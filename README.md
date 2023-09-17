@@ -15,12 +15,15 @@ Evanescent uses the latest LTS JDK (currently version 17) and keeps dependencies
 
 ## In-built Features
 
-- ✅ Simple Microsoft login in-game.
+- ✅ Removed Minecraft Realms support.
 - ✅ Removed hit delay.
 - ✅ Removed right-click delay.
+- ✅ Simple Microsoft login in-game.
+- ✅ Simple Automatic Sprint feature.
 
 ## Pending In-built Features (not limited to)
 
+- ❌ Removed Twitch Broadcast support.
 - ❌ Removed score display on the right side of the scoreboard.
 - ❌ Implemented raw input.
 
