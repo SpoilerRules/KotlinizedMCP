@@ -4,7 +4,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.9.10-blue.svg)](https://kotlinlang.org/)
 [![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![Gradle](https://img.shields.io/badge/Gradle-8.3-orange.svg)](https://gradle.org/)
-[![OptiFine](https://img.shields.io/badge/OptiFine-Integrated-lime.svg)](https://optifine.net/)
+[![OptiFine](https://img.shields.io/badge/OptiFine-Integrated-green.svg)](https://optifine.net/)
 
 ## Introduction
 
