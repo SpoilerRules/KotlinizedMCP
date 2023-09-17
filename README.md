@@ -34,7 +34,7 @@ Contributions are greatly appreciated and mainly accepted in Kotlin/JVM. Feel fr
 
 ## License
 
-This project is licensed under the Custom Evanescent License, Version 1.0. Please review the [LICENSE](LICENSE) file for more details.
+This project is licensed under the Evanescent License, Version 1.0. Please review the [LICENSE](LICENSE) file for more details.
 
 ---
 
