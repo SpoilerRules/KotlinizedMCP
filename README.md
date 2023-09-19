@@ -32,6 +32,10 @@ Evanescent uses the latest LTS JDK (currently version 17) and keeps dependencies
 
 The name “Evanescent” means something that fades away quickly. We chose this name because this client is only a starting point for your own project, and you can customize it as you wish.
 
+## Community
+
+Join the discussion, connect with fellow developers, and ask for help or support at our [Discord server](https://discord.gg/nG9UzMGa7k).
+
 ## Contributions
 
 Contributions are greatly appreciated and mainly accepted in Kotlin/JVM. Feel free to contribute to the project and help make it even better!
