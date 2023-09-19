@@ -25,12 +25,16 @@ import org.apache.logging.log4j.LogManager
 
 class ScreenshotHelper {
     private val logger = LogManager.getLogger()
-    private lateinit var pixelBuffer: IntBuffer
-    private lateinit var pixelValues: IntArray
+    private var pixelBuffer: IntBuffer
+    private var pixelValues: IntArray
 
-    fun screenshotRequest(gameDirectory: File, width: Int, height: Int, buffer: Framebuffer): IChatComponent {
-        return saveScreenshot(gameDirectory, width, height, buffer)
+    init {
+        val bufferSize = 1024
+        pixelBuffer = BufferUtils.createIntBuffer(bufferSize)
+        pixelValues = IntArray(bufferSize)
     }
+
+    fun screenshotRequest(gameDirectory: File, width: Int, height: Int, buffer: Framebuffer): IChatComponent = saveScreenshot(gameDirectory, width, height, buffer)
 
     private fun saveScreenshot(
         gameDirectory: File,
@@ -39,7 +43,6 @@ class ScreenshotHelper {
         buffer: Framebuffer
     ): IChatComponent {
         try {
-            val file1 = File(gameDirectory, "screenshots").apply { mkdir() }
             val minecraft = Minecraft.getMinecraft()
             val originalGuiScale = Config.getGameSettings().guiScale
             val scaledResolution = ScaledResolution(minecraft)
@@ -116,7 +119,7 @@ class ScreenshotHelper {
                 resize(finalWidth, finalHeight)
             }
 
-            val screenshotFile = getTimestampedPNGFileForDirectory(file1)
+            val screenshotFile = getTimestampedPNGFileForDirectory(File(gameDirectory, "screenshots").apply { mkdir() })
             val canonicalScreenshotFile = screenshotFile.canonicalFile
 
             ImageIO.write(bufferedImage, "png", canonicalScreenshotFile)
