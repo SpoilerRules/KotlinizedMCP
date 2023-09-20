@@ -22,6 +22,7 @@ repositories {
 dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+
     // Netty
     implementation("io.netty:netty-handler:4.1.97.Final")
     implementation("io.netty:netty-buffer:4.1.97.Final")
@@ -125,6 +126,10 @@ publishing {
 
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "test.kotlin.Start"
+    }
+    archiveBaseName.set("Evanescent")
     exclude("META-INF/**", "natives/**")
 }
 
