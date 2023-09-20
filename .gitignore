@@ -4,12 +4,12 @@
 /.gradle/
 /gradle/
 /build/
-# Minecraft
+# Minecraft (clueless)
 /test_workspace/*
 !/test_workspace/assets
 /test_workspace/assets/*
 !/test_workspace/assets/indexes
-!/test_workspace/assets/objects
+# !/test_workspace/assets/objects
 
 # GitHub Defaults (for Kotlin/JVM) ↓
 
