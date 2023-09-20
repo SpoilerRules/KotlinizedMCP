@@ -126,6 +126,7 @@ publishing {
 
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // the line below allows you to launch the client without a launcher (buggy).
     manifest {
         attributes["Main-Class"] = "test.kotlin.Start"
     }
