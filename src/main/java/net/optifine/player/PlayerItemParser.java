@@ -21,7 +21,6 @@ import net.optifine.util.Json;
 
 public class PlayerItemParser
 {
-    private static JsonParser jsonParser = new JsonParser();
     public static final String ITEM_TYPE = "type";
     public static final String ITEM_TEXTURE_SIZE = "textureSize";
     public static final String ITEM_USE_PLAYER_TEXTURE = "usePlayerTexture";

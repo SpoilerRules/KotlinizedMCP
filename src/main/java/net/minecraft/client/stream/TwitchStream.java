@@ -2,14 +2,7 @@ package net.minecraft.client.stream;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mojang.authlib.properties.Property;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Map;
-import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,14 +14,7 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.HttpUtil;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.JsonUtils;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Util;
+import net.minecraft.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -36,18 +22,11 @@ import org.apache.logging.log4j.MarkerManager;
 import org.lwjgl.opengl.GL11;
 import tv.twitch.AuthToken;
 import tv.twitch.ErrorCode;
-import tv.twitch.broadcast.EncodingCpuUsage;
-import tv.twitch.broadcast.FrameBuffer;
-import tv.twitch.broadcast.GameInfo;
-import tv.twitch.broadcast.IngestList;
-import tv.twitch.broadcast.IngestServer;
-import tv.twitch.broadcast.StreamInfo;
-import tv.twitch.broadcast.VideoParams;
-import tv.twitch.chat.ChatRawMessage;
-import tv.twitch.chat.ChatTokenizedMessage;
-import tv.twitch.chat.ChatUserInfo;
-import tv.twitch.chat.ChatUserMode;
-import tv.twitch.chat.ChatUserSubscription;
+import tv.twitch.broadcast.*;
+import tv.twitch.chat.*;
+
+import java.util.Map;
+import java.util.Set;
 
 public class TwitchStream implements BroadcastController.BroadcastListener, ChatController.ChatListener, IngestServerTester.IngestTestListener, IStream
 {
@@ -81,49 +60,10 @@ public class TwitchStream implements BroadcastController.BroadcastListener, Chat
         this.chatController.func_152984_a("nmt37qblda36pvonovdkbopzfzw3wlq");
         this.twitchComponent.getChatStyle().setColor(EnumChatFormatting.DARK_PURPLE);
 
-        if (streamProperty != null && !Strings.isNullOrEmpty(streamProperty.getValue()) && OpenGlHelper.framebufferSupported)
-        {
-            Thread thread = new Thread("Twitch authenticator")
-            {
-                public void run()
-                {
-                    try
-                    {
-                        URL url = new URL("https://api.twitch.tv/kraken?oauth_token=" + URLEncoder.encode(streamProperty.getValue(), "UTF-8"));
-                        String s = HttpUtil.get(url);
-                        JsonObject jsonobject = JsonUtils.getJsonObject((new JsonParser()).parse(s), "Response");
-                        JsonObject jsonobject1 = JsonUtils.getJsonObject(jsonobject, "token");
-
-                        if (JsonUtils.getBoolean(jsonobject1, "valid"))
-                        {
-                            String s1 = JsonUtils.getString(jsonobject1, "user_name");
-                            TwitchStream.LOGGER.debug(TwitchStream.STREAM_MARKER, "Authenticated with twitch; username is {}", new Object[] {s1});
-                            AuthToken authtoken = new AuthToken();
-                            authtoken.data = streamProperty.getValue();
-                            TwitchStream.this.broadcastController.func_152818_a(s1, authtoken);
-                            TwitchStream.this.chatController.func_152998_c(s1);
-                            TwitchStream.this.chatController.func_152994_a(authtoken);
-                            Runtime.getRuntime().addShutdownHook(new Thread("Twitch shutdown hook")
-                            {
-                                public void run()
-                                {
-                                    TwitchStream.this.shutdownStream();
-                                }
-                            });
-                            TwitchStream.this.broadcastController.func_152817_A();
-                            TwitchStream.this.chatController.func_175984_n();
-                        }
-                        else
-                        {
-                            TwitchStream.this.authFailureReason = IStream.AuthFailureReason.INVALID_TOKEN;
-                            TwitchStream.LOGGER.error(TwitchStream.STREAM_MARKER, "Given twitch access token is invalid");
-                        }
-                    }
-                    catch (IOException ioexception)
-                    {
-                        TwitchStream.this.authFailureReason = IStream.AuthFailureReason.ERROR;
-                        TwitchStream.LOGGER.error(TwitchStream.STREAM_MARKER, (String)"Could not authenticate with twitch", (Throwable)ioexception);
-                    }
+        if (streamProperty != null && !Strings.isNullOrEmpty(streamProperty.getValue()) && OpenGlHelper.framebufferSupported) {
+            Thread thread = new Thread("Twitch authenticator") {
+                public void run() {
+                    LogManager.getLogger().info("Twitch stream support is gradually being removed.");
                 }
             };
             thread.setDaemon(true);

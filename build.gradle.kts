@@ -66,6 +66,7 @@ dependencies {
 
     // Miscellaneous
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
+    implementation("org.apache.commons:commons-text:1.10.0") // Latest as of 2023 September 22
     implementation("commons-io:commons-io:2.13.0") // Latest as of 2023 August 22
     implementation("commons-codec:commons-codec:1.16.0") // Latest as of 2023 August 22
     api("com.google.guava:guava:32.1.2-jre") // Latest as of 2023 August 21

@@ -1,10 +1,7 @@
 package net.optifine.entity.model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -254,7 +251,7 @@ public class CustomEntityModelParser
         }
     }
 
-    public static JsonObject loadJson(ResourceLocation location) throws IOException, JsonParseException
+    public static JsonObject loadJson(ResourceLocation location) throws IOException
     {
         InputStream inputstream = Config.getResourceStream(location);
 
@@ -266,9 +263,8 @@ public class CustomEntityModelParser
         {
             String s = Config.readInputStream(inputstream, "ASCII");
             inputstream.close();
-            JsonParser jsonparser = new JsonParser();
-            JsonObject jsonobject = (JsonObject)jsonparser.parse(s);
-            return jsonobject;
+            Gson gson = new Gson();
+            return gson.fromJson(s, JsonObject.class);
         }
     }
 }
