@@ -36,7 +36,7 @@ public class MathHelper
 
     public static float sqrt_float(float value)
     {
-        return (float)Math.sqrt((double)value);
+        return (float)Math.sqrt(value);
     }
 
     public static float sqrt_double(double value)
@@ -96,17 +96,17 @@ public class MathHelper
 
     public static int clamp_int(int num, int min, int max)
     {
-        return num < min ? min : (num > max ? max : num);
+        return num < min ? min : (Math.min(num, max));
     }
 
     public static float clamp_float(float num, float min, float max)
     {
-        return num < min ? min : (num > max ? max : num);
+        return num < min ? min : (Math.min(num, max));
     }
 
     public static double clamp_double(double num, double min, double max)
     {
-        return num < min ? min : (num > max ? max : num);
+        return num < min ? min : (Math.min(num, max));
     }
 
     public static double denormalizeClamp(double lowerBnd, double upperBnd, double slide)
@@ -114,19 +114,10 @@ public class MathHelper
         return slide < 0.0D ? lowerBnd : (slide > 1.0D ? upperBnd : lowerBnd + (upperBnd - lowerBnd) * slide);
     }
 
-    public static double abs_max(double p_76132_0_, double p_76132_2_)
-    {
-        if (p_76132_0_ < 0.0D)
-        {
-            p_76132_0_ = -p_76132_0_;
-        }
-
-        if (p_76132_2_ < 0.0D)
-        {
-            p_76132_2_ = -p_76132_2_;
-        }
-
-        return p_76132_0_ > p_76132_2_ ? p_76132_0_ : p_76132_2_;
+    public static double absMax(double num1, double num2) {
+        num1 = Math.abs(num1);
+        num2 = Math.abs(num2);
+        return Math.max(num1, num2);
     }
 
     public static int bucketInt(int p_76137_0_, int p_76137_1_)
@@ -306,8 +297,8 @@ public class MathHelper
         int j = (p_180188_1_ & 16711680) >> 16;
         int k = (p_180188_0_ & 65280) >> 8;
         int l = (p_180188_1_ & 65280) >> 8;
-        int i1 = (p_180188_0_ & 255) >> 0;
-        int j1 = (p_180188_1_ & 255) >> 0;
+        int i1 = (p_180188_0_ & 255);
+        int j1 = (p_180188_1_ & 255);
         int k1 = (int)((float)i * (float)j / 255.0F);
         int l1 = (int)((float)k * (float)l / 255.0F);
         int i2 = (int)((float)i1 * (float)j1 / 255.0F);
@@ -326,7 +317,7 @@ public class MathHelper
 
     public static long getCoordinateRandom(int x, int y, int z)
     {
-        long i = (long)(x * 3129871) ^ (long)z * 116129781L ^ (long)y;
+        long i = (x * 3129871L) ^ (long)z * 116129781L ^ (long)y;
         i = i * i * 42317861L + i * 11L;
         return i;
     }
@@ -428,46 +419,39 @@ public class MathHelper
         float f5;
         float f6;
 
-        switch (i)
-        {
-            case 0:
+        switch (i) {
+            case 0 -> {
                 f4 = p_181758_2_;
                 f5 = f3;
                 f6 = f1;
-                break;
-
-            case 1:
+            }
+            case 1 -> {
                 f4 = f2;
                 f5 = p_181758_2_;
                 f6 = f1;
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 f4 = f1;
                 f5 = p_181758_2_;
                 f6 = f3;
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 f4 = f1;
                 f5 = f2;
                 f6 = p_181758_2_;
-                break;
-
-            case 4:
+            }
+            case 4 -> {
                 f4 = f3;
                 f5 = f1;
                 f6 = p_181758_2_;
-                break;
-
-            case 5:
+            }
+            case 5 -> {
                 f4 = p_181758_2_;
                 f5 = f1;
                 f6 = f2;
-                break;
-
-            default:
-                throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + p_181758_0_ + ", " + p_181758_1_ + ", " + p_181758_2_);
+            }
+            default ->
+                    throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + p_181758_0_ + ", " + p_181758_1_ + ", " + p_181758_2_);
         }
 
         int j = clamp_int((int)(f4 * 255.0F), 0, 255);
@@ -476,29 +460,27 @@ public class MathHelper
         return j << 16 | k << 8 | l;
     }
 
-    static
-    {
-        for (int i = 0; i < 65536; ++i)
-        {
-            SIN_TABLE[i] = (float)Math.sin((double)i * Math.PI * 2.0D / 65536.0D);
+    static {
+        for (int i = 0; i < 65536; ++i) {
+            SIN_TABLE[i] = (float)Math.sin(i * Math.PI * 2.0 / 65536.0);
         }
 
-        for (int j = 0; j < SIN_TABLE_FAST.length; ++j)
-        {
-            SIN_TABLE_FAST[j] = MathUtils.roundToFloat(Math.sin((double)j * Math.PI * 2.0D / 4096.0D));
+        for (int j = 0; j < SIN_TABLE_FAST.length; ++j) {
+            SIN_TABLE_FAST[j] = MathUtils.roundToFloat(Math.sin(j * Math.PI * 2.0 / 4096.0));
         }
 
-        multiplyDeBruijnBitPosition = new int[] {0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8, 31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9};
+        multiplyDeBruijnBitPosition = new int[] {0, 1, 28, 2, 29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4, 8,
+                31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6, 11, 5, 10, 9};
+
         field_181163_d = Double.longBitsToDouble(4805340802404319232L);
         field_181164_e = new double[257];
         field_181165_f = new double[257];
 
-        for (int k = 0; k < 257; ++k)
-        {
-            double d0 = (double)k / 256.0D;
-            double d1 = Math.asin(d0);
-            field_181165_f[k] = Math.cos(d1);
-            field_181164_e[k] = d1;
+        for (int k = 1; k < field_181164_e.length; ++k) {
+            double ratio = k / 256.0;
+            double asinVal = Math.asin(ratio);
+            field_181165_f[k] = Math.cos(asinVal);
+            field_181164_e[k] = asinVal;
         }
     }
 }

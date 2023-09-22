@@ -1139,7 +1139,7 @@ public abstract class Entity implements ICommandSender
             {
                 double d0 = entityIn.posX - this.posX;
                 double d1 = entityIn.posZ - this.posZ;
-                double d2 = MathHelper.abs_max(d0, d1);
+                double d2 = MathHelper.absMax(d0, d1);
 
                 if (d2 >= 0.009999999776482582D)
                 {

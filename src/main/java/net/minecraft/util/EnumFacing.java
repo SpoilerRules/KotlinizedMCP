@@ -228,23 +228,20 @@ public enum EnumFacing implements IStringSerializable
         return values()[rand.nextInt(values().length)];
     }
 
-    public static EnumFacing getFacingFromVector(float p_176737_0_, float p_176737_1_, float p_176737_2_)
-    {
-        EnumFacing enumfacing = NORTH;
-        float f = Float.MIN_VALUE;
+    public static EnumFacing getFacingFromVector(double x, double y, double z) {
+        EnumFacing bestMatch = null;
+        float maxDotProduct = Float.MIN_VALUE;
 
-        for (EnumFacing enumfacing1 : values())
-        {
-            float f1 = p_176737_0_ * (float)enumfacing1.directionVec.getX() + p_176737_1_ * (float)enumfacing1.directionVec.getY() + p_176737_2_ * (float)enumfacing1.directionVec.getZ();
+        for (EnumFacing currentFacing : EnumFacing.values()) {
+            float dotProduct = (float)(x * currentFacing.directionVec.getX() + y * currentFacing.directionVec.getY() + z * currentFacing.directionVec.getZ());
 
-            if (f1 > f)
-            {
-                f = f1;
-                enumfacing = enumfacing1;
+            if (dotProduct > maxDotProduct) {
+                maxDotProduct = dotProduct;
+                bestMatch = currentFacing;
             }
         }
 
-        return enumfacing;
+        return bestMatch;
     }
 
     public String toString()
