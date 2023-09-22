@@ -44,11 +44,9 @@ import net.minecraft.client.gui.GuiMemoryErrorScreen;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSleepMP;
 import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.gui.mainMenuGui.microsoftLogin.LoginHandler;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -135,11 +133,9 @@ import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.stats.AchievementList;
-import net.minecraft.stats.IStatStringFormat;
 import net.minecraft.stats.StatFileWriter;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
-import net.minecraft.util.Timer;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
@@ -149,7 +145,6 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
@@ -189,7 +184,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public int displayWidth;
     public int displayHeight;
     private boolean connectedToRealms = false;
-    private final Timer timer = new Timer(20.0F);
+    private final net.minecraft.util.Timer timer = new net.minecraft.util.Timer(20.0F);
     private PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());
     public WorldClient theWorld;
     public RenderGlobal renderGlobal;
@@ -843,9 +838,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         if (this.isGamePaused && this.theWorld != null) {
-            float f = this.timer.renderPartialTicks;
+            float f = this.timer.getRenderPartialTicks();
             this.timer.updateTimer();
-            this.timer.renderPartialTicks = f;
+            this.timer.setRenderPartialTicks(f);
         } else {
             this.timer.updateTimer();
         }
@@ -862,7 +857,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         long l = System.nanoTime();
         this.mcProfiler.startSection("tick");
 
-        for (int j = 0; j < this.timer.elapsedTicks; ++j) {
+        for (int j = 0; j < this.timer.getElapsedTicks(); ++j) {
             this.runTick();
         }
 
@@ -870,7 +865,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         long i1 = System.nanoTime() - l;
         this.checkGLError("Pre render");
         this.mcProfiler.endStartSection("sound");
-        this.mcSoundHandler.setListener(this.thePlayer, this.timer.renderPartialTicks);
+        this.mcSoundHandler.setListener(this.thePlayer, this.timer.getRenderPartialTicks());
         this.mcProfiler.endSection();
         this.mcProfiler.startSection("render");
         GlStateManager.pushMatrix();
@@ -887,7 +882,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         if (!this.skipRenderWorld) {
             this.mcProfiler.endStartSection("gameRenderer");
-            this.entityRenderer.updateCameraAndRender(this.timer.renderPartialTicks, i);
+            this.entityRenderer.updateCameraAndRender(this.timer.getRenderPartialTicks(), i);
             this.mcProfiler.endSection();
         }
 
@@ -912,7 +907,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.framebufferMc.framebufferRender(this.displayWidth, this.displayHeight);
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
-        this.entityRenderer.renderStreamIndicator(this.timer.renderPartialTicks);
+        this.entityRenderer.renderStreamIndicator(this.timer.getRenderPartialTicks());
         GlStateManager.popMatrix();
         this.mcProfiler.startSection("root");
         this.updateDisplay();
