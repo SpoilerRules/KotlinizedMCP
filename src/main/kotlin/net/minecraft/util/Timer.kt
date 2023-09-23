@@ -29,18 +29,14 @@ class Timer(private var ticksPerSecond: Float) {
 
             if (counter > 1000L) {
                 val hrClockDifference = nanoTimeMillis - lastSyncHRClock
-                val timeRatio = counter.toDouble() / hrClockDifference.toDouble()
+                val timeRatio = counter / hrClockDifference
                 timeSyncAdjustment += (timeRatio - timeSyncAdjustment) * 0.20000000298023224
                 lastSyncHRClock = nanoTimeMillis
                 counter = 0L
             }
 
-            if (counter < 0L) {
-                lastSyncHRClock = nanoTimeMillis
-            }
-        } else {
-            lastHRTime = nanoTimeSecs
-        }
+            if (counter < 0L) lastSyncHRClock = nanoTimeMillis
+        } else lastHRTime = nanoTimeSecs
 
         lastSyncSysClock = currentTimeMillis
 
@@ -50,11 +46,9 @@ class Timer(private var ticksPerSecond: Float) {
         val clampedAdjustment = timeAdjustment.coerceIn(0.0, 1.0)
         elapsedPartialTicks += (clampedAdjustment * timerSpeed * ticksPerSecond).toFloat()
         elapsedTicks = elapsedPartialTicks.toInt()
-        elapsedPartialTicks -= elapsedTicks.toFloat()
+        elapsedPartialTicks -= elapsedTicks
 
-        if (elapsedTicks > 10) {
-            elapsedTicks = 10
-        }
+        if (elapsedTicks > 10) elapsedTicks = 10
 
         renderPartialTicks = elapsedPartialTicks
     }
