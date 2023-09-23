@@ -19,16 +19,8 @@ object Start {
     }
 
     private fun setLwjglLibraryPath() {
-        val os = System.getProperty("os.name").lowercase()
-        val osType = when {
-            os.contains("win") -> "windows"
-            os.contains("nix") || os.contains("nux") -> "linux"
-            else -> throw UnsupportedOperationException("Unsupported operating system: $os")
-        }
-        System.setProperty("org.lwjgl.librarypath", findLibraryPath(osType))
+        val osType = if (System.getProperty("os.name").startsWith("Windows")) "windows" else "linux"
+        val rootDirectory = File("").canonicalFile.parentFile.absolutePath.replace('\\', '/')
+        System.setProperty("org.lwjgl.librarypath", "$rootDirectory/test_natives/$osType")
     }
-
-    private fun findLibraryPath(subdirectory: String) =
-        File("../test_natives", subdirectory).takeIf { it.exists() && it.isDirectory }?.absolutePath?.replace('\\', '/')
-            ?: throw IllegalStateException("Library path not found for OS: $subdirectory")
 }
