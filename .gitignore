@@ -7,6 +7,9 @@
 # Minecraft (clueless)
 /test_workspace/
 
+/release_folder/
+*.cmd
+
 # GitHub Defaults (for Kotlin/JVM) ↓
 
 # Compiled class file
