@@ -8,7 +8,8 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
-import net.minecraft.client.ClientBrandRetriever;
+
+import net.minecraft.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ThreadLanServerPing;
 import net.minecraft.command.ServerCommandManager;
@@ -377,7 +378,7 @@ public class IntegratedServer extends MinecraftServer
         {
             public String call() throws Exception
             {
-                String s = ClientBrandRetriever.getClientModName();
+                String s = ClientBrandEnum.CLIENT_MOD_NAME;
 
                 if (!s.equals("vanilla"))
                 {

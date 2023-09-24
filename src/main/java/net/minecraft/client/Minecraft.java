@@ -178,7 +178,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private static Minecraft theMinecraft;
     public PlayerControllerMP playerController;
     private boolean fullscreen;
-    private final boolean enableGLErrorChecking = true;
     private boolean hasCrashed;
     private CrashReport crashReporter;
     public int displayWidth;
@@ -516,7 +515,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private void createDisplay() throws LWJGLException {
         Display.setResizable(true);
-        Display.setTitle("Evanescent");
+        Display.setTitle(ClientBrandEnum.WINDOW_DISPLAY_TITLE);
 
         try {
             Display.create(new PixelFormat().withDepthBits(24));
@@ -794,7 +793,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void checkGLError(String message) {
-        if (this.enableGLErrorChecking) {
+        boolean enableGLErrorChecking = true;
+        if (enableGLErrorChecking) {
             int i = GL11.glGetError();
 
             if (i != 0) {
@@ -2049,7 +2049,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         });
         theCrash.getCategory().addCrashSectionCallable("Is Modded", new Callable<String>() {
             public String call() throws Exception {
-                return ClientBrandRetriever.getClientModName();
+                return ClientBrandEnum.CLIENT_MOD_NAME;
             }
         });
         theCrash.getCategory().addCrashSectionCallable("Type", new Callable<String>() {
@@ -2139,7 +2139,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public void addServerTypeToSnooper(PlayerUsageSnooper playerSnooper) {
         playerSnooper.addStatToSnooper("opengl_version", GL11.glGetString(GL11.GL_VERSION));
         playerSnooper.addStatToSnooper("opengl_vendor", GL11.glGetString(GL11.GL_VENDOR));
-        playerSnooper.addStatToSnooper("client_brand", ClientBrandRetriever.getClientModName());
+        playerSnooper.addStatToSnooper("client_brand", ClientBrandEnum.CLIENT_MOD_NAME);
         playerSnooper.addStatToSnooper("launched_version", this.launchedVersion);
         ContextCapabilities contextcapabilities = GLContext.getCapabilities();
         playerSnooper.addStatToSnooper("gl_caps[ARB_arrays_of_arrays]", contextcapabilities.GL_ARB_arrays_of_arrays);

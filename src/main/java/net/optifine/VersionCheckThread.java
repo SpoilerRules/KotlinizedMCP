@@ -3,7 +3,8 @@ package net.optifine;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import net.minecraft.client.ClientBrandRetriever;
+
+import net.minecraft.client.ClientBrandEnum;
 import net.minecraft.src.Config;
 
 public class VersionCheckThread extends Thread
@@ -26,7 +27,7 @@ public class VersionCheckThread extends Thread
             if (Config.getGameSettings().snooperEnabled)
             {
                 httpurlconnection.setRequestProperty("OF-MC-Version", "1.8.9");
-                httpurlconnection.setRequestProperty("OF-MC-Brand", "" + ClientBrandRetriever.getClientModName());
+                httpurlconnection.setRequestProperty("OF-MC-Brand", "" + ClientBrandEnum.CLIENT_MOD_NAME);
                 httpurlconnection.setRequestProperty("OF-Edition", "HD_U");
                 httpurlconnection.setRequestProperty("OF-Release", "M6_pre2");
                 httpurlconnection.setRequestProperty("OF-Java-Version", "" + System.getProperty("java.version"));

@@ -8,7 +8,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
-import net.minecraft.client.ClientBrandRetriever;
+import net.minecraft.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.GuardianSound;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -112,7 +112,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
         this.gameController.thePlayer.setReducedDebug(packetIn.isReducedDebugInfo());
         this.gameController.playerController.setGameType(packetIn.getGameType());
         this.gameController.gameSettings.sendSettingsToServer();
-        this.netManager.sendPacket(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString(ClientBrandRetriever.getClientModName())));
+        this.netManager.sendPacket(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString(ClientBrandEnum.CLIENT_MOD_NAME)));
     }
 
     public void handleSpawnObject(S0EPacketSpawnObject packetIn) {
