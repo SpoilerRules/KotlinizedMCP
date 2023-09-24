@@ -2,6 +2,13 @@ import java.io.File
 import net.minecraft.client.main.PseudoMain as Main
 
 object Start {
+    // Please set the path below to point to the correct location of 'lwjgl64.dll' on your system,
+    // using forward slashes ('/') for the directory separators and choosing the appropriate path
+    // for your operating system ("windows" or "linux").
+    //                             ↓ this is just an example.
+    private const val lwjgl64DLLPath: String =
+        "C:/Users/spoil/Desktop/sussy_items/Evanescent/test_natives/windows/lwjgl64.dll"
+
     @JvmStatic
     fun main(args: Array<String>) {
         setLwjglLibraryPath()
@@ -18,20 +25,9 @@ object Start {
         Main(args + defaultArgs).main()
     }
 
-    private fun setLwjglLibraryPath() {
-        // Please set the path below to point to the correct location of 'lwjgl64.dll' on your system,
-        // using forward slashes ('/') for the directory separators and choosing the appropriate path
-        // for your operating system ("windows" or "linux").
-        //                             ↓ this is just an example.
-        val lwjgl64DLLPath = "C:/Users/spoil/Desktop/sussy_items/Evanescent/test_natives/windows/lwjgl64.dll"
-
-
-        val libraryFile = File(lwjgl64DLLPath)
-        if (!libraryFile.exists()) {
-            throw IllegalStateException("The lwjgl64.dll library file was not found. Please update the 'lwjgl64DLLPath' variable in Start.kt to point to the correct location.")
-        }
-
-        val libraryPath = libraryFile.parentFile.absolutePath.replace('\\', '/')
-        System.setProperty("org.lwjgl.librarypath", libraryPath)
-    }
+    private fun setLwjglLibraryPath() = System.setProperty(
+        "org.lwjgl.librarypath",
+        File(lwjgl64DLLPath).takeIf { it.exists() }?.parentFile?.absolutePath?.replace('\\', '/')
+            ?: throw IllegalStateException("The lwjgl64.dll library file was not found. Please update the 'lwjgl64DLLPath' variable in Start.kt to point to the correct location.")
+    )
 }
