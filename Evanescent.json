@@ -7,42 +7,72 @@
   "type": "release",
   "libraries": [
     {
-      "name": "io.netty:netty-handler:4.1.97.Final",
+      "name": "io.netty:netty-handler:4.1.98.Final",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.97.Final/netty-handler-4.1.97.Final.jar",
-          "sha1": "abb86c6906bf512bf2b797a41cd7d2e8d3cd7c36",
-          "size": 560040
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-handler/4.1.98.Final/netty-handler-4.1.98.Final.jar",
+          "sha1": "196a9c42b23c0326f6fe53f8be06b706ca1f0fe4",
+          "size": 561287
         }
       }
     },
     {
-      "name": "io.netty:netty-buffer:4.1.97.Final",
+      "name": "io.netty:netty-codec:4.1.98.Final",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.97.Final/netty-buffer-4.1.97.Final.jar",
-          "sha1": "f8f3d8644afa5e6e1a40a3a6aeb9d9aa970ecb4f",
-          "size": 306590
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-codec/4.1.98.Final/netty-codec-4.1.98.Final.jar",
+          "sha1": "09c1c0cec713b4cdb1951dfd3a7d4045f67b7140",
+          "size": 345274
         }
       }
     },
     {
-      "name": "io.netty:netty-common:4.1.97.Final",
+      "name": "io.netty:netty-transport:4.1.98.Final",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/io/netty/netty-common/4.1.97.Final/netty-common-4.1.97.Final.jar",
-          "sha1": "7cceacaf11df8dc63f23d0fb58e9d4640fc88404",
-          "size": 659930
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-transport/4.1.98.Final/netty-transport-4.1.98.Final.jar",
+          "sha1": "1671837c86fb91ba8aa6c885404d5f5be226957d",
+          "size": 489991
         }
       }
     },
     {
-      "name": "io.netty:netty-transport-native-epoll:4.1.97.Final",
+      "name": "io.netty:netty-buffer:4.1.98.Final",
       "downloads": {
         "artifact": {
-            "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-native-epoll/4.1.97.Final/netty-transport-native-epoll-4.1.97.Final.jar",
-            "sha1": "d569aa0dbbe7bccac689a69ca2a15c7eae2bc619",
-            "size": 5660
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-buffer/4.1.98.Final/netty-buffer-4.1.98.Final.jar",
+          "sha1": "0a231a976dd6169695795c9d014befcc5209bba0",
+          "size": 306588
+        }
+      }
+    },
+    {
+      "name": "io.netty:netty-common:4.1.98.Final",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-common/4.1.98.Final/netty-common-4.1.98.Final.jar",
+          "sha1": "97dcf94b8a0ce7bb7f2600abaa71ec1c3ea9b71a",
+          "size": 659924
+        }
+      }
+    },
+    {
+      "name": "io.netty:netty-transport-native-epoll:4.1.98.Final",
+      "downloads": {
+        "artifact": {
+            "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-native-epoll/4.1.98.Final/netty-transport-native-epoll-4.1.98.Final.jar",
+            "sha1": "b7b5fb43a8cb3b901df27ac31d6ed165760f2fd3",
+            "size": 5661
+        }
+      }
+    },
+    {
+      "name": "io.netty:netty-resolver:4.1.98.Final",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-resolver/4.1.98.Final/netty-resolver-4.1.98.Final.jar",
+          "sha1": "57b36ef412f702ed695f16a525a1f1c23fb1771f",
+          "size": 37788
         }
       }
     },
@@ -63,6 +93,16 @@
           "url": "https://repo.maven.apache.org/maven2/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar",
           "sha1": "1dcf1de382a0bf95a3d8b0849546c88bac1292c9",
           "size": 4617
+        }
+      }
+    },
+    {
+      "name": "org.apache.commons:commons-text:1.10.0",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/apache/commons/commons-text/1.10.0/commons-text-1.10.0.jar",
+          "sha1": "3363381aef8cef2dbc1023b3e3a9433b08b64e01",
+          "size": 238400
         }
       }
     },
