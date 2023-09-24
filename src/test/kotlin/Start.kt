@@ -20,8 +20,7 @@ object Start {
 
     private fun setLwjglLibraryPath() {
         val osType = if (System.getProperty("os.name").startsWith("Windows")) "windows" else "linux"
-        val rootDirectory = File("").absolutePath.replace('\\', '/')
-        val libraryPath = File(rootDirectory, "test_natives/$osType").absolutePath.replace('\\', '/')
-        System.setProperty("org.lwjgl.librarypath", libraryPath)
+        val rootDirectory = File("").canonicalFile.parentFile.absolutePath.replace('\\', '/')
+        System.setProperty("org.lwjgl.librarypath", "$rootDirectory/test_natives/$osType")
     }
 }
