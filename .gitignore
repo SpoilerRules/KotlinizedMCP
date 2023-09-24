@@ -2,6 +2,7 @@
 /target/
 /.idea/
 /.gradle/
+/.github/
 /gradle/
 /build/
 # Minecraft (clueless)
