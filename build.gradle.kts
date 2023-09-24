@@ -24,10 +24,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
     // Netty
-    implementation("io.netty:netty-handler:4.1.97.Final")
-    implementation("io.netty:netty-buffer:4.1.97.Final")
-    implementation("io.netty:netty-transport-native-epoll:4.1.97.Final")
-    implementation("io.netty:netty-common:4.1.97.Final")
+    implementation("io.netty:netty-handler:4.1.98.Final")
+    implementation("io.netty:netty-buffer:4.1.98.Final")
+    implementation("io.netty:netty-transport-native-epoll:4.1.98.Final")
+    implementation("io.netty:netty-common:4.1.98.Final")
+    implementation("io.netty:netty-codec:4.1.98.Final")
+    implementation("io.netty:netty-transport:4.1.98.Final")
+    implementation("io.netty:netty-resolver:4.1.98.Final")
 
     // System related
     implementation("com.github.oshi:oshi-core:6.4.5") // Latest as of 2023 August 24

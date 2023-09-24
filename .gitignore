@@ -6,7 +6,7 @@
 /gradle/
 /build/
 # Minecraft (clueless)
-/test_workspace/
+/workspace/
 
 /release_folder/
 *.cmd
