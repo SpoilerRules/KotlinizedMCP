@@ -18,6 +18,7 @@ Evanescent uses the latest LTS JDK (currently version 17) and keeps dependencies
 
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed hit delay.
+- ✅ Command detection is case-insensitive.
 - ✅ Simple Microsoft login in-game.
 - ✅ Simple Automatic Sprint feature.
 
