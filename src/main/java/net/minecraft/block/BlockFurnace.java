@@ -190,7 +190,7 @@ public class BlockFurnace extends BlockContainer
 
             if (tileentity instanceof TileEntityFurnace)
             {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace)tileentity);
+                InventoryHelper.dropInventoryItemsAtPosition(worldIn, pos, (TileEntityFurnace)tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         }

@@ -399,7 +399,7 @@ public class BlockChest extends BlockContainer
 
         if (tileentity instanceof IInventory)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory)tileentity);
+            InventoryHelper.dropInventoryItemsAtPosition(worldIn, pos, (IInventory)tileentity);
             worldIn.updateComparatorOutputLevel(pos, this);
         }
 

@@ -203,7 +203,7 @@ public class BlockDispenser extends BlockContainer
 
         if (tileentity instanceof TileEntityDispenser)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityDispenser)tileentity);
+            InventoryHelper.dropInventoryItemsAtPosition(worldIn, pos, (TileEntityDispenser)tileentity);
             worldIn.updateComparatorOutputLevel(pos, this);
         }
 

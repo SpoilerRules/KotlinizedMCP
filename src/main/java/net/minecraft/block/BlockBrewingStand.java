@@ -121,7 +121,7 @@ public class BlockBrewingStand extends BlockContainer
 
         if (tileentity instanceof TileEntityBrewingStand)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityBrewingStand)tileentity);
+            InventoryHelper.dropInventoryItemsAtPosition(worldIn, pos, (TileEntityBrewingStand)tileentity);
         }
 
         super.breakBlock(worldIn, pos, state);

@@ -32,7 +32,7 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
 
         if (this.worldObj.getGameRules().getBoolean("doEntityDrops"))
         {
-            InventoryHelper.dropInventoryItems(this.worldObj, this, this);
+            InventoryHelper.dropInventoryItemsAtEntity(this.worldObj, this, this);
         }
     }
 
@@ -135,7 +135,7 @@ public abstract class EntityMinecartContainer extends EntityMinecart implements 
     {
         if (this.dropContentsWhenDead)
         {
-            InventoryHelper.dropInventoryItems(this.worldObj, this, this);
+            InventoryHelper.dropInventoryItemsAtEntity(this.worldObj, this, this);
         }
 
         super.setDead();
