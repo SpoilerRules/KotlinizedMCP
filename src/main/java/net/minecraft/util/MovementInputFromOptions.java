@@ -3,54 +3,33 @@ package net.minecraft.util;
 import movement.AutoSprint;
 import net.minecraft.client.settings.GameSettings;
 
-public class MovementInputFromOptions extends MovementInput
-{
+// this class will be omitted when related classes are kotlinized. (pending sacrifice)
+public class MovementInputFromOptions extends MovementInput {
     private final GameSettings gameSettings;
+    private final AutoSprint autoSprint = new AutoSprint();
 
-    public MovementInputFromOptions(GameSettings gameSettingsIn)
-    {
+    public MovementInputFromOptions(GameSettings gameSettingsIn) {
         this.gameSettings = gameSettingsIn;
     }
 
-    public void updatePlayerMoveState()
-    {
-        this.moveStrafe = 0.0F;
-        this.moveForward = 0.0F;
+    public void updatePlayerMoveState() {
+        moveStrafe = moveForward = 0.0F;
 
-        if (this.gameSettings.keyBindForward.isKeyDown())
-        {
-            ++this.moveForward;
-            /**
-             *
-             * Auto Sprint (optional)
-             *
-             */
-            AutoSprint autoSprint = new AutoSprint();
+        if (gameSettings.keyBindForward.isKeyDown()) {
+            moveForward++;
             autoSprint.sprint();
         }
 
-        if (this.gameSettings.keyBindBack.isKeyDown())
-        {
-            --this.moveForward;
-        }
+        if (gameSettings.keyBindBack.isKeyDown()) moveForward--;
+        if (gameSettings.keyBindLeft.isKeyDown()) moveStrafe++;
+        if (gameSettings.keyBindRight.isKeyDown()) moveStrafe--;
 
-        if (this.gameSettings.keyBindLeft.isKeyDown())
-        {
-            ++this.moveStrafe;
-        }
+        jump = gameSettings.keyBindJump.isKeyDown();
+        sneak = gameSettings.keyBindSneak.isKeyDown();
 
-        if (this.gameSettings.keyBindRight.isKeyDown())
-        {
-            --this.moveStrafe;
-        }
-
-        this.jump = this.gameSettings.keyBindJump.isKeyDown();
-        this.sneak = this.gameSettings.keyBindSneak.isKeyDown();
-
-        if (this.sneak)
-        {
-            this.moveStrafe = (float)((double)this.moveStrafe * 0.3D);
-            this.moveForward = (float)((double)this.moveForward * 0.3D);
+        if (sneak) {
+            moveStrafe *= 0.3F;
+            moveForward *= 0.3F;
         }
     }
 }
