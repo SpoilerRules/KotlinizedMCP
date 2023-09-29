@@ -2,7 +2,7 @@
   "id": "Evanescent",
   "javaVersion": {
     "component": "java-runtime-gamma",
-    "majorVersion": 17
+    "majorVersion": 21
   },
   "type": "release",
   "libraries": [
@@ -60,9 +60,9 @@
       "name": "io.netty:netty-transport-native-epoll:4.1.98.Final",
       "downloads": {
         "artifact": {
-            "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-native-epoll/4.1.98.Final/netty-transport-native-epoll-4.1.98.Final.jar",
-            "sha1": "b7b5fb43a8cb3b901df27ac31d6ed165760f2fd3",
-            "size": 5661
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-native-epoll/4.1.98.Final/netty-transport-native-epoll-4.1.98.Final.jar",
+          "sha1": "b7b5fb43a8cb3b901df27ac31d6ed165760f2fd3",
+          "size": 5661
         }
       }
     },
@@ -77,12 +77,42 @@
       }
     },
     {
-      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.10",
+      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20-Beta2",
       "downloads": {
         "artifact": {
-          "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.10/kotlin-stdlib-1.9.10.jar",
-          "sha1": "72812e8a368917ab5c0a5081b56915ffdfec93b7",
-          "size": 1708006
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20-Beta2/kotlin-stdlib-1.9.20-Beta2.jar",
+          "sha1": "7ce634622f363f3d927669612e510b8e8be40b78",
+          "size": 1715902
+        }
+      }
+    },
+    {
+      "name": "org.openjfx:javafx-swing:21",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/openjfx/javafx-swing/21/javafx-swing-21.jar",
+          "sha1": "705af0d31c0b9973d6abfe33c4ff960bf0e9bf3a",
+          "size": 303
+        }
+      }
+    },
+    {
+      "name": "org.openjfx:javafx-web:21",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/openjfx/javafx-web/21/javafx-web-21.jar",
+          "sha1": "c1506a67f08d6c3022bdde6f6792b68931112de4",
+          "size": 301
+        }
+      }
+    },
+    {
+      "name": "fr.litarvan:openauth:1.1.6",
+      "downloads": {
+        "artifact": {
+          "url": "https://litarvan.github.io/maven/fr/litarvan/openauth/1.1.6/openauth-1.1.6.jar",
+          "sha1": "b130fd84bc7b844d9ac570c40cd18b0e59b5c43c",
+          "size": 49460
         }
       }
     },
