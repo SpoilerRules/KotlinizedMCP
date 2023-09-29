@@ -3,7 +3,7 @@
  */
 
 plugins {
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.20-Beta2"
     id("java-library")
     id("maven-publish")
     id("application")
@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-Beta2")
 
     // Netty
     implementation("io.netty:netty-handler:4.1.98.Final")
@@ -88,8 +88,8 @@ dependencies {
     api("com.mojang:authlib:1.5.21") // Neutral
 
     // JavaFX
-    implementation("org.openjfx:javafx-swing:17.0.8")
-    implementation("org.openjfx:javafx-web:17.0.8")
+    implementation("org.openjfx:javafx-swing:21")
+    implementation("org.openjfx:javafx-web:21")
 
     // Additional
     implementation("fr.litarvan:openauth:1.1.6")
@@ -101,8 +101,8 @@ dependencies {
 
 group = "spoiligaming"
 
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
 application {
     mainClass.set("net.minecraft.main.Main")
@@ -122,8 +122,7 @@ sourceSets {
 }
 
 javafx {
-    version = "17"
-    modules("javafx.controls", "javafx.fxml")
+    version = "21"
 }
 
 publishing {
@@ -139,12 +138,12 @@ tasks.jar {
         attributes["Main-Class"] = "test.kotlin.Start"
     }
     archiveBaseName.set("Evanescent")
-    exclude("META-INF/**", "natives/**")
+    exclude("META-INF/**")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
