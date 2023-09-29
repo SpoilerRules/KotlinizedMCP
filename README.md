@@ -12,7 +12,7 @@ Evanescent is a Minecraft client project that takes MCP 1.8.9 and rewrites it in
 
 #### JDK Version and Dependencies
 
-Evanescent uses the latest LTS JDK (currently version 17) and keeps dependencies up to date to ensure the best performance and security.
+Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies up to date to ensure the best performance and security.
 
 ## In-built Features
 
