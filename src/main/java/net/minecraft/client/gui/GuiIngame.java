@@ -552,13 +552,13 @@ public class GuiIngame extends Gui
             currentEntry++;
             ScorePlayerTeam playerTeam = scoreboard.getPlayersTeam(score.getPlayerName());
             String playerNameFormatted = ScorePlayerTeam.formatPlayerName(playerTeam, score.getPlayerName());
-            String scoreText = EnumChatFormatting.RED + "" + score.getScorePoints();
+        //    String scoreText = EnumChatFormatting.RED + "" + score.getScorePoints();
             int y = verticalOffset - currentEntry * this.getFontRenderer().FONT_HEIGHT;
             int rightX = scaledRes.getScaledWidth() - horizontalOffset + 2;
 
             drawRect(leftX - 2, y, rightX, y + this.getFontRenderer().FONT_HEIGHT, 1342177280);
             this.getFontRenderer().drawString(playerNameFormatted, leftX, y, 553648127);
-            this.getFontRenderer().drawString(scoreText, rightX - this.getFontRenderer().getStringWidth(scoreText), y, 553648127);
+        //    this.getFontRenderer().drawString(scoreText, rightX - this.getFontRenderer().getStringWidth(scoreText), y, 553648127);
 
             if (currentEntry == sortedScores.size()) {
                 String displayName = objective.getDisplayName();
