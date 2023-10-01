@@ -1,35 +1,54 @@
 package net.minecraft.client.gui.mainMenuGui.microsoftLogin
 
+import java.awt.Desktop
+import java.net.Proxy
+import java.net.URI
+
 import com.mojang.authlib.Agent
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
-import fr.litarvan.openauth.microsoft.MicrosoftAuthResult
-import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator
+
+import net.minecraft.client.Minecraft
 import net.minecraft.util.Session
+
+import me.liuli.elixir.account.MicrosoftAccount
+import me.liuli.elixir.compat.OAuthServer
+
 import org.apache.logging.log4j.LogManager
-import java.net.Proxy
 
 class LoginHandler {
-    private val microsoftAuthenticator = MicrosoftAuthenticator()
-    private val authResult = microsoftAuthenticator.loginWithWebview()
+    private lateinit var authServer: OAuthServer
     private val log = LogManager.getLogger()
+    private val mc: Minecraft = Minecraft.getMinecraft()
 
-    fun initiateLogin() = authResult?.let { setSession(it) }
+    fun initiateLogin() = setSession()
 
-    private fun setSession(authenticationResult: MicrosoftAuthResult): Session {
-        val minecraftProfile = authenticationResult.profile
-        val userSession = Session(minecraftProfile.name, minecraftProfile.id, authenticationResult.accessToken, "microsoft")
+    private fun setSession() {
         val userAuthentication =
             YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT)
 
-        userAuthentication.setUsername(minecraftProfile.name)
+        authServer = MicrosoftAccount.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
+            override fun openUrl(url: String) =
+                Desktop.getDesktop().run {
+                    if (isSupported(Desktop.Action.BROWSE)) browse(URI(url))
+                    else log.error("Opening URL is not supported.")
+                }
 
-        log.info("Profile Name: ${minecraftProfile.name}")
-        log.info("Profile ID: ${minecraftProfile.id}")
-        log.info("Access Token: ${authenticationResult.accessToken}")
-        log.info("User Session created: $userSession")
-        log.info("User Authentication Profile: $userAuthentication")
-        log.info("Successful Login")
+            override fun authResult(account: MicrosoftAccount) {
+                userAuthentication.setUsername(account.session.username)
 
-        return userSession
+                mc.sessionSet(
+                    Session(
+                        account.session.username,
+                        account.session.uuid,
+                        account.session.token,
+                        "microsoft"
+                    )
+                )
+
+                log.info("Authentication successful for user: ${account.session.username}")
+            }
+
+            override fun authError(error: String) = log.error("Authentication error: $error")
+        })
     }
 }

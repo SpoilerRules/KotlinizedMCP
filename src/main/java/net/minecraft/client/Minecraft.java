@@ -294,7 +294,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         Bootstrap.register();
     }
 
-    public void setSession(Session session) {
+    public void sessionSet(Session session) {
         this.session = session;
     }
 
@@ -2409,14 +2409,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     } else if (i == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                         this.toggleFullscreen();
                     } else if (i == this.gameSettings.keyBindScreenshot.getKeyCode()) {
-                        ScreenshotHelper screenshotHelper = new ScreenshotHelper();
-                        IChatComponent chatComponent = screenshotHelper.screenshotRequest(
-                                this.mcDataDir,
-                                this.displayWidth,
-                                this.displayHeight,
-                                this.framebufferMc
-                        );
-
+                        this.ingameGUI.getChatGUI().printChatMessage(ScreenshotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
                     }
                 } else if (i == this.gameSettings.keyBindStreamToggleMic.getKeyCode()) {
                     this.stream.muteMicrophone(false);

@@ -346,37 +346,28 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
      * @param serverPort The server port
      * @param useNativeTransport True if the client use the native transport system
      */
-    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport)
-    {
+    public static NetworkManager createNetworkManagerAndConnect(InetAddress address, int serverPort, boolean useNativeTransport) {
         final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
-        Class <? extends SocketChannel > oclass;
-        LazyLoadBase <? extends EventLoopGroup > lazyloadbase;
+        Class<? extends SocketChannel> oclass;
+        LazyLoadBase<? extends EventLoopGroup> lazyloadbase;
 
-        if (Epoll.isAvailable() && useNativeTransport)
-        {
+        if (Epoll.isAvailable() && useNativeTransport) {
             oclass = EpollSocketChannel.class;
             lazyloadbase = CLIENT_EPOLL_EVENTLOOP;
-        }
-        else
-        {
+        } else {
             oclass = NioSocketChannel.class;
             lazyloadbase = CLIENT_NIO_EVENTLOOP;
         }
 
-        ((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group((EventLoopGroup)lazyloadbase.getValue())).handler(new ChannelInitializer<Channel>()
-        {
-            protected void initChannel(Channel p_initChannel_1_) throws Exception
-            {
-                try
-                {
+        ((Bootstrap) ((Bootstrap) ((Bootstrap) (new Bootstrap()).group((EventLoopGroup) lazyloadbase.getValue())).handler(new ChannelInitializer<Channel>() {
+            protected void initChannel(Channel p_initChannel_1_) throws Exception {
+                try {
                     p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
-                }
-                catch (ChannelException var3)
-                {
+                } catch (ChannelException var3) {
                     ;
                 }
 
-                p_initChannel_1_.pipeline().addLast((String)"timeout", (ChannelHandler)(new ReadTimeoutHandler(30))).addLast((String)"splitter", (ChannelHandler)(new MessageDeserializer2())).addLast((String)"decoder", (ChannelHandler)(new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String)"prepender", (ChannelHandler)(new MessageSerializer2())).addLast((String)"encoder", (ChannelHandler)(new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String)"packet_handler", (ChannelHandler)networkmanager);
+                p_initChannel_1_.pipeline().addLast((String) "timeout", (ChannelHandler) (new ReadTimeoutHandler(30))).addLast((String) "splitter", (ChannelHandler) (new MessageDeserializer2())).addLast((String) "decoder", (ChannelHandler) (new MessageDeserializer(EnumPacketDirection.CLIENTBOUND))).addLast((String) "prepender", (ChannelHandler) (new MessageSerializer2())).addLast((String) "encoder", (ChannelHandler) (new MessageSerializer(EnumPacketDirection.SERVERBOUND))).addLast((String) "packet_handler", (ChannelHandler) networkmanager);
             }
         })).channel(oclass)).connect(address, serverPort).syncUninterruptibly();
         return networkmanager;

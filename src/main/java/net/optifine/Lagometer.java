@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.src.Config;
+import net.minecraft.util.Session;
 import net.optifine.util.MemoryMonitor;
 import org.lwjgl.opengl.GL11;
 

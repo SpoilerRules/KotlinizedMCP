@@ -16,10 +16,12 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Session;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
 import net.optifine.CustomPanorama;
 import net.optifine.CustomPanoramaProperties;
+import net.optifine.Log;
 import net.optifine.reflect.Reflector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -226,7 +228,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.mc.displayGuiScreen((GuiScreen) Reflector.newInstance(Reflector.GuiModList_Constructor, new Object[]{this}));
         }
 
-        if (button.id == 14 && mLoginButton.visible) mc.setSession(new LoginHandler().initiateLogin());
+        if (button.id == 14 && mLoginButton.visible) new LoginHandler().initiateLogin();
     }
 
     public void confirmClicked(boolean result, int id) {
