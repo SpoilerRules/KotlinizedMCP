@@ -16,6 +16,7 @@ Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies
 
 ## In-built Features
 
+- ✅ Removed red numbers on the right side of the scoreboard.
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed hit delay.
 - ✅ Command detection is case-insensitive.
