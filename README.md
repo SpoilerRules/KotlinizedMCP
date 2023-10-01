@@ -35,7 +35,7 @@ Yes, you can use any JVM languages to work on Evanescent. However, please note t
 
 ## In-built Features
 
-- ✅ Removed red numbers on the right side of the scoreboard.
+- ✅ Removed score display on the right side of the scoreboard.
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed hit delay.
 - ✅ Command detection is case-insensitive.
@@ -45,7 +45,6 @@ Yes, you can use any JVM languages to work on Evanescent. However, please note t
 ## Pending In-built Features
 
 - ❌ Removed Twitch Broadcast support.
-- ❌ Removed score display on the right side of the scoreboard.
 - ❌ Implemented raw input.
 
 ## Why the Name "Evanescent"?
