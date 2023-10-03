@@ -26,7 +26,7 @@ class LoginHandler {
         val userAuthentication =
             YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT)
 
-        authServer = MicrosoftAccount.buildFromOpenBrowser(object : MicrosoftAccount.OAuthHandler {
+        authServer = MicrosoftAccount.buildFromOpenBrowser(object: MicrosoftAccount.OAuthHandler {
             override fun openUrl(url: String) =
                 Desktop.getDesktop().run {
                     if (isSupported(Desktop.Action.BROWSE)) browse(URI(url))
@@ -48,7 +48,7 @@ class LoginHandler {
                 log.info("Authentication successful for user: ${account.session.username}")
             }
 
-            override fun authError(error: String) = log.error("Authentication error: $error")
+            override fun authError(error: String) = log.error("Microsoft authentication error: $error")
         })
     }
 }

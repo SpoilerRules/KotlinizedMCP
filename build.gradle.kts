@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "1.9.20-Beta2"
-    id("application")
     id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
@@ -79,7 +78,7 @@ dependencies {
     implementation("com.paulscode.sound:librarylwjglopenal:20100824")
 
     // Mojang
-    api("com.ibm.icu:icu4j:51.2") // Neutral
+    implementation("com.ibm.icu:icu4j:51.2") // Neutral
 
     api("com.mojang:authlib:1.5.21") // Neutral
 
@@ -89,7 +88,7 @@ dependencies {
         exclude(group = "com.mojang", module = "authlib")
     }
 
-    // Testing
+    // Testing (useless for now)
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -98,10 +97,6 @@ group = "spoiligaming"
 
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
-
-application {
-    mainClass.set("net.minecraft.main.Main")
-}
 
 sourceSets {
     getByName("main") {
@@ -134,7 +129,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.compilerArgs.addAll(listOf("-Xlint:deprecation"/*, "-Xlint:unchecked"*/))
+    options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
 }
 
 tasks.withType<Javadoc> {

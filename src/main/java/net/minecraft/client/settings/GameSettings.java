@@ -98,7 +98,7 @@ public class GameSettings {
     public float chatOpacity = 1.0F;
     public boolean snooperEnabled = true;
     public boolean fullScreen;
-    public boolean enableVsync = true;
+    public boolean enableVsync = false;
     public boolean useVbo = false;
     public boolean allowBlockAlternatives = true;
     public boolean reducedDebugInfo = false;

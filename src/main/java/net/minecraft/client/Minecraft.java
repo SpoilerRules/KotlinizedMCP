@@ -2409,7 +2409,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     } else if (i == this.gameSettings.keyBindFullscreen.getKeyCode()) {
                         this.toggleFullscreen();
                     } else if (i == this.gameSettings.keyBindScreenshot.getKeyCode()) {
-                        this.ingameGUI.getChatGUI().printChatMessage(ScreenshotHelper.saveScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
+                        this.ingameGUI.getChatGUI().printChatMessage(ScreenshotHandler.takeScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
                     }
                 } else if (i == this.gameSettings.keyBindStreamToggleMic.getKeyCode()) {
                     this.stream.muteMicrophone(false);
