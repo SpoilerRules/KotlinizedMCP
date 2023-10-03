@@ -10,8 +10,8 @@
 - [Introduction](#introduction)
 - [JDK Version and Dependencies](#jdk-version-and-dependencies)
 - [Frequently Asked Questions](#frequently-asked-questions)
-- [In-built Features](#in-built-features)
-- [Pending In-built Features](#pending-in-built-features)
+- [Built-in Features](#built-in-features)
+- [Pending Built-in Features](#pending-built-in-features)
 - [Why the Name "Evanescent"?](#why-the-name-evanescent)
 - [Community](#community)
 - [Contributions](#contributions)
@@ -27,13 +27,20 @@ Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies
 
 ## Frequently Asked Questions
 
+#### Is Evanescent (KotlinizedMCP) designed for me to create my Minecraft 1.8.9 client, similar to a typical decompiled MCP 1.8.9?
+Absolutely! This project is created to aid client developers by providing a user-friendly template. You should consider using Evanescent, also known as KotlinizedMCP, for the following reasons:
+- Aims to always use the latest dependencies and support the latest LTS JDK.
+- Uses Gradle (Kotlin Script DSL) to simplify setting up dependencies, compiling, and customizing the project, making your development experience smoother.
+- Majority of classes being rewritten in Kotlin/JVM to enhance performance, readability, and maintainability while utilizing modern features of Java and Kotlin/JVM.
+- Includes built-in features such as in-game Microsoft Login, removal of support for outdated features like Minecraft Realms, integration with OptiFine, and more. Check out the full list of built-in features in the [Built-in Features](#built-in-features) section.
+
 #### Is Evanescent (KotlinizedMCP) based on decompiled MCP 1.8.9?
 Yes, Evanescent, also known as KotlinizedMCP, is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
 
 #### Can I use other JVM languages, such as Scala, for development?
 Yes, you can use any JVM languages to work on Evanescent. However, please note that we primarily accept contributions in Kotlin/JVM, as this project is named "KotlinizedMCP".
 
-## In-built Features
+## Built-in Features
 
 - ✅ Removed score display on the right side of the scoreboard.
 - ✅ Removed Minecraft Realms support.
@@ -42,7 +49,7 @@ Yes, you can use any JVM languages to work on Evanescent. However, please note t
 - ✅ Simple Microsoft login in-game.
 - ✅ Simple Automatic Sprint feature.
 
-## Pending In-built Features
+## Pending Built-in Features
 
 - ❌ Removed Twitch Broadcast support.
 - ❌ Implemented raw input.
@@ -58,6 +65,8 @@ Join the discussion, connect with fellow developers, and ask for help or support
 ## Contributions
 
 Contributions are greatly appreciated and mainly accepted in Kotlin/JVM. Feel free to contribute to the project and help make it even better!
+
+If you are interested in actively contributing and have already made at least one contribution, we encourage you to join our [Discord server](https://discord.gg/nG9UzMGa7k) and request the "Contributor" role. Ensure that your GitHub account is linked to your Discord profile. Finally, you need to visit [this channel](https://discord.com/channels/1153066699453636680/1153415081946783805) to access information about our goals, schedules, and other relevant details. This will help you stay updated and aligned with our project's policies, which may affect the acceptance of your contributions.
 
 ## License
 
