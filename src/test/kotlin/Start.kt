@@ -16,6 +16,7 @@ object Start {
             "--version", "Evanescent",
             "--assetsDir", "assets",
             "--assetIndex", "1.8",
+            "--gameDir", System.getProperty("user.dir"),
             "--uuid", "41cdf1dc-19cd-460e-92d8-5e5dd13848ad",
             "--accessToken", "0",
             "--userProperties", "{}",
