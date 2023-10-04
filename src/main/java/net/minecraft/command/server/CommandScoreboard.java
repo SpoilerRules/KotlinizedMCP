@@ -564,15 +564,13 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void removeTeam(ICommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_) throws CommandException
-    {
+    protected void removeTeam(ICommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_) throws CommandException {
         Scoreboard scoreboard = this.getScoreboard();
         ScorePlayerTeam scoreplayerteam = this.getTeam(p_147194_2_[p_147194_3_]);
 
-        if (scoreplayerteam != null)
-        {
+        if (scoreplayerteam != null) {
             scoreboard.removeTeam(scoreplayerteam);
-            notifyOperators(p_147194_1_, this, "commands.scoreboard.teams.remove.success", new Object[] {scoreplayerteam.getRegisteredName()});
+            notifyOperators(p_147194_1_, this, "commands.scoreboard.teams.remove.success", new Object[]{scoreplayerteam.getRegisteredName()});
         }
     }
 

@@ -527,44 +527,58 @@ public class GuiIngame extends Gui
     }
 
     /** Removed annoying red numbers by default. */
-    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
+    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes)
+    {
         Scoreboard scoreboard = objective.getScoreboard();
-        List<Score> sortedScores = scoreboard.getSortedScores(objective)
-                .stream()
-                .filter(score -> score.getPlayerName() != null && !score.getPlayerName().startsWith("#"))
-                .collect(Collectors.toList());
+        Collection<Score> collection = scoreboard.getSortedScores(objective);
+        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>()
+        {
+            public boolean apply(Score p_apply_1_)
+            {
+                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
+            }
+        }));
 
-        if (sortedScores.size() > 15) {
-            sortedScores = sortedScores.subList(sortedScores.size() - 15, sortedScores.size());
+        if (list.size() > 15)
+        {
+            collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
+        }
+        else
+        {
+            collection = list;
         }
 
-        int maxDisplayNameWidth = sortedScores.stream()
-                .mapToInt(score -> this.getFontRenderer().getStringWidth(ScorePlayerTeam.formatPlayerName(scoreboard.getPlayersTeam(score.getPlayerName()), score.getPlayerName())))
-                .max()
-                .orElse(0);
+        int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
 
-        int verticalOffset = scaledRes.getScaledHeight() / 2 + sortedScores.size() * this.getFontRenderer().FONT_HEIGHT / 3;
-        int horizontalOffset = 3;
-        int leftX = scaledRes.getScaledWidth() - maxDisplayNameWidth - horizontalOffset;
-        int currentEntry = 0;
+        for (Score score : collection)
+        {
+            ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
+            String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
+            i = Math.max(i, this.getFontRenderer().getStringWidth(s));
+        }
 
-        for (Score score : sortedScores) {
-            currentEntry++;
-            ScorePlayerTeam playerTeam = scoreboard.getPlayersTeam(score.getPlayerName());
-            String playerNameFormatted = ScorePlayerTeam.formatPlayerName(playerTeam, score.getPlayerName());
-        //    String scoreText = EnumChatFormatting.RED + "" + score.getScorePoints();
-            int y = verticalOffset - currentEntry * this.getFontRenderer().FONT_HEIGHT;
-            int rightX = scaledRes.getScaledWidth() - horizontalOffset + 2;
+        int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
+        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
+        int k1 = 3;
+        int l1 = scaledRes.getScaledWidth() - i - k1;
+        int j = 0;
 
-            drawRect(leftX - 2, y, rightX, y + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            this.getFontRenderer().drawString(playerNameFormatted, leftX, y, 553648127);
-        //    this.getFontRenderer().drawString(scoreText, rightX - this.getFontRenderer().getStringWidth(scoreText), y, 553648127);
+        for (Score score1 : collection)
+        {
+            ++j;
+            ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
+            String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
+            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
+            int l = scaledRes.getScaledWidth() - k1 + 2;
+            drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
+            this.getFontRenderer().drawString(s1, l1, k, 553648127);
 
-            if (currentEntry == sortedScores.size()) {
-                String displayName = objective.getDisplayName();
-                drawRect(leftX - 2, y - this.getFontRenderer().FONT_HEIGHT - 1, rightX, y - 1, 1610612736);
-                drawRect(leftX - 2, y - 1, rightX, y, 1342177280);
-                this.getFontRenderer().drawString(displayName, leftX + maxDisplayNameWidth / 2 - this.getFontRenderer().getStringWidth(displayName) / 2, y - this.getFontRenderer().FONT_HEIGHT, 553648127);
+            if (j == collection.size())
+            {
+                String s3 = objective.getDisplayName();
+                drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
+                drawRect(l1 - 2, k - 1, l, k, 1342177280);
+                this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
             }
         }
     }

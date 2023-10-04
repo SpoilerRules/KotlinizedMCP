@@ -1286,7 +1286,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
             }
         }
 
-        if (packetIn.getAction() == 1) {
+        if (packetIn.getAction() == 1 && scoreplayerteam != null) {
             scoreboard.removeTeam(scoreplayerteam);
         }
     }

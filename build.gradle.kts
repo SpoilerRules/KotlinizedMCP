@@ -1,14 +1,10 @@
 plugins {
     kotlin("jvm") version "1.9.20-Beta2"
-    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
     mavenCentral()
     maven("https://repo.marcloud.net/")
-    maven("https://repo.maven.apache.org/maven2/")
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    maven("https://litarvan.github.io/maven")
     maven("https://jitpack.io")
 }
 
@@ -54,7 +50,7 @@ dependencies {
     implementation("net.java.dev.jna:jna-platform:5.13.0") // Latest as of 2023 August 22
 
     // Logging
-    implementation("commons-logging:commons-logging:1.2") // Latest as of 2023 August 22
+   // implementation("commons-logging:commons-logging:1.2") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of 2023 August 22
     implementation("org.apache.logging.log4j:log4j-api:2.20.0") // Latest as of 2023 August 22
     implementation("org.apache.logging.log4j:log4j-core:2.20.0") // Latest as of 2023 August 22
@@ -93,11 +89,6 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-group = "spoiligaming"
-
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
-
 sourceSets {
     getByName("main") {
         kotlin {
@@ -111,25 +102,23 @@ sourceSets {
     }
 }
 
-javafx {
-    version = "21"
-}
+group = "spoiligaming"
+
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
 tasks.jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+/*  ↓  To change the name of the JAR file, modify the string below. ←  */
+    //                     ↓ ↓ ↓
     archiveBaseName.set("Evanescent")
-    exclude("META-INF/**")
-}
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "21"
-    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude("META-INF/**")
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
+  //  options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
 }
 
 tasks.withType<Javadoc> {

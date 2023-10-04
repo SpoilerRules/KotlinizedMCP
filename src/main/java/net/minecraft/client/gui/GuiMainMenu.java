@@ -228,7 +228,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.mc.displayGuiScreen((GuiScreen) Reflector.newInstance(Reflector.GuiModList_Constructor, new Object[]{this}));
         }
 
-        if (button.id == 14 && mLoginButton.visible) new LoginHandler().initiateLogin();
+        if (button.id == 14 && mLoginButton.visible) {
+            new LoginHandler(isShiftKeyDown()).initiateLogin();
+        }
     }
 
     public void confirmClicked(boolean result, int id) {
