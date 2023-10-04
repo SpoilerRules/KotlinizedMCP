@@ -77,6 +77,26 @@
       }
     },
     {
+      "name": "io.netty:netty-transport-native-unix-common:4.1.99.Final",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-native-unix-common/4.1.99.Final/netty-transport-native-unix-common-4.1.99.Final.jar",
+          "sha1": "cb0fc6c31c387404212949c57950b5d72ce908b9",
+          "size": 43968
+        }
+      }
+    },
+    {
+      "name": "io.netty:netty-transport-classes-epoll:4.1.99.Final",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/io/netty/netty-transport-classes-epoll/4.1.99.Final/netty-transport-classes-epoll-4.1.99.Final.jar",
+          "sha1": "961bd5b8d97ea6a07168176462f398089a24b5c8",
+          "size": 147138
+        }
+      }
+    },
+    {
       "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20-Beta2",
       "downloads": {
         "artifact": {
@@ -87,35 +107,31 @@
       }
     },
     {
-      "name": "org.openjfx:javafx-swing:21",
+      "name": "com.github.CCBlueX:Elixir:1.2.6",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/openjfx/javafx-swing/21/javafx-swing-21.jar",
-          "sha1": "705af0d31c0b9973d6abfe33c4ff960bf0e9bf3a",
-          "size": 303
+          "url": "https://jitpack.io/com/github/CCBlueX/Elixir/1.2.6/Elixir-1.2.6.jar",
+          "sha1": "7f3fae12c1311c11652a955272fbc9e9d67546bd",
+          "size": 35341
         }
-      }
-    },
-    {
-      "name": "org.openjfx:javafx-web:21",
-      "downloads": {
-        "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/openjfx/javafx-web/21/javafx-web-21.jar",
-          "sha1": "c1506a67f08d6c3022bdde6f6792b68931112de4",
-          "size": 301
+      },
+      "rules": [
+        {
+          "extract": {
+            "exclude": [
+              {
+                "group": "org.jetbrains.kotlin",
+                "module": "kotlin-stdlib"
+              },
+              {
+                "group": "com.mojang",
+                "module": "authlib"
+              }
+            ]
+          }
         }
-      }
-    },
-    {
-      "name": "fr.litarvan:openauth:1.1.6",
-      "downloads": {
-        "artifact": {
-          "url": "https://litarvan.github.io/maven/fr/litarvan/openauth/1.1.6/openauth-1.1.6.jar",
-          "sha1": "b130fd84bc7b844d9ac570c40cd18b0e59b5c43c",
-          "size": 49460
-        }
-      }
-    },
+      ]
+    },    
     {
       "name": "com.google.guava:failureaccess:1.0.1",
       "downloads": {
@@ -389,16 +405,6 @@
           "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/5.13.0/jna-platform-5.13.0.jar",
           "sha1": "88e9a306715e9379f3122415ef4ae759a352640d",
           "size": 1363209
-        }
-      }
-    },
-    {
-      "name": "commons-logging:commons-logging:1.2",
-      "downloads": {
-        "artifact": {
-          "url": "https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar",
-          "sha1": "4bfc12adfe4842bf07b657f0369c4cb522955686",
-          "size": 61829
         }
       }
     },
