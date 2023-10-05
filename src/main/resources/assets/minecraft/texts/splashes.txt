@@ -164,6 +164,7 @@ Regional resources!
 Woo, facepunch!
 Woo, somethingawful!
 Woo, tigsource!
+This client is actually kotlinized!
 Woo, worldofminecraft!
 Woo, reddit!
 Woo, 2pp!
