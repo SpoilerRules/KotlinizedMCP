@@ -38,7 +38,7 @@ Absolutely! This project is created to aid client developers by providing a user
 Yes, Evanescent, also known as KotlinizedMCP, is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
 
 #### Can I use other JVM languages, such as Scala, for development?
-Yes, you can use any JVM languages to work on Evanescent. However, please note that we primarily accept contributions in Kotlin/JVM, as this project is named "KotlinizedMCP".
+Yes, you can use any JVM languages to work on Evanescent. Please be aware that our primary focus for contributions is in Kotlin/JVM, given the project's name, "KotlinizedMCP". You can find further details on contributing to the project in the [Contributions](#contributions) section.
 
 ## Built-in Features
 
