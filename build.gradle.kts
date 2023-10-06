@@ -121,6 +121,11 @@ tasks.withType<JavaCompile> {
   //  options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
 }
 
+tasks.withType<JavaExec> {
+    val osType = if (System.getProperty("os.name").lowercase().contains("windows")) "windows" else "linux"
+    systemProperty("java.library.path", "../test_natives/$osType")
+}
+
 tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
 }
