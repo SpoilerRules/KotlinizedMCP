@@ -1,7 +1,5 @@
 package net.minecraft.util;
 
-import org.apache.commons.lang3.Validate;
-
 import java.util.Objects;
 
 public class ResourceLocation
@@ -26,24 +24,21 @@ public class ResourceLocation
 
     /**
      * Splits an object name (such as minecraft:apple) into the domain and path parts and returns these as an array of
-     * length 2. If no colon is present in the passed value the returned array will contain {null, toSplit}.
+     * length 2. If no colon is present in the passed value, the returned array will contain {null, objectName}.
      */
-    protected static String[] splitObjectName(String toSplit)
-    {
-        String[] astring = new String[] {null, toSplit};
-        int i = toSplit.indexOf(58);
+    protected static String[] splitObjectName(String objectName) {
+        String[] objectParts = {null, objectName};
+        int delimiterIndex = objectName.indexOf(":");
 
-        if (i >= 0)
-        {
-            astring[1] = toSplit.substring(i + 1);
+        if (delimiterIndex >= 0) {
+            objectParts[1] = objectName.substring(delimiterIndex + 1);
 
-            if (i > 1)
-            {
-                astring[0] = toSplit.substring(0, i);
+            if (delimiterIndex > 1) {
+                objectParts[0] = objectName.substring(0, delimiterIndex);
             }
         }
 
-        return astring;
+        return objectParts;
     }
 
     public String getResourcePath()

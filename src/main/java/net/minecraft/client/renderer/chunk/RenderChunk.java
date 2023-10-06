@@ -704,10 +704,8 @@ public class RenderChunk
         return this.getBoundingBoxParent().isBoundingBoxInFrustumFully(p_isBoundingBoxInFrustum_1_, p_isBoundingBoxInFrustum_2_) || p_isBoundingBoxInFrustum_1_.isBoundingBoxInFrustum(this.boundingBox);
     }
 
-    public AabbFrame getBoundingBoxParent()
-    {
-        if (this.boundingBoxParent == null)
-        {
+    public AabbFrame getBoundingBoxParent() {
+        if (this.boundingBoxParent == null) {
             BlockPos blockpos = this.getPosition();
             int i = blockpos.getX();
             int j = blockpos.getY();
@@ -717,20 +715,17 @@ public class RenderChunk
             int j1 = j >> l << l;
             int k1 = k >> l << l;
 
-            if (i1 != i || j1 != j || k1 != k)
-            {
+            if (i1 != i || j1 != j || k1 != k) {
                 AabbFrame aabbframe = this.renderGlobal.getRenderChunk(new BlockPos(i1, j1, k1)).getBoundingBoxParent();
 
-                if (aabbframe != null && aabbframe.minX == (double)i1 && aabbframe.minY == (double)j1 && aabbframe.minZ == (double)k1)
-                {
+                if (aabbframe != null && aabbframe.minX == (double) i1 && aabbframe.minY == (double) j1 && aabbframe.minZ == (double) k1) {
                     this.boundingBoxParent = aabbframe;
                 }
             }
 
-            if (this.boundingBoxParent == null)
-            {
+            if (this.boundingBoxParent == null) {
                 int l1 = 1 << l;
-                this.boundingBoxParent = new AabbFrame((double)i1, (double)j1, (double)k1, (double)(i1 + l1), (double)(j1 + l1), (double)(k1 + l1));
+                this.boundingBoxParent = new AabbFrame(i1, j1, k1, i1 + l1, j1 + l1, k1 + l1);
             }
         }
 

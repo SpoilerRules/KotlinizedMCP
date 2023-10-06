@@ -18,7 +18,7 @@ public class PlayerUsageSnooper
     private final Map<String, Object> snooperStats = Maps.<String, Object>newHashMap();
     private final Map<String, Object> clientStats = Maps.<String, Object>newHashMap();
     private final String uniqueID = UUID.randomUUID().toString();
-    private final URL serverUrl;
+  //  private final URL serverUrl;
     private final IPlayerUsage playerStatsCollector;
     private final Timer threadTrigger = new Timer("Snooper Timer", true);
     private final Object syncLock = new Object();
@@ -26,16 +26,13 @@ public class PlayerUsageSnooper
     private boolean isRunning;
     private int selfCounter;
 
-    public PlayerUsageSnooper(String side, IPlayerUsage playerStatCollector, long startTime)
-    {
-        try
-        {
+    public PlayerUsageSnooper(String side, IPlayerUsage playerStatCollector, long startTime) {
+        // no more snooper
+    /*    try {
             this.serverUrl = new URL("http://snoop.minecraft.net/" + side + "?version=" + 2);
-        }
-        catch (MalformedURLException var6)
-        {
+        } catch (MalformedURLException var6) {
             throw new IllegalArgumentException();
-        }
+        }*/
 
         this.playerStatsCollector = playerStatCollector;
         this.minecraftStartTimeMilis = startTime;
@@ -68,7 +65,7 @@ public class PlayerUsageSnooper
                             map.put("snooper_token", PlayerUsageSnooper.this.uniqueID);
                         }
 
-                        HttpUtil.postMap(PlayerUsageSnooper.this.serverUrl, map, true);
+                      //  HttpUtil.postMap(PlayerUsageSnooper.this.serverUrl, map, true);
                     }
                 }
             }, 0L, 900000L);

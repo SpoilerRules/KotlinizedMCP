@@ -1,11 +1,11 @@
 package net.minecraft.scoreboard;
 
+import annotations.QuicklyFixed;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumChatFormatting;
@@ -34,7 +34,7 @@ public class Scoreboard {
                 throw new IllegalArgumentException("An objective with the name '" + name + "' already exists!");
             } else {
                 scoreobjective = new ScoreObjective(this, name, criteria);
-                List<ScoreObjective> list = (List) this.scoreObjectiveCriterias.get(criteria);
+                List<ScoreObjective> list = this.scoreObjectiveCriterias.get(criteria);
 
                 if (list == null) {
                     list = Lists.newArrayList();
@@ -50,12 +50,12 @@ public class Scoreboard {
     }
 
     public Collection<ScoreObjective> getObjectivesFromCriteria(IScoreObjectiveCriteria criteria) {
-        Collection<ScoreObjective> collection = (Collection) this.scoreObjectiveCriterias.get(criteria);
+        Collection<ScoreObjective> collection = this.scoreObjectiveCriterias.get(criteria);
         return collection == null ? Lists.newArrayList() : Lists.newArrayList(collection);
     }
 
     public boolean entityHasObjective(String name, ScoreObjective p_178819_2_) {
-        Map<ScoreObjective, Score> map = (Map) this.entitiesScoreObjectives.get(name);
+        Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.get(name);
 
         if (map == null) {
             return false;
@@ -69,14 +69,14 @@ public class Scoreboard {
         if (name.length() > 40) {
             throw new IllegalArgumentException("The player name '" + name + "' is too long!");
         } else {
-            Map<ScoreObjective, Score> map = (Map) this.entitiesScoreObjectives.get(name);
+            Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.get(name);
 
             if (map == null) {
-                map = Maps.<ScoreObjective, Score>newHashMap();
+                map = Maps.newHashMap();
                 this.entitiesScoreObjectives.put(name, map);
             }
 
-            Score score = (Score) map.get(objective);
+            Score score = map.get(objective);
 
             if (score == null) {
                 score = new Score(this, objective, name);
@@ -88,10 +88,10 @@ public class Scoreboard {
     }
 
     public Collection<Score> getSortedScores(ScoreObjective objective) {
-        List<Score> list = Lists.<Score>newArrayList();
+        List<Score> list = Lists.newArrayList();
 
         for (Map<ScoreObjective, Score> map : this.entitiesScoreObjectives.values()) {
-            Score score = (Score) map.get(objective);
+            Score score = map.get(objective);
 
             if (score != null) {
                 list.add(score);
@@ -112,19 +112,19 @@ public class Scoreboard {
 
     public void removeObjectiveFromEntity(String name, ScoreObjective objective) {
         if (objective == null) {
-            Map<ScoreObjective, Score> map = (Map) this.entitiesScoreObjectives.remove(name);
+            Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.remove(name);
 
             if (map != null) {
                 this.func_96516_a(name);
             }
         } else {
-            Map<ScoreObjective, Score> map2 = (Map) this.entitiesScoreObjectives.get(name);
+            Map<ScoreObjective, Score> map2 = this.entitiesScoreObjectives.get(name);
 
             if (map2 != null) {
-                Score score = (Score) map2.remove(objective);
+                Score score = map2.remove(objective);
 
                 if (map2.size() < 1) {
-                    Map<ScoreObjective, Score> map1 = (Map) this.entitiesScoreObjectives.remove(name);
+                    Map<ScoreObjective, Score> map1 = this.entitiesScoreObjectives.remove(name);
 
                     if (map1 != null) {
                         this.func_96516_a(name);
@@ -138,7 +138,7 @@ public class Scoreboard {
 
     public Collection<Score> getScores() {
         Collection<Map<ScoreObjective, Score>> collection = this.entitiesScoreObjectives.values();
-        List<Score> list = Lists.<Score>newArrayList();
+        List<Score> list = Lists.newArrayList();
 
         for (Map<ScoreObjective, Score> map : collection) {
             list.addAll(map.values());
@@ -148,25 +148,26 @@ public class Scoreboard {
     }
 
     public Map<ScoreObjective, Score> getObjectivesForEntity(String name) {
-        Map<ScoreObjective, Score> map = (Map) this.entitiesScoreObjectives.get(name);
+        Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.get(name);
 
         if (map == null) {
-            map = Maps.<ScoreObjective, Score>newHashMap();
+            map = Maps.newHashMap();
         }
 
         return map;
     }
 
+    @QuicklyFixed
     public void removeObjective(ScoreObjective p_96519_1_) {
-        this.scoreObjectives.remove(p_96519_1_.getName());
+        if (p_96519_1_ != null) this.scoreObjectives.remove(p_96519_1_.getName()); // <- quickly fixed part (added null check)
 
         for (int i = 0; i < 19; ++i) {
             if (this.getObjectiveInDisplaySlot(i) == p_96519_1_) {
-                this.setObjectiveInDisplaySlot(i, (ScoreObjective) null);
+                this.setObjectiveInDisplaySlot(i, null);
             }
         }
 
-        List<ScoreObjective> list = (List) this.scoreObjectiveCriterias.get(p_96519_1_.getCriteria());
+        List<ScoreObjective> list = this.scoreObjectiveCriterias.get(Objects.requireNonNull(p_96519_1_).getCriteria());  // <- quickly fixed part (added requireNonNull)
 
         if (list != null) {
             list.remove(p_96519_1_);
@@ -188,17 +189,17 @@ public class Scoreboard {
     }
 
     public ScorePlayerTeam getTeam(String p_96508_1_) {
-        return (ScorePlayerTeam) this.teams.get(p_96508_1_);
+        return this.teams.get(p_96508_1_);
     }
 
     public ScorePlayerTeam createTeam(String name) {
         if (name.length() > 16) {
-            throw new IllegalArgumentException("The team name \'" + name + "\' is too long!");
+            throw new IllegalArgumentException("The team name '" + name + "' is too long!");
         } else {
             ScorePlayerTeam scoreplayerteam = this.getTeam(name);
 
             if (scoreplayerteam != null) {
-                throw new IllegalArgumentException("A team with the name \'" + name + "\' already exists!");
+                throw new IllegalArgumentException("A team with the name '" + name + "' already exists!");
             } else {
                 scoreplayerteam = new ScorePlayerTeam(this, name);
                 this.teams.put(name, scoreplayerteam);
@@ -220,7 +221,7 @@ public class Scoreboard {
 
     public boolean addPlayerToTeam(String player, String newTeam) {
         if (player.length() > 40) {
-            throw new IllegalArgumentException("The player name \'" + player + "\' is too long!");
+            throw new IllegalArgumentException("The player name '" + player + "' is too long!");
         } else if (!this.teams.containsKey(newTeam)) {
             return false;
         } else {

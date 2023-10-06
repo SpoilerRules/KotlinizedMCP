@@ -188,7 +188,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     private List renderInfosTileEntitiesShadow = new ArrayList(1024);
     private int renderDistance = 0;
     private int renderDistanceSq = 0;
-    private static final Set SET_ALL_FACINGS = Collections.unmodifiableSet(new HashSet(Arrays.asList(EnumFacing.VALUES)));
+    private static final Set SET_ALL_FACINGS = Set.of(EnumFacing.VALUES);
     private int countTileEntitiesRendered;
     private IChunkProvider worldChunkProvider = null;
     private LongHashMap worldChunkProviderMap = null;
@@ -1434,23 +1434,16 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
         }
 
-        if (l == 0)
-        {
-            this.mc.mcProfiler.endSection();
-            return l;
-        }
-        else
-        {
-            if (Config.isFogOff() && this.mc.entityRenderer.fogStandard)
-            {
+        if (l != 0) {
+            if (Config.isFogOff() && this.mc.entityRenderer.fogStandard) {
                 GlStateManager.disableFog();
             }
 
             this.mc.mcProfiler.endStartSection("render_" + blockLayerIn);
             this.renderBlockLayer(blockLayerIn);
-            this.mc.mcProfiler.endSection();
-            return l;
         }
+        this.mc.mcProfiler.endSection();
+        return l;
     }
 
     @SuppressWarnings("incomplete-switch")
