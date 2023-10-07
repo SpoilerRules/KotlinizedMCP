@@ -74,7 +74,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.DefaultResourcePack;
 import net.minecraft.client.resources.FoliageColorReloadListener;
 import net.minecraft.client.resources.GrassColorReloadListener;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourcePack;
@@ -520,7 +520,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         try {
             Display.create(new PixelFormat().withDepthBits(24));
         } catch (LWJGLException lwjglexception) {
-            logger.error("Couldn't set pixel format", lwjglexception);
+            logger.error("Couldn't set pixel translate", lwjglexception);
             if (fullscreen) updateDisplayMode();
         }
 
@@ -1746,13 +1746,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             throw new ReportedException(crashreport);
         }
 
-        this.loadingScreen.displaySavingString(I18n.format("menu.loadingLevel", new Object[0]));
+        this.loadingScreen.displaySavingString(LocalizationHelper.translate("menu.loadingLevel", new Object[0]));
 
         while (!this.theIntegratedServer.serverIsInRunLoop()) {
             String s = this.theIntegratedServer.getUserMessage();
 
             if (s != null) {
-                this.loadingScreen.displayLoadingString(I18n.format(s, new Object[0]));
+                this.loadingScreen.displayLoadingString(LocalizationHelper.translate(s, new Object[0]));
             } else {
                 this.loadingScreen.displayLoadingString("");
             }
@@ -2384,7 +2384,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                                 }
 
                                 Minecraft.this.displayGuiScreen((GuiScreen) null);
-                            }, I18n.format("stream.confirm_start", new Object[0]), "", 0));
+                            }, LocalizationHelper.translate("stream.confirm_start", new Object[0]), "", 0));
                         } else if (this.getTwitchStream().func_152928_D() && this.getTwitchStream().func_152936_l()) {
                             if (this.theWorld != null) {
                                 this.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Not ready to start streaming yet!"));

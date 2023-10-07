@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerRepair;
@@ -60,17 +60,17 @@ public class GuiRepair extends GuiContainer implements ICrafting
     {
         GlStateManager.disableLighting();
         GlStateManager.disableBlend();
-        this.fontRendererObj.drawString(I18n.format("container.repair", new Object[0]), 60, 6, 4210752);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("container.repair", new Object[0]), 60, 6, 4210752);
 
         if (this.anvil.maximumCost > 0)
         {
             int i = 8453920;
             boolean flag = true;
-            String s = I18n.format("container.repair.cost", new Object[] {Integer.valueOf(this.anvil.maximumCost)});
+            String s = LocalizationHelper.translate("container.repair.cost", new Object[] {Integer.valueOf(this.anvil.maximumCost)});
 
             if (this.anvil.maximumCost >= 40 && !this.mc.thePlayer.capabilities.isCreativeMode)
             {
-                s = I18n.format("container.repair.expensive", new Object[0]);
+                s = LocalizationHelper.translate("container.repair.expensive", new Object[0]);
                 i = 16736352;
             }
             else if (!this.anvil.getSlot(2).getHasStack())

@@ -1,7 +1,7 @@
 package net.optifine.shaders.gui;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.optifine.shaders.Shaders;
 import net.optifine.shaders.config.EnumShaderOption;
 
@@ -22,7 +22,7 @@ public class GuiButtonEnumShaderOption extends GuiButton
 
     private static String getButtonText(EnumShaderOption eso)
     {
-        String s = I18n.format(eso.getResourceKey(), new Object[0]) + ": ";
+        String s = LocalizationHelper.translate(eso.getResourceKey(), new Object[0]) + ": ";
 
         switch (eso)
         {

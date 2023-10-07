@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 
 public class GuiErrorScreen extends GuiScreen
 {
@@ -17,7 +17,7 @@ public class GuiErrorScreen extends GuiScreen
     public void initGui()
     {
         super.initGui();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, 140, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, 140, LocalizationHelper.translate("gui.cancel", new Object[0])));
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)

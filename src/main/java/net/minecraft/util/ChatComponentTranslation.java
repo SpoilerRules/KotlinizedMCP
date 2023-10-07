@@ -102,7 +102,7 @@ public class ChatComponentTranslation extends ChatComponentStyle
                 {
                     if (!"s".equals(s2))
                     {
-                        throw new ChatComponentTranslationFormatException(this, "Unsupported format: \'" + s + "\'");
+                        throw new ChatComponentTranslationFormatException(this, "Unsupported translate: \'" + s + "\'");
                     }
 
                     String s1 = matcher.group(1);

@@ -27,7 +27,7 @@ import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.stream.TwitchStream;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
@@ -307,7 +307,7 @@ public class GameSettings {
     }
 
     public static String getKeyDisplayString(int key) {
-        return key < 0 ? I18n.format("key.mouseButton", new Object[]{key + 101}) : (key < 256 ? Keyboard.getKeyName(key) : String.format("%c", new Object[]{Character.valueOf((char) (key - 256))}).toUpperCase());
+        return key < 0 ? LocalizationHelper.translate("key.mouseButton", new Object[]{key + 101}) : (key < 256 ? Keyboard.getKeyName(key) : String.format("%c", new Object[]{Character.valueOf((char) (key - 256))}).toUpperCase());
     }
 
     public static boolean isKeyDown(KeyBinding key) {
@@ -606,7 +606,7 @@ public class GameSettings {
             index = 0;
         }
 
-        return I18n.format(strArray[index], new Object[0]);
+        return LocalizationHelper.translate(strArray[index], new Object[0]);
     }
 
     public String getKeyBinding(GameSettings.Options settingOption) {
@@ -615,19 +615,19 @@ public class GameSettings {
         if (s != null) {
             return s;
         } else {
-            String s1 = I18n.format(settingOption.getEnumString(), new Object[0]) + ": ";
+            String s1 = LocalizationHelper.translate(settingOption.getEnumString(), new Object[0]) + ": ";
 
             if (settingOption.getEnumFloat()) {
                 float f1 = this.getOptionFloatValue(settingOption);
                 float f = settingOption.normalizeValue(f1);
-                return settingOption == GameSettings.Options.MIPMAP_LEVELS && (double) f1 >= 4.0D ? s1 + Lang.get("of.general.max") : (settingOption == GameSettings.Options.SENSITIVITY ? (f == 0.0F ? s1 + I18n.format("options.sensitivity.min", new Object[0]) : (f == 1.0F ? s1 + I18n.format("options.sensitivity.max", new Object[0]) : s1 + (int) (f * 200.0F) + "%")) : (settingOption == GameSettings.Options.FOV ? (f1 == 70.0F ? s1 + I18n.format("options.fov.min", new Object[0]) : (f1 == 110.0F ? s1 + I18n.format("options.fov.max", new Object[0]) : s1 + (int) f1)) : (settingOption == GameSettings.Options.FRAMERATE_LIMIT ? (f1 == settingOption.valueMax ? s1 + I18n.format("options.framerateLimit.max", new Object[0]) : s1 + (int) f1 + " fps") : (settingOption == GameSettings.Options.RENDER_CLOUDS ? (f1 == settingOption.valueMin ? s1 + I18n.format("options.cloudHeight.min", new Object[0]) : s1 + ((int) f1 + 128)) : (settingOption == GameSettings.Options.GAMMA ? (f == 0.0F ? s1 + I18n.format("options.gamma.min", new Object[0]) : (f == 1.0F ? s1 + I18n.format("options.gamma.max", new Object[0]) : s1 + "+" + (int) (f * 100.0F) + "%")) : (settingOption == GameSettings.Options.SATURATION ? s1 + (int) (f * 400.0F) + "%" : (settingOption == GameSettings.Options.CHAT_OPACITY ? s1 + (int) (f * 90.0F + 10.0F) + "%" : (settingOption == GameSettings.Options.CHAT_HEIGHT_UNFOCUSED ? s1 + GuiNewChat.calculateChatboxHeight(f) + "px" : (settingOption == GameSettings.Options.CHAT_HEIGHT_FOCUSED ? s1 + GuiNewChat.calculateChatboxHeight(f) + "px" : (settingOption == GameSettings.Options.CHAT_WIDTH ? s1 + GuiNewChat.calculateChatboxWidth(f) + "px" : (settingOption == GameSettings.Options.RENDER_DISTANCE ? s1 + (int) f1 + " chunks" : (settingOption == GameSettings.Options.MIPMAP_LEVELS ? (f1 == 0.0F ? s1 + I18n.format("options.off", new Object[0]) : s1 + (int) f1) : (settingOption == GameSettings.Options.STREAM_FPS ? s1 + TwitchStream.formatStreamFps(f) + " fps" : (settingOption == GameSettings.Options.STREAM_KBPS ? s1 + TwitchStream.formatStreamKbps(f) + " Kbps" : (settingOption == GameSettings.Options.STREAM_BYTES_PER_PIXEL ? s1 + String.format("%.3f bpp", new Object[]{Float.valueOf(TwitchStream.formatStreamBps(f))}) : (f == 0.0F ? s1 + I18n.format("options.off", new Object[0]) : s1 + (int) (f * 100.0F) + "%"))))))))))))))));
+                return settingOption == GameSettings.Options.MIPMAP_LEVELS && (double) f1 >= 4.0D ? s1 + Lang.get("of.general.max") : (settingOption == GameSettings.Options.SENSITIVITY ? (f == 0.0F ? s1 + LocalizationHelper.translate("options.sensitivity.min", new Object[0]) : (f == 1.0F ? s1 + LocalizationHelper.translate("options.sensitivity.max", new Object[0]) : s1 + (int) (f * 200.0F) + "%")) : (settingOption == GameSettings.Options.FOV ? (f1 == 70.0F ? s1 + LocalizationHelper.translate("options.fov.min", new Object[0]) : (f1 == 110.0F ? s1 + LocalizationHelper.translate("options.fov.max", new Object[0]) : s1 + (int) f1)) : (settingOption == GameSettings.Options.FRAMERATE_LIMIT ? (f1 == settingOption.valueMax ? s1 + LocalizationHelper.translate("options.framerateLimit.max", new Object[0]) : s1 + (int) f1 + " fps") : (settingOption == GameSettings.Options.RENDER_CLOUDS ? (f1 == settingOption.valueMin ? s1 + LocalizationHelper.translate("options.cloudHeight.min", new Object[0]) : s1 + ((int) f1 + 128)) : (settingOption == GameSettings.Options.GAMMA ? (f == 0.0F ? s1 + LocalizationHelper.translate("options.gamma.min", new Object[0]) : (f == 1.0F ? s1 + LocalizationHelper.translate("options.gamma.max", new Object[0]) : s1 + "+" + (int) (f * 100.0F) + "%")) : (settingOption == GameSettings.Options.SATURATION ? s1 + (int) (f * 400.0F) + "%" : (settingOption == GameSettings.Options.CHAT_OPACITY ? s1 + (int) (f * 90.0F + 10.0F) + "%" : (settingOption == GameSettings.Options.CHAT_HEIGHT_UNFOCUSED ? s1 + GuiNewChat.calculateChatboxHeight(f) + "px" : (settingOption == GameSettings.Options.CHAT_HEIGHT_FOCUSED ? s1 + GuiNewChat.calculateChatboxHeight(f) + "px" : (settingOption == GameSettings.Options.CHAT_WIDTH ? s1 + GuiNewChat.calculateChatboxWidth(f) + "px" : (settingOption == GameSettings.Options.RENDER_DISTANCE ? s1 + (int) f1 + " chunks" : (settingOption == GameSettings.Options.MIPMAP_LEVELS ? (f1 == 0.0F ? s1 + LocalizationHelper.translate("options.off", new Object[0]) : s1 + (int) f1) : (settingOption == GameSettings.Options.STREAM_FPS ? s1 + TwitchStream.formatStreamFps(f) + " fps" : (settingOption == GameSettings.Options.STREAM_KBPS ? s1 + TwitchStream.formatStreamKbps(f) + " Kbps" : (settingOption == GameSettings.Options.STREAM_BYTES_PER_PIXEL ? s1 + String.format("%.3f bpp", new Object[]{Float.valueOf(TwitchStream.formatStreamBps(f))}) : (f == 0.0F ? s1 + LocalizationHelper.translate("options.off", new Object[0]) : s1 + (int) (f * 100.0F) + "%"))))))))))))))));
             } else if (settingOption.getEnumBoolean()) {
                 boolean flag = this.getOptionOrdinalValue(settingOption);
-                return flag ? s1 + I18n.format("options.on", new Object[0]) : s1 + I18n.format("options.off", new Object[0]);
+                return flag ? s1 + LocalizationHelper.translate("options.on", new Object[0]) : s1 + LocalizationHelper.translate("options.off", new Object[0]);
             } else if (settingOption == GameSettings.Options.GUI_SCALE) {
                 return this.guiScale >= GUISCALES.length ? s1 + this.guiScale + "x" : s1 + getTranslation(GUISCALES, this.guiScale);
             } else if (settingOption == GameSettings.Options.CHAT_VISIBILITY) {
-                return s1 + I18n.format(this.chatVisibility.getResourceKey(), new Object[0]);
+                return s1 + LocalizationHelper.translate(this.chatVisibility.getResourceKey(), new Object[0]);
             } else if (settingOption == GameSettings.Options.PARTICLES) {
                 return s1 + getTranslation(PARTICLES, this.particleSetting);
             } else if (settingOption == GameSettings.Options.AMBIENT_OCCLUSION) {
@@ -644,10 +644,10 @@ public class GameSettings {
                 return s1 + getTranslation(CLOUDS_TYPES, this.clouds);
             } else if (settingOption == GameSettings.Options.GRAPHICS) {
                 if (this.fancyGraphics) {
-                    return s1 + I18n.format("options.graphics.fancy", new Object[0]);
+                    return s1 + LocalizationHelper.translate("options.graphics.fancy", new Object[0]);
                 } else {
                     String s2 = "options.graphics.fast";
-                    return s1 + I18n.format("options.graphics.fast", new Object[0]);
+                    return s1 + LocalizationHelper.translate("options.graphics.fast", new Object[0]);
                 }
             } else {
                 return s1;
@@ -1638,7 +1638,7 @@ public class GameSettings {
     }
 
     private String getKeyBindingOF(GameSettings.Options p_getKeyBindingOF_1_) {
-        String s = I18n.format(p_getKeyBindingOF_1_.getEnumString(), new Object[0]) + ": ";
+        String s = LocalizationHelper.translate(p_getKeyBindingOF_1_.getEnumString(), new Object[0]) + ": ";
 
         if (s == null) {
             s = p_getKeyBindingOF_1_.getEnumString();
@@ -1646,21 +1646,21 @@ public class GameSettings {
 
         if (p_getKeyBindingOF_1_ == GameSettings.Options.RENDER_DISTANCE) {
             int i1 = (int) this.getOptionFloatValue(p_getKeyBindingOF_1_);
-            String s1 = I18n.format("options.renderDistance.tiny", new Object[0]);
+            String s1 = LocalizationHelper.translate("options.renderDistance.tiny", new Object[0]);
             int i = 2;
 
             if (i1 >= 4) {
-                s1 = I18n.format("options.renderDistance.short", new Object[0]);
+                s1 = LocalizationHelper.translate("options.renderDistance.short", new Object[0]);
                 i = 4;
             }
 
             if (i1 >= 8) {
-                s1 = I18n.format("options.renderDistance.normal", new Object[0]);
+                s1 = LocalizationHelper.translate("options.renderDistance.normal", new Object[0]);
                 i = 8;
             }
 
             if (i1 >= 16) {
-                s1 = I18n.format("options.renderDistance.far", new Object[0]);
+                s1 = LocalizationHelper.translate("options.renderDistance.far", new Object[0]);
                 i = 16;
             }
 
@@ -1886,7 +1886,7 @@ public class GameSettings {
             return this.advancedItemTooltips ? s + Lang.getOn() : s + Lang.getOff();
         } else if (p_getKeyBindingOF_1_ == GameSettings.Options.FRAMERATE_LIMIT) {
             float f = this.getOptionFloatValue(p_getKeyBindingOF_1_);
-            return f == 0.0F ? s + Lang.get("of.options.framerateLimit.vsync") : (f == p_getKeyBindingOF_1_.valueMax ? s + I18n.format("options.framerateLimit.max", new Object[0]) : s + (int) f + " fps");
+            return f == 0.0F ? s + Lang.get("of.options.framerateLimit.vsync") : (f == p_getKeyBindingOF_1_.valueMax ? s + LocalizationHelper.translate("options.framerateLimit.max", new Object[0]) : s + (int) f + " fps");
         } else {
             return null;
         }

@@ -22,7 +22,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.EntityPickupFX;
 import net.minecraft.client.player.inventory.ContainerLocalMenu;
 import net.minecraft.client.player.inventory.LocalBlockIntercommunication;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.stream.MetadataAchievement;
 import net.minecraft.client.stream.MetadataCombat;
@@ -597,7 +597,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
 
             if (flag) {
                 GameSettings gamesettings = this.gameController.gameSettings;
-                this.gameController.ingameGUI.setRecordPlaying(I18n.format("mount.onboard", GameSettings.getKeyDisplayString(gamesettings.keyBindSneak.getKeyCode())), false);
+                this.gameController.ingameGUI.setRecordPlaying(LocalizationHelper.translate("mount.onboard", GameSettings.getKeyDisplayString(gamesettings.keyBindSneak.getKeyCode())), false);
             }
         } else if (packetIn.getLeash() == 1 && entity instanceof EntityLiving) {
             if (entity1 != null) {
@@ -1154,7 +1154,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
                     }
                     ServerList.func_147414_b(mc.getCurrentServerData());
                     mc.displayGuiScreen(null);
-                }, I18n.format("multiplayer.texturePrompt.line1"), I18n.format("multiplayer.texturePrompt.line2"), 0)));
+                }, LocalizationHelper.translate("multiplayer.texturePrompt.line1"), LocalizationHelper.translate("multiplayer.texturePrompt.line2"), 0)));
             }
         } catch (URISyntaxException e) {
             this.netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.FAILED_DOWNLOAD));

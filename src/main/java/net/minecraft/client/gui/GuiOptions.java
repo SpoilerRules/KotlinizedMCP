@@ -5,11 +5,8 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.stream.GuiStreamOptions;
-import net.minecraft.client.gui.stream.GuiStreamUnavailable;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.stream.IStream;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
@@ -33,7 +30,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
     public void initGui()
     {
         int i = 0;
-        this.field_146442_a = I18n.format("options.title", new Object[0]);
+        this.field_146442_a = LocalizationHelper.translate("options.title", new Object[0]);
 
         for (GameSettings.Options gamesettings$options : field_146440_f)
         {
@@ -81,7 +78,7 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
             this.buttonList.add(guioptionbutton1);
         }
 
-        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, I18n.format("options.skinCustomisation", new Object[0])));
+        this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, LocalizationHelper.translate("options.skinCustomisation", new Object[0])));
         this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...")
         {
             public void playPressSound(SoundHandler soundHandlerIn)
@@ -94,15 +91,15 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
                 }
             }
         });
-        this.buttonList.add(new GuiButton(106, this.width / 2 - 155, this.height / 6 + 72 - 6, 150, 20, I18n.format("options.sounds", new Object[0])));
-        this.buttonList.add(new GuiButton(107, this.width / 2 + 5, this.height / 6 + 72 - 6, 150, 20, I18n.format("options.stream", new Object[0])));
-        this.buttonList.add(new GuiButton(101, this.width / 2 - 155, this.height / 6 + 96 - 6, 150, 20, I18n.format("options.video", new Object[0])));
-        this.buttonList.add(new GuiButton(100, this.width / 2 + 5, this.height / 6 + 96 - 6, 150, 20, I18n.format("options.controls", new Object[0])));
-        this.buttonList.add(new GuiButton(102, this.width / 2 - 155, this.height / 6 + 120 - 6, 150, 20, I18n.format("options.language", new Object[0])));
-        this.buttonList.add(new GuiButton(103, this.width / 2 + 5, this.height / 6 + 120 - 6, 150, 20, I18n.format("options.chat.title", new Object[0])));
-        this.buttonList.add(new GuiButton(105, this.width / 2 - 155, this.height / 6 + 144 - 6, 150, 20, I18n.format("options.resourcepack", new Object[0])));
-        this.buttonList.add(new GuiButton(104, this.width / 2 + 5, this.height / 6 + 144 - 6, 150, 20, I18n.format("options.snooper.view", new Object[0])));
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(106, this.width / 2 - 155, this.height / 6 + 72 - 6, 150, 20, LocalizationHelper.translate("options.sounds", new Object[0])));
+        this.buttonList.add(new GuiButton(107, this.width / 2 + 5, this.height / 6 + 72 - 6, 150, 20, LocalizationHelper.translate("Extra Settings...", new Object[0])));
+        this.buttonList.add(new GuiButton(101, this.width / 2 - 155, this.height / 6 + 96 - 6, 150, 20, LocalizationHelper.translate("options.video", new Object[0])));
+        this.buttonList.add(new GuiButton(100, this.width / 2 + 5, this.height / 6 + 96 - 6, 150, 20, LocalizationHelper.translate("options.controls", new Object[0])));
+        this.buttonList.add(new GuiButton(102, this.width / 2 - 155, this.height / 6 + 120 - 6, 150, 20, LocalizationHelper.translate("options.language", new Object[0])));
+        this.buttonList.add(new GuiButton(103, this.width / 2 + 5, this.height / 6 + 120 - 6, 150, 20, LocalizationHelper.translate("options.chat.title", new Object[0])));
+        this.buttonList.add(new GuiButton(105, this.width / 2 - 155, this.height / 6 + 144 - 6, 150, 20, LocalizationHelper.translate("options.resourcepack", new Object[0])));
+        this.buttonList.add(new GuiButton(104, this.width / 2 + 5, this.height / 6 + 144 - 6, 150, 20, LocalizationHelper.translate("options.snooper.view", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, LocalizationHelper.translate("gui.done", new Object[0])));
     }
 
     public String func_175355_a(EnumDifficulty p_175355_1_)
@@ -127,100 +124,76 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
-        if (button.enabled)
-        {
-            if (button.id < 100 && button instanceof GuiOptionButton)
-            {
-                GameSettings.Options gamesettings$options = ((GuiOptionButton)button).returnEnumOptions();
+    protected void actionPerformed(GuiButton button) throws IOException {
+        if (button.enabled) {
+            if (button.id < 100 && button instanceof GuiOptionButton) {
+                GameSettings.Options gamesettings$options = ((GuiOptionButton) button).returnEnumOptions();
                 this.game_settings_1.setOptionValue(gamesettings$options, 1);
                 button.displayString = this.game_settings_1.getKeyBinding(GameSettings.Options.getEnumOptions(button.id));
             }
 
-            if (button.id == 108)
-            {
+            if (button.id == 108) {
                 this.mc.theWorld.getWorldInfo().setDifficulty(EnumDifficulty.getDifficultyEnum(this.mc.theWorld.getDifficulty().getDifficultyId() + 1));
                 this.field_175357_i.displayString = this.func_175355_a(this.mc.theWorld.getDifficulty());
             }
 
-            if (button.id == 109)
-            {
-                this.mc.displayGuiScreen(new GuiYesNo(this, (new ChatComponentTranslation("difficulty.lock.title", new Object[0])).getFormattedText(), (new ChatComponentTranslation("difficulty.lock.question", new Object[] {new ChatComponentTranslation(this.mc.theWorld.getWorldInfo().getDifficulty().getDifficultyResourceKey(), new Object[0])})).getFormattedText(), 109));
+            if (button.id == 109) {
+                this.mc.displayGuiScreen(new GuiYesNo(this, (new ChatComponentTranslation("difficulty.lock.title", new Object[0])).getFormattedText(), (new ChatComponentTranslation("difficulty.lock.question", new Object[]{new ChatComponentTranslation(this.mc.theWorld.getWorldInfo().getDifficulty().getDifficultyResourceKey(), new Object[0])})).getFormattedText(), 109));
             }
 
-            if (button.id == 110)
-            {
+            if (button.id == 110) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiCustomizeSkin(this));
             }
 
-            if (button.id == 8675309)
-            {
+            if (button.id == 8675309) {
                 this.mc.entityRenderer.activateNextShader();
             }
 
-            if (button.id == 101)
-            {
+            if (button.id == 101) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiVideoSettings(this, this.game_settings_1));
             }
 
-            if (button.id == 100)
-            {
+            if (button.id == 100) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiControls(this, this.game_settings_1));
             }
 
-            if (button.id == 102)
-            {
+            if (button.id == 102) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiLanguage(this, this.game_settings_1, this.mc.getLanguageManager()));
             }
 
-            if (button.id == 103)
-            {
+            if (button.id == 103) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new ScreenChatOptions(this, this.game_settings_1));
             }
 
-            if (button.id == 104)
-            {
+            if (button.id == 104) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiSnooper(this, this.game_settings_1));
             }
 
-            if (button.id == 200)
-            {
+            if (button.id == 200) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(this.field_146441_g);
             }
 
-            if (button.id == 105)
-            {
+            if (button.id == 105) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiScreenResourcePacks(this));
             }
 
-            if (button.id == 106)
-            {
+            if (button.id == 106) {
                 this.mc.gameSettings.saveOptions();
                 this.mc.displayGuiScreen(new GuiScreenOptionsSounds(this, this.game_settings_1));
             }
 
-            if (button.id == 107)
+            if (button.id == 107) // evanescent settings button
             {
                 this.mc.gameSettings.saveOptions();
-                IStream istream = this.mc.getTwitchStream();
-
-                if (istream.func_152936_l() && istream.func_152928_D())
-                {
-                    this.mc.displayGuiScreen(new GuiStreamOptions(this, this.game_settings_1));
-                }
-                else
-                {
-                    GuiStreamUnavailable.checkStreamAvailabilityAndDisplayScreen(this);
-                }
+                this.mc.displayGuiScreen(new GuiExtraSettings(this));
             }
         }
     }

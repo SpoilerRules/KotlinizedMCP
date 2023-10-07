@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 import java.util.List;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.util.IChatComponent;
 
 public class GuiDisconnected extends GuiScreen
@@ -16,7 +16,7 @@ public class GuiDisconnected extends GuiScreen
     public GuiDisconnected(GuiScreen screen, String reasonLocalizationKey, IChatComponent chatComp)
     {
         this.parentScreen = screen;
-        this.reason = I18n.format(reasonLocalizationKey, new Object[0]);
+        this.reason = LocalizationHelper.translate(reasonLocalizationKey, new Object[0]);
         this.message = chatComp;
     }
 
@@ -29,7 +29,7 @@ public class GuiDisconnected extends GuiScreen
         this.buttonList.clear();
         this.multilineMessage = this.fontRendererObj.listFormattedStringToWidth(this.message.getFormattedText(), this.width - 50);
         this.field_175353_i = this.multilineMessage.size() * this.fontRendererObj.FONT_HEIGHT;
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT, I18n.format("gui.toMenu", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT, LocalizationHelper.translate("gui.toMenu", new Object[0])));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException

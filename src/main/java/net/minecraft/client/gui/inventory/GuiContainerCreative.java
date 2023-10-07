@@ -12,7 +12,7 @@ import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -365,7 +365,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
         if (creativetabs.drawInForegroundOfTab())
         {
             GlStateManager.disableBlend();
-            this.fontRendererObj.drawString(I18n.format(creativetabs.getTranslatedTabLabel(), new Object[0]), 8, 6, 4210752);
+            this.fontRendererObj.drawString(LocalizationHelper.translate(creativetabs.getTranslatedTabLabel(), new Object[0]), 8, 6, 4210752);
         }
     }
 
@@ -566,7 +566,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (this.field_147064_C != null && selectedTabIndex == CreativeTabs.tabInventory.getTabIndex() && this.isPointInRegion(this.field_147064_C.xDisplayPosition, this.field_147064_C.yDisplayPosition, 16, 16, mouseX, mouseY))
         {
-            this.drawCreativeTabHoveringText(I18n.format("inventory.binSlot", new Object[0]), mouseX, mouseY);
+            this.drawCreativeTabHoveringText(LocalizationHelper.translate("inventory.binSlot", new Object[0]), mouseX, mouseY);
         }
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -601,7 +601,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
             if (creativetabs != null)
             {
-                list.add(1, "" + EnumChatFormatting.BOLD + EnumChatFormatting.BLUE + I18n.format(creativetabs.getTranslatedTabLabel(), new Object[0]));
+                list.add(1, "" + EnumChatFormatting.BOLD + EnumChatFormatting.BLUE + LocalizationHelper.translate(creativetabs.getTranslatedTabLabel(), new Object[0]));
             }
 
             for (int i = 0; i < list.size(); ++i)
@@ -715,7 +715,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
 
         if (this.isPointInRegion(j + 3, k + 3, 23, 27, p_147052_2_, p_147052_3_))
         {
-            this.drawCreativeTabHoveringText(I18n.format(p_147052_1_.getTranslatedTabLabel(), new Object[0]), p_147052_2_, p_147052_3_);
+            this.drawCreativeTabHoveringText(LocalizationHelper.translate(p_147052_1_.getTranslatedTabLabel(), new Object[0]), p_147052_2_, p_147052_3_);
             return true;
         }
         else

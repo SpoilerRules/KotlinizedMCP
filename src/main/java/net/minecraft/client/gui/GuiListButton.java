@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 
 public class GuiListButton extends GuiButton
 {
@@ -20,7 +20,7 @@ public class GuiListButton extends GuiButton
 
     private String buildDisplayString()
     {
-        return I18n.format(this.localizationStr, new Object[0]) + ": " + (this.field_175216_o ? I18n.format("gui.yes", new Object[0]) : I18n.format("gui.no", new Object[0]));
+        return LocalizationHelper.translate(this.localizationStr, new Object[0]) + ": " + (this.field_175216_o ? LocalizationHelper.translate("gui.yes", new Object[0]) : LocalizationHelper.translate("gui.no", new Object[0]));
     }
 
     public void func_175212_b(boolean p_175212_1_)

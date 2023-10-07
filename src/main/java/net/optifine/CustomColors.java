@@ -196,7 +196,7 @@ public class CustomColors
         textColors = null;
         setMapColors(mapColorsOriginal);
         potionColors = null;
-        paletteFormatDefault = getValidProperty("mcpatcher/color.properties", "palette.format", CustomColormap.FORMAT_STRINGS, "vanilla");
+        paletteFormatDefault = getValidProperty("mcpatcher/color.properties", "palette.translate", CustomColormap.FORMAT_STRINGS, "vanilla");
         String s = "mcpatcher/colormap/";
         String[] astring = new String[] {"water.png", "watercolorX.png"};
         waterColors = getCustomColors(s, astring, 256, 256);
@@ -769,7 +769,7 @@ public class CustomColors
                 }
                 else
                 {
-                    properties.put("format", paletteFormatDefault);
+                    properties.put("translate", paletteFormatDefault);
                     properties.put("source", pathImage);
                     s = pathImage;
                 }

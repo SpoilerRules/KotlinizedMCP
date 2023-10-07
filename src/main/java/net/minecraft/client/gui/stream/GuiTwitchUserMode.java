@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
@@ -171,12 +171,12 @@ public class GuiTwitchUserMode extends GuiScreen
     {
         int i = this.width / 3;
         int j = i - 130;
-        this.buttonList.add(new GuiButton(1, i * 0 + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.timeout", new Object[0])));
-        this.buttonList.add(new GuiButton(0, i * 1 + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.ban", new Object[0])));
-        this.buttonList.add(new GuiButton(2, i * 2 + j / 2, this.height - 70, 130, 20, I18n.format("stream.userinfo.mod", new Object[0])));
-        this.buttonList.add(new GuiButton(5, i * 0 + j / 2, this.height - 45, 130, 20, I18n.format("gui.cancel", new Object[0])));
-        this.buttonList.add(new GuiButton(3, i * 1 + j / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unban", new Object[0])));
-        this.buttonList.add(new GuiButton(4, i * 2 + j / 2, this.height - 45, 130, 20, I18n.format("stream.userinfo.unmod", new Object[0])));
+        this.buttonList.add(new GuiButton(1, i * 0 + j / 2, this.height - 70, 130, 20, LocalizationHelper.translate("stream.userinfo.timeout", new Object[0])));
+        this.buttonList.add(new GuiButton(0, i * 1 + j / 2, this.height - 70, 130, 20, LocalizationHelper.translate("stream.userinfo.ban", new Object[0])));
+        this.buttonList.add(new GuiButton(2, i * 2 + j / 2, this.height - 70, 130, 20, LocalizationHelper.translate("stream.userinfo.mod", new Object[0])));
+        this.buttonList.add(new GuiButton(5, i * 0 + j / 2, this.height - 45, 130, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
+        this.buttonList.add(new GuiButton(3, i * 1 + j / 2, this.height - 45, 130, 20, LocalizationHelper.translate("stream.userinfo.unban", new Object[0])));
+        this.buttonList.add(new GuiButton(4, i * 2 + j / 2, this.height - 45, 130, 20, LocalizationHelper.translate("stream.userinfo.unmod", new Object[0])));
         int k = 0;
 
         for (IChatComponent ichatcomponent : this.field_152332_r)

@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 
 public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
@@ -24,7 +24,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
 
     public void initGui()
     {
-        this.title = I18n.format("of.options.otherTitle", new Object[0]);
+        this.title = LocalizationHelper.translate("of.options.otherTitle", new Object[0]);
         this.buttonList.clear();
 
         for (int i = 0; i < enumOptions.length; ++i)
@@ -43,8 +43,8 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
             }
         }
 
-        this.buttonList.add(new GuiButton(210, this.width / 2 - 100, this.height / 6 + 168 + 11 - 44, I18n.format("of.options.other.reset", new Object[0])));
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(210, this.width / 2 - 100, this.height / 6 + 168 + 11 - 44, LocalizationHelper.translate("of.options.other.reset", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, LocalizationHelper.translate("gui.done", new Object[0])));
     }
 
     protected void actionPerformed(GuiButton guibutton)
@@ -66,7 +66,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
             if (guibutton.id == 210)
             {
                 this.mc.gameSettings.saveOptions();
-                GuiYesNo guiyesno = new GuiYesNo(this, I18n.format("of.message.other.reset", new Object[0]), "", 9999);
+                GuiYesNo guiyesno = new GuiYesNo(this, LocalizationHelper.translate("of.message.other.reset", new Object[0]), "", 9999);
                 this.mc.displayGuiScreen(guiyesno);
             }
         }

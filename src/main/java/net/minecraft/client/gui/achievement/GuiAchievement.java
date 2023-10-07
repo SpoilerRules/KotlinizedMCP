@@ -6,7 +6,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.stats.Achievement;
 import net.minecraft.util.ResourceLocation;
 
@@ -31,7 +31,7 @@ public class GuiAchievement extends Gui
 
     public void displayAchievement(Achievement ach)
     {
-        this.achievementTitle = I18n.format("achievement.get", new Object[0]);
+        this.achievementTitle = LocalizationHelper.translate("achievement.get", new Object[0]);
         this.achievementDescription = ach.getStatName().getUnformattedText();
         this.notificationTime = Minecraft.getSystemTime();
         this.theAchievement = ach;

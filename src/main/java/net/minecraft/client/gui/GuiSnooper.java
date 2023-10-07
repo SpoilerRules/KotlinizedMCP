@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.TreeMap;
 import java.util.Map.Entry;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 
 public class GuiSnooper extends GuiScreen
@@ -26,8 +26,8 @@ public class GuiSnooper extends GuiScreen
 
     public void initGui()
     {
-        this.field_146610_i = I18n.format("options.snooper.title", new Object[0]);
-        String s = I18n.format("options.snooper.desc", new Object[0]);
+        this.field_146610_i = LocalizationHelper.translate("options.snooper.title", new Object[0]);
+        String s = LocalizationHelper.translate("options.snooper.desc", new Object[0]);
         java.util.List<String> list = Lists.<String>newArrayList();
 
         for (String s1 : this.fontRendererObj.listFormattedStringToWidth(s, this.width - 30))
@@ -39,7 +39,7 @@ public class GuiSnooper extends GuiScreen
         this.field_146604_g.clear();
         this.field_146609_h.clear();
         this.buttonList.add(this.field_146605_t = new GuiButton(1, this.width / 2 - 152, this.height - 30, 150, 20, this.game_settings_2.getKeyBinding(GameSettings.Options.SNOOPER_ENABLED)));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height - 30, 150, 20, LocalizationHelper.translate("gui.done", new Object[0])));
         boolean flag = this.mc.getIntegratedServer() != null && this.mc.getIntegratedServer().getPlayerUsageSnooper() != null;
 
         for (Entry<String, String> entry : (new TreeMap<String, String>(this.mc.getPlayerUsageSnooper().getCurrentStats())).entrySet())

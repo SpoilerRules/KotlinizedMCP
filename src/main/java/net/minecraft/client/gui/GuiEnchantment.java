@@ -8,7 +8,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -220,7 +220,7 @@ public class GuiEnchantment extends GuiContainer
                 if (l >= 0 && Enchantment.getEnchantmentById(l & 255) != null)
                 {
                     String s = Enchantment.getEnchantmentById(l & 255).getTranslatedName((l & 65280) >> 8);
-                    list.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC.toString() + I18n.format("container.enchant.clue", new Object[] {s}));
+                    list.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.ITALIC.toString() + LocalizationHelper.translate("container.enchant.clue", new Object[] {s}));
                 }
 
                 if (!flag)
@@ -240,11 +240,11 @@ public class GuiEnchantment extends GuiContainer
 
                         if (i1 == 1)
                         {
-                            s1 = I18n.format("container.enchant.lapis.one", new Object[0]);
+                            s1 = LocalizationHelper.translate("container.enchant.lapis.one", new Object[0]);
                         }
                         else
                         {
-                            s1 = I18n.format("container.enchant.lapis.many", new Object[] {Integer.valueOf(i1)});
+                            s1 = LocalizationHelper.translate("container.enchant.lapis.many", new Object[] {Integer.valueOf(i1)});
                         }
 
                         if (i >= i1)
@@ -258,11 +258,11 @@ public class GuiEnchantment extends GuiContainer
 
                         if (i1 == 1)
                         {
-                            s1 = I18n.format("container.enchant.level.one", new Object[0]);
+                            s1 = LocalizationHelper.translate("container.enchant.level.one", new Object[0]);
                         }
                         else
                         {
-                            s1 = I18n.format("container.enchant.level.many", new Object[] {Integer.valueOf(i1)});
+                            s1 = LocalizationHelper.translate("container.enchant.level.many", new Object[] {Integer.valueOf(i1)});
                         }
 
                         list.add(EnumChatFormatting.GRAY.toString() + "" + s1);

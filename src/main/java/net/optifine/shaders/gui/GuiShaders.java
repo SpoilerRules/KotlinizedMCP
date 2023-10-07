@@ -6,7 +6,7 @@ import java.net.URI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.src.Config;
 import net.optifine.Lang;
@@ -45,7 +45,7 @@ public class GuiShaders extends GuiScreenOF
 
     public void initGui()
     {
-        this.screenTitle = I18n.format("of.options.shadersTitle", new Object[0]);
+        this.screenTitle = LocalizationHelper.translate("of.options.shadersTitle", new Object[0]);
 
         if (Shaders.shadersConfig == null)
         {
@@ -73,7 +73,7 @@ public class GuiShaders extends GuiScreenOF
         int i2 = this.height - 25;
         this.buttonList.add(new GuiButton(201, l1, i2, k1 - 22 + 1, j, Lang.get("of.options.shaders.shadersFolder")));
         this.buttonList.add(new GuiButtonDownloadShaders(210, l1 + k1 - 22 - 1, i2));
-        this.buttonList.add(new GuiButton(202, j1 / 4 * 3 - k1 / 2, this.height - 25, k1, j, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(202, j1 / 4 * 3 - k1 / 2, this.height - 25, k1, j, LocalizationHelper.translate("gui.done", new Object[0])));
         this.buttonList.add(new GuiButton(203, k, this.height - 25, i, j, Lang.get("of.options.shaders.shaderOptions")));
         this.updateButtons();
     }

@@ -133,7 +133,7 @@ public class OldServerPinger
                         }
                         else
                         {
-                            OldServerPinger.logger.error("Invalid server icon (unknown format)");
+                            OldServerPinger.logger.error("Invalid server icon (unknown translate)");
                         }
                     }
                     else

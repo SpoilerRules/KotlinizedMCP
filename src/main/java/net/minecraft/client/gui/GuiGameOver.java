@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.util.EnumChatFormatting;
 
 public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
@@ -19,17 +19,17 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
         {
             if (this.mc.isIntegratedServerRunning())
             {
-                this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.deleteWorld", new Object[0])));
+                this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, LocalizationHelper.translate("deathScreen.deleteWorld", new Object[0])));
             }
             else
             {
-                this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.leaveServer", new Object[0])));
+                this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, LocalizationHelper.translate("deathScreen.leaveServer", new Object[0])));
             }
         }
         else
         {
-            this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, I18n.format("deathScreen.respawn", new Object[0])));
-            this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, I18n.format("deathScreen.titleScreen", new Object[0])));
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 72, LocalizationHelper.translate("deathScreen.respawn", new Object[0])));
+            this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, LocalizationHelper.translate("deathScreen.titleScreen", new Object[0])));
 
             if (this.mc.getSession() == null)
             {
@@ -63,7 +63,7 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
                 }
                 else
                 {
-                    GuiYesNo guiyesno = new GuiYesNo(this, I18n.format("deathScreen.quit.confirm", new Object[0]), "", I18n.format("deathScreen.titleScreen", new Object[0]), I18n.format("deathScreen.respawn", new Object[0]), 0);
+                    GuiYesNo guiyesno = new GuiYesNo(this, LocalizationHelper.translate("deathScreen.quit.confirm", new Object[0]), "", LocalizationHelper.translate("deathScreen.titleScreen", new Object[0]), LocalizationHelper.translate("deathScreen.respawn", new Object[0]), 0);
                     this.mc.displayGuiScreen(guiyesno);
                     guiyesno.setButtonDelay(20);
                 }
@@ -91,16 +91,16 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
         boolean flag = this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled();
-        String s = flag ? I18n.format("deathScreen.title.hardcore", new Object[0]) : I18n.format("deathScreen.title", new Object[0]);
+        String s = flag ? LocalizationHelper.translate("deathScreen.title.hardcore", new Object[0]) : LocalizationHelper.translate("deathScreen.title", new Object[0]);
         this.drawCenteredString(this.fontRendererObj, s, this.width / 2 / 2, 30, 16777215);
         GlStateManager.popMatrix();
 
         if (flag)
         {
-            this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.hardcoreInfo", new Object[0]), this.width / 2, 144, 16777215);
+            this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("deathScreen.hardcoreInfo", new Object[0]), this.width / 2, 144, 16777215);
         }
 
-        this.drawCenteredString(this.fontRendererObj, I18n.format("deathScreen.score", new Object[0]) + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("deathScreen.score", new Object[0]) + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

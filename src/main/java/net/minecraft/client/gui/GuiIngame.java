@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -18,7 +17,7 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -476,11 +475,11 @@ public class GuiIngame extends Gui
 
         if (this.mc.theWorld.getTotalWorldTime() >= 120500L)
         {
-            s = I18n.format("demo.demoExpired", new Object[0]);
+            s = LocalizationHelper.translate("demo.demoExpired", new Object[0]);
         }
         else
         {
-            s = I18n.format("demo.remainingTime", new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - this.mc.theWorld.getTotalWorldTime()))});
+            s = LocalizationHelper.translate("demo.remainingTime", new Object[] {StringUtils.ticksToElapsedTime((int)(120500L - this.mc.theWorld.getTotalWorldTime()))});
         }
 
         int i = this.getFontRenderer().getStringWidth(s);
@@ -1085,7 +1084,7 @@ public class GuiIngame extends Gui
 
     public void setRecordPlayingMessage(String recordName)
     {
-        this.setRecordPlaying(I18n.format("record.nowPlaying", new Object[] {recordName}), true);
+        this.setRecordPlaying(LocalizationHelper.translate("record.nowPlaying", new Object[] {recordName}), true);
     }
 
     public void setRecordPlaying(String message, boolean isPlaying)

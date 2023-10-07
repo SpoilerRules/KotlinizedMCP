@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 import java.util.Random;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
@@ -45,7 +45,7 @@ public class GuiCreateWorld extends GuiScreen
     {
         this.parentScreen = p_i46320_1_;
         this.worldSeed = "";
-        this.worldName = I18n.format("selectWorld.newWorld", new Object[0]);
+        this.worldName = LocalizationHelper.translate("selectWorld.newWorld", new Object[0]);
     }
 
     public void updateScreen()
@@ -58,19 +58,19 @@ public class GuiCreateWorld extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 28, 150, 20, I18n.format("selectWorld.create", new Object[0])));
-        this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height - 28, 150, 20, I18n.format("gui.cancel", new Object[0])));
-        this.buttonList.add(this.btnGameMode = new GuiButton(2, this.width / 2 - 75, 115, 150, 20, I18n.format("selectWorld.gameMode", new Object[0])));
-        this.buttonList.add(this.btnMoreOptions = new GuiButton(3, this.width / 2 - 75, 187, 150, 20, I18n.format("selectWorld.moreWorldOptions", new Object[0])));
-        this.buttonList.add(this.btnMapFeatures = new GuiButton(4, this.width / 2 - 155, 100, 150, 20, I18n.format("selectWorld.mapFeatures", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 28, 150, 20, LocalizationHelper.translate("selectWorld.create", new Object[0])));
+        this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height - 28, 150, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
+        this.buttonList.add(this.btnGameMode = new GuiButton(2, this.width / 2 - 75, 115, 150, 20, LocalizationHelper.translate("selectWorld.gameMode", new Object[0])));
+        this.buttonList.add(this.btnMoreOptions = new GuiButton(3, this.width / 2 - 75, 187, 150, 20, LocalizationHelper.translate("selectWorld.moreWorldOptions", new Object[0])));
+        this.buttonList.add(this.btnMapFeatures = new GuiButton(4, this.width / 2 - 155, 100, 150, 20, LocalizationHelper.translate("selectWorld.mapFeatures", new Object[0])));
         this.btnMapFeatures.visible = false;
-        this.buttonList.add(this.btnBonusItems = new GuiButton(7, this.width / 2 + 5, 151, 150, 20, I18n.format("selectWorld.bonusItems", new Object[0])));
+        this.buttonList.add(this.btnBonusItems = new GuiButton(7, this.width / 2 + 5, 151, 150, 20, LocalizationHelper.translate("selectWorld.bonusItems", new Object[0])));
         this.btnBonusItems.visible = false;
-        this.buttonList.add(this.btnMapType = new GuiButton(5, this.width / 2 + 5, 100, 150, 20, I18n.format("selectWorld.mapType", new Object[0])));
+        this.buttonList.add(this.btnMapType = new GuiButton(5, this.width / 2 + 5, 100, 150, 20, LocalizationHelper.translate("selectWorld.mapType", new Object[0])));
         this.btnMapType.visible = false;
-        this.buttonList.add(this.btnAllowCommands = new GuiButton(6, this.width / 2 - 155, 151, 150, 20, I18n.format("selectWorld.allowCommands", new Object[0])));
+        this.buttonList.add(this.btnAllowCommands = new GuiButton(6, this.width / 2 - 155, 151, 150, 20, LocalizationHelper.translate("selectWorld.allowCommands", new Object[0])));
         this.btnAllowCommands.visible = false;
-        this.buttonList.add(this.btnCustomizeType = new GuiButton(8, this.width / 2 + 5, 120, 150, 20, I18n.format("selectWorld.customizeType", new Object[0])));
+        this.buttonList.add(this.btnCustomizeType = new GuiButton(8, this.width / 2 + 5, 120, 150, 20, LocalizationHelper.translate("selectWorld.customizeType", new Object[0])));
         this.btnCustomizeType.visible = false;
         this.worldNameField = new GuiTextField(9, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
         this.worldNameField.setFocused(true);
@@ -101,41 +101,41 @@ public class GuiCreateWorld extends GuiScreen
 
     private void updateDisplayState()
     {
-        this.btnGameMode.displayString = I18n.format("selectWorld.gameMode", new Object[0]) + ": " + I18n.format("selectWorld.gameMode." + this.gameMode, new Object[0]);
-        this.gameModeDesc1 = I18n.format("selectWorld.gameMode." + this.gameMode + ".line1", new Object[0]);
-        this.gameModeDesc2 = I18n.format("selectWorld.gameMode." + this.gameMode + ".line2", new Object[0]);
-        this.btnMapFeatures.displayString = I18n.format("selectWorld.mapFeatures", new Object[0]) + " ";
+        this.btnGameMode.displayString = LocalizationHelper.translate("selectWorld.gameMode", new Object[0]) + ": " + LocalizationHelper.translate("selectWorld.gameMode." + this.gameMode, new Object[0]);
+        this.gameModeDesc1 = LocalizationHelper.translate("selectWorld.gameMode." + this.gameMode + ".line1", new Object[0]);
+        this.gameModeDesc2 = LocalizationHelper.translate("selectWorld.gameMode." + this.gameMode + ".line2", new Object[0]);
+        this.btnMapFeatures.displayString = LocalizationHelper.translate("selectWorld.mapFeatures", new Object[0]) + " ";
 
         if (this.generateStructuresEnabled)
         {
-            this.btnMapFeatures.displayString = this.btnMapFeatures.displayString + I18n.format("options.on", new Object[0]);
+            this.btnMapFeatures.displayString = this.btnMapFeatures.displayString + LocalizationHelper.translate("options.on", new Object[0]);
         }
         else
         {
-            this.btnMapFeatures.displayString = this.btnMapFeatures.displayString + I18n.format("options.off", new Object[0]);
+            this.btnMapFeatures.displayString = this.btnMapFeatures.displayString + LocalizationHelper.translate("options.off", new Object[0]);
         }
 
-        this.btnBonusItems.displayString = I18n.format("selectWorld.bonusItems", new Object[0]) + " ";
+        this.btnBonusItems.displayString = LocalizationHelper.translate("selectWorld.bonusItems", new Object[0]) + " ";
 
         if (this.bonusChestEnabled && !this.hardCoreMode)
         {
-            this.btnBonusItems.displayString = this.btnBonusItems.displayString + I18n.format("options.on", new Object[0]);
+            this.btnBonusItems.displayString = this.btnBonusItems.displayString + LocalizationHelper.translate("options.on", new Object[0]);
         }
         else
         {
-            this.btnBonusItems.displayString = this.btnBonusItems.displayString + I18n.format("options.off", new Object[0]);
+            this.btnBonusItems.displayString = this.btnBonusItems.displayString + LocalizationHelper.translate("options.off", new Object[0]);
         }
 
-        this.btnMapType.displayString = I18n.format("selectWorld.mapType", new Object[0]) + " " + I18n.format(WorldType.worldTypes[this.selectedIndex].getTranslateName(), new Object[0]);
-        this.btnAllowCommands.displayString = I18n.format("selectWorld.allowCommands", new Object[0]) + " ";
+        this.btnMapType.displayString = LocalizationHelper.translate("selectWorld.mapType", new Object[0]) + " " + LocalizationHelper.translate(WorldType.worldTypes[this.selectedIndex].getTranslateName(), new Object[0]);
+        this.btnAllowCommands.displayString = LocalizationHelper.translate("selectWorld.allowCommands", new Object[0]) + " ";
 
         if (this.allowCheats && !this.hardCoreMode)
         {
-            this.btnAllowCommands.displayString = this.btnAllowCommands.displayString + I18n.format("options.on", new Object[0]);
+            this.btnAllowCommands.displayString = this.btnAllowCommands.displayString + LocalizationHelper.translate("options.on", new Object[0]);
         }
         else
         {
-            this.btnAllowCommands.displayString = this.btnAllowCommands.displayString + I18n.format("options.off", new Object[0]);
+            this.btnAllowCommands.displayString = this.btnAllowCommands.displayString + LocalizationHelper.translate("options.off", new Object[0]);
         }
     }
 
@@ -375,11 +375,11 @@ public class GuiCreateWorld extends GuiScreen
 
         if (this.inMoreWorldOptionsDisplay)
         {
-            this.btnMoreOptions.displayString = I18n.format("gui.done", new Object[0]);
+            this.btnMoreOptions.displayString = LocalizationHelper.translate("gui.done", new Object[0]);
         }
         else
         {
-            this.btnMoreOptions.displayString = I18n.format("selectWorld.moreWorldOptions", new Object[0]);
+            this.btnMoreOptions.displayString = LocalizationHelper.translate("selectWorld.moreWorldOptions", new Object[0]);
         }
     }
 
@@ -422,34 +422,34 @@ public class GuiCreateWorld extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("selectWorld.create", new Object[0]), this.width / 2, 20, -1);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.create", new Object[0]), this.width / 2, 20, -1);
 
         if (this.inMoreWorldOptionsDisplay)
         {
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.enterSeed", new Object[0]), this.width / 2 - 100, 47, -6250336);
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.seedInfo", new Object[0]), this.width / 2 - 100, 85, -6250336);
+            this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.enterSeed", new Object[0]), this.width / 2 - 100, 47, -6250336);
+            this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.seedInfo", new Object[0]), this.width / 2 - 100, 85, -6250336);
 
             if (this.btnMapFeatures.visible)
             {
-                this.drawString(this.fontRendererObj, I18n.format("selectWorld.mapFeatures.info", new Object[0]), this.width / 2 - 150, 122, -6250336);
+                this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.mapFeatures.info", new Object[0]), this.width / 2 - 150, 122, -6250336);
             }
 
             if (this.btnAllowCommands.visible)
             {
-                this.drawString(this.fontRendererObj, I18n.format("selectWorld.allowCommands.info", new Object[0]), this.width / 2 - 150, 172, -6250336);
+                this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.allowCommands.info", new Object[0]), this.width / 2 - 150, 172, -6250336);
             }
 
             this.worldSeedField.drawTextBox();
 
             if (WorldType.worldTypes[this.selectedIndex].showWorldInfoNotice())
             {
-                this.fontRendererObj.drawSplitString(I18n.format(WorldType.worldTypes[this.selectedIndex].getTranslatedInfo(), new Object[0]), this.btnMapType.xPosition + 2, this.btnMapType.yPosition + 22, this.btnMapType.getButtonWidth(), 10526880);
+                this.fontRendererObj.drawSplitString(LocalizationHelper.translate(WorldType.worldTypes[this.selectedIndex].getTranslatedInfo(), new Object[0]), this.btnMapType.xPosition + 2, this.btnMapType.yPosition + 22, this.btnMapType.getButtonWidth(), 10526880);
             }
         }
         else
         {
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.enterName", new Object[0]), this.width / 2 - 100, 47, -6250336);
-            this.drawString(this.fontRendererObj, I18n.format("selectWorld.resultFolder", new Object[0]) + " " + this.saveDirName, this.width / 2 - 100, 85, -6250336);
+            this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.enterName", new Object[0]), this.width / 2 - 100, 47, -6250336);
+            this.drawString(this.fontRendererObj, LocalizationHelper.translate("selectWorld.resultFolder", new Object[0]) + " " + this.saveDirName, this.width / 2 - 100, 85, -6250336);
             this.worldNameField.drawTextBox();
             this.drawString(this.fontRendererObj, this.gameModeDesc1, this.width / 2 - 100, 137, -6250336);
             this.drawString(this.fontRendererObj, this.gameModeDesc2, this.width / 2 - 100, 149, -6250336);
@@ -460,7 +460,7 @@ public class GuiCreateWorld extends GuiScreen
 
     public void recreateFromExistingWorld(WorldInfo original)
     {
-        this.worldName = I18n.format("selectWorld.newWorld.copyOf", new Object[] {original.getWorldName()});
+        this.worldName = LocalizationHelper.translate("selectWorld.newWorld.copyOf", new Object[] {original.getWorldName()});
         this.worldSeed = original.getSeed() + "";
         this.selectedIndex = original.getTerrainType().getWorldTypeID();
         this.chunkProviderSettingsJson = original.getGeneratorOptions();

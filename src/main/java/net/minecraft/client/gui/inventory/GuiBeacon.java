@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerBeacon;
@@ -162,8 +162,8 @@ public class GuiBeacon extends GuiContainer
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         RenderHelper.disableStandardItemLighting();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.primary", new Object[0]), 62, 10, 14737632);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("tile.beacon.secondary", new Object[0]), 169, 10, 14737632);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("tile.beacon.primary", new Object[0]), 62, 10, 14737632);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("tile.beacon.secondary", new Object[0]), 169, 10, 14737632);
 
         for (GuiButton guibutton : this.buttonList)
         {
@@ -261,7 +261,7 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
-            GuiBeacon.this.drawCreativeTabHoveringText(I18n.format("gui.cancel", new Object[0]), mouseX, mouseY);
+            GuiBeacon.this.drawCreativeTabHoveringText(LocalizationHelper.translate("gui.cancel", new Object[0]), mouseX, mouseY);
         }
     }
 
@@ -274,7 +274,7 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
-            GuiBeacon.this.drawCreativeTabHoveringText(I18n.format("gui.done", new Object[0]), mouseX, mouseY);
+            GuiBeacon.this.drawCreativeTabHoveringText(LocalizationHelper.translate("gui.done", new Object[0]), mouseX, mouseY);
         }
     }
 
@@ -292,7 +292,7 @@ public class GuiBeacon extends GuiContainer
 
         public void drawButtonForegroundLayer(int mouseX, int mouseY)
         {
-            String s = I18n.format(Potion.potionTypes[this.field_146149_p].getName(), new Object[0]);
+            String s = LocalizationHelper.translate(Potion.potionTypes[this.field_146149_p].getName(), new Object[0]);
 
             if (this.field_146148_q >= 3 && this.field_146149_p != Potion.regeneration.id)
             {

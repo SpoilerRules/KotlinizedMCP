@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.src.Config;
 
 public class GuiMessage extends GuiScreen
@@ -23,7 +23,7 @@ public class GuiMessage extends GuiScreen
         this.parentScreen = parentScreen;
         this.messageLine1 = line1;
         this.messageLine2 = line2;
-        this.confirmButtonText = I18n.format("gui.done", new Object[0]);
+        this.confirmButtonText = LocalizationHelper.translate("gui.done", new Object[0]);
     }
 
     public void initGui()

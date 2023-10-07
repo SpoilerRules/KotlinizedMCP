@@ -50,13 +50,12 @@ dependencies {
     implementation("net.java.dev.jna:jna-platform:5.13.0") // Latest as of 2023 August 22
 
     // Logging
-   // implementation("commons-logging:commons-logging:1.2") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of 2023 August 22
     implementation("org.apache.logging.log4j:log4j-api:2.20.0") // Latest as of 2023 August 22
     implementation("org.apache.logging.log4j:log4j-core:2.20.0") // Latest as of 2023 August 22
 
-    // Twitch
-    implementation("tv.twitch:twitch:6.5") // Neutral (Pending removal)
+    // Twitch (Pending removal)
+    implementation("tv.twitch:twitch:6.5") // Neutral
 
     // Miscellaneous
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
@@ -118,7 +117,7 @@ tasks.jar {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-  //  options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
+    //options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
 }
 
 tasks.withType<JavaExec> {

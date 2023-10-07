@@ -6,7 +6,7 @@ import java.util.Properties;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiYesNo;
 import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.src.Config;
 import net.optifine.Lang;
 import net.optifine.shaders.IShaderPack;
@@ -121,8 +121,8 @@ class GuiSlotShaders extends GuiSlot
                     else
                     {
                         String s3 = ("HD_U_" + s1).replace('_', ' ');
-                        String s4 = I18n.format("of.message.shaders.nv1", new Object[] {s3});
-                        String s5 = I18n.format("of.message.shaders.nv2", new Object[0]);
+                        String s4 = LocalizationHelper.translate("of.message.shaders.nv1", new Object[] {s3});
+                        String s5 = LocalizationHelper.translate("of.message.shaders.nv2", new Object[0]);
                         GuiYesNoCallback guiyesnocallback = new GuiYesNoCallback()
                         {
                             public void confirmClicked(boolean result, int id)

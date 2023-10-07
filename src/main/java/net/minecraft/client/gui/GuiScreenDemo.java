@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 import java.net.URI;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -18,8 +18,8 @@ public class GuiScreenDemo extends GuiScreen
     {
         this.buttonList.clear();
         int i = -16;
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 116, this.height / 2 + 62 + i, 114, 20, I18n.format("demo.help.buy", new Object[0])));
-        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height / 2 + 62 + i, 114, 20, I18n.format("demo.help.later", new Object[0])));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 116, this.height / 2 + 62 + i, 114, 20, LocalizationHelper.translate("demo.help.buy", new Object[0])));
+        this.buttonList.add(new GuiButton(2, this.width / 2 + 2, this.height / 2 + 62 + i, 114, 20, LocalizationHelper.translate("demo.help.later", new Object[0])));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -68,14 +68,14 @@ public class GuiScreenDemo extends GuiScreen
         this.drawDefaultBackground();
         int i = (this.width - 248) / 2 + 10;
         int j = (this.height - 166) / 2 + 8;
-        this.fontRendererObj.drawString(I18n.format("demo.help.title", new Object[0]), i, j, 2039583);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("demo.help.title", new Object[0]), i, j, 2039583);
         j = j + 12;
         GameSettings gamesettings = this.mc.gameSettings;
-        this.fontRendererObj.drawString(I18n.format("demo.help.movementShort", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindRight.getKeyCode())}), i, j, 5197647);
-        this.fontRendererObj.drawString(I18n.format("demo.help.movementMouse", new Object[0]), i, j + 12, 5197647);
-        this.fontRendererObj.drawString(I18n.format("demo.help.jump", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindJump.getKeyCode())}), i, j + 24, 5197647);
-        this.fontRendererObj.drawString(I18n.format("demo.help.inventory", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindInventory.getKeyCode())}), i, j + 36, 5197647);
-        this.fontRendererObj.drawSplitString(I18n.format("demo.help.fullWrapped", new Object[0]), i, j + 68, 218, 2039583);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("demo.help.movementShort", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindForward.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindLeft.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindBack.getKeyCode()), GameSettings.getKeyDisplayString(gamesettings.keyBindRight.getKeyCode())}), i, j, 5197647);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("demo.help.movementMouse", new Object[0]), i, j + 12, 5197647);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("demo.help.jump", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindJump.getKeyCode())}), i, j + 24, 5197647);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("demo.help.inventory", new Object[] {GameSettings.getKeyDisplayString(gamesettings.keyBindInventory.getKeyCode())}), i, j + 36, 5197647);
+        this.fontRendererObj.drawSplitString(LocalizationHelper.translate("demo.help.fullWrapped", new Object[0]), i, j + 68, 218, 2039583);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerMerchant;
@@ -53,7 +53,7 @@ public class GuiMerchant extends GuiContainer
     {
         String s = this.chatComponent.getUnformattedText();
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
     }
 
     public void updateScreen()
@@ -185,7 +185,7 @@ public class GuiMerchant extends GuiContainer
             }
             else if (merchantrecipe.isRecipeDisabled() && (this.isPointInRegion(83, 21, 28, 21, mouseX, mouseY) || this.isPointInRegion(83, 51, 28, 21, mouseX, mouseY)))
             {
-                this.drawCreativeTabHoveringText(I18n.format("merchant.deprecated", new Object[0]), mouseX, mouseY);
+                this.drawCreativeTabHoveringText(LocalizationHelper.translate("merchant.deprecated", new Object[0]), mouseX, mouseY);
             }
 
             GlStateManager.popMatrix();

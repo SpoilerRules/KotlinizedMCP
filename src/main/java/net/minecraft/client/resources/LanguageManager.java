@@ -25,7 +25,7 @@ public class LanguageManager implements IResourceManagerReloadListener
     {
         this.theMetadataSerializer = theMetadataSerializerIn;
         this.currentLanguage = currentLanguageIn;
-        I18n.setLocale(currentLocale);
+        LocalizationHelper.setCurrentLocale(currentLocale);
     }
 
     public void parseLanguageMetadata(List<IResourcePack> resourcesPacks)

@@ -44,7 +44,7 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.data.TextureMetadataSection;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -1164,11 +1164,11 @@ public class Shaders
         }
         else
         {
-            InternalFormat internalformat = (InternalFormat)connectedparser.parseEnum((String)deque.poll(), InternalFormat.values(), "internal format");
+            InternalFormat internalformat = (InternalFormat)connectedparser.parseEnum((String)deque.poll(), InternalFormat.values(), "internal translate");
 
             if (internalformat == null)
             {
-                SMCLog.warning("Invalid raw texture internal format: " + line);
+                SMCLog.warning("Invalid raw texture internal translate: " + line);
                 return null;
             }
             else
@@ -1206,11 +1206,11 @@ public class Shaders
 
                 if (i >= 0 && j >= 0 && k >= 0)
                 {
-                    PixelFormat pixelformat = (PixelFormat)connectedparser.parseEnum((String)deque.poll(), PixelFormat.values(), "pixel format");
+                    PixelFormat pixelformat = (PixelFormat)connectedparser.parseEnum((String)deque.poll(), PixelFormat.values(), "pixel translate");
 
                     if (pixelformat == null)
                     {
-                        SMCLog.warning("Invalid raw texture pixel format: " + line);
+                        SMCLog.warning("Invalid raw texture pixel translate: " + line);
                         return null;
                     }
                     else
@@ -1893,7 +1893,7 @@ public class Shaders
 
             if (Config.isShowGlErrors() && TimedEvent.isActive("ShowGlErrorShaders", 10000L))
             {
-                String s3 = I18n.format("of.message.openglError", new Object[] {Integer.valueOf(i), s});
+                String s3 = LocalizationHelper.translate("of.message.openglError", new Object[] {Integer.valueOf(i), s});
                 printChat(s3);
             }
         }
@@ -3020,7 +3020,7 @@ public class Shaders
                                                         if (i2 >= 0 && l != 0)
                                                         {
                                                             gbuffersFormat[i2] = l;
-                                                            SMCLog.info("%s format: %s", new Object[] {s5, s7});
+                                                            SMCLog.info("%s translate: %s", new Object[] {s5, s7});
                                                         }
                                                     }
                                                     else if (shaderline.isConstBoolSuffix("Clear", false))
@@ -3063,17 +3063,17 @@ public class Shaders
                                                     else if (shaderline.isProperty("GAUX4FORMAT", "RGBA32F"))
                                                     {
                                                         gbuffersFormat[7] = 34836;
-                                                        SMCLog.info("gaux4 format : RGB32AF");
+                                                        SMCLog.info("gaux4 translate : RGB32AF");
                                                     }
                                                     else if (shaderline.isProperty("GAUX4FORMAT", "RGB32F"))
                                                     {
                                                         gbuffersFormat[7] = 34837;
-                                                        SMCLog.info("gaux4 format : RGB32F");
+                                                        SMCLog.info("gaux4 translate : RGB32F");
                                                     }
                                                     else if (shaderline.isProperty("GAUX4FORMAT", "RGB16"))
                                                     {
                                                         gbuffersFormat[7] = 32852;
-                                                        SMCLog.info("gaux4 format : RGB16");
+                                                        SMCLog.info("gaux4 translate : RGB16");
                                                     }
                                                     else if (shaderline.isConstBoolSuffix("MipmapEnabled", true))
                                                     {

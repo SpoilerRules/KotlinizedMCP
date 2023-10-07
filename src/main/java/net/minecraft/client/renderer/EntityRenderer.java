@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.settings.GameSettings;
@@ -2561,7 +2561,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             {
                 String s = "HD_U".replace("HD_U", "HD Ultra").replace("L", "Light");
                 String s1 = s + " " + Config.getNewRelease();
-                ChatComponentText chatcomponenttext = new ChatComponentText(I18n.format("of.message.newVersion", new Object[] {"\u00a7n" + s1 + "\u00a7r"}));
+                ChatComponentText chatcomponenttext = new ChatComponentText(LocalizationHelper.translate("of.message.newVersion", new Object[] {"\u00a7n" + s1 + "\u00a7r"}));
                 chatcomponenttext.setChatStyle((new ChatStyle()).setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://optifine.net/downloads")));
                 this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext);
                 Config.setNewRelease((String)null);
@@ -2570,7 +2570,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             if (Config.isNotify64BitJava())
             {
                 Config.setNotify64BitJava(false);
-                ChatComponentText chatcomponenttext1 = new ChatComponentText(I18n.format("of.message.java64Bit", new Object[0]));
+                ChatComponentText chatcomponenttext1 = new ChatComponentText(LocalizationHelper.translate("of.message.java64Bit", new Object[0]));
                 this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext1);
             }
         }
@@ -2609,7 +2609,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             if (i != 0 && GlErrors.isEnabled(i))
             {
                 String s = Config.getGlErrorString(i);
-                ChatComponentText chatcomponenttext = new ChatComponentText(I18n.format("of.message.openglError", new Object[] {Integer.valueOf(i), s}));
+                ChatComponentText chatcomponenttext = new ChatComponentText(LocalizationHelper.translate("of.message.openglError", new Object[] {Integer.valueOf(i), s}));
                 this.mc.ingameGUI.getChatGUI().printChatMessage(chatcomponenttext);
             }
         }
@@ -2701,7 +2701,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
 
             this.loadVisibleChunks = true;
-            ChatComponentText chatcomponenttext = new ChatComponentText(I18n.format("of.message.loadingVisibleChunks", new Object[0]));
+            ChatComponentText chatcomponenttext = new ChatComponentText(LocalizationHelper.translate("of.message.loadingVisibleChunks", new Object[0]));
             this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(chatcomponenttext, i);
         }
     }

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import net.minecraft.client.AnvilConverterException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.storage.ISaveFormat;
@@ -44,7 +44,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     public void initGui()
     {
-        this.screenTitle = I18n.format("selectWorld.title", new Object[0]);
+        this.screenTitle = LocalizationHelper.translate("selectWorld.title", new Object[0]);
 
         try
         {
@@ -57,12 +57,12 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
             return;
         }
 
-        this.field_146637_u = I18n.format("selectWorld.world", new Object[0]);
-        this.field_146636_v = I18n.format("selectWorld.conversion", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.SURVIVAL.getID()] = I18n.format("gameMode.survival", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.CREATIVE.getID()] = I18n.format("gameMode.creative", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.ADVENTURE.getID()] = I18n.format("gameMode.adventure", new Object[0]);
-        this.field_146635_w[WorldSettings.GameType.SPECTATOR.getID()] = I18n.format("gameMode.spectator", new Object[0]);
+        this.field_146637_u = LocalizationHelper.translate("selectWorld.world", new Object[0]);
+        this.field_146636_v = LocalizationHelper.translate("selectWorld.conversion", new Object[0]);
+        this.field_146635_w[WorldSettings.GameType.SURVIVAL.getID()] = LocalizationHelper.translate("gameMode.survival", new Object[0]);
+        this.field_146635_w[WorldSettings.GameType.CREATIVE.getID()] = LocalizationHelper.translate("gameMode.creative", new Object[0]);
+        this.field_146635_w[WorldSettings.GameType.ADVENTURE.getID()] = LocalizationHelper.translate("gameMode.adventure", new Object[0]);
+        this.field_146635_w[WorldSettings.GameType.SPECTATOR.getID()] = LocalizationHelper.translate("gameMode.spectator", new Object[0]);
         this.availableWorlds = new GuiSelectWorld.List(this.mc);
         this.availableWorlds.registerScrollButtons(4, 5);
         this.addWorldSelectionButtons();
@@ -93,7 +93,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
         if (StringUtils.isEmpty(s))
         {
-            s = I18n.format("selectWorld.world", new Object[0]) + " " + (p_146614_1_ + 1);
+            s = LocalizationHelper.translate("selectWorld.world", new Object[0]) + " " + (p_146614_1_ + 1);
         }
 
         return s;
@@ -101,12 +101,12 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     public void addWorldSelectionButtons()
     {
-        this.buttonList.add(this.selectButton = new GuiButton(1, this.width / 2 - 154, this.height - 52, 150, 20, I18n.format("selectWorld.select", new Object[0])));
-        this.buttonList.add(new GuiButton(3, this.width / 2 + 4, this.height - 52, 150, 20, I18n.format("selectWorld.create", new Object[0])));
-        this.buttonList.add(this.renameButton = new GuiButton(6, this.width / 2 - 154, this.height - 28, 72, 20, I18n.format("selectWorld.rename", new Object[0])));
-        this.buttonList.add(this.deleteButton = new GuiButton(2, this.width / 2 - 76, this.height - 28, 72, 20, I18n.format("selectWorld.delete", new Object[0])));
-        this.buttonList.add(this.recreateButton = new GuiButton(7, this.width / 2 + 4, this.height - 28, 72, 20, I18n.format("selectWorld.recreate", new Object[0])));
-        this.buttonList.add(new GuiButton(0, this.width / 2 + 82, this.height - 28, 72, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(this.selectButton = new GuiButton(1, this.width / 2 - 154, this.height - 52, 150, 20, LocalizationHelper.translate("selectWorld.select", new Object[0])));
+        this.buttonList.add(new GuiButton(3, this.width / 2 + 4, this.height - 52, 150, 20, LocalizationHelper.translate("selectWorld.create", new Object[0])));
+        this.buttonList.add(this.renameButton = new GuiButton(6, this.width / 2 - 154, this.height - 28, 72, 20, LocalizationHelper.translate("selectWorld.rename", new Object[0])));
+        this.buttonList.add(this.deleteButton = new GuiButton(2, this.width / 2 - 76, this.height - 28, 72, 20, LocalizationHelper.translate("selectWorld.delete", new Object[0])));
+        this.buttonList.add(this.recreateButton = new GuiButton(7, this.width / 2 + 4, this.height - 28, 72, 20, LocalizationHelper.translate("selectWorld.recreate", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 + 82, this.height - 28, 72, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
         this.selectButton.enabled = false;
         this.deleteButton.enabled = false;
         this.renameButton.enabled = false;
@@ -223,10 +223,10 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
     public static GuiYesNo makeDeleteWorldYesNo(GuiYesNoCallback selectWorld, String name, int id)
     {
-        String s = I18n.format("selectWorld.deleteQuestion", new Object[0]);
-        String s1 = "\'" + name + "\' " + I18n.format("selectWorld.deleteWarning", new Object[0]);
-        String s2 = I18n.format("selectWorld.deleteButton", new Object[0]);
-        String s3 = I18n.format("gui.cancel", new Object[0]);
+        String s = LocalizationHelper.translate("selectWorld.deleteQuestion", new Object[0]);
+        String s1 = "\'" + name + "\' " + LocalizationHelper.translate("selectWorld.deleteWarning", new Object[0]);
+        String s2 = LocalizationHelper.translate("selectWorld.deleteButton", new Object[0]);
+        String s3 = LocalizationHelper.translate("gui.cancel", new Object[0]);
         GuiYesNo guiyesno = new GuiYesNo(selectWorld, s, s1, s2, s3, id);
         return guiyesno;
     }
@@ -298,12 +298,12 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
                 if (saveformatcomparator.isHardcoreModeEnabled())
                 {
-                    s2 = EnumChatFormatting.DARK_RED + I18n.format("gameMode.hardcore", new Object[0]) + EnumChatFormatting.RESET;
+                    s2 = EnumChatFormatting.DARK_RED + LocalizationHelper.translate("gameMode.hardcore", new Object[0]) + EnumChatFormatting.RESET;
                 }
 
                 if (saveformatcomparator.getCheatsEnabled())
                 {
-                    s2 = s2 + ", " + I18n.format("selectWorld.cheats", new Object[0]);
+                    s2 = s2 + ", " + LocalizationHelper.translate("selectWorld.cheats", new Object[0]);
                 }
             }
 

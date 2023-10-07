@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import io.netty.buffer.Unpooled;
 import java.io.IOException;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
@@ -36,8 +36,8 @@ public class GuiCommandBlock extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 4 - 150, this.height / 4 + 120 + 12, 150, 20, I18n.format("gui.done", new Object[0])));
-        this.buttonList.add(this.cancelBtn = new GuiButton(1, this.width / 2 + 4, this.height / 4 + 120 + 12, 150, 20, I18n.format("gui.cancel", new Object[0])));
+        this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 4 - 150, this.height / 4 + 120 + 12, 150, 20, LocalizationHelper.translate("gui.done", new Object[0])));
+        this.buttonList.add(this.cancelBtn = new GuiButton(1, this.width / 2 + 4, this.height / 4 + 120 + 12, 150, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
         this.buttonList.add(this.field_175390_s = new GuiButton(4, this.width / 2 + 150 - 20, 150, 20, 20, "O"));
         this.commandTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 50, 300, 20);
         this.commandTextField.setMaxStringLength(32767);
@@ -119,21 +119,21 @@ public class GuiCommandBlock extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("advMode.setCommand", new Object[0]), this.width / 2, 20, 16777215);
-        this.drawString(this.fontRendererObj, I18n.format("advMode.command", new Object[0]), this.width / 2 - 150, 37, 10526880);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("advMode.setCommand", new Object[0]), this.width / 2, 20, 16777215);
+        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.command", new Object[0]), this.width / 2 - 150, 37, 10526880);
         this.commandTextField.drawTextBox();
         int i = 75;
         int j = 0;
-        this.drawString(this.fontRendererObj, I18n.format("advMode.nearestPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, I18n.format("advMode.randomPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, I18n.format("advMode.allPlayers", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, I18n.format("advMode.allEntities", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.nearestPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.randomPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.allPlayers", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.allEntities", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
         this.drawString(this.fontRendererObj, "", this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
 
         if (this.previousOutputTextField.getText().length() > 0)
         {
             i = i + j * this.fontRendererObj.FONT_HEIGHT + 16;
-            this.drawString(this.fontRendererObj, I18n.format("advMode.previousOutput", new Object[0]), this.width / 2 - 150, i, 10526880);
+            this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.previousOutput", new Object[0]), this.width / 2 - 150, i, 10526880);
             this.previousOutputTextField.drawTextBox();
         }
 

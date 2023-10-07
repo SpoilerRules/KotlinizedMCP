@@ -177,8 +177,8 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
 
                 if (j != 1)
                 {
-                    String s1 = I18n.format("resourcePack.incompatible.confirm.title", new Object[0]);
-                    String s = I18n.format("resourcePack.incompatible.confirm." + (j > 1 ? "new" : "old"), new Object[0]);
+                    String s1 = LocalizationHelper.translate("resourcePack.incompatible.confirm.title", new Object[0]);
+                    String s = LocalizationHelper.translate("resourcePack.incompatible.confirm." + (j > 1 ? "new" : "old"), new Object[0]);
                     this.mc.displayGuiScreen(new GuiYesNo(new GuiYesNoCallback()
                     {
                         public void confirmClicked(boolean result, int id)

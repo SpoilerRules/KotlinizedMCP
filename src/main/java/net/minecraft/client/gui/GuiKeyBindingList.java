@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.util.Arrays;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.EnumChatFormatting;
@@ -36,7 +36,7 @@ public class GuiKeyBindingList extends GuiListExtended
                 this.listEntries[i++] = new GuiKeyBindingList.CategoryEntry(s1);
             }
 
-            int j = mcIn.fontRendererObj.getStringWidth(I18n.format(keybinding.getKeyDescription(), new Object[0]));
+            int j = mcIn.fontRendererObj.getStringWidth(LocalizationHelper.translate(keybinding.getKeyDescription(), new Object[0]));
 
             if (j > this.maxListLabelWidth)
             {
@@ -74,7 +74,7 @@ public class GuiKeyBindingList extends GuiListExtended
 
         public CategoryEntry(String p_i45028_2_)
         {
-            this.labelText = I18n.format(p_i45028_2_, new Object[0]);
+            this.labelText = LocalizationHelper.translate(p_i45028_2_, new Object[0]);
             this.labelWidth = GuiKeyBindingList.this.mc.fontRendererObj.getStringWidth(this.labelText);
         }
 
@@ -107,9 +107,9 @@ public class GuiKeyBindingList extends GuiListExtended
         private KeyEntry(KeyBinding p_i45029_2_)
         {
             this.keybinding = p_i45029_2_;
-            this.keyDesc = I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]);
-            this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 75, 20, I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]));
-            this.btnReset = new GuiButton(0, 0, 0, 50, 20, I18n.format("controls.reset", new Object[0]));
+            this.keyDesc = LocalizationHelper.translate(p_i45029_2_.getKeyDescription(), new Object[0]);
+            this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 75, 20, LocalizationHelper.translate(p_i45029_2_.getKeyDescription(), new Object[0]));
+            this.btnReset = new GuiButton(0, 0, 0, 50, 20, LocalizationHelper.translate("controls.reset", new Object[0]));
         }
 
         public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected)

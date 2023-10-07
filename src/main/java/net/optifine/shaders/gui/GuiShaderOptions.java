@@ -3,7 +3,7 @@ package net.optifine.shaders.gui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.src.Config;
 import net.minecraft.util.MathHelper;
@@ -53,7 +53,7 @@ public class GuiShaderOptions extends GuiScreenOF
 
     public void initGui()
     {
-        this.title = I18n.format("of.options.shaderOptionsTitle", new Object[0]);
+        this.title = LocalizationHelper.translate("of.options.shaderOptionsTitle", new Object[0]);
         int i = 100;
         int j = 0;
         int k = 30;
@@ -103,8 +103,8 @@ public class GuiShaderOptions extends GuiScreenOF
             }
         }
 
-        this.buttonList.add(new GuiButton(201, this.width / 2 - i1 - 20, this.height / 6 + 168 + 11, i1, j1, I18n.format("controls.reset", new Object[0])));
-        this.buttonList.add(new GuiButton(200, this.width / 2 + 20, this.height / 6 + 168 + 11, i1, j1, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(201, this.width / 2 - i1 - 20, this.height / 6 + 168 + 11, i1, j1, LocalizationHelper.translate("controls.reset", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 + 20, this.height / 6 + 168 + 11, i1, j1, LocalizationHelper.translate("gui.done", new Object[0])));
     }
 
     public static String getButtonText(ShaderOption so, int btnWidth)

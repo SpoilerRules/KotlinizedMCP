@@ -7,7 +7,7 @@ import java.util.Random;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.src.Config;
 import net.optifine.Lang;
 
@@ -30,16 +30,16 @@ public class GuiScreenCapeOF extends GuiScreenOF
     public void initGui()
     {
         int i = 0;
-        this.title = I18n.format("of.options.capeOF.title", new Object[0]);
+        this.title = LocalizationHelper.translate("of.options.capeOF.title", new Object[0]);
         i = i + 2;
-        this.buttonList.add(new GuiButtonOF(210, this.width / 2 - 155, this.height / 6 + 24 * (i >> 1), 150, 20, I18n.format("of.options.capeOF.openEditor", new Object[0])));
-        this.buttonList.add(new GuiButtonOF(220, this.width / 2 - 155 + 160, this.height / 6 + 24 * (i >> 1), 150, 20, I18n.format("of.options.capeOF.reloadCape", new Object[0])));
+        this.buttonList.add(new GuiButtonOF(210, this.width / 2 - 155, this.height / 6 + 24 * (i >> 1), 150, 20, LocalizationHelper.translate("of.options.capeOF.openEditor", new Object[0])));
+        this.buttonList.add(new GuiButtonOF(220, this.width / 2 - 155 + 160, this.height / 6 + 24 * (i >> 1), 150, 20, LocalizationHelper.translate("of.options.capeOF.reloadCape", new Object[0])));
         i = i + 6;
-        this.buttonCopyLink = new GuiButtonOF(230, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), 200, 20, I18n.format("of.options.capeOF.copyEditorLink", new Object[0]));
+        this.buttonCopyLink = new GuiButtonOF(230, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), 200, 20, LocalizationHelper.translate("of.options.capeOF.copyEditorLink", new Object[0]));
         this.buttonCopyLink.visible = this.linkUrl != null;
         this.buttonList.add(this.buttonCopyLink);
         i = i + 4;
-        this.buttonList.add(new GuiButtonOF(200, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButtonOF(200, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), LocalizationHelper.translate("gui.done", new Object[0])));
     }
 
     protected void actionPerformed(GuiButton button)
@@ -80,7 +80,7 @@ public class GuiScreenCapeOF extends GuiScreenOF
                 }
                 catch (InvalidCredentialsException invalidcredentialsexception)
                 {
-                    Config.showGuiMessage(I18n.format("of.message.capeOF.error1", new Object[0]), I18n.format("of.message.capeOF.error2", new Object[] {invalidcredentialsexception.getMessage()}));
+                    Config.showGuiMessage(LocalizationHelper.translate("of.message.capeOF.error1", new Object[0]), LocalizationHelper.translate("of.message.capeOF.error2", new Object[] {invalidcredentialsexception.getMessage()}));
                     Config.warn("Mojang authentication failed");
                     Config.warn(invalidcredentialsexception.getClass().getName() + ": " + invalidcredentialsexception.getMessage());
                 }

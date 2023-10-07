@@ -127,4 +127,8 @@ public class Locale
             return "Format error: " + s;
         }
     }
+
+    public Map<String, String> getProperties() {
+        return properties;
+    }
 }

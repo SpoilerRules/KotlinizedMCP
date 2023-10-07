@@ -45,7 +45,7 @@ public class CustomColormap implements CustomColors.IColorizer
     public static final String FORMAT_GRID_STRING = "grid";
     public static final String FORMAT_FIXED_STRING = "fixed";
     public static final String[] FORMAT_STRINGS = new String[] {"vanilla", "grid", "fixed"};
-    public static final String KEY_FORMAT = "format";
+    public static final String KEY_FORMAT = "translate";
     public static final String KEY_BLOCKS = "blocks";
     public static final String KEY_SOURCE = "source";
     public static final String KEY_COLOR = "color";
@@ -57,7 +57,7 @@ public class CustomColormap implements CustomColors.IColorizer
         ConnectedParser connectedparser = new ConnectedParser("Colormap");
         this.name = connectedparser.parseName(path);
         this.basePath = connectedparser.parseBasePath(path);
-        this.format = this.parseFormat(props.getProperty("format", formatDefault));
+        this.format = this.parseFormat(props.getProperty("translate", formatDefault));
         this.matchBlocks = connectedparser.parseMatchBlocks(props.getProperty("blocks"));
         this.source = parseTexture(props.getProperty("source"), path, this.basePath);
         this.color = ConnectedParser.parseColor(props.getProperty("color"), -1);
@@ -91,7 +91,7 @@ public class CustomColormap implements CustomColors.IColorizer
             }
             else
             {
-                warn("Unknown format: " + str);
+                warn("Unknown translate: " + str);
                 return -1;
             }
         }

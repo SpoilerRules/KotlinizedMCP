@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.stream.IStream;
 import net.minecraft.client.stream.NullStream;
 import net.minecraft.util.ChatComponentTranslation;
@@ -64,12 +64,12 @@ public class GuiStreamUnavailable extends GuiScreen
 
         if (this.field_152326_h.func_152559_b() != null)
         {
-            this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 50, 150, 20, I18n.format("gui.cancel", new Object[0])));
-            this.buttonList.add(new GuiButton(1, this.width / 2 - 155 + 160, this.height - 50, 150, 20, I18n.format(this.field_152326_h.func_152559_b().getFormattedText(), new Object[0])));
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 155, this.height - 50, 150, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
+            this.buttonList.add(new GuiButton(1, this.width / 2 - 155 + 160, this.height - 50, 150, 20, LocalizationHelper.translate(this.field_152326_h.func_152559_b().getFormattedText(), new Object[0])));
         }
         else
         {
-            this.buttonList.add(new GuiButton(0, this.width / 2 - 75, this.height - 50, 150, 20, I18n.format("gui.cancel", new Object[0])));
+            this.buttonList.add(new GuiButton(0, this.width / 2 - 75, this.height - 50, 150, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
         }
     }
 

@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 
 public class GuiConfirmOpenLink extends GuiYesNo
 {
@@ -12,11 +12,11 @@ public class GuiConfirmOpenLink extends GuiYesNo
 
     public GuiConfirmOpenLink(GuiYesNoCallback p_i1084_1_, String linkTextIn, int p_i1084_3_, boolean p_i1084_4_)
     {
-        super(p_i1084_1_, I18n.format(p_i1084_4_ ? "chat.link.confirmTrusted" : "chat.link.confirm", new Object[0]), linkTextIn, p_i1084_3_);
-        this.confirmButtonText = I18n.format(p_i1084_4_ ? "chat.link.open" : "gui.yes", new Object[0]);
-        this.cancelButtonText = I18n.format(p_i1084_4_ ? "gui.cancel" : "gui.no", new Object[0]);
-        this.copyLinkButtonText = I18n.format("chat.copy", new Object[0]);
-        this.openLinkWarning = I18n.format("chat.link.warning", new Object[0]);
+        super(p_i1084_1_, LocalizationHelper.translate(p_i1084_4_ ? "chat.link.confirmTrusted" : "chat.link.confirm", new Object[0]), linkTextIn, p_i1084_3_);
+        this.confirmButtonText = LocalizationHelper.translate(p_i1084_4_ ? "chat.link.open" : "gui.yes", new Object[0]);
+        this.cancelButtonText = LocalizationHelper.translate(p_i1084_4_ ? "gui.cancel" : "gui.no", new Object[0]);
+        this.copyLinkButtonText = LocalizationHelper.translate("chat.copy", new Object[0]);
+        this.openLinkWarning = LocalizationHelper.translate("chat.link.warning", new Object[0]);
         this.linkText = linkTextIn;
     }
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.ResourcePackListEntry;
 import net.minecraft.client.resources.ResourcePackListEntryDefault;
 import net.minecraft.client.resources.ResourcePackListEntryFound;
@@ -33,8 +33,8 @@ public class GuiScreenResourcePacks extends GuiScreen
 
     public void initGui()
     {
-        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, I18n.format("resourcePack.openFolder", new Object[0])));
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, LocalizationHelper.translate("resourcePack.openFolder", new Object[0])));
+        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, LocalizationHelper.translate("gui.done", new Object[0])));
 
         if (!this.changed)
         {
@@ -205,8 +205,8 @@ public class GuiScreenResourcePacks extends GuiScreen
         this.drawBackground(0);
         this.availableResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
         this.selectedResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
-        this.drawCenteredString(this.fontRendererObj, I18n.format("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
+        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

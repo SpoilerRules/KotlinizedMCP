@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
@@ -96,14 +96,14 @@ public class GuiScreenBook extends GuiScreen
 
         if (this.bookIsUnsigned)
         {
-            this.buttonList.add(this.buttonSign = new GuiButton(3, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, I18n.format("book.signButton", new Object[0])));
-            this.buttonList.add(this.buttonDone = new GuiButton(0, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, I18n.format("gui.done", new Object[0])));
-            this.buttonList.add(this.buttonFinalize = new GuiButton(5, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, I18n.format("book.finalizeButton", new Object[0])));
-            this.buttonList.add(this.buttonCancel = new GuiButton(4, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, I18n.format("gui.cancel", new Object[0])));
+            this.buttonList.add(this.buttonSign = new GuiButton(3, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, LocalizationHelper.translate("book.signButton", new Object[0])));
+            this.buttonList.add(this.buttonDone = new GuiButton(0, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, LocalizationHelper.translate("gui.done", new Object[0])));
+            this.buttonList.add(this.buttonFinalize = new GuiButton(5, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, LocalizationHelper.translate("book.finalizeButton", new Object[0])));
+            this.buttonList.add(this.buttonCancel = new GuiButton(4, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
         }
         else
         {
-            this.buttonList.add(this.buttonDone = new GuiButton(0, this.width / 2 - 100, 4 + this.bookImageHeight, 200, 20, I18n.format("gui.done", new Object[0])));
+            this.buttonList.add(this.buttonDone = new GuiButton(0, this.width / 2 - 100, 4 + this.bookImageHeight, 200, 20, LocalizationHelper.translate("gui.done", new Object[0])));
         }
 
         int i = (this.width - this.bookImageWidth) / 2;
@@ -381,20 +381,20 @@ public class GuiScreenBook extends GuiScreen
                 }
             }
 
-            String s1 = I18n.format("book.editTitle", new Object[0]);
+            String s1 = LocalizationHelper.translate("book.editTitle", new Object[0]);
             int k = this.fontRendererObj.getStringWidth(s1);
             this.fontRendererObj.drawString(s1, i + 36 + (116 - k) / 2, j + 16 + 16, 0);
             int l = this.fontRendererObj.getStringWidth(s);
             this.fontRendererObj.drawString(s, i + 36 + (116 - l) / 2, j + 48, 0);
-            String s2 = I18n.format("book.byAuthor", new Object[] {this.editingPlayer.getName()});
+            String s2 = LocalizationHelper.translate("book.byAuthor", new Object[] {this.editingPlayer.getName()});
             int i1 = this.fontRendererObj.getStringWidth(s2);
             this.fontRendererObj.drawString(EnumChatFormatting.DARK_GRAY + s2, i + 36 + (116 - i1) / 2, j + 48 + 10, 0);
-            String s3 = I18n.format("book.finalizeWarning", new Object[0]);
+            String s3 = LocalizationHelper.translate("book.finalizeWarning", new Object[0]);
             this.fontRendererObj.drawSplitString(s3, i + 36, j + 80, 116, 0);
         }
         else
         {
-            String s4 = I18n.format("book.pageIndicator", new Object[] {Integer.valueOf(this.currPage + 1), Integer.valueOf(this.bookTotalPages)});
+            String s4 = LocalizationHelper.translate("book.pageIndicator", new Object[] {Integer.valueOf(this.currPage + 1), Integer.valueOf(this.bookTotalPages)});
             String s5 = "";
 
             if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())

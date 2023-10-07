@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.InventoryEffectRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -51,7 +51,7 @@ public class GuiInventory extends InventoryEffectRenderer
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 86, 16, 4210752);
+        this.fontRendererObj.drawString(LocalizationHelper.translate("container.crafting", new Object[0]), 86, 16, 4210752);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)

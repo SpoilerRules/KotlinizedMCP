@@ -11,17 +11,15 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Session;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
 import net.optifine.CustomPanorama;
 import net.optifine.CustomPanoramaProperties;
-import net.optifine.Log;
 import net.optifine.reflect.Reflector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -107,8 +105,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         this.openGLWarning1 = "";
 
         if (!GLContext.getCapabilities().OpenGL20 && !OpenGlHelper.areShadersSupported()) {
-            this.openGLWarning1 = I18n.format("title.oldgl1", new Object[0]);
-            this.openGLWarning2 = I18n.format("title.oldgl2", new Object[0]);
+            this.openGLWarning1 = LocalizationHelper.translate("title.oldgl1", new Object[0]);
+            this.openGLWarning2 = LocalizationHelper.translate("title.oldgl2", new Object[0]);
             this.openGLWarningLink = "https://help.mojang.com/customer/portal/articles/325948?ref=game";
         }
     }
@@ -155,8 +153,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.addSingleplayerMultiplayerButtons(j, 24);
         }
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, LocalizationHelper.translate("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, LocalizationHelper.translate("menu.quit", new Object[0])));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
 
         synchronized (this.threadLock) {
@@ -178,12 +176,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     private void addSingleplayerMultiplayerButtons(int buttonY, int buttonSpacing) {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, buttonY, I18n.format("menu.singleplayer")));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, buttonY + buttonSpacing, I18n.format("menu.multiplayer")));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, buttonY, LocalizationHelper.translate("menu.singleplayer")));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, buttonY + buttonSpacing, LocalizationHelper.translate("menu.multiplayer")));
 
         if (Reflector.GuiModList_Constructor.exists()) {
             this.mLoginButton = new GuiButton(14, this.width / 2 + 2, buttonY + buttonSpacing * 2, 98, 20, "Microsoft Login");
-            this.modButton = new GuiButton(6, this.width / 2 - 100, buttonY + buttonSpacing * 2, 98, 20, I18n.format("fml.menu.mods"));
+            this.modButton = new GuiButton(6, this.width / 2 - 100, buttonY + buttonSpacing * 2, 98, 20, LocalizationHelper.translate("fml.menu.mods"));
             this.buttonList.addAll(Arrays.asList(this.mLoginButton, this.modButton));
         } else {
             this.mLoginButton = new GuiButton(14, this.width / 2 - 100, buttonY + buttonSpacing * 2, "Microsoft Login");
@@ -192,9 +190,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
     }
 
     private void addDemoButtons(int p_73972_1_, int p_73972_2_) {
-        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
+        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, LocalizationHelper.translate("menu.playdemo", new Object[0])));
         GuiButton buttonResetDemo;
-        this.buttonList.add(buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo", new Object[0])));
+        this.buttonList.add(buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, LocalizationHelper.translate("menu.resetdemo", new Object[0])));
         ISaveFormat isaveformat = this.mc.getSaveLoader();
         WorldInfo worldinfo = isaveformat.getWorldInfo("Demo_World");
 

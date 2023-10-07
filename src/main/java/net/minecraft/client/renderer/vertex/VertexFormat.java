@@ -111,7 +111,7 @@ public class VertexFormat
 
     public String toString()
     {
-        String s = "format: " + this.elements.size() + " elements: ";
+        String s = "translate: " + this.elements.size() + " elements: ";
 
         for (int i = 0; i < this.elements.size(); ++i)
         {

@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.LocalizationHelper;
 
 public class GuiSlider extends GuiButton
 {
@@ -49,7 +49,7 @@ public class GuiSlider extends GuiButton
 
     private String getDisplayString()
     {
-        return this.formatHelper == null ? I18n.format(this.name, new Object[0]) + ": " + this.func_175220_c() : this.formatHelper.getText(this.id, I18n.format(this.name, new Object[0]), this.func_175220_c());
+        return this.formatHelper == null ? LocalizationHelper.translate(this.name, new Object[0]) + ": " + this.func_175220_c() : this.formatHelper.getText(this.id, LocalizationHelper.translate(this.name, new Object[0]), this.func_175220_c());
     }
 
     protected int getHoverState(boolean mouseOver)
