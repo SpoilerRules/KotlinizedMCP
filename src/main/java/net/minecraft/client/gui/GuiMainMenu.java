@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import net.minecraft.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.mainMenuGui.microsoftLogin.LoginHandler;
 import net.minecraft.client.renderer.GlStateManager;
@@ -450,7 +451,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
         GlStateManager.scale(f, f, f);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         GlStateManager.popMatrix();
-        String text = "Evanescent";
+        String text = ClientBrandEnum.MINECRAFT_VERSION;
 
         if (Reflector.FMLCommonHandler_getBrandings.exists()) {
             Object object = Reflector.call(Reflector.FMLCommonHandler_instance);

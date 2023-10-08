@@ -1,5 +1,6 @@
 package net.minecraft.server.management;
 
+import annotations.PendingRemoval;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -911,31 +912,32 @@ public abstract class ServerConfigurationManager
         this.sendChatMsgImpl(component, true);
     }
 
-    public StatisticsFile getPlayerStatsFile(EntityPlayer playerIn)
-    {
+    @PendingRemoval
+    public StatisticsFile getPlayerStatsFile(EntityPlayer playerIn) {
         UUID uuid = playerIn.getUniqueID();
-        StatisticsFile statisticsfile = uuid == null ? null : (StatisticsFile)this.playerStatFiles.get(uuid);
+        if (uuid == null) return null;
 
-        if (statisticsfile == null)
-        {
-            File file1 = new File(this.mcServer.worldServerForDimension(0).getSaveHandler().getWorldDirectory(), "stats");
-            File file2 = new File(file1, uuid.toString() + ".json");
+        if (this.playerStatFiles.containsKey(uuid)) return this.playerStatFiles.get(uuid);
 
-            if (!file2.exists())
-            {
-                File file3 = new File(file1, playerIn.getName() + ".json");
+        // prepares the stats file
+        File worldDirectory = this.mcServer.worldServerForDimension(0).getSaveHandler().getWorldDirectory();
+        File statsDirectory = new File(worldDirectory, "stats");
+        File playerStatsFile = new File(statsDirectory, uuid + ".json");
 
-                if (file3.exists() && file3.isFile())
-                {
-                    file3.renameTo(file2);
-                }
+        // if the stats file doesn't exist, check for old format and rename if necessary
+        if (!playerStatsFile.exists()) {
+            File oldPlayerStatsFile = new File(statsDirectory, playerIn.getName() + ".json");
+            if (oldPlayerStatsFile.exists() && oldPlayerStatsFile.isFile()) {
+                boolean renamed = oldPlayerStatsFile.renameTo(playerStatsFile);
+                if (!renamed) logger.error("Failed to rename player stats file.");
             }
-
-            statisticsfile = new StatisticsFile(this.mcServer, file2);
-            statisticsfile.readStatFile();
-            this.playerStatFiles.put(uuid, statisticsfile);
         }
 
+        StatisticsFile statisticsfile = new StatisticsFile(this.mcServer, playerStatsFile);
+        statisticsfile.readStatFile();
+
+        // cache loaded stats file and finally return it
+        this.playerStatFiles.put(uuid, statisticsfile);
         return statisticsfile;
     }
 
