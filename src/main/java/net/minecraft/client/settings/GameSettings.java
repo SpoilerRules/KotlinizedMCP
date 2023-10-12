@@ -130,7 +130,14 @@ public class GameSettings {
     public int streamMicToggleBehavior = 0;
     public boolean useNativeTransport = true;
     public boolean entityShadows = true;
+
+    // Extra Settings
     public boolean autoSprint = true;
+    public boolean rawInput = false;
+    public boolean scoreDisplay = true;
+    public boolean cameraShake = true;
+    public boolean jumpDelay = false;
+
     public KeyBinding keyBindForward = new KeyBinding("key.forward", 17, "key.categories.movement");
     public KeyBinding keyBindLeft = new KeyBinding("key.left", 30, "key.categories.movement");
     public KeyBinding keyBindBack = new KeyBinding("key.back", 31, "key.categories.movement");
@@ -565,8 +572,22 @@ public class GameSettings {
             this.entityShadows = !this.entityShadows;
         }
 
+        // Extra Settings
         if (settingsOption == GameSettings.Options.AUTO_SPRINT) {
             this.autoSprint = !this.autoSprint;
+        }
+        if (settingsOption == GameSettings.Options.RAW_INPUT) {
+            this.rawInput = !this.rawInput;
+        }
+        if (settingsOption == GameSettings.Options.SCORE_DISPLAY) {
+            this.scoreDisplay = !this.scoreDisplay;
+        }
+        if (settingsOption == GameSettings.Options.CAMERA_SHAKE) {
+            this.cameraShake = !this.cameraShake;
+        }
+
+        if (settingsOption == GameSettings.Options.JUMP_DELAY) {
+            this.jumpDelay = !this.jumpDelay;
         }
 
         this.saveOptions();
@@ -596,7 +617,14 @@ public class GameSettings {
             case BLOCK_ALTERNATIVES -> this.allowBlockAlternatives;
             case REDUCED_DEBUG_INFO -> this.reducedDebugInfo;
             case ENTITY_SHADOWS -> this.entityShadows;
+
+            // Extra Settings
             case AUTO_SPRINT -> this.autoSprint;
+            case RAW_INPUT ->  this.rawInput;
+            case SCORE_DISPLAY -> this.scoreDisplay;
+            case CAMERA_SHAKE -> this.cameraShake;
+            case JUMP_DELAY -> this.jumpDelay;
+
             default -> false;
         };
     }
@@ -2555,7 +2583,14 @@ public class GameSettings {
         BLOCK_ALTERNATIVES("options.blockAlternatives", false, true),
         REDUCED_DEBUG_INFO("options.reducedDebugInfo", false, true),
         ENTITY_SHADOWS("options.entityShadows", false, true),
+
+        // Extra Settings
         AUTO_SPRINT("Auto Sprint", false, true),
+        RAW_INPUT("Raw Input", false, true),
+        SCORE_DISPLAY("Score Point Display", false, true),
+        CAMERA_SHAKE("Camera Shake", false, true),
+        JUMP_DELAY("Jump Delay", false, true),
+
         FOG_FANCY("of.options.FOG_FANCY", false, false),
         FOG_START("of.options.FOG_START", false, false),
         MIPMAP_TYPE("of.options.MIPMAP_TYPE", true, false, 0.0F, 3.0F, 1.0F),

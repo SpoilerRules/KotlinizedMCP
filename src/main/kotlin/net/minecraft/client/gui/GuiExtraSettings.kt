@@ -7,13 +7,20 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
         val centerWidth = width / 2
-        val centerHeight = height / 2
-        val autoSprintOption: GameSettings.Options = GameSettings.Options.AUTO_SPRINT
-     //   val rawInputOption: GameSettings.Options = GameSettings.Options.RAW_INPUT
-        val keyBinding: String = mc.gameSettings.getKeyBinding(GameSettings.Options.AUTO_SPRINT)
+        val centerHeight = height / 2 - 20
 
-        // "Done" button
+        data class OptionPosition(val option: GameSettings.Options, val x: Int, val y: Int)
+
+        val options = listOf(
+            OptionPosition(GameSettings.Options.AUTO_SPRINT, centerWidth - 75, centerHeight + 15),
+            OptionPosition(GameSettings.Options.RAW_INPUT, centerWidth - 190, centerHeight - 75),
+            OptionPosition(GameSettings.Options.CAMERA_SHAKE, centerWidth - 190, centerHeight - 30),
+            OptionPosition(GameSettings.Options.JUMP_DELAY, centerWidth + 50, centerHeight - 75),
+            OptionPosition(GameSettings.Options.SCORE_DISPLAY, centerWidth + 50, centerHeight - 30)
+        )
+
         buttonList.run {
+            // "Done" button
             add(
                 GuiButton(
                     1,
@@ -23,34 +30,19 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
                 )
             )
 
-            // "Automatic Sprint" button (middle)
-            add(
-                GuiOptionButton(
-                    autoSprintOption.returnEnumOrdinal(),
-                    centerWidth - 75,
-                    centerHeight,
-                    autoSprintOption,
-                    keyBinding
+            // Option buttons
+            options.forEach { (option, x, y) ->
+                add(
+                    GuiOptionButton(
+                        option.returnEnumOrdinal(),
+                        x,
+                        y,
+                        option,
+                        mc.gameSettings.getKeyBinding(option)
+                    )
                 )
-            )
-
-            // "Raw Input" button
-            add(
-                GuiOptionButton(
-                    autoSprintOption.returnEnumOrdinal(),
-                    centerWidth - 75,
-                    centerHeight,
-                    autoSprintOption,
-                    keyBinding
-                )
-            )
+            }
         }
-
-        // "Camera Shake" button
-
-        // "Jump Delay" button
-
-        // "Scoreboard Numbers" button
 
         super.initGui()
     }
@@ -74,5 +66,3 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
         drawCenteredString(fontRendererObject, "Extra Settings", width / 2, 15, 16777215)
     }
 }
-
-data class ButtonDataProvider(val id: Int, val text: String, val xOffset: Int, val yOffset: Int)
