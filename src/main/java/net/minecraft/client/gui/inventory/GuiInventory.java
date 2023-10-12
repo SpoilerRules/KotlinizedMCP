@@ -51,7 +51,7 @@ public class GuiInventory extends InventoryEffectRenderer
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(LocalizationHelper.translate("container.crafting", new Object[0]), 86, 16, 4210752);
+        this.fontRendererObject.drawString(LocalizationHelper.translate("container.crafting", new Object[0]), 86, 16, 4210752);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)

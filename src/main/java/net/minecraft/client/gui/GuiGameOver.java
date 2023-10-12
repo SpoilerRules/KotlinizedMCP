@@ -92,15 +92,15 @@ public class GuiGameOver extends GuiScreen implements GuiYesNoCallback
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
         boolean flag = this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled();
         String s = flag ? LocalizationHelper.translate("deathScreen.title.hardcore", new Object[0]) : LocalizationHelper.translate("deathScreen.title", new Object[0]);
-        this.drawCenteredString(this.fontRendererObj, s, this.width / 2 / 2, 30, 16777215);
+        this.drawCenteredString(this.fontRendererObject, s, this.width / 2 / 2, 30, 16777215);
         GlStateManager.popMatrix();
 
         if (flag)
         {
-            this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("deathScreen.hardcoreInfo", new Object[0]), this.width / 2, 144, 16777215);
+            this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("deathScreen.hardcoreInfo", new Object[0]), this.width / 2, 144, 16777215);
         }
 
-        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("deathScreen.score", new Object[0]) + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("deathScreen.score", new Object[0]) + ": " + EnumChatFormatting.YELLOW + this.mc.thePlayer.getScore(), this.width / 2, 100, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

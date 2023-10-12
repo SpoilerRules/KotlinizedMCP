@@ -1,6 +1,8 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
+
+import net.minecraft.client.ClientBrandEnum;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.src.Config;
@@ -19,11 +21,11 @@ import net.optifine.shaders.gui.GuiShaders;
 
 public class GuiVideoSettings extends GuiScreenOF
 {
-    private GuiScreen parentGuiScreen;
+    private final GuiScreen parentGuiScreen;
     protected String screenTitle = "Video Settings";
-    private GameSettings guiGameSettings;
-    private static GameSettings.Options[] videoOptions = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.USE_VBO, GameSettings.Options.GAMMA, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.DYNAMIC_LIGHTS, GameSettings.Options.DYNAMIC_FOV};
-    private TooltipManager tooltipManager = new TooltipManager(this, new TooltipProviderOptions());
+    private final GameSettings guiGameSettings;
+    private static final GameSettings.Options[] videoOptions = new GameSettings.Options[] {GameSettings.Options.GRAPHICS, GameSettings.Options.RENDER_DISTANCE, GameSettings.Options.AMBIENT_OCCLUSION, GameSettings.Options.FRAMERATE_LIMIT, GameSettings.Options.AO_LEVEL, GameSettings.Options.VIEW_BOBBING, GameSettings.Options.GUI_SCALE, GameSettings.Options.USE_VBO, GameSettings.Options.GAMMA, GameSettings.Options.BLOCK_ALTERNATIVES, GameSettings.Options.DYNAMIC_LIGHTS, GameSettings.Options.DYNAMIC_FOV};
+    private final TooltipManager tooltipManager = new TooltipManager(this, new TooltipProviderOptions());
 
     public GuiVideoSettings(GuiScreen parentScreenIn, GameSettings gameSettingsIn)
     {
@@ -33,47 +35,43 @@ public class GuiVideoSettings extends GuiScreenOF
 
     public void initGui()
     {
-        this.screenTitle = LocalizationHelper.translate("options.videoTitle", new Object[0]);
+        this.screenTitle = LocalizationHelper.translate("options.videoTitle");
         this.buttonList.clear();
 
         for (int i = 0; i < videoOptions.length; ++i)
         {
             GameSettings.Options gamesettings$options = videoOptions[i];
 
-            if (gamesettings$options != null)
-            {
-                int j = this.width / 2 - 155 + i % 2 * 160;
-                int k = this.height / 6 + 21 * (i / 2) - 12;
+            int j = this.width / 2 - 155 + i % 2 * 160;
+            int k = this.height / 6 + 21 * (i / 2) - 12;
 
-                if (gamesettings$options.getEnumFloat())
-                {
-                    this.buttonList.add(new GuiOptionSliderOF(gamesettings$options.returnEnumOrdinal(), j, k, gamesettings$options));
-                }
-                else
-                {
-                    this.buttonList.add(new GuiOptionButtonOF(gamesettings$options.returnEnumOrdinal(), j, k, gamesettings$options, this.guiGameSettings.getKeyBinding(gamesettings$options)));
-                }
+            if (gamesettings$options.getEnumFloat())
+            {
+                this.buttonList.add(new GuiOptionSliderOF(gamesettings$options.returnEnumOrdinal(), j, k, gamesettings$options));
+            }
+            else
+            {
+                this.buttonList.add(new GuiOptionButtonOF(gamesettings$options.returnEnumOrdinal(), j, k, gamesettings$options, this.guiGameSettings.getKeyBinding(gamesettings$options)));
             }
         }
 
         int l = this.height / 6 + 21 * (videoOptions.length / 2) - 12;
-        int i1 = 0;
-        i1 = this.width / 2 - 155 + 0;
+        int i1;
+        i1 = this.width / 2 - 155;
         this.buttonList.add(new GuiOptionButton(231, i1, l, Lang.get("of.options.shaders")));
         i1 = this.width / 2 - 155 + 160;
         this.buttonList.add(new GuiOptionButton(202, i1, l, Lang.get("of.options.quality")));
         l = l + 21;
-        i1 = this.width / 2 - 155 + 0;
+        i1 = this.width / 2 - 155;
         this.buttonList.add(new GuiOptionButton(201, i1, l, Lang.get("of.options.details")));
         i1 = this.width / 2 - 155 + 160;
         this.buttonList.add(new GuiOptionButton(212, i1, l, Lang.get("of.options.performance")));
         l = l + 21;
-        i1 = this.width / 2 - 155 + 0;
+        i1 = this.width / 2 - 155;
         this.buttonList.add(new GuiOptionButton(211, i1, l, Lang.get("of.options.animations")));
         i1 = this.width / 2 - 155 + 160;
         this.buttonList.add(new GuiOptionButton(222, i1, l, Lang.get("of.options.other")));
-        l = l + 21;
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, LocalizationHelper.translate("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168 + 11, LocalizationHelper.translate("gui.done")));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -186,29 +184,12 @@ public class GuiVideoSettings extends GuiScreenOF
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 15, 16777215);
-        String s = Config.getVersion();
-        String s1 = "HD_U";
+        this.drawCenteredString(this.fontRendererObject, this.screenTitle, this.width / 2, 15, 16777215);
 
-        if (s1.equals("HD"))
-        {
-            s = "OptiFine HD M6_pre2";
-        }
-
-        if (s1.equals("HD_U"))
-        {
-            s = "OptiFine HD M6_pre2 Ultra";
-        }
-
-        if (s1.equals("L"))
-        {
-            s = "OptiFine M6_pre2 Light";
-        }
-
-        this.drawString(this.fontRendererObj, s, 2, this.height - 10, 8421504);
-        String s2 = "Minecraft 1.8.9";
-        int i = this.fontRendererObj.getStringWidth(s2);
-        this.drawString(this.fontRendererObj, s2, this.width - i - 2, this.height - 10, 8421504);
+        this.drawString(this.fontRendererObject, "OptiFine HD M6_pre2 Ultra", 2, this.height - 10, 8421504);
+        String s2 = ClientBrandEnum.MINECRAFT_VERSION;
+        int i = this.fontRendererObject.getStringWidth(s2);
+        this.drawString(this.fontRendererObject, s2, this.width - i - 2, this.height - 10, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.tooltipManager.drawTooltips(mouseX, mouseY, this.buttonList);
     }
@@ -221,11 +202,6 @@ public class GuiVideoSettings extends GuiScreenOF
     public static int getButtonHeight(GuiButton p_getButtonHeight_0_)
     {
         return p_getButtonHeight_0_.height;
-    }
-
-    public static void drawGradientRect(GuiScreen p_drawGradientRect_0_, int p_drawGradientRect_1_, int p_drawGradientRect_2_, int p_drawGradientRect_3_, int p_drawGradientRect_4_, int p_drawGradientRect_5_, int p_drawGradientRect_6_)
-    {
-        p_drawGradientRect_0_.drawGradientRect(p_drawGradientRect_1_, p_drawGradientRect_2_, p_drawGradientRect_3_, p_drawGradientRect_4_, p_drawGradientRect_5_, p_drawGradientRect_6_);
     }
 
     public static String getGuiChatText(GuiChat p_getGuiChatText_0_)

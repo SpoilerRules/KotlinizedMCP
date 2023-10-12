@@ -162,11 +162,11 @@ public class GuiConnecting extends GuiScreen
 
         if (this.networkManager == null)
         {
-            this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("connect.connecting", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
+            this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("connect.connecting", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
         }
         else
         {
-            this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("connect.authorizing", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
+            this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("connect.authorizing", new Object[0]), this.width / 2, this.height / 2 - 50, 16777215);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

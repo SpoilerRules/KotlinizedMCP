@@ -92,8 +92,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
         if (this.loadingAchievements)
         {
             this.drawDefaultBackground();
-            this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("multiplayer.downloadingStats", new Object[0]), this.width / 2, this.height / 2, 16777215);
-            this.drawCenteredString(this.fontRendererObj, lanSearchStates[(int)(Minecraft.getSystemTime() / 150L % (long)lanSearchStates.length)], this.width / 2, this.height / 2 + this.fontRendererObj.FONT_HEIGHT * 2, 16777215);
+            this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("multiplayer.downloadingStats", new Object[0]), this.width / 2, this.height / 2, 16777215);
+            this.drawCenteredString(this.fontRendererObject, lanSearchStates[(int)(Minecraft.getSystemTime() / 150L % (long)lanSearchStates.length)], this.width / 2, this.height / 2 + this.fontRendererObject.FONT_HEIGHT * 2, 16777215);
         }
         else
         {
@@ -218,7 +218,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
     {
         int i = (this.width - this.field_146555_f) / 2;
         int j = (this.height - this.field_146557_g) / 2;
-        this.fontRendererObj.drawString(LocalizationHelper.translate("gui.achievements", new Object[0]), i + 15, j + 5, 4210752);
+        this.fontRendererObject.drawString(LocalizationHelper.translate("gui.achievements", new Object[0]), i + 15, j + 5, 4210752);
     }
 
     protected void drawAchievementScreen(int p_146552_1_, int p_146552_2_, float p_146552_3_)
@@ -487,8 +487,8 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
             if (this.statFileWriter.canUnlockAchievement(achievement))
             {
-                int j8 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
-                int i9 = this.fontRendererObj.splitStringWidth(s1, j8);
+                int j8 = Math.max(this.fontRendererObject.getStringWidth(s), 120);
+                int i9 = this.fontRendererObject.splitStringWidth(s1, j8);
 
                 if (this.statFileWriter.hasAchievementUnlocked(achievement))
                 {
@@ -496,29 +496,29 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
                 }
 
                 this.drawGradientRect(i7 - 3, k7 - 3, i7 + j8 + 3, k7 + i9 + 3 + 12, -1073741824, -1073741824);
-                this.fontRendererObj.drawSplitString(s1, i7, k7 + 12, j8, -6250336);
+                this.fontRendererObject.drawSplitString(s1, i7, k7 + 12, j8, -6250336);
 
                 if (this.statFileWriter.hasAchievementUnlocked(achievement))
                 {
-                    this.fontRendererObj.drawStringWithShadow(LocalizationHelper.translate("achievement.taken", new Object[0]), (float)i7, (float)(k7 + i9 + 4), -7302913);
+                    this.fontRendererObject.drawStringWithShadow(LocalizationHelper.translate("achievement.taken", new Object[0]), (float)i7, (float)(k7 + i9 + 4), -7302913);
                 }
             }
             else if (i8 == 3)
             {
                 s = LocalizationHelper.translate("achievement.unknown", new Object[0]);
-                int k8 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
+                int k8 = Math.max(this.fontRendererObject.getStringWidth(s), 120);
                 String s2 = (new ChatComponentTranslation("achievement.requires", new Object[] {achievement.parentAchievement.getStatName()})).getUnformattedText();
-                int i5 = this.fontRendererObj.splitStringWidth(s2, k8);
+                int i5 = this.fontRendererObject.splitStringWidth(s2, k8);
                 this.drawGradientRect(i7 - 3, k7 - 3, i7 + k8 + 3, k7 + i5 + 12 + 3, -1073741824, -1073741824);
-                this.fontRendererObj.drawSplitString(s2, i7, k7 + 12, k8, -9416624);
+                this.fontRendererObject.drawSplitString(s2, i7, k7 + 12, k8, -9416624);
             }
             else if (i8 < 3)
             {
-                int l8 = Math.max(this.fontRendererObj.getStringWidth(s), 120);
+                int l8 = Math.max(this.fontRendererObject.getStringWidth(s), 120);
                 String s3 = (new ChatComponentTranslation("achievement.requires", new Object[] {achievement.parentAchievement.getStatName()})).getUnformattedText();
-                int j9 = this.fontRendererObj.splitStringWidth(s3, l8);
+                int j9 = this.fontRendererObject.splitStringWidth(s3, l8);
                 this.drawGradientRect(i7 - 3, k7 - 3, i7 + l8 + 3, k7 + j9 + 12 + 3, -1073741824, -1073741824);
-                this.fontRendererObj.drawSplitString(s3, i7, k7 + 12, l8, -9416624);
+                this.fontRendererObject.drawSplitString(s3, i7, k7 + 12, l8, -9416624);
             }
             else
             {
@@ -527,7 +527,7 @@ public class GuiAchievements extends GuiScreen implements IProgressMeter
 
             if (s != null)
             {
-                this.fontRendererObj.drawStringWithShadow(s, (float)i7, (float)k7, this.statFileWriter.canUnlockAchievement(achievement) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
+                this.fontRendererObject.drawStringWithShadow(s, (float)i7, (float)k7, this.statFileWriter.canUnlockAchievement(achievement) ? (achievement.getSpecial() ? -128 : -1) : (achievement.getSpecial() ? -8355776 : -8355712));
             }
         }
 

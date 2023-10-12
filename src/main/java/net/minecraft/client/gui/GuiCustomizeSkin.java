@@ -3,7 +3,6 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.optifine.gui.GuiButtonOF;
 import net.optifine.gui.GuiScreenCapeOF;
 
 public class GuiCustomizeSkin extends GuiScreen
@@ -19,7 +18,7 @@ public class GuiCustomizeSkin extends GuiScreen
     public void initGui()
     {
         int i = 0;
-        this.title = LocalizationHelper.translate("options.skinCustomisation.title", new Object[0]);
+        this.title = LocalizationHelper.translate("options.skinCustomisation.title");
 
         for (EnumPlayerModelParts enumplayermodelparts : EnumPlayerModelParts.values())
         {
@@ -32,9 +31,9 @@ public class GuiCustomizeSkin extends GuiScreen
             ++i;
         }
 
-        this.buttonList.add(new GuiButtonOF(210, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), LocalizationHelper.translate("of.options.skinCustomisation.ofCape", new Object[0])));
+        this.buttonList.add(new GuiButton(210, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), LocalizationHelper.translate("of.options.skinCustomisation.ofCape")));
         i = i + 2;
-        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), LocalizationHelper.translate("gui.done", new Object[0])));
+        this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), LocalizationHelper.translate("gui.done")));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -63,7 +62,7 @@ public class GuiCustomizeSkin extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.title, this.width / 2, 20, 16777215);
+        this.drawCenteredString(this.fontRendererObject, this.title, this.width / 2, 20, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -73,11 +72,11 @@ public class GuiCustomizeSkin extends GuiScreen
 
         if (this.mc.gameSettings.getModelParts().contains(playerModelParts))
         {
-            s = LocalizationHelper.translate("options.on", new Object[0]);
+            s = LocalizationHelper.translate("options.on");
         }
         else
         {
-            s = LocalizationHelper.translate("options.off", new Object[0]);
+            s = LocalizationHelper.translate("options.off");
         }
 
         return playerModelParts.func_179326_d().getFormattedText() + ": " + s;

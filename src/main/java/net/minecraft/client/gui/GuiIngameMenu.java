@@ -89,7 +89,7 @@ public class GuiIngameMenu extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("menu.game", new Object[0]), this.width / 2, 40, 16777215);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("menu.game", new Object[0]), this.width / 2, 40, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

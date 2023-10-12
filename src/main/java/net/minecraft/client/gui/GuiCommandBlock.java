@@ -39,11 +39,11 @@ public class GuiCommandBlock extends GuiScreen
         this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 4 - 150, this.height / 4 + 120 + 12, 150, 20, LocalizationHelper.translate("gui.done", new Object[0])));
         this.buttonList.add(this.cancelBtn = new GuiButton(1, this.width / 2 + 4, this.height / 4 + 120 + 12, 150, 20, LocalizationHelper.translate("gui.cancel", new Object[0])));
         this.buttonList.add(this.field_175390_s = new GuiButton(4, this.width / 2 + 150 - 20, 150, 20, 20, "O"));
-        this.commandTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 50, 300, 20);
+        this.commandTextField = new GuiTextField(2, this.fontRendererObject, this.width / 2 - 150, 50, 300, 20);
         this.commandTextField.setMaxStringLength(32767);
         this.commandTextField.setFocused(true);
         this.commandTextField.setText(this.localCommandBlock.getCommand());
-        this.previousOutputTextField = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 150, 150, 276, 20);
+        this.previousOutputTextField = new GuiTextField(3, this.fontRendererObject, this.width / 2 - 150, 150, 276, 20);
         this.previousOutputTextField.setMaxStringLength(32767);
         this.previousOutputTextField.setEnabled(false);
         this.previousOutputTextField.setText("-");
@@ -119,21 +119,21 @@ public class GuiCommandBlock extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("advMode.setCommand", new Object[0]), this.width / 2, 20, 16777215);
-        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.command", new Object[0]), this.width / 2 - 150, 37, 10526880);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("advMode.setCommand", new Object[0]), this.width / 2, 20, 16777215);
+        this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.command", new Object[0]), this.width / 2 - 150, 37, 10526880);
         this.commandTextField.drawTextBox();
         int i = 75;
         int j = 0;
-        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.nearestPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.randomPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.allPlayers", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.allEntities", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
-        this.drawString(this.fontRendererObj, "", this.width / 2 - 150, i + j++ * this.fontRendererObj.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.nearestPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObject.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.randomPlayer", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObject.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.allPlayers", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObject.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.allEntities", new Object[0]), this.width / 2 - 150, i + j++ * this.fontRendererObject.FONT_HEIGHT, 10526880);
+        this.drawString(this.fontRendererObject, "", this.width / 2 - 150, i + j++ * this.fontRendererObject.FONT_HEIGHT, 10526880);
 
         if (this.previousOutputTextField.getText().length() > 0)
         {
-            i = i + j * this.fontRendererObj.FONT_HEIGHT + 16;
-            this.drawString(this.fontRendererObj, LocalizationHelper.translate("advMode.previousOutput", new Object[0]), this.width / 2 - 150, i, 10526880);
+            i = i + j * this.fontRendererObject.FONT_HEIGHT + 16;
+            this.drawString(this.fontRendererObject, LocalizationHelper.translate("advMode.previousOutput", new Object[0]), this.width / 2 - 150, i, 10526880);
             this.previousOutputTextField.drawTextBox();
         }
 

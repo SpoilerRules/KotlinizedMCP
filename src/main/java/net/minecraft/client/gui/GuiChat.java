@@ -23,7 +23,7 @@ public class GuiChat extends GuiScreen
     private boolean playerNamesFound;
     private boolean waitingOnAutocomplete;
     private int autocompleteIndex;
-    private List<String> foundPlayerNames = Lists.<String>newArrayList();
+    private final List<String> foundPlayerNames = Lists.newArrayList();
     protected GuiTextField inputField;
     private String defaultInputFieldText = "";
 
@@ -40,7 +40,7 @@ public class GuiChat extends GuiScreen
     {
         Keyboard.enableRepeatEvents(true);
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
-        this.inputField = new GuiTextField(0, this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
+        this.inputField = new GuiTextField(0, this.fontRendererObject, 4, this.height - 12, this.width - 4, 12);
         this.inputField.setMaxStringLength(100);
         this.inputField.setEnableBackgroundDrawing(false);
         this.inputField.setFocused(true);
@@ -74,7 +74,7 @@ public class GuiChat extends GuiScreen
 
         if (keyCode == 1)
         {
-            this.mc.displayGuiScreen((GuiScreen)null);
+            this.mc.displayGuiScreen(null);
         }
         else if (keyCode != 28 && keyCode != 156)
         {
@@ -108,7 +108,7 @@ public class GuiChat extends GuiScreen
                 this.sendChatMessage(s);
             }
 
-            this.mc.displayGuiScreen((GuiScreen)null);
+            this.mc.displayGuiScreen(null);
         }
     }
 
@@ -182,9 +182,8 @@ public class GuiChat extends GuiScreen
             int i = this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false);
             this.foundPlayerNames.clear();
             this.autocompleteIndex = 0;
-            String s = this.inputField.getText().substring(i).toLowerCase();
             String s1 = this.inputField.getText().substring(0, this.inputField.getCursorPosition());
-            this.sendAutocompleteRequest(s1, s);
+            this.sendAutocompleteRequest(s1);
 
             if (this.foundPlayerNames.isEmpty())
             {
@@ -212,10 +211,10 @@ public class GuiChat extends GuiScreen
             this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(stringbuilder.toString()), 1);
         }
 
-        this.inputField.writeText((String)this.foundPlayerNames.get(this.autocompleteIndex++));
+        this.inputField.writeText(this.foundPlayerNames.get(this.autocompleteIndex++));
     }
 
-    private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_)
+    private void sendAutocompleteRequest(String p_146405_1_)
     {
         if (p_146405_1_.length() >= 1)
         {
@@ -251,7 +250,7 @@ public class GuiChat extends GuiScreen
                     this.historyBuffer = this.inputField.getText();
                 }
 
-                this.inputField.setText((String)this.mc.ingameGUI.getChatGUI().getSentMessages().get(i));
+                this.inputField.setText(this.mc.ingameGUI.getChatGUI().getSentMessages().get(i));
                 this.sentHistoryCursor = i;
             }
         }

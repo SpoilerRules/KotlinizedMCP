@@ -249,11 +249,11 @@ public class GuiShaderOptions extends GuiScreenOF
 
         if (this.screenText != null)
         {
-            this.drawCenteredString(this.fontRendererObj, this.screenText, this.width / 2, 15, 16777215);
+            this.drawCenteredString(this.fontRendererObject, this.screenText, this.width / 2, 15, 16777215);
         }
         else
         {
-            this.drawCenteredString(this.fontRendererObj, this.title, this.width / 2, 15, 16777215);
+            this.drawCenteredString(this.fontRendererObject, this.title, this.width / 2, 15, 16777215);
         }
 
         super.drawScreen(x, y, f);

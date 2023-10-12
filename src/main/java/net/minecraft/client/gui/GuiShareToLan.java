@@ -99,8 +99,8 @@ public class GuiShareToLan extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("lanServer.title", new Object[0]), this.width / 2, 50, 16777215);
-        this.drawCenteredString(this.fontRendererObj, LocalizationHelper.translate("lanServer.otherPlayers", new Object[0]), this.width / 2, 82, 16777215);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("lanServer.title", new Object[0]), this.width / 2, 50, 16777215);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("lanServer.otherPlayers", new Object[0]), this.width / 2, 82, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

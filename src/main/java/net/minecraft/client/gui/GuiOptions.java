@@ -12,34 +12,27 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumDifficulty;
 
-public class GuiOptions extends GuiScreen implements GuiYesNoCallback
-{
-    private static final GameSettings.Options[] field_146440_f = new GameSettings.Options[] {GameSettings.Options.FOV};
+public class GuiOptions extends GuiScreen implements GuiYesNoCallback {
+    private static final GameSettings.Options[] field_146440_f = new GameSettings.Options[]{GameSettings.Options.FOV};
     private final GuiScreen field_146441_g;
     private final GameSettings game_settings_1;
     private GuiButton field_175357_i;
     private GuiLockIconButton field_175356_r;
     protected String field_146442_a = "Options";
 
-    public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_)
-    {
+    public GuiOptions(GuiScreen p_i1046_1_, GameSettings p_i1046_2_) {
         this.field_146441_g = p_i1046_1_;
         this.game_settings_1 = p_i1046_2_;
     }
 
-    public void initGui()
-    {
+    public void initGui() {
         int i = 0;
-        this.field_146442_a = LocalizationHelper.translate("options.title", new Object[0]);
+        this.field_146442_a = LocalizationHelper.translate("options.title");
 
-        for (GameSettings.Options gamesettings$options : field_146440_f)
-        {
-            if (gamesettings$options.getEnumFloat())
-            {
+        for (GameSettings.Options gamesettings$options : field_146440_f) {
+            if (gamesettings$options.getEnumFloat()) {
                 this.buttonList.add(new GuiOptionSlider(gamesettings$options.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), gamesettings$options));
-            }
-            else
-            {
+            } else {
                 GuiOptionButton guioptionbutton = new GuiOptionButton(gamesettings$options.returnEnumOrdinal(), this.width / 2 - 155 + i % 2 * 160, this.height / 6 - 12 + 24 * (i >> 1), gamesettings$options, this.game_settings_1.getKeyBinding(gamesettings$options));
                 this.buttonList.add(guioptionbutton);
             }
@@ -69,41 +62,44 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
                 this.field_175357_i.enabled = false;
             }
         } else {
-            GameSettings.Options autoSprint = GameSettings.Options.AUTO_SPRINT;
-            int xPosition = this.width / 2 - 155 + i % 2 * 160;
-            int yPosition = this.height / 6 - 12 + 24 * (i >> 1);
-            String keyBinding = this.game_settings_1.getKeyBinding(autoSprint);
+            GameSettings.Options autoSprintOption = GameSettings.Options.AUTO_SPRINT;
+            int buttonX = this.width / 2 - 155 + i % 2 * 160;
+            int buttonY = this.height / 6 - 12 + 24 * (i >> 1);
+            String autoSprintKeyBinding = this.game_settings_1.getKeyBinding(autoSprintOption);
 
-            GuiOptionButton guioptionbutton1 = new GuiOptionButton(autoSprint.returnEnumOrdinal(), xPosition, yPosition, autoSprint, keyBinding);
-            this.buttonList.add(guioptionbutton1);
+            GuiOptionButton autoSprintButton = new GuiOptionButton(
+                    autoSprintOption.returnEnumOrdinal(),
+                    buttonX,
+                    buttonY,
+                    autoSprintOption,
+                    autoSprintKeyBinding
+            );
+
+            this.buttonList.add(autoSprintButton);
         }
 
         this.buttonList.add(new GuiButton(110, this.width / 2 - 155, this.height / 6 + 48 - 6, 150, 20, LocalizationHelper.translate("options.skinCustomisation", new Object[0])));
-        this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...")
-        {
-            public void playPressSound(SoundHandler soundHandlerIn)
-            {
-                SoundEventAccessorComposite soundeventaccessorcomposite = soundHandlerIn.getRandomSoundFromCategories(new SoundCategory[] {SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER});
+        this.buttonList.add(new GuiButton(8675309, this.width / 2 + 5, this.height / 6 + 48 - 6, 150, 20, "Super Secret Settings...") {
+            public void playPressSound(SoundHandler soundHandlerIn) {
+                SoundEventAccessorComposite soundeventaccessorcomposite = soundHandlerIn.getRandomSoundFromCategories(SoundCategory.ANIMALS, SoundCategory.BLOCKS, SoundCategory.MOBS, SoundCategory.PLAYERS, SoundCategory.WEATHER);
 
-                if (soundeventaccessorcomposite != null)
-                {
+                if (soundeventaccessorcomposite != null) {
                     soundHandlerIn.playSound(PositionedSoundRecord.create(soundeventaccessorcomposite.getSoundEventLocation(), 0.5F));
                 }
             }
         });
         this.buttonList.add(new GuiButton(106, this.width / 2 - 155, this.height / 6 + 72 - 6, 150, 20, LocalizationHelper.translate("options.sounds", new Object[0])));
-        this.buttonList.add(new GuiButton(107, this.width / 2 + 5, this.height / 6 + 72 - 6, 150, 20, LocalizationHelper.translate("Extra Settings...", new Object[0])));
+        this.buttonList.add(new GuiButton(107, this.width / 2 + 5, this.height / 6 + 72 - 6, 150, 20, LocalizationHelper.translate("Extra Settings...")));
         this.buttonList.add(new GuiButton(101, this.width / 2 - 155, this.height / 6 + 96 - 6, 150, 20, LocalizationHelper.translate("options.video", new Object[0])));
         this.buttonList.add(new GuiButton(100, this.width / 2 + 5, this.height / 6 + 96 - 6, 150, 20, LocalizationHelper.translate("options.controls", new Object[0])));
         this.buttonList.add(new GuiButton(102, this.width / 2 - 155, this.height / 6 + 120 - 6, 150, 20, LocalizationHelper.translate("options.language", new Object[0])));
-        this.buttonList.add(new GuiButton(103, this.width / 2 + 5, this.height / 6 + 120 - 6, 150, 20, LocalizationHelper.translate("options.chat.title", new Object[0])));
-        this.buttonList.add(new GuiButton(105, this.width / 2 - 155, this.height / 6 + 144 - 6, 150, 20, LocalizationHelper.translate("options.resourcepack", new Object[0])));
+        this.buttonList.add(new GuiButton(103, this.width / 2 + 5, this.height / 6 + 120 - 6, 150, 20, LocalizationHelper.translate("options.chat.title")));
+        this.buttonList.add(new GuiButton(105, this.width / 2 - 155, this.height / 6 + 144 - 6, 150, 20, LocalizationHelper.translate("options.resourcepack")));
         this.buttonList.add(new GuiButton(104, this.width / 2 + 5, this.height / 6 + 144 - 6, 150, 20, LocalizationHelper.translate("options.snooper.view", new Object[0])));
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, LocalizationHelper.translate("gui.done", new Object[0])));
     }
 
-    public String func_175355_a(EnumDifficulty p_175355_1_)
-    {
+    public String func_175355_a(EnumDifficulty p_175355_1_) {
         IChatComponent ichatcomponent = new ChatComponentText("");
         ichatcomponent.appendSibling(new ChatComponentTranslation("options.difficulty", new Object[0]));
         ichatcomponent.appendText(": ");
@@ -111,12 +107,10 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         return ichatcomponent.getFormattedText();
     }
 
-    public void confirmClicked(boolean result, int id)
-    {
+    public void confirmClicked(boolean result, int id) {
         this.mc.displayGuiScreen(this);
 
-        if (id == 109 && result && this.mc.theWorld != null)
-        {
+        if (id == 109 && result && this.mc.theWorld != null) {
             this.mc.theWorld.getWorldInfo().setDifficultyLocked(true);
             this.field_175356_r.func_175229_b(true);
             this.field_175356_r.enabled = false;
@@ -198,10 +192,9 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, this.field_146442_a, this.width / 2, 15, 16777215);
+        this.drawCenteredString(this.fontRendererObject, this.field_146442_a, this.width / 2, 15, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }
