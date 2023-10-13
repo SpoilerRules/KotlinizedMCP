@@ -12,6 +12,8 @@ import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
@@ -1421,19 +1423,18 @@ public abstract class EntityLivingBase extends Entity {
         this.worldObj.theProfiler.endSection();
         this.worldObj.theProfiler.startSection("jump");
 
-        // removed jump delay
+        var gameSettings = Minecraft.getMinecraft().gameSettings;
+        var isJumpDelay = gameSettings.getOptionOrdinalValue(GameSettings.Options.JUMP_DELAY);
+
+        // Jump delay
         if (this.isJumping) {
-            if (this.isInWater()) {
-                this.updateAITick();
-            } else if (this.isInLava()) {
-                this.handleJumpLava();
-            } else if (this.onGround/* && this.jumpTicks == 0*/) {
+            if (this.isInWater()) this.updateAITick();
+            else if (this.isInLava()) this.handleJumpLava();
+            else if (this.onGround && (!isJumpDelay || this.jumpTicks == 0)) {
                 this.jump();
-               // this.jumpTicks = 10;
+                this.jumpTicks = isJumpDelay ? 10 : this.jumpTicks;
             }
-        } else {
-         //   this.jumpTicks = 0;
-        }
+        } else this.jumpTicks = isJumpDelay ? 0 : this.jumpTicks;
 
         this.worldObj.theProfiler.endSection();
         this.worldObj.theProfiler.startSection("travel");
@@ -1600,7 +1601,7 @@ public abstract class EntityLivingBase extends Entity {
     }
 
     public boolean isOnTeam(Team teamIn) {
-        return this.getTeam() != null ? this.getTeam().isSameTeam(teamIn) : false;
+        return this.getTeam() != null && this.getTeam().isSameTeam(teamIn);
     }
 
     public void sendEnterCombat() {

@@ -2586,7 +2586,8 @@ public class GameSettings {
 
         // Extra Settings
         AUTO_SPRINT("Auto Sprint", false, true),
-        RAW_INPUT("Raw Input", false, true),
+        // We call it "Mouse Delay Fix" for now, real "Raw Input" will be implemented later.
+        RAW_INPUT("Mouse Delay Fix", false, true),
         SCORE_DISPLAY("Score Point Display", false, true),
         CAMERA_SHAKE("Camera Shake", false, true),
         JUMP_DELAY("Jump Delay", false, true),

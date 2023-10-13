@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import com.google.common.annotations.Beta;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -12,6 +14,8 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
@@ -1200,18 +1204,16 @@ public abstract class Entity implements ICommandSender
         }
     }
 
-    public Vec3 getLook(float partialTicks)
-    {
-        if (partialTicks == 1.0F)
-        {
-            return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
-        }
-        else
-        {
-            float f = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * partialTicks;
-            float f1 = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * partialTicks;
-            return this.getVectorForRotation(f, f1);
-        }
+    @Beta
+    public Vec3 getLook(float partialTicks) {
+        if (!Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
+            if (partialTicks == 1.0F) return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
+            else {
+                float f = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * partialTicks;
+                float f1 = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * partialTicks;
+                return this.getVectorForRotation(f, f1);
+            }
+        } else return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
     }
 
     protected final Vec3 getVectorForRotation(float pitch, float yaw)
