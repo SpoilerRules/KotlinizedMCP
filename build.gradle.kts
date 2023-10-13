@@ -54,9 +54,6 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-api:2.20.0") // Latest as of 2023 August 22
     implementation("org.apache.logging.log4j:log4j-core:2.20.0") // Latest as of 2023 August 22
 
-    // Twitch (Pending removal)
-    implementation("tv.twitch:twitch:6.5") // Neutral
-
     // Miscellaneous
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-text:1.10.0") // Latest as of 2023 September 22

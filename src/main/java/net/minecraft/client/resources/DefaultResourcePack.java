@@ -17,7 +17,7 @@ import net.optifine.reflect.ReflectorForge;
 
 public class DefaultResourcePack implements IResourcePack
 {
-    public static final Set<String> defaultResourceDomains = ImmutableSet.<String>of("minecraft", "realms");
+    public static final Set<String> defaultResourceDomains = ImmutableSet.of("minecraft");
     private final Map<String, File> mapAssets;
 
     public DefaultResourcePack(Map<String, File> mapAssetsIn)
@@ -48,8 +48,7 @@ public class DefaultResourcePack implements IResourcePack
         }
     }
 
-    public InputStream getInputStreamAssets(ResourceLocation location) throws IOException, FileNotFoundException
-    {
+    public InputStream getInputStreamAssets(ResourceLocation location) throws IOException {
         File file1 = (File)this.mapAssets.get(location.toString());
         return file1 != null && file1.isFile() ? new FileInputStream(file1) : null;
     }

@@ -168,8 +168,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback {
             this.field_92019_w = this.field_92021_u + 24;
         }
 
-        this.mc.setConnectedToRealms(false);
-
         if (this.func_183501_a()) {
             this.field_183503_M.setGuiSize(this.width, this.height);
             this.field_183503_M.initGui();
