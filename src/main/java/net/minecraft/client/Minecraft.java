@@ -73,6 +73,7 @@ import net.minecraft.stats.StatFileWriter;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.*;
+import net.minecraft.util.input.MouseInputHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
@@ -154,7 +155,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public boolean skipRenderWorld;
     public MovingObjectPosition objectMouseOver;
     public GameSettings gameSettings;
-    public MouseHelper mouseHelper;
+    public MouseInputHelper mouseHelper;
     public final File mcDataDir;
     private final File fileAssets;
     private final String launchedVersion;
@@ -366,7 +367,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         });
 
         // initialize mouse helper
-        this.mouseHelper = new MouseHelper();
+        this.mouseHelper = new MouseInputHelper();
 
         // check and enable OpenGL settings
         checkGLError("Pre startup");
@@ -1067,7 +1068,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (Display.isActive()) {
             if (!this.inGameHasFocus) {
                 this.inGameHasFocus = true;
-                this.mouseHelper.grabMouseCursor();
+                this.mouseHelper.captureMouseCursor();
                 this.displayGuiScreen((GuiScreen) null);
                 this.leftClickCounter = 10000;
             }
@@ -1078,7 +1079,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (this.inGameHasFocus) {
             KeyBinding.unPressAllKeys();
             this.inGameHasFocus = false;
-            this.mouseHelper.ungrabMouseCursor();
+            this.mouseHelper.releaseMouseCursor();
         }
     }
 

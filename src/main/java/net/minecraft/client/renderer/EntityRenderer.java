@@ -1182,7 +1182,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
 
         if (this.mc.inGameHasFocus && flag) {
-            this.mc.mouseHelper.mouseXYChange();
+            this.mc.mouseHelper.updateMouseDelta();
             float f = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
             float f1 = f * f * f * 8.0F;
             float f2 = (float) this.mc.mouseHelper.deltaX * f1;

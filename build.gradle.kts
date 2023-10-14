@@ -39,7 +39,6 @@ dependencies {
 
     api("org.lwjgl:lwjgl:2.9.4-nightly") // Latest as of 2023 September 04
     api("org.lwjgl:util:2.9.4-nightly") // Latest as of 2023 September 04
-    implementation("net.java.jinput:jinput:2.0.9") // Latest as of 2023 August 22
 
     // Apache HttpComponents
     implementation("org.apache.httpcomponents:httpclient:4.5.14") // Latest as of 2023 August 22
