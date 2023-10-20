@@ -34,12 +34,7 @@ public class Scoreboard {
                 throw new IllegalArgumentException("An objective with the name '" + name + "' already exists!");
             } else {
                 scoreobjective = new ScoreObjective(this, name, criteria);
-                List<ScoreObjective> list = this.scoreObjectiveCriterias.get(criteria);
-
-                if (list == null) {
-                    list = Lists.newArrayList();
-                    this.scoreObjectiveCriterias.put(criteria, list);
-                }
+                List<ScoreObjective> list = this.scoreObjectiveCriterias.computeIfAbsent(criteria, k -> Lists.newArrayList());
 
                 list.add(scoreobjective);
                 this.scoreObjectives.put(name, scoreobjective);
@@ -69,12 +64,7 @@ public class Scoreboard {
         if (name.length() > 40) {
             throw new IllegalArgumentException("The player name '" + name + "' is too long!");
         } else {
-            Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.get(name);
-
-            if (map == null) {
-                map = Maps.newHashMap();
-                this.entitiesScoreObjectives.put(name, map);
-            }
+            Map<ScoreObjective, Score> map = this.entitiesScoreObjectives.computeIfAbsent(name, k -> Maps.newHashMap());
 
             Score score = map.get(objective);
 
@@ -98,7 +88,7 @@ public class Scoreboard {
             }
         }
 
-        Collections.sort(list, Score.scoreComparator);
+        list.sort(Score.scoreComparator);
         return list;
     }
 
@@ -159,7 +149,9 @@ public class Scoreboard {
 
     @QuicklyFixed
     public void removeObjective(ScoreObjective p_96519_1_) {
-        if (p_96519_1_ != null) this.scoreObjectives.remove(p_96519_1_.getName()); // <- quickly fixed part (added null check)
+        if (p_96519_1_ == null) return;
+
+        this.scoreObjectives.remove(p_96519_1_.getName());
 
         for (int i = 0; i < 19; ++i) {
             if (this.getObjectiveInDisplaySlot(i) == p_96519_1_) {
@@ -167,10 +159,10 @@ public class Scoreboard {
             }
         }
 
-        List<ScoreObjective> list = this.scoreObjectiveCriterias.get(Objects.requireNonNull(p_96519_1_).getCriteria());  // <- quickly fixed part (added requireNonNull)
+        List<ScoreObjective> listo = this.scoreObjectiveCriterias.get(p_96519_1_.getCriteria());
 
-        if (list != null) {
-            list.remove(p_96519_1_);
+        if (listo != null) {
+            listo.remove(p_96519_1_);
         }
 
         for (Map<ScoreObjective, Score> map : this.entitiesScoreObjectives.values()) {
@@ -209,7 +201,10 @@ public class Scoreboard {
         }
     }
 
+    @QuicklyFixed
     public void removeTeam(ScorePlayerTeam p_96511_1_) {
+        if (p_96511_1_ == null) return;
+
         this.teams.remove(p_96511_1_.getRegisteredName());
 
         for (String s : p_96511_1_.getMembershipCollection()) {
@@ -249,6 +244,8 @@ public class Scoreboard {
     }
 
     public void removePlayerFromTeam(String p_96512_1_, ScorePlayerTeam p_96512_2_) {
+        if (p_96512_1_ == null || p_96512_2_ == null) return;
+
         if (this.getPlayersTeam(p_96512_1_) != p_96512_2_) {
             throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team '" + p_96512_2_.getRegisteredName() + "'.");
         } else {

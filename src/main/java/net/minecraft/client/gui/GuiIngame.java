@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.LocalizationHelper;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -515,50 +516,57 @@ public class GuiIngame extends Gui
         }
     }
 
-    /** Removed annoying red numbers by default. */
+    /** Renders the scoreboard. */
     private void renderScoreboard(ScoreObjective scoreObjective, ScaledResolution screenResolution) {
         Scoreboard gameScoreboard = scoreObjective.getScoreboard();
         Collection<Score> allScores = gameScoreboard.getSortedScores(scoreObjective);
+        boolean displayScores = mc.gameSettings.getOptionOrdinalValue(GameSettings.Options.SCORE_DISPLAY);
 
-        // score display related code
-    /*    List<Score> filteredScores = allScores.stream().filter(individualScore -> individualScore.getPlayerName() != null && !individualScore.getPlayerName().startsWith("#")).collect(Collectors.toList());
-        if (filteredScores.size() > 15)
-            allScores = Lists.newArrayList(Iterables.skip(filteredScores, allScores.size() - 15));
-        else allScores = filteredScores;*/
+        if (displayScores) {
+            allScores = allScores.stream()
+                    .filter(score -> score.getPlayerName() != null && !score.getPlayerName().startsWith("#"))
+                    .limit(15)
+                    .collect(Collectors.toList());
+        }
 
-        int displayNameWidth = this.getFontRenderer().getStringWidth(scoreObjective.getDisplayName());
+        FontRenderer fontRenderer = this.getFontRenderer();
+        int displayNameWidth = fontRenderer.getStringWidth(scoreObjective.getDisplayName());
+        int fontHeight = fontRenderer.FONT_HEIGHT;
 
         for (Score score : allScores) {
             ScorePlayerTeam playerTeam = gameScoreboard.getPlayersTeam(score.getPlayerName());
-            String scoreEntry = ScorePlayerTeam.formatPlayerName(playerTeam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
-            displayNameWidth = Math.max(displayNameWidth, this.getFontRenderer().getStringWidth(scoreEntry));
+            String playerName = ScorePlayerTeam.formatPlayerName(playerTeam, score.getPlayerName());
+            String scoreEntry = playerName + ": " + EnumChatFormatting.RED + score.getScorePoints();
+
+            displayNameWidth = Math.max(displayNameWidth, fontRenderer.getStringWidth(displayScores ? scoreEntry : playerName));
         }
 
-        int totalHeight = allScores.size() * this.getFontRenderer().FONT_HEIGHT;
+        int totalHeight = allScores.size() * fontHeight;
         int verticalCenter = screenResolution.getScaledHeight() / 2 + totalHeight / 3;
-        int horizontalMargin = 3;
+        int horizontalMargin = 4;
         int scoreboardRightEdge = screenResolution.getScaledWidth() - displayNameWidth - horizontalMargin;
         int scoreIndex = 0;
 
         for (Score individualScore : allScores) {
             ++scoreIndex;
-
             ScorePlayerTeam playerTeam = gameScoreboard.getPlayersTeam(individualScore.getPlayerName());
             String playerName = ScorePlayerTeam.formatPlayerName(playerTeam, individualScore.getPlayerName());
-        //    String playerScore = EnumChatFormatting.RED + String.valueOf(individualScore.getScorePoints());
 
-            int verticalOffset = verticalCenter - scoreIndex * this.getFontRenderer().FONT_HEIGHT;
+            int verticalOffset = verticalCenter - scoreIndex * fontHeight;
             int scoreboardLeftEdge = screenResolution.getScaledWidth() - horizontalMargin + 2;
+            drawRect(scoreboardRightEdge - 2, verticalOffset, scoreboardLeftEdge, verticalOffset + fontHeight, 1342177280);
+            fontRenderer.drawString(playerName, scoreboardRightEdge, verticalOffset, 553648127);
 
-            drawRect(scoreboardRightEdge - 2, verticalOffset, scoreboardLeftEdge, verticalOffset + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            this.getFontRenderer().drawString(playerName, scoreboardRightEdge, verticalOffset, 553648127);
-        //    this.getFontRenderer().drawString(playerScore, scoreboardLeftEdge - this.getFontRenderer().getStringWidth(playerScore), verticalOffset, 553648127);
+            if (displayScores) {
+                String playerScore = EnumChatFormatting.RED + String.valueOf(individualScore.getScorePoints());
+                fontRenderer.drawString(playerScore, scoreboardLeftEdge - fontRenderer.getStringWidth(playerScore), verticalOffset, 553648127);
+            }
 
             if (scoreIndex == allScores.size()) {
                 String objectiveDisplayName = scoreObjective.getDisplayName();
-                drawRect(scoreboardRightEdge - 2, verticalOffset - this.getFontRenderer().FONT_HEIGHT - 1, scoreboardLeftEdge, verticalOffset - 1, 1610612736);
+                drawRect(scoreboardRightEdge - 2, verticalOffset - fontHeight - 1, scoreboardLeftEdge, verticalOffset - 1, 1610612736);
                 drawRect(scoreboardRightEdge - 2, verticalOffset - 1, scoreboardLeftEdge, verticalOffset, 1342177280);
-                this.getFontRenderer().drawString(objectiveDisplayName, scoreboardRightEdge + displayNameWidth / 2 - this.getFontRenderer().getStringWidth(objectiveDisplayName) / 2, verticalOffset - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                fontRenderer.drawString(objectiveDisplayName, scoreboardRightEdge + displayNameWidth / 2 - fontRenderer.getStringWidth(objectiveDisplayName) / 2, verticalOffset - fontHeight, 553648127);
             }
         }
     }

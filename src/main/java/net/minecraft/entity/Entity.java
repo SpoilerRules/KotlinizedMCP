@@ -128,6 +128,8 @@ public abstract class Entity implements ICommandSender
     protected UUID entityUniqueID;
     private final CommandResultStats cmdResultStats;
 
+    private static final Minecraft mc = Minecraft.getMinecraft();
+
     public int getEntityId()
     {
         return this.entityId;
@@ -1206,7 +1208,7 @@ public abstract class Entity implements ICommandSender
 
     @Beta
     public Vec3 getLook(float partialTicks) {
-        if (Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
+        if (mc.gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
             if (partialTicks == 1.0F) return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
             else {
                 float f = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * partialTicks;

@@ -73,10 +73,6 @@ public class GameSettings {
     private static final String[] GUISCALES = new String[]{"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
     private static final String[] PARTICLES = new String[]{"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
     private static final String[] AMBIENT_OCCLUSIONS = new String[]{"options.ao.off", "options.ao.min", "options.ao.max"};
-    private static final String[] STREAM_COMPRESSIONS = new String[]{"options.stream.compression.low", "options.stream.compression.medium", "options.stream.compression.high"};
-    private static final String[] STREAM_CHAT_MODES = new String[]{"options.stream.chat.enabled.streaming", "options.stream.chat.enabled.always", "options.stream.chat.enabled.never"};
-    private static final String[] STREAM_CHAT_FILTER_MODES = new String[]{"options.stream.chat.userFilter.all", "options.stream.chat.userFilter.subs", "options.stream.chat.userFilter.mods"};
-    private static final String[] STREAM_MIC_MODES = new String[]{"options.stream.mic_toggle.mute", "options.stream.mic_toggle.talk"};
     private static final String[] CLOUDS_TYPES = new String[]{"options.off", "options.graphics.fast", "options.graphics.fancy"};
     public float mouseSensitivity = 0.5F;
     public boolean invertMouse;
@@ -116,22 +112,11 @@ public class GameSettings {
     public boolean showInventoryAchievementHint = true;
     public int mipmapLevels = 4;
     private Map<SoundCategory, Float> mapSoundLevels = Maps.newEnumMap(SoundCategory.class);
-    public float streamBytesPerPixel = 0.5F;
-    public float streamMicVolume = 1.0F;
-    public float streamGameVolume = 1.0F;
-    public float streamKbps = 0.5412844F;
-    public float streamFps = 0.31690142F;
-    public int streamCompression = 1;
-    public boolean streamSendMetadata = true;
-    public String streamPreferredServer = "";
-    public int streamChatEnabled = 0;
-    public int streamChatUserFilter = 0;
-    public int streamMicToggleBehavior = 0;
     public boolean useNativeTransport = true;
     public boolean entityShadows = true;
 
     // Extra Settings
-    public boolean autoSprint = true;
+    public boolean autoSprint = false;
     public boolean rawInput = true;
     public boolean scoreDisplay = true;
     public boolean cameraShake = true;
@@ -157,10 +142,6 @@ public class GameSettings {
     public KeyBinding keyBindSmoothCamera = new KeyBinding("key.smoothCamera", 0, "key.categories.misc");
     public KeyBinding keyBindFullscreen = new KeyBinding("key.fullscreen", 87, "key.categories.misc");
     public KeyBinding keyBindSpectatorOutlines = new KeyBinding("key.spectatorOutlines", 0, "key.categories.misc");
-    public KeyBinding keyBindStreamStartStop = new KeyBinding("key.streamStartStop", 64, "key.categories.stream");
-    public KeyBinding keyBindStreamPauseUnpause = new KeyBinding("key.streamPauseUnpause", 65, "key.categories.stream");
-    public KeyBinding keyBindStreamCommercials = new KeyBinding("key.streamCommercial", 0, "key.categories.stream");
-    public KeyBinding keyBindStreamToggleMic = new KeyBinding("key.streamToggleMic", 0, "key.categories.stream");
     public KeyBinding[] keyBindsHotbar = new KeyBinding[]{new KeyBinding("key.hotbar.1", 2, "key.categories.inventory"), new KeyBinding("key.hotbar.2", 3, "key.categories.inventory"), new KeyBinding("key.hotbar.3", 4, "key.categories.inventory"), new KeyBinding("key.hotbar.4", 5, "key.categories.inventory"), new KeyBinding("key.hotbar.5", 6, "key.categories.inventory"), new KeyBinding("key.hotbar.6", 7, "key.categories.inventory"), new KeyBinding("key.hotbar.7", 8, "key.categories.inventory"), new KeyBinding("key.hotbar.8", 9, "key.categories.inventory"), new KeyBinding("key.hotbar.9", 10, "key.categories.inventory")};
     public KeyBinding[] keyBindings;
     protected Minecraft mc;
@@ -268,7 +249,7 @@ public class GameSettings {
     private File optionsFileOF;
 
     public GameSettings(Minecraft mcIn, File optionsFileIn) {
-        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindStreamStartStop, this.keyBindStreamPauseUnpause, this.keyBindStreamCommercials, this.keyBindStreamToggleMic, this.keyBindFullscreen, this.keyBindSpectatorOutlines}, this.keyBindsHotbar);
+        this.keyBindings = ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindFullscreen, this.keyBindSpectatorOutlines}, this.keyBindsHotbar);
         this.difficulty = EnumDifficulty.NORMAL;
         this.lastServer = "";
         this.fovSetting = 70.0F;
@@ -304,7 +285,7 @@ public class GameSettings {
     }
 
     public GameSettings() {
-        this.keyBindings = (KeyBinding[]) ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindStreamStartStop, this.keyBindStreamPauseUnpause, this.keyBindStreamCommercials, this.keyBindStreamToggleMic, this.keyBindFullscreen, this.keyBindSpectatorOutlines}, this.keyBindsHotbar);
+        this.keyBindings = (KeyBinding[]) ArrayUtils.addAll(new KeyBinding[]{this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindSprint, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.keyBindCommand, this.keyBindScreenshot, this.keyBindTogglePerspective, this.keyBindSmoothCamera, this.keyBindFullscreen, this.keyBindSpectatorOutlines}, this.keyBindsHotbar);
         this.difficulty = EnumDifficulty.NORMAL;
         this.lastServer = "";
         this.fovSetting = 70.0F;
@@ -478,26 +459,6 @@ public class GameSettings {
             this.chatVisibility = EntityPlayer.EnumChatVisibility.getEnumChatVisibility((this.chatVisibility.getChatVisibility() + value) % 3);
         }
 
-        if (settingsOption == GameSettings.Options.STREAM_COMPRESSION) {
-            this.streamCompression = (this.streamCompression + value) % 3;
-        }
-
-        if (settingsOption == GameSettings.Options.STREAM_SEND_METADATA) {
-            this.streamSendMetadata = !this.streamSendMetadata;
-        }
-
-        if (settingsOption == GameSettings.Options.STREAM_CHAT_ENABLED) {
-            this.streamChatEnabled = (this.streamChatEnabled + value) % 3;
-        }
-
-        if (settingsOption == GameSettings.Options.STREAM_CHAT_USER_FILTER) {
-            this.streamChatUserFilter = (this.streamChatUserFilter + value) % 3;
-        }
-
-        if (settingsOption == GameSettings.Options.STREAM_MIC_TOGGLE_BEHAVIOR) {
-            this.streamMicToggleBehavior = (this.streamMicToggleBehavior + value) % 2;
-        }
-
         if (settingsOption == GameSettings.Options.CHAT_COLOR) {
             this.chatColours = !this.chatColours;
         }
@@ -572,7 +533,26 @@ public class GameSettings {
 
     public float getOptionFloatValue(GameSettings.Options settingOption) {
         float f = this.getOptionFloatValueOF(settingOption);
-        return f != Float.MAX_VALUE ? f : (settingOption == GameSettings.Options.FOV ? this.fovSetting : (settingOption == GameSettings.Options.GAMMA ? this.gammaSetting : (settingOption == GameSettings.Options.SATURATION ? this.saturation : (settingOption == GameSettings.Options.SENSITIVITY ? this.mouseSensitivity : (settingOption == GameSettings.Options.CHAT_OPACITY ? this.chatOpacity : (settingOption == GameSettings.Options.CHAT_HEIGHT_FOCUSED ? this.chatHeightFocused : (settingOption == GameSettings.Options.CHAT_HEIGHT_UNFOCUSED ? this.chatHeightUnfocused : (settingOption == GameSettings.Options.CHAT_SCALE ? this.chatScale : (settingOption == GameSettings.Options.CHAT_WIDTH ? this.chatWidth : (settingOption == GameSettings.Options.FRAMERATE_LIMIT ? (float) this.limitFramerate : (settingOption == GameSettings.Options.MIPMAP_LEVELS ? (float) this.mipmapLevels : (settingOption == GameSettings.Options.RENDER_DISTANCE ? (float) this.renderDistanceChunks : (settingOption == GameSettings.Options.STREAM_BYTES_PER_PIXEL ? this.streamBytesPerPixel : (settingOption == GameSettings.Options.STREAM_VOLUME_MIC ? this.streamMicVolume : (settingOption == GameSettings.Options.STREAM_VOLUME_SYSTEM ? this.streamGameVolume : (settingOption == GameSettings.Options.STREAM_KBPS ? this.streamKbps : (settingOption == GameSettings.Options.STREAM_FPS ? this.streamFps : 0.0F)))))))))))))))));
+
+        if (f != Float.MAX_VALUE) {
+            return f;
+        }
+
+        return switch (settingOption) {
+            case FOV -> this.fovSetting;
+            case GAMMA -> this.gammaSetting;
+            case SATURATION -> this.saturation;
+            case SENSITIVITY -> this.mouseSensitivity;
+            case CHAT_OPACITY -> this.chatOpacity;
+            case CHAT_HEIGHT_FOCUSED -> this.chatHeightFocused;
+            case CHAT_HEIGHT_UNFOCUSED -> this.chatHeightUnfocused;
+            case CHAT_SCALE -> this.chatScale;
+            case CHAT_WIDTH -> this.chatWidth;
+            case FRAMERATE_LIMIT -> (float) this.limitFramerate;
+            case MIPMAP_LEVELS -> (float) this.mipmapLevels;
+            case RENDER_DISTANCE -> (float) this.renderDistanceChunks;
+            default -> 0.0F;
+        };
     }
 
     public boolean getOptionOrdinalValue(GameSettings.Options settingOption) {
@@ -589,7 +569,6 @@ public class GameSettings {
             case ENABLE_VSYNC -> this.enableVsync;
             case USE_VBO -> this.useVbo;
             case TOUCHSCREEN -> this.touchscreen;
-            case STREAM_SEND_METADATA -> this.streamSendMetadata;
             case FORCE_UNICODE_FONT -> this.forceUnicodeFont;
             case BLOCK_ALTERNATIVES -> this.allowBlockAlternatives;
             case REDUCED_DEBUG_INFO -> this.reducedDebugInfo;
@@ -695,14 +674,6 @@ public class GameSettings {
                 return s1 + getTranslation(PARTICLES, this.particleSetting);
             } else if (settingOption == GameSettings.Options.AMBIENT_OCCLUSION) {
                 return s1 + getTranslation(AMBIENT_OCCLUSIONS, this.ambientOcclusion);
-            } else if (settingOption == GameSettings.Options.STREAM_COMPRESSION) {
-                return s1 + getTranslation(STREAM_COMPRESSIONS, this.streamCompression);
-            } else if (settingOption == GameSettings.Options.STREAM_CHAT_ENABLED) {
-                return s1 + getTranslation(STREAM_CHAT_MODES, this.streamChatEnabled);
-            } else if (settingOption == GameSettings.Options.STREAM_CHAT_USER_FILTER) {
-                return s1 + getTranslation(STREAM_CHAT_FILTER_MODES, this.streamChatUserFilter);
-            } else if (settingOption == GameSettings.Options.STREAM_MIC_TOGGLE_BEHAVIOR) {
-                return s1 + getTranslation(STREAM_MIC_MODES, this.streamMicToggleBehavior);
             } else if (settingOption == GameSettings.Options.RENDER_CLOUDS) {
                 return s1 + getTranslation(CLOUDS_TYPES, this.clouds);
             } else if (settingOption == GameSettings.Options.GRAPHICS) {
@@ -935,50 +906,6 @@ public class GameSettings {
                                 this.mipmapLevels = Integer.parseInt(astring[1]);
                             }
 
-                            if (astring[0].equals("streamBytesPerPixel")) {
-                                this.streamBytesPerPixel = this.parseFloat(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamMicVolume")) {
-                                this.streamMicVolume = this.parseFloat(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamSystemVolume")) {
-                                this.streamGameVolume = this.parseFloat(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamKbps")) {
-                                this.streamKbps = this.parseFloat(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamFps")) {
-                                this.streamFps = this.parseFloat(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamCompression")) {
-                                this.streamCompression = Integer.parseInt(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamSendMetadata")) {
-                                this.streamSendMetadata = astring[1].equals("true");
-                            }
-
-                            if (astring[0].equals("streamPreferredServer") && astring.length >= 2) {
-                                this.streamPreferredServer = s.substring(s.indexOf(58) + 1);
-                            }
-
-                            if (astring[0].equals("streamChatEnabled")) {
-                                this.streamChatEnabled = Integer.parseInt(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamChatUserFilter")) {
-                                this.streamChatUserFilter = Integer.parseInt(astring[1]);
-                            }
-
-                            if (astring[0].equals("streamMicToggleBehavior")) {
-                                this.streamMicToggleBehavior = Integer.parseInt(astring[1]);
-                            }
-
                             if (astring[0].equals("forceUnicodeFont")) {
                                 this.forceUnicodeFont = astring[1].equals("true");
                             }
@@ -1112,17 +1039,6 @@ public class GameSettings {
             printwriter.println("chatWidth:" + this.chatWidth);
             printwriter.println("showInventoryAchievementHint:" + this.showInventoryAchievementHint);
             printwriter.println("mipmapLevels:" + this.mipmapLevels);
-            printwriter.println("streamBytesPerPixel:" + this.streamBytesPerPixel);
-            printwriter.println("streamMicVolume:" + this.streamMicVolume);
-            printwriter.println("streamSystemVolume:" + this.streamGameVolume);
-            printwriter.println("streamKbps:" + this.streamKbps);
-            printwriter.println("streamFps:" + this.streamFps);
-            printwriter.println("streamCompression:" + this.streamCompression);
-            printwriter.println("streamSendMetadata:" + this.streamSendMetadata);
-            printwriter.println("streamPreferredServer:" + this.streamPreferredServer);
-            printwriter.println("streamChatEnabled:" + this.streamChatEnabled);
-            printwriter.println("streamChatUserFilter:" + this.streamChatUserFilter);
-            printwriter.println("streamMicToggleBehavior:" + this.streamMicToggleBehavior);
             printwriter.println("forceUnicodeFont:" + this.forceUnicodeFont);
             printwriter.println("allowBlockAlternatives:" + this.allowBlockAlternatives);
             printwriter.println("reducedDebugInfo:" + this.reducedDebugInfo);
@@ -2605,16 +2521,6 @@ public class GameSettings {
         CHAT_HEIGHT_UNFOCUSED("options.chat.height.unfocused", true, false),
         MIPMAP_LEVELS("options.mipmapLevels", true, false, 0.0F, 4.0F, 1.0F),
         FORCE_UNICODE_FONT("options.forceUnicodeFont", false, true),
-        STREAM_BYTES_PER_PIXEL("options.stream.bytesPerPixel", true, false),
-        STREAM_VOLUME_MIC("options.stream.micVolumne", true, false),
-        STREAM_VOLUME_SYSTEM("options.stream.systemVolume", true, false),
-        STREAM_KBPS("options.stream.kbps", true, false),
-        STREAM_FPS("options.stream.fps", true, false),
-        STREAM_COMPRESSION("options.stream.compression", false, false),
-        STREAM_SEND_METADATA("options.stream.sendMetadata", false, true),
-        STREAM_CHAT_ENABLED("options.stream.chat.enabled", false, false),
-        STREAM_CHAT_USER_FILTER("options.stream.chat.userFilter", false, false),
-        STREAM_MIC_TOGGLE_BEHAVIOR("options.stream.micToggleBehavior", false, false),
         BLOCK_ALTERNATIVES("options.blockAlternatives", false, true),
         REDUCED_DEBUG_INFO("options.reducedDebugInfo", false, true),
         ENTITY_SHADOWS("options.entityShadows", false, true),
