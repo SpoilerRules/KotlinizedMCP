@@ -97,12 +97,12 @@
       }
     },
     {
-      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20-Beta2",
+      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20-Beta2/kotlin-stdlib-1.9.20-Beta2.jar",
-          "sha1": "7ce634622f363f3d927669612e510b8e8be40b78",
-          "size": 1715902
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20-RC/kotlin-stdlib-1.9.20-RC.jar",
+          "sha1": "f3abfc5244b1097dec0f64b371f184e3124b2779",
+          "size": 1715901
         }
       }
     },
