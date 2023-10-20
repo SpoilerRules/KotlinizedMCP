@@ -926,8 +926,26 @@ public class GameSettings {
                                 this.entityShadows = astring[1].equals("true");
                             }
 
+                            // Save extra settings
+
                             if (astring[0].equals("autoSprint")) {
                                 this.autoSprint = astring[1].equals("true");
+                            }
+
+                            if (astring[0].equals("rawInput")) {
+                                this.rawInput = astring[1].equals("true");
+                            }
+
+                            if (astring[0].equals("scoreDisplay")) {
+                                this.scoreDisplay = astring[1].equals("true");
+                            }
+
+                            if (astring[0].equals("cameraShake")) {
+                                this.cameraShake = astring[1].equals("true");
+                            }
+
+                            if (astring[0].equals("jumpDelay")) {
+                                this.jumpDelay = astring[1].equals("true");
                             }
 
                             for (KeyBinding keybinding : this.keyBindings) {
@@ -1044,7 +1062,12 @@ public class GameSettings {
             printwriter.println("reducedDebugInfo:" + this.reducedDebugInfo);
             printwriter.println("useNativeTransport:" + this.useNativeTransport);
             printwriter.println("entityShadows:" + this.entityShadows);
+            // Save extra settings
             printwriter.println("autoSprint:" + this.autoSprint);
+            printwriter.println("rawInput:" + this.rawInput);
+            printwriter.println("scoreDisplay:" + this.scoreDisplay);
+            printwriter.println("cameraShake:" + this.cameraShake);
+            printwriter.println("jumpDelay:" + this.jumpDelay);
 
             for (KeyBinding keybinding : this.keyBindings) {
                 printwriter.println("key_" + keybinding.getKeyDescription() + ":" + keybinding.getKeyCode());
