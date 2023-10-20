@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-Beta2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC")
 
     // Netty
     implementation("io.netty:netty-handler:4.1.98.Final")
@@ -30,7 +30,7 @@ dependencies {
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") // Latest as of 2023 August 22
 
     // LWJGL
-    /** Uncomment this when you are ready to start utilizing LWJGL 3.
+    /* Uncomment this when you are ready to start utilizing LWJGL 3.
     * api("org.lwjgl:lwjgl:3.3.2") // Latest as of 2023 August 23
     * api("org.lwjgl:lwjgl-opengl:3.3.2") // Latest as of 2023 August 22
     * api("org.lwjgl:lwjgl-glfw:3.3.2") // Latest as of 2023 August 22
