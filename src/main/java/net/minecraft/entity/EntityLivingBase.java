@@ -1532,14 +1532,19 @@ public abstract class EntityLivingBase extends Entity {
         return this.worldObj.rayTraceBlocks(new Vec3(this.posX, this.posY + (double) this.getEyeHeight(), this.posZ), new Vec3(entityIn.posX, entityIn.posY + (double) entityIn.getEyeHeight(), entityIn.posZ)) == null;
     }
 
-    // Fixed mouse delay
-    public Vec3 getLookVec() {
+    /**
+     * returns a (normalized) vector of where this entity is looking
+     */
+    public Vec3 getLookVec()
+    {
         return this.getLook(1.0F);
     }
 
-    // EntityPlayerSP
+    /**
+     * interpolated look vector
+     */
     public Vec3 getLook(float partialTicks) {
-        return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
+        return super.getLook(1.0f);
     }
 
     public float getSwingProgress(float partialTickTime) {

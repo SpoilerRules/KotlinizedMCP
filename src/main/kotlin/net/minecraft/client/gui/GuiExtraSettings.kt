@@ -13,8 +13,8 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
 
         val options = listOf(
             OptionPosition(GameSettings.Options.AUTO_SPRINT, centerWidth - 75, centerHeight + 15), // Correctly implemented.
-            OptionPosition(GameSettings.Options.RAW_INPUT, centerWidth - 190, centerHeight - 75), // Not correctly implemented. Placeholder as in-use of current module.
-            OptionPosition(GameSettings.Options.CAMERA_SHAKE, centerWidth - 190, centerHeight - 30),
+            OptionPosition(GameSettings.Options.RAW_INPUT, centerWidth - 190, centerHeight - 75), // Not correctly implemented. Placeholder as in-use of current module (Mouse Delay Fix).
+            OptionPosition(GameSettings.Options.CAMERA_SHAKE, centerWidth - 190, centerHeight - 30), // Not correctly implemented. Placeholder as in-use of current module (Hurt Shake).
             OptionPosition(GameSettings.Options.JUMP_DELAY, centerWidth + 50, centerHeight - 75), // Correctly Implemented.
             OptionPosition(GameSettings.Options.SCORE_DISPLAY, centerWidth + 50, centerHeight - 30)
         )

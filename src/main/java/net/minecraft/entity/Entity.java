@@ -182,7 +182,7 @@ public abstract class Entity implements ICommandSender
 
     public boolean equals(Object p_equals_1_)
     {
-        return p_equals_1_ instanceof Entity ? ((Entity)p_equals_1_).entityId == this.entityId : false;
+        return p_equals_1_ instanceof Entity && ((Entity) p_equals_1_).entityId == this.entityId;
     }
 
     public int hashCode()
@@ -1206,7 +1206,7 @@ public abstract class Entity implements ICommandSender
 
     @Beta
     public Vec3 getLook(float partialTicks) {
-        if (!Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
+        if (Minecraft.getMinecraft().gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
             if (partialTicks == 1.0F) return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
             else {
                 float f = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * partialTicks;

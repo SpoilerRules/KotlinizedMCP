@@ -132,7 +132,7 @@ public class GameSettings {
 
     // Extra Settings
     public boolean autoSprint = true;
-    public boolean rawInput = false;
+    public boolean rawInput = true;
     public boolean scoreDisplay = true;
     public boolean cameraShake = true;
     public boolean jumpDelay = false;
@@ -2621,10 +2621,11 @@ public class GameSettings {
 
         // Extra Settings
         AUTO_SPRINT("Auto Sprint", false, true),
-        // We call it "Mouse Delay Fix" for now, real "Raw Input" will be implemented later.
-        RAW_INPUT("Mouse Delay Fix", false, true),
+        // We call it "Mouse Delay" for now, real "Raw Input" will be implemented later.
+        RAW_INPUT("Mouse Delay", false, true),
         SCORE_DISPLAY("Score Point Display", false, true),
-        CAMERA_SHAKE("Camera Shake", false, true),
+        // We call it "Hurt Shake" for now, real "Camera Shake" will be implemented later.
+        CAMERA_SHAKE("Hurt Shake", false, true),
         JUMP_DELAY("Jump Delay", false, true),
 
         FOG_FANCY("of.options.FOG_FANCY", false, false),
