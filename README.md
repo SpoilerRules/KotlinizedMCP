@@ -38,21 +38,22 @@ Absolutely! This project is created to aid client developers by providing a user
 Yes, Evanescent, also known as KotlinizedMCP, is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
 
 #### Can I use other JVM languages, such as Scala, for development?
-Yes, you can use any JVM languages to work on Evanescent. Please be aware that our primary focus for contributions is in Kotlin/JVM, given the project's name, "KotlinizedMCP". You can find further details on contributing to the project in the [Contributions](#contributions) section.
+Yes, you are welcome to use any JVM languages to work on Evanescent for your independent projects. Please note that our primary focus for contributions to the GitHub repository is in Kotlin/JVM, given the project's name, "KotlinizedMCP". You can find further details on contributing to the project in the [Contributions](#contributions) section.
 
 ## Built-in Features
 
-- ✅ Removed score display on the right side of the scoreboard.
-- ✅ Removed Minecraft Realms support.
-- ✅ Removed hit delay.
 - ✅ Command detection is case-insensitive.
 - ✅ Simple Microsoft login in-game.
-- ✅ Simple Automatic Sprint feature.
+- ✅ Extra Settings, offering options like Hit Delay, Auto Sprint, and more.
+- ✅ Removed Minecraft Realms support.
+- ✅ Removed Twitch Broadcast support.
 
 ## Pending Built-in Features
 
-- ❌ Removed Twitch Broadcast support.
+- ❌ Removed Demo version support.
+- ❌ Removed Snooper support.
 - ❌ Implemented raw input.
+- ❌ Implemented camera shake customization.
 
 ## Why the Name "Evanescent"?
 
