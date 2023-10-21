@@ -118,7 +118,7 @@ tasks.withType<JavaCompile> {
 
 tasks.withType<JavaExec> {
     val osType = if (System.getProperty("os.name").lowercase().contains("windows")) "windows" else "linux"
-    systemProperty("java.library.path", "test_natives/$osType")
+    systemProperty("java.library.path", "..\\test_natives\\$osType")
 }
 
 tasks.withType<Javadoc> {
