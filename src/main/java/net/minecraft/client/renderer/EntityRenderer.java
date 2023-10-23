@@ -62,15 +62,14 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MouseFilter;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.input.MouseInputFilter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
@@ -113,8 +112,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public ItemRenderer itemRenderer;
     private final MapItemRenderer theMapItemRenderer;
     private int rendererUpdateCount;
-    private MouseFilter mouseFilterXAxis = new MouseFilter();
-    private MouseFilter mouseFilterYAxis = new MouseFilter();
+    private MouseInputFilter mouseInputFilterXAxis = new MouseInputFilter();
+    private MouseInputFilter mouseInputFilterYAxis = new MouseInputFilter();
     private final float thirdPersonDistance = 4.0F;
     private float thirdPersonDistanceTemp = 4.0F;
     private float smoothCamYaw;
@@ -327,8 +326,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             float f = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
             float f1 = f * f * f * 8.0F;
-            this.smoothCamFilterX = this.mouseFilterXAxis.smooth(this.smoothCamYaw, 0.05F * f1);
-            this.smoothCamFilterY = this.mouseFilterYAxis.smooth(this.smoothCamPitch, 0.05F * f1);
+            this.smoothCamFilterX = this.mouseInputFilterXAxis.smooth(this.smoothCamYaw, 0.05F * f1);
+            this.smoothCamFilterY = this.mouseInputFilterYAxis.smooth(this.smoothCamPitch, 0.05F * f1);
             this.smoothCamPartialTicks = 0.0F;
             this.smoothCamYaw = 0.0F;
             this.smoothCamPitch = 0.0F;
@@ -337,8 +336,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.smoothCamFilterX = 0.0F;
             this.smoothCamFilterY = 0.0F;
-            this.mouseFilterXAxis.reset();
-            this.mouseFilterYAxis.reset();
+            this.mouseInputFilterXAxis.reset();
+            this.mouseInputFilterYAxis.reset();
         }
 
         if (this.mc.getRenderViewEntity() == null)
@@ -566,8 +565,8 @@ public class EntityRenderer implements IResourceManagerReloadListener
             {
                 Config.zoomMode = false;
                 this.mc.gameSettings.smoothCamera = Config.zoomSmoothCamera;
-                this.mouseFilterXAxis = new MouseFilter();
-                this.mouseFilterYAxis = new MouseFilter();
+                this.mouseInputFilterXAxis = new MouseInputFilter();
+                this.mouseInputFilterYAxis = new MouseInputFilter();
                 this.mc.renderGlobal.displayListEntitiesDirty = true;
             }
 

@@ -8,7 +8,7 @@ import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
-import net.minecraft.client.network.OldServerPinger;
+import net.minecraft.client.network.ServerPingHandlerService;
 import net.minecraft.client.resources.LocalizationHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ import org.lwjgl.input.Keyboard;
 public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
 {
     private static final Logger logger = LogManager.getLogger();
-    private final OldServerPinger oldServerPinger = new OldServerPinger();
+    private final ServerPingHandlerService serverPingHandlerService = new ServerPingHandlerService();
     private GuiScreen parentScreen;
     private ServerSelectionList serverListSelector;
     private ServerList savedServerList;
@@ -101,7 +101,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             this.serverListSelector.func_148194_a(list);
         }
 
-        this.oldServerPinger.pingPendingNetworks();
+        this.serverPingHandlerService.pingPendingNetworks();
     }
 
     public void onGuiClosed()
@@ -114,7 +114,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             this.lanServerDetector = null;
         }
 
-        this.oldServerPinger.clearPendingNetworks();
+        this.serverPingHandlerService.clearPendingNetworks();
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -392,9 +392,9 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         }
     }
 
-    public OldServerPinger getOldServerPinger()
+    public ServerPingHandlerService getOldServerPinger()
     {
-        return this.oldServerPinger;
+        return this.serverPingHandlerService;
     }
 
     public void setHoveringText(String p_146793_1_)
