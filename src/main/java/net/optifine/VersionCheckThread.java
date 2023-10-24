@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import net.minecraft.client.ClientBrandEnum;
+import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.src.Config;
 
 public class VersionCheckThread extends Thread

@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import net.minecraft.client.ClientBrandEnum;
+import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.mainMenuGui.microsoftLogin.LoginHandler;
 import net.minecraft.client.renderer.GlStateManager;

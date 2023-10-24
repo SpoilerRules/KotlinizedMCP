@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
-import net.minecraft.client.ClientBrandEnum;
+import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.src.Config;

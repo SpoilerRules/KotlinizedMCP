@@ -1,4 +1,4 @@
-package net.minecraft.client
+package net.minecraft.util.client
 
 object ClientBrandEnum {
     const val WINDOW_DISPLAY_TITLE = "Evanescent | Minecraft 1.8.9"

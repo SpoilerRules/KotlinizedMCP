@@ -8,7 +8,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
-import net.minecraft.client.ClientBrandEnum;
+import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.GuardianSound;
 import net.minecraft.client.entity.EntityOtherPlayerMP;

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-import net.minecraft.client.ClientBrandEnum;
+import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ThreadLanServerPing;
 import net.minecraft.command.ServerCommandManager;
