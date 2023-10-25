@@ -34,7 +34,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -185,14 +185,14 @@ public class EntityRabbit extends EntityAnimal
                 if (this.moveHelper.isUpdating() && this.currentMoveTypeDuration == 0)
                 {
                     PathEntity pathentity = this.navigator.getPath();
-                    Vec3 vec3 = new Vec3(this.moveHelper.getX(), this.moveHelper.getY(), this.moveHelper.getZ());
+                    Vector3D vector3D = new Vector3D(this.moveHelper.getX(), this.moveHelper.getY(), this.moveHelper.getZ());
 
                     if (pathentity != null && pathentity.getCurrentPathIndex() < pathentity.getCurrentPathLength())
                     {
-                        vec3 = pathentity.getPosition(this);
+                        vector3D = pathentity.getPosition(this);
                     }
 
-                    this.calculateRotationYaw(vec3.xCoord, vec3.zCoord);
+                    this.calculateRotationYaw(vector3D.x, vector3D.z);
                     this.doMovementAction(this.moveType);
                 }
             }

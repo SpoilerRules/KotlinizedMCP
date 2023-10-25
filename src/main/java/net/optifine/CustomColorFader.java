@@ -1,18 +1,18 @@
 package net.optifine;
 
 import net.minecraft.src.Config;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class CustomColorFader
 {
-    private Vec3 color = null;
+    private Vector3D color = null;
     private long timeUpdate = System.currentTimeMillis();
 
-    public Vec3 getColor(double x, double y, double z)
+    public Vector3D getColor(double x, double y, double z)
     {
         if (this.color == null)
         {
-            this.color = new Vec3(x, y, z);
+            this.color = new Vector3D(x, y, z);
             return this.color;
         }
         else
@@ -28,7 +28,7 @@ public class CustomColorFader
             {
                 this.timeUpdate = i;
 
-                if (Math.abs(x - this.color.xCoord) < 0.004D && Math.abs(y - this.color.yCoord) < 0.004D && Math.abs(z - this.color.zCoord) < 0.004D)
+                if (Math.abs(x - this.color.x) < 0.004D && Math.abs(y - this.color.y) < 0.004D && Math.abs(z - this.color.z) < 0.004D)
                 {
                     return this.color;
                 }
@@ -36,13 +36,13 @@ public class CustomColorFader
                 {
                     double d0 = (double)j * 0.001D;
                     d0 = Config.limit(d0, 0.0D, 1.0D);
-                    double d1 = x - this.color.xCoord;
-                    double d2 = y - this.color.yCoord;
-                    double d3 = z - this.color.zCoord;
-                    double d4 = this.color.xCoord + d1 * d0;
-                    double d5 = this.color.yCoord + d2 * d0;
-                    double d6 = this.color.zCoord + d3 * d0;
-                    this.color = new Vec3(d4, d5, d6);
+                    double d1 = x - this.color.x;
+                    double d2 = y - this.color.y;
+                    double d3 = z - this.color.z;
+                    double d4 = this.color.x + d1 * d0;
+                    double d5 = this.color.y + d2 * d0;
+                    double d6 = this.color.z + d3 * d0;
+                    this.color = new Vector3D(d4, d5, d6);
                     return this.color;
                 }
             }

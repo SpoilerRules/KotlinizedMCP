@@ -11,7 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import org.lwjgl.opengl.GL11;
 
 public class RenderGuardian extends RenderLiving<EntityGuardian>
@@ -41,10 +41,10 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
 
                 if (entitylivingbase != null)
                 {
-                    Vec3 vec3 = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, 1.0F);
-                    Vec3 vec31 = this.func_177110_a(livingEntity, (double)livingEntity.getEyeHeight(), 1.0F);
+                    Vector3D vector3D = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, 1.0F);
+                    Vector3D vec31D = this.func_177110_a(livingEntity, (double)livingEntity.getEyeHeight(), 1.0F);
 
-                    if (camera.isBoundingBoxInFrustum(AxisAlignedBB.fromBounds(vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord, vec3.yCoord, vec3.zCoord)))
+                    if (camera.isBoundingBoxInFrustum(AxisAlignedBB.fromBounds(vec31D.x, vec31D.y, vec31D.z, vector3D.x, vector3D.y, vector3D.z)))
                     {
                         return true;
                     }
@@ -55,12 +55,12 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
         }
     }
 
-    private Vec3 func_177110_a(EntityLivingBase entityLivingBaseIn, double p_177110_2_, float p_177110_4_)
+    private Vector3D func_177110_a(EntityLivingBase entityLivingBaseIn, double p_177110_2_, float p_177110_4_)
     {
         double d0 = entityLivingBaseIn.lastTickPosX + (entityLivingBaseIn.posX - entityLivingBaseIn.lastTickPosX) * (double)p_177110_4_;
         double d1 = p_177110_2_ + entityLivingBaseIn.lastTickPosY + (entityLivingBaseIn.posY - entityLivingBaseIn.lastTickPosY) * (double)p_177110_4_;
         double d2 = entityLivingBaseIn.lastTickPosZ + (entityLivingBaseIn.posZ - entityLivingBaseIn.lastTickPosZ) * (double)p_177110_4_;
-        return new Vec3(d0, d1, d2);
+        return new Vector3D(d0, d1, d2);
     }
 
     public void doRender(EntityGuardian entity, double x, double y, double z, float entityYaw, float partialTicks)
@@ -94,13 +94,13 @@ public class RenderGuardian extends RenderLiving<EntityGuardian>
             float f4 = entity.getEyeHeight();
             GlStateManager.pushMatrix();
             GlStateManager.translate((float)x, (float)y + f4, (float)z);
-            Vec3 vec3 = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, partialTicks);
-            Vec3 vec31 = this.func_177110_a(entity, (double)f4, partialTicks);
-            Vec3 vec32 = vec3.subtract(vec31);
-            double d0 = vec32.lengthVector() + 1.0D;
-            vec32 = vec32.normalize();
-            float f5 = (float)Math.acos(vec32.yCoord);
-            float f6 = (float)Math.atan2(vec32.zCoord, vec32.xCoord);
+            Vector3D vector3D = this.func_177110_a(entitylivingbase, (double)entitylivingbase.height * 0.5D, partialTicks);
+            Vector3D vec31D = this.func_177110_a(entity, (double)f4, partialTicks);
+            Vector3D vec32D = vector3D.subtract(vec31D);
+            double d0 = vec32D.length() + 1.0D;
+            vec32D = vec32D.normalize();
+            float f5 = (float)Math.acos(vec32D.y);
+            float f6 = (float)Math.atan2(vec32D.z, vec32D.x);
             GlStateManager.rotate((((float)Math.PI / 2F) + -f6) * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(f5 * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
             int i = 1;

@@ -19,7 +19,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Rotations;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -334,7 +334,7 @@ public class EntityArmorStand extends EntityLivingBase
         }
     }
 
-    public boolean interactAt(EntityPlayer player, Vec3 targetVec3)
+    public boolean interactAt(EntityPlayer player, Vector3D targetVector3D)
     {
         if (this.hasMarker())
         {
@@ -379,7 +379,7 @@ public class EntityArmorStand extends EntityLivingBase
             double d2 = 1.6D;
             int j = 0;
             boolean flag1 = this.isSmall();
-            double d3 = flag1 ? targetVec3.yCoord * 2.0D : targetVec3.yCoord;
+            double d3 = flag1 ? targetVector3D.y * 2.0D : targetVector3D.y;
 
             if (d3 >= 0.1D && d3 < 0.1D + (flag1 ? 0.8D : 0.45D) && this.contents[1] != null)
             {

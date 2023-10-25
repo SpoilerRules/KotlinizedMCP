@@ -11,7 +11,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class ItemBoat extends Item
@@ -30,7 +30,7 @@ public class ItemBoat extends Item
         double d0 = playerIn.prevPosX + (playerIn.posX - playerIn.prevPosX) * (double)f;
         double d1 = playerIn.prevPosY + (playerIn.posY - playerIn.prevPosY) * (double)f + (double)playerIn.getEyeHeight();
         double d2 = playerIn.prevPosZ + (playerIn.posZ - playerIn.prevPosZ) * (double)f;
-        Vec3 vec3 = new Vec3(d0, d1, d2);
+        Vector3D vector3D = new Vector3D(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
         float f5 = -MathHelper.cos(-f1 * 0.017453292F);
@@ -38,8 +38,8 @@ public class ItemBoat extends Item
         float f7 = f4 * f5;
         float f8 = f3 * f5;
         double d3 = 5.0D;
-        Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
-        MovingObjectPosition movingobjectposition = worldIn.rayTraceBlocks(vec3, vec31, true);
+        Vector3D vec31D = vector3D.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
+        MovingObjectPosition movingobjectposition = worldIn.rayTraceBlocks(vector3D, vec31D, true);
 
         if (movingobjectposition == null)
         {
@@ -47,10 +47,10 @@ public class ItemBoat extends Item
         }
         else
         {
-            Vec3 vec32 = playerIn.getLook(f);
+            Vector3D vec32D = playerIn.getLook(f);
             boolean flag = false;
             float f9 = 1.0F;
-            List<Entity> list = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, playerIn.getEntityBoundingBox().addCoord(vec32.xCoord * d3, vec32.yCoord * d3, vec32.zCoord * d3).expand((double)f9, (double)f9, (double)f9));
+            List<Entity> list = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, playerIn.getEntityBoundingBox().addCoord(vec32D.x * d3, vec32D.y * d3, vec32D.z * d3).expand((double)f9, (double)f9, (double)f9));
 
             for (int i = 0; i < list.size(); ++i)
             {
@@ -61,7 +61,7 @@ public class ItemBoat extends Item
                     float f10 = entity.getCollisionBorderSize();
                     AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand((double)f10, (double)f10, (double)f10);
 
-                    if (axisalignedbb.isVecInside(vec3))
+                    if (axisalignedbb.isVecInside(vector3D))
                     {
                         flag = true;
                     }

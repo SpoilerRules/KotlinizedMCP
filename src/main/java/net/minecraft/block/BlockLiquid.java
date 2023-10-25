@@ -15,7 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
@@ -129,9 +129,9 @@ public abstract class BlockLiquid extends Block
         return 0;
     }
 
-    protected Vec3 getFlowVector(IBlockAccess worldIn, BlockPos pos)
+    protected Vector3D getFlowVector(IBlockAccess worldIn, BlockPos pos)
     {
-        Vec3 vec3 = new Vec3(0.0D, 0.0D, 0.0D);
+        Vector3D vector3D = new Vector3D(0.0D, 0.0D, 0.0D);
         int i = this.getEffectiveFlowDecay(worldIn, pos);
 
         for (EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL)
@@ -148,14 +148,14 @@ public abstract class BlockLiquid extends Block
                     if (j >= 0)
                     {
                         int k = j - (i - 8);
-                        vec3 = vec3.addVector((double)((blockpos.getX() - pos.getX()) * k), (double)((blockpos.getY() - pos.getY()) * k), (double)((blockpos.getZ() - pos.getZ()) * k));
+                        vector3D = vector3D.addVector((double)((blockpos.getX() - pos.getX()) * k), (double)((blockpos.getY() - pos.getY()) * k), (double)((blockpos.getZ() - pos.getZ()) * k));
                     }
                 }
             }
             else if (j >= 0)
             {
                 int l = j - i;
-                vec3 = vec3.addVector((double)((blockpos.getX() - pos.getX()) * l), (double)((blockpos.getY() - pos.getY()) * l), (double)((blockpos.getZ() - pos.getZ()) * l));
+                vector3D = vector3D.addVector((double)((blockpos.getX() - pos.getX()) * l), (double)((blockpos.getY() - pos.getY()) * l), (double)((blockpos.getZ() - pos.getZ()) * l));
             }
         }
 
@@ -167,16 +167,16 @@ public abstract class BlockLiquid extends Block
 
                 if (this.isBlockSolid(worldIn, blockpos1, enumfacing1) || this.isBlockSolid(worldIn, blockpos1.up(), enumfacing1))
                 {
-                    vec3 = vec3.normalize().addVector(0.0D, -6.0D, 0.0D);
+                    vector3D = vector3D.normalize().addVector(0.0D, -6.0D, 0.0D);
                     break;
                 }
             }
         }
 
-        return vec3.normalize();
+        return vector3D.normalize();
     }
 
-    public Vec3 modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vec3 motion)
+    public Vector3D modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vector3D motion)
     {
         return motion.add(this.getFlowVector(worldIn, pos));
     }
@@ -266,8 +266,8 @@ public abstract class BlockLiquid extends Block
 
     public static double getFlowDirection(IBlockAccess worldIn, BlockPos pos, Material materialIn)
     {
-        Vec3 vec3 = getFlowingBlock(materialIn).getFlowVector(worldIn, pos);
-        return vec3.xCoord == 0.0D && vec3.zCoord == 0.0D ? -1000.0D : MathHelper.atan2(vec3.zCoord, vec3.xCoord) - (Math.PI / 2D);
+        Vector3D vector3D = getFlowingBlock(materialIn).getFlowVector(worldIn, pos);
+        return vector3D.x == 0.0D && vector3D.z == 0.0D ? -1000.0D : MathHelper.atan2(vector3D.z, vector3D.x) - (Math.PI / 2D);
     }
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)

@@ -23,7 +23,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomFishable;
 import net.minecraft.world.World;
@@ -237,15 +237,15 @@ public class EntityFishHook extends Entity
                 ++this.ticksInAir;
             }
 
-            Vec3 vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            Vec3 vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec31, vec3);
-            vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vector3D vec31D = new Vector3D(this.posX, this.posY, this.posZ);
+            Vector3D vector3D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec31D, vector3D);
+            vec31D = new Vector3D(this.posX, this.posY, this.posZ);
+            vector3D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
             if (movingobjectposition != null)
             {
-                vec3 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vector3D = new Vector3D(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
             }
 
             Entity entity = null;
@@ -260,11 +260,11 @@ public class EntityFishHook extends Entity
                 {
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand((double)f, (double)f, (double)f);
-                    MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec31, vec3);
+                    MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec31D, vector3D);
 
                     if (movingobjectposition1 != null)
                     {
-                        double d2 = vec31.squareDistanceTo(movingobjectposition1.hitVec);
+                        double d2 = vec31D.squareDistanceTo(movingobjectposition1.hitVec);
 
                         if (d2 < d0 || d0 == 0.0D)
                         {

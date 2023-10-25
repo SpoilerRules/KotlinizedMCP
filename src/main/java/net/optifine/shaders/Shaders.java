@@ -59,7 +59,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 import net.optifine.CustomBlockLayers;
 import net.optifine.CustomColors;
@@ -4078,11 +4078,11 @@ public class Shaders
                 }
             }
 
-            Vec3 vec3 = mc.theWorld.getSkyColor(entity, partialTicks);
-            vec3 = CustomColors.getWorldSkyColor(vec3, currentWorld, entity, partialTicks);
-            skyColorR = (float)vec3.xCoord;
-            skyColorG = (float)vec3.yCoord;
-            skyColorB = (float)vec3.zCoord;
+            Vector3D vector3D = mc.theWorld.getSkyColor(entity, partialTicks);
+            vector3D = CustomColors.getWorldSkyColor(vector3D, currentWorld, entity, partialTicks);
+            skyColorR = (float) vector3D.x;
+            skyColorG = (float) vector3D.y;
+            skyColorB = (float) vector3D.z;
         }
 
         isRenderingWorld = true;
@@ -4913,11 +4913,11 @@ public class Shaders
         pushEntity(-2, 0);
     }
 
-    public static void setSkyColor(Vec3 v3color)
+    public static void setSkyColor(Vector3D v3color)
     {
-        skyColorR = (float)v3color.xCoord;
-        skyColorG = (float)v3color.yCoord;
-        skyColorB = (float)v3color.zCoord;
+        skyColorR = (float)v3color.x;
+        skyColorG = (float)v3color.y;
+        skyColorB = (float)v3color.z;
         setProgramUniform3f(uniform_skyColor, skyColorR, skyColorG, skyColorB);
     }
 

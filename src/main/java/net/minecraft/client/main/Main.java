@@ -90,7 +90,7 @@ public class Main {
         String assetIndex = optionSet.has(assetIndexOption) ? optionSet.valueOf(assetIndexOption) : null;
         String server = optionSet.valueOf(serverOption);
         Integer port = optionSet.valueOf(portOption);
-        Session session = new Session(optionSet.valueOf(usernameOption), uuid, optionSet.valueOf(accessTokenOption), optionSet.valueOf(userTypeOption));
+        Session session = new Session(optionSet.valueOf(usernameOption), uuid, optionSet.valueOf(accessTokenOption));
         GameConfiguration gameConfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, userProperties, profileProperties, proxy), new GameConfiguration.DisplayInformation(width, height, fullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcePackDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(demoMode, version), new GameConfiguration.ServerInformation(server, port));
         Runtime.getRuntime().addShutdownHook(new Thread("Client Shutdown Thread") {
             public void run() {

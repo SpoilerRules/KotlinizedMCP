@@ -20,7 +20,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -570,7 +570,7 @@ public class BlockStairs extends Block
         return this.modelBlock.getSelectedBoundingBox(worldIn, pos);
     }
 
-    public Vec3 modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vec3 motion)
+    public Vector3D modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vector3D motion)
     {
         return this.modelBlock.modifyAcceleration(worldIn, pos, entityIn, motion);
     }
@@ -633,7 +633,7 @@ public class BlockStairs extends Block
         return facing != EnumFacing.DOWN && (facing == EnumFacing.UP || (double)hitY <= 0.5D) ? iblockstate.withProperty(HALF, BlockStairs.EnumHalf.BOTTOM) : iblockstate.withProperty(HALF, BlockStairs.EnumHalf.TOP);
     }
 
-    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end)
+    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vector3D start, Vector3D end)
     {
         MovingObjectPosition[] amovingobjectposition = new MovingObjectPosition[8];
         IBlockState iblockstate = worldIn.getBlockState(pos);

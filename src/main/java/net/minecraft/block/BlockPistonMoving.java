@@ -16,7 +16,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -119,7 +119,7 @@ public class BlockPistonMoving extends BlockContainer
         }
     }
 
-    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end)
+    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vector3D start, Vector3D end)
     {
         return null;
     }

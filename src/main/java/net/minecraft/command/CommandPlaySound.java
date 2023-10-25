@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class CommandPlaySound extends CommandBase
 {
@@ -35,22 +35,22 @@ public class CommandPlaySound extends CommandBase
             int i = 0;
             String s = args[i++];
             EntityPlayerMP entityplayermp = getPlayer(sender, args[i++]);
-            Vec3 vec3 = sender.getPositionVector();
-            double d0 = vec3.xCoord;
+            Vector3D vector3D = sender.getPositionVector();
+            double d0 = vector3D.x;
 
             if (args.length > i)
             {
                 d0 = parseDouble(d0, args[i++], true);
             }
 
-            double d1 = vec3.yCoord;
+            double d1 = vector3D.y;
 
             if (args.length > i)
             {
                 d1 = parseDouble(d1, args[i++], 0, 0, false);
             }
 
-            double d2 = vec3.zCoord;
+            double d2 = vector3D.z;
 
             if (args.length > i)
             {

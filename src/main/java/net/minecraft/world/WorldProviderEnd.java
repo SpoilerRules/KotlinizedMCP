@@ -2,7 +2,7 @@ package net.minecraft.world;
 
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -32,7 +32,7 @@ public class WorldProviderEnd extends WorldProvider
         return null;
     }
 
-    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_)
+    public Vector3D getFogColor(float p_76562_1_, float p_76562_2_)
     {
         int i = 10518688;
         float f = MathHelper.cos(p_76562_1_ * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
@@ -43,7 +43,7 @@ public class WorldProviderEnd extends WorldProvider
         f1 = f1 * (f * 0.0F + 0.15F);
         f2 = f2 * (f * 0.0F + 0.15F);
         f3 = f3 * (f * 0.0F + 0.15F);
-        return new Vec3((double)f1, (double)f2, (double)f3);
+        return new Vector3D((double)f1, (double)f2, (double)f3);
     }
 
     public boolean isSkyColored()

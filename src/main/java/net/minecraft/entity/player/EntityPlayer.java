@@ -68,7 +68,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
@@ -375,22 +375,22 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             for (int i = 0; i < p_71010_2_; ++i)
             {
-                Vec3 vec3 = new Vec3(((double)this.rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
-                vec3 = vec3.rotatePitch(-this.rotationPitch * (float)Math.PI / 180.0F);
-                vec3 = vec3.rotateYaw(-this.rotationYaw * (float)Math.PI / 180.0F);
+                Vector3D vector3D = new Vector3D(((double)this.rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
+                vector3D = vector3D.rotatePitch(-this.rotationPitch * (float)Math.PI / 180.0F);
+                vector3D = vector3D.rotateYaw(-this.rotationYaw * (float)Math.PI / 180.0F);
                 double d0 = (double)(-this.rand.nextFloat()) * 0.6D - 0.3D;
-                Vec3 vec31 = new Vec3(((double)this.rand.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-                vec31 = vec31.rotatePitch(-this.rotationPitch * (float)Math.PI / 180.0F);
-                vec31 = vec31.rotateYaw(-this.rotationYaw * (float)Math.PI / 180.0F);
-                vec31 = vec31.addVector(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
+                Vector3D vec31D = new Vector3D(((double)this.rand.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+                vec31D = vec31D.rotatePitch(-this.rotationPitch * (float)Math.PI / 180.0F);
+                vec31D = vec31D.rotateYaw(-this.rotationYaw * (float)Math.PI / 180.0F);
+                vec31D = vec31D.addVector(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
 
                 if (itemStackIn.getHasSubtypes())
                 {
-                    this.worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord, vec3.yCoord + 0.05D, vec3.zCoord, new int[] {Item.getIdFromItem(itemStackIn.getItem()), itemStackIn.getMetadata()});
+                    this.worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec31D.x, vec31D.y, vec31D.z, vector3D.x, vector3D.y + 0.05D, vector3D.z, new int[] {Item.getIdFromItem(itemStackIn.getItem()), itemStackIn.getMetadata()});
                 }
                 else
                 {
-                    this.worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec31.xCoord, vec31.yCoord, vec31.zCoord, vec3.xCoord, vec3.yCoord + 0.05D, vec3.zCoord, new int[] {Item.getIdFromItem(itemStackIn.getItem())});
+                    this.worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec31D.x, vec31D.y, vec31D.z, vector3D.x, vector3D.y + 0.05D, vector3D.z, new int[] {Item.getIdFromItem(itemStackIn.getItem())});
                 }
             }
 

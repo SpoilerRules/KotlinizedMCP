@@ -3,7 +3,7 @@ package net.minecraft.command;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public interface ICommandSender
@@ -18,7 +18,7 @@ public interface ICommandSender
 
     BlockPos getPosition();
 
-    Vec3 getPositionVector();
+    Vector3D getPositionVector();
 
     World getEntityWorld();
 

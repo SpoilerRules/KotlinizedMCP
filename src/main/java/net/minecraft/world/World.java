@@ -41,7 +41,7 @@ import net.minecraft.util.IntHashMap;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.village.VillageCollection;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
@@ -775,35 +775,35 @@ public abstract class World implements IBlockAccess
         return this.skylightSubtracted < 4;
     }
 
-    public MovingObjectPosition rayTraceBlocks(Vec3 p_72933_1_, Vec3 p_72933_2_)
+    public MovingObjectPosition rayTraceBlocks(Vector3D p_72933_1_, Vector3D p_72933_2_)
     {
         return this.rayTraceBlocks(p_72933_1_, p_72933_2_, false, false, false);
     }
 
-    public MovingObjectPosition rayTraceBlocks(Vec3 start, Vec3 end, boolean stopOnLiquid)
+    public MovingObjectPosition rayTraceBlocks(Vector3D start, Vector3D end, boolean stopOnLiquid)
     {
         return this.rayTraceBlocks(start, end, stopOnLiquid, false, false);
     }
 
-    public MovingObjectPosition rayTraceBlocks(Vec3 vec31, Vec3 vec32, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock)
+    public MovingObjectPosition rayTraceBlocks(Vector3D vec31D, Vector3D vec32D, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock)
     {
-        if (!Double.isNaN(vec31.xCoord) && !Double.isNaN(vec31.yCoord) && !Double.isNaN(vec31.zCoord))
+        if (!Double.isNaN(vec31D.x) && !Double.isNaN(vec31D.y) && !Double.isNaN(vec31D.z))
         {
-            if (!Double.isNaN(vec32.xCoord) && !Double.isNaN(vec32.yCoord) && !Double.isNaN(vec32.zCoord))
+            if (!Double.isNaN(vec32D.x) && !Double.isNaN(vec32D.y) && !Double.isNaN(vec32D.z))
             {
-                int i = MathHelper.floor_double(vec32.xCoord);
-                int j = MathHelper.floor_double(vec32.yCoord);
-                int k = MathHelper.floor_double(vec32.zCoord);
-                int l = MathHelper.floor_double(vec31.xCoord);
-                int i1 = MathHelper.floor_double(vec31.yCoord);
-                int j1 = MathHelper.floor_double(vec31.zCoord);
+                int i = MathHelper.floor_double(vec32D.x);
+                int j = MathHelper.floor_double(vec32D.y);
+                int k = MathHelper.floor_double(vec32D.z);
+                int l = MathHelper.floor_double(vec31D.x);
+                int i1 = MathHelper.floor_double(vec31D.y);
+                int j1 = MathHelper.floor_double(vec31D.z);
                 BlockPos blockpos = new BlockPos(l, i1, j1);
                 IBlockState iblockstate = this.getBlockState(blockpos);
                 Block block = iblockstate.getBlock();
 
                 if ((!ignoreBlockWithoutBoundingBox || block.getCollisionBoundingBox(this, blockpos, iblockstate) != null) && block.canCollideCheck(iblockstate, stopOnLiquid))
                 {
-                    MovingObjectPosition movingobjectposition = block.collisionRayTrace(this, blockpos, vec31, vec32);
+                    MovingObjectPosition movingobjectposition = block.collisionRayTrace(this, blockpos, vec31D, vec32D);
 
                     if (movingobjectposition != null)
                     {
@@ -816,7 +816,7 @@ public abstract class World implements IBlockAccess
 
                 while (k1-- >= 0)
                 {
-                    if (Double.isNaN(vec31.xCoord) || Double.isNaN(vec31.yCoord) || Double.isNaN(vec31.zCoord))
+                    if (Double.isNaN(vec31D.x) || Double.isNaN(vec31D.y) || Double.isNaN(vec31D.z))
                     {
                         return null;
                     }
@@ -875,23 +875,23 @@ public abstract class World implements IBlockAccess
                     double d3 = 999.0D;
                     double d4 = 999.0D;
                     double d5 = 999.0D;
-                    double d6 = vec32.xCoord - vec31.xCoord;
-                    double d7 = vec32.yCoord - vec31.yCoord;
-                    double d8 = vec32.zCoord - vec31.zCoord;
+                    double d6 = vec32D.x - vec31D.x;
+                    double d7 = vec32D.y - vec31D.y;
+                    double d8 = vec32D.z - vec31D.z;
 
                     if (flag2)
                     {
-                        d3 = (d0 - vec31.xCoord) / d6;
+                        d3 = (d0 - vec31D.x) / d6;
                     }
 
                     if (flag)
                     {
-                        d4 = (d1 - vec31.yCoord) / d7;
+                        d4 = (d1 - vec31D.y) / d7;
                     }
 
                     if (flag1)
                     {
-                        d5 = (d2 - vec31.zCoord) / d8;
+                        d5 = (d2 - vec31D.z) / d8;
                     }
 
                     if (d3 == -0.0D)
@@ -914,22 +914,22 @@ public abstract class World implements IBlockAccess
                     if (d3 < d4 && d3 < d5)
                     {
                         enumfacing = i > l ? EnumFacing.WEST : EnumFacing.EAST;
-                        vec31 = new Vec3(d0, vec31.yCoord + d7 * d3, vec31.zCoord + d8 * d3);
+                        vec31D = new Vector3D(d0, vec31D.y + d7 * d3, vec31D.z + d8 * d3);
                     }
                     else if (d4 < d5)
                     {
                         enumfacing = j > i1 ? EnumFacing.DOWN : EnumFacing.UP;
-                        vec31 = new Vec3(vec31.xCoord + d6 * d4, d1, vec31.zCoord + d8 * d4);
+                        vec31D = new Vector3D(vec31D.x + d6 * d4, d1, vec31D.z + d8 * d4);
                     }
                     else
                     {
                         enumfacing = k > j1 ? EnumFacing.NORTH : EnumFacing.SOUTH;
-                        vec31 = new Vec3(vec31.xCoord + d6 * d5, vec31.yCoord + d7 * d5, d2);
+                        vec31D = new Vector3D(vec31D.x + d6 * d5, vec31D.y + d7 * d5, d2);
                     }
 
-                    l = MathHelper.floor_double(vec31.xCoord) - (enumfacing == EnumFacing.EAST ? 1 : 0);
-                    i1 = MathHelper.floor_double(vec31.yCoord) - (enumfacing == EnumFacing.UP ? 1 : 0);
-                    j1 = MathHelper.floor_double(vec31.zCoord) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
+                    l = MathHelper.floor_double(vec31D.x) - (enumfacing == EnumFacing.EAST ? 1 : 0);
+                    i1 = MathHelper.floor_double(vec31D.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
+                    j1 = MathHelper.floor_double(vec31D.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
                     blockpos = new BlockPos(l, i1, j1);
                     IBlockState iblockstate1 = this.getBlockState(blockpos);
                     Block block1 = iblockstate1.getBlock();
@@ -938,7 +938,7 @@ public abstract class World implements IBlockAccess
                     {
                         if (block1.canCollideCheck(iblockstate1, stopOnLiquid))
                         {
-                            MovingObjectPosition movingobjectposition1 = block1.collisionRayTrace(this, blockpos, vec31, vec32);
+                            MovingObjectPosition movingobjectposition1 = block1.collisionRayTrace(this, blockpos, vec31D, vec32D);
 
                             if (movingobjectposition1 != null)
                             {
@@ -947,7 +947,7 @@ public abstract class World implements IBlockAccess
                         }
                         else
                         {
-                            movingobjectposition2 = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec31, enumfacing, blockpos);
+                            movingobjectposition2 = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec31D, enumfacing, blockpos);
                         }
                     }
                 }
@@ -1287,7 +1287,7 @@ public abstract class World implements IBlockAccess
         return f1 * 0.8F + 0.2F;
     }
 
-    public Vec3 getSkyColor(Entity entityIn, float partialTicks)
+    public Vector3D getSkyColor(Entity entityIn, float partialTicks)
     {
         float f = this.getCelestialAngle(partialTicks);
         float f1 = MathHelper.cos(f * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
@@ -1342,7 +1342,7 @@ public abstract class World implements IBlockAccess
             f5 = f5 * (1.0F - f12) + 1.0F * f12;
         }
 
-        return new Vec3((double)f3, (double)f4, (double)f5);
+        return new Vector3D((double)f3, (double)f4, (double)f5);
     }
 
     public float getCelestialAngle(float partialTicks)
@@ -1366,7 +1366,7 @@ public abstract class World implements IBlockAccess
         return f * (float)Math.PI * 2.0F;
     }
 
-    public Vec3 getCloudColour(float partialTicks)
+    public Vector3D getCloudColour(float partialTicks)
     {
         float f = this.getCelestialAngle(partialTicks);
         float f1 = MathHelper.cos(f * (float)Math.PI * 2.0F) * 2.0F + 0.5F;
@@ -1399,10 +1399,10 @@ public abstract class World implements IBlockAccess
             f4 = f4 * f8 + f10 * (1.0F - f8);
         }
 
-        return new Vec3((double)f2, (double)f3, (double)f4);
+        return new Vector3D((double)f2, (double)f3, (double)f4);
     }
 
-    public Vec3 getFogColor(float partialTicks)
+    public Vector3D getFogColor(float partialTicks)
     {
         float f = this.getCelestialAngle(partialTicks);
         return this.provider.getFogColor(f, partialTicks);
@@ -1905,7 +1905,7 @@ public abstract class World implements IBlockAccess
         else
         {
             boolean flag = false;
-            Vec3 vec3 = new Vec3(0.0D, 0.0D, 0.0D);
+            Vector3D vector3D = new Vector3D(0.0D, 0.0D, 0.0D);
             BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
             for (int k1 = i; k1 < j; ++k1)
@@ -1925,20 +1925,20 @@ public abstract class World implements IBlockAccess
                             if ((double)l >= d0)
                             {
                                 flag = true;
-                                vec3 = block.modifyAcceleration(this, blockpos$mutableblockpos, entityIn, vec3);
+                                vector3D = block.modifyAcceleration(this, blockpos$mutableblockpos, entityIn, vector3D);
                             }
                         }
                     }
                 }
             }
 
-            if (vec3.lengthVector() > 0.0D && entityIn.isPushedByWater())
+            if (vector3D.length() > 0.0D && entityIn.isPushedByWater())
             {
-                vec3 = vec3.normalize();
+                vector3D = vector3D.normalize();
                 double d1 = 0.014D;
-                entityIn.motionX += vec3.xCoord * d1;
-                entityIn.motionY += vec3.yCoord * d1;
-                entityIn.motionZ += vec3.zCoord * d1;
+                entityIn.motionX += vector3D.x * d1;
+                entityIn.motionY += vector3D.y * d1;
+                entityIn.motionZ += vector3D.z * d1;
             }
 
             return flag;
@@ -2026,7 +2026,7 @@ public abstract class World implements IBlockAccess
         return explosion;
     }
 
-    public float getBlockDensity(Vec3 vec, AxisAlignedBB bb)
+    public float getBlockDensity(Vector3D vec, AxisAlignedBB bb)
     {
         double d0 = 1.0D / ((bb.maxX - bb.minX) * 2.0D + 1.0D);
         double d1 = 1.0D / ((bb.maxY - bb.minY) * 2.0D + 1.0D);
@@ -2049,7 +2049,7 @@ public abstract class World implements IBlockAccess
                         double d6 = bb.minY + (bb.maxY - bb.minY) * (double)f1;
                         double d7 = bb.minZ + (bb.maxZ - bb.minZ) * (double)f2;
 
-                        if (this.rayTraceBlocks(new Vec3(d5 + d3, d6, d7 + d4), vec) == null)
+                        if (this.rayTraceBlocks(new Vector3D(d5 + d3, d6, d7 + d4), vec) == null)
                         {
                             ++i;
                         }

@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import org.lwjgl.opengl.GL11;
 
 public class CloudRenderer
@@ -13,11 +13,11 @@ public class CloudRenderer
     private boolean updated = false;
     private boolean renderFancy = false;
     int cloudTickCounter;
-    private Vec3 cloudColor;
+    private Vector3D cloudColor;
     float partialTicks;
     private boolean updateRenderFancy = false;
     private int updateCloudTickCounter = 0;
-    private Vec3 updateCloudColor = new Vec3(-1.0D, -1.0D, -1.0D);
+    private Vector3D updateCloudColor = new Vector3D(-1.0D, -1.0D, -1.0D);
     private double updatePlayerX = 0.0D;
     private double updatePlayerY = 0.0D;
     private double updatePlayerZ = 0.0D;
@@ -29,7 +29,7 @@ public class CloudRenderer
         this.glListClouds = GLAllocation.generateDisplayLists(1);
     }
 
-    public void prepareToRender(boolean renderFancy, int cloudTickCounter, float partialTicks, Vec3 cloudColor)
+    public void prepareToRender(boolean renderFancy, int cloudTickCounter, float partialTicks, Vector3D cloudColor)
     {
         this.renderFancy = renderFancy;
         this.cloudTickCounter = cloudTickCounter;
@@ -51,15 +51,15 @@ public class CloudRenderer
         {
             return true;
         }
-        else if (Math.abs(this.cloudColor.xCoord - this.updateCloudColor.xCoord) > 0.003D)
+        else if (Math.abs(this.cloudColor.x - this.updateCloudColor.x) > 0.003D)
         {
             return true;
         }
-        else if (Math.abs(this.cloudColor.yCoord - this.updateCloudColor.yCoord) > 0.003D)
+        else if (Math.abs(this.cloudColor.y - this.updateCloudColor.y) > 0.003D)
         {
             return true;
         }
-        else if (Math.abs(this.cloudColor.zCoord - this.updateCloudColor.zCoord) > 0.003D)
+        else if (Math.abs(this.cloudColor.z - this.updateCloudColor.z) > 0.003D)
         {
             return true;
         }

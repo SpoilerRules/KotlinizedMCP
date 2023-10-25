@@ -1,7 +1,7 @@
 package net.minecraft.pathfinding;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class PathEntity {
     private final PathPoint[] points;
@@ -45,14 +45,14 @@ public class PathEntity {
         this.currentPathIndex = currentPathIndexIn;
     }
 
-    public Vec3 getVectorFromIndex(Entity entityIn, int index) {
+    public Vector3D getVectorFromIndex(Entity entityIn, int index) {
         double d0 = (double) this.points[index].xCoord + (double) ((int) (entityIn.width + 1.0F)) * 0.5D;
         double d1 = (double) this.points[index].yCoord;
         double d2 = (double) this.points[index].zCoord + (double) ((int) (entityIn.width + 1.0F)) * 0.5D;
-        return new Vec3(d0, d1, d2);
+        return new Vector3D(d0, d1, d2);
     }
 
-    public Vec3 getPosition(Entity entityIn) {
+    public Vector3D getPosition(Entity entityIn) {
         return this.getVectorFromIndex(entityIn, this.currentPathIndex);
     }
 
@@ -72,8 +72,8 @@ public class PathEntity {
         }
     }
 
-    public boolean isDestinationSame(Vec3 vec) {
+    public boolean isDestinationSame(Vector3D vec) {
         PathPoint pathpoint = this.getFinalPathPoint();
-        return pathpoint == null ? false : pathpoint.xCoord == (int) vec.xCoord && pathpoint.zCoord == (int) vec.zCoord;
+        return pathpoint == null ? false : pathpoint.xCoord == (int) vec.x && pathpoint.zCoord == (int) vec.z;
     }
 }

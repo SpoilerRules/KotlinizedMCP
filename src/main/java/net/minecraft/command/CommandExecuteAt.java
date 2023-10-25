@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class CommandExecuteAt extends CommandBase
@@ -84,9 +84,9 @@ public class CommandExecuteAt extends CommandBase
                 {
                     return blockpos;
                 }
-                public Vec3 getPositionVector()
+                public Vector3D getPositionVector()
                 {
-                    return new Vec3(d0, d1, d2);
+                    return new Vector3D(d0, d1, d2);
                 }
                 public World getEntityWorld()
                 {

@@ -1,7 +1,7 @@
 package net.minecraft.entity.ai;
 
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIPanic extends EntityAIBase
 {
@@ -26,17 +26,17 @@ public class EntityAIPanic extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.theEntityCreature, 5, 4);
+            Vector3D vector3D = RandomPositionGenerator.findRandomTarget(this.theEntityCreature, 5, 4);
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return false;
             }
             else
             {
-                this.randPosX = vec3.xCoord;
-                this.randPosY = vec3.yCoord;
-                this.randPosZ = vec3.zCoord;
+                this.randPosX = vector3D.x;
+                this.randPosY = vector3D.y;
+                this.randPosZ = vector3D.z;
                 return true;
             }
         }

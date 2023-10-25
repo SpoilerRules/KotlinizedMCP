@@ -2,7 +2,7 @@ package net.minecraft.entity.ai;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIMoveTowardsTarget extends EntityAIBase
 {
@@ -36,17 +36,17 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
         }
         else
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, new Vec3(this.targetEntity.posX, this.targetEntity.posY, this.targetEntity.posZ));
+            Vector3D vector3D = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, new Vector3D(this.targetEntity.posX, this.targetEntity.posY, this.targetEntity.posZ));
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return false;
             }
             else
             {
-                this.movePosX = vec3.xCoord;
-                this.movePosY = vec3.yCoord;
-                this.movePosZ = vec3.zCoord;
+                this.movePosX = vector3D.x;
+                this.movePosY = vector3D.y;
+                this.movePosZ = vector3D.z;
                 return true;
             }
         }

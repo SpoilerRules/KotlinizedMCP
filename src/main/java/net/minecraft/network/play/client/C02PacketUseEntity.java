@@ -5,14 +5,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 {
     private int entityId;
     private C02PacketUseEntity.Action action;
-    private Vec3 hitVec;
+    private Vector3D hitVec;
 
     public C02PacketUseEntity()
     {
@@ -24,7 +24,7 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
         this.action = action;
     }
 
-    public C02PacketUseEntity(Entity entity, Vec3 hitVec)
+    public C02PacketUseEntity(Entity entity, Vector3D hitVec)
     {
         this(entity, C02PacketUseEntity.Action.INTERACT_AT);
         this.hitVec = hitVec;
@@ -37,7 +37,7 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 
         if (this.action == C02PacketUseEntity.Action.INTERACT_AT)
         {
-            this.hitVec = new Vec3((double)buf.readFloat(), (double)buf.readFloat(), (double)buf.readFloat());
+            this.hitVec = new Vector3D((double)buf.readFloat(), (double)buf.readFloat(), (double)buf.readFloat());
         }
     }
 
@@ -48,9 +48,9 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
 
         if (this.action == C02PacketUseEntity.Action.INTERACT_AT)
         {
-            buf.writeFloat((float)this.hitVec.xCoord);
-            buf.writeFloat((float)this.hitVec.yCoord);
-            buf.writeFloat((float)this.hitVec.zCoord);
+            buf.writeFloat((float)this.hitVec.x);
+            buf.writeFloat((float)this.hitVec.y);
+            buf.writeFloat((float)this.hitVec.z);
         }
     }
 
@@ -69,7 +69,7 @@ public class C02PacketUseEntity implements Packet<INetHandlerPlayServer>
         return this.action;
     }
 
-    public Vec3 getHitVec()
+    public Vector3D getHitVec()
     {
         return this.hitVec;
     }

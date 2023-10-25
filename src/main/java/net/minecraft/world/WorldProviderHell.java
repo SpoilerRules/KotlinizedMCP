@@ -1,6 +1,6 @@
 package net.minecraft.world;
 
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.border.WorldBorder;
@@ -17,9 +17,9 @@ public class WorldProviderHell extends WorldProvider
         this.dimensionId = -1;
     }
 
-    public Vec3 getFogColor(float p_76562_1_, float p_76562_2_)
+    public Vector3D getFogColor(float p_76562_1_, float p_76562_2_)
     {
-        return new Vec3(0.20000000298023224D, 0.029999999329447746D, 0.029999999329447746D);
+        return new Vector3D(0.20000000298023224D, 0.029999999329447746D, 0.029999999329447746D);
     }
 
     protected void generateLightBrightnessTable()

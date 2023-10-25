@@ -51,7 +51,6 @@ class LoginHandler (private val copyUrlOnly: Boolean) {
                         account.session.username,
                         account.session.uuid,
                         account.session.token,
-                        "microsoft"
                     )
                 )
 

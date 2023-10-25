@@ -21,7 +21,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class Explosion
 {
@@ -35,7 +35,7 @@ public class Explosion
     private final Entity exploder;
     private final float explosionSize;
     private final List<BlockPos> affectedBlockPositions;
-    private final Map<EntityPlayer, Vec3> playerKnockbackMap;
+    private final Map<EntityPlayer, Vector3D> playerKnockbackMap;
 
     public Explosion(World worldIn, Entity entityIn, double x, double y, double z, float size, List<BlockPos> affectedPositions)
     {
@@ -52,7 +52,7 @@ public class Explosion
     {
         this.explosionRNG = new Random();
         this.affectedBlockPositions = Lists.<BlockPos>newArrayList();
-        this.playerKnockbackMap = Maps.<EntityPlayer, Vec3>newHashMap();
+        this.playerKnockbackMap = Maps.<EntityPlayer, Vector3D>newHashMap();
         this.worldObj = worldIn;
         this.exploder = entityIn;
         this.explosionSize = size;
@@ -122,7 +122,7 @@ public class Explosion
         int j2 = MathHelper.floor_double(this.explosionZ - (double)f3 - 1.0D);
         int j1 = MathHelper.floor_double(this.explosionZ + (double)f3 + 1.0D);
         List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB((double)k1, (double)i2, (double)j2, (double)l1, (double)i1, (double)j1));
-        Vec3 vec3 = new Vec3(this.explosionX, this.explosionY, this.explosionZ);
+        Vector3D vector3D = new Vector3D(this.explosionX, this.explosionY, this.explosionZ);
 
         for (int k2 = 0; k2 < list.size(); ++k2)
         {
@@ -144,7 +144,7 @@ public class Explosion
                         d5 = d5 / d13;
                         d7 = d7 / d13;
                         d9 = d9 / d13;
-                        double d14 = (double)this.worldObj.getBlockDensity(vec3, entity.getEntityBoundingBox());
+                        double d14 = (double)this.worldObj.getBlockDensity(vector3D, entity.getEntityBoundingBox());
                         double d10 = (1.0D - d12) * d14;
                         entity.attackEntityFrom(DamageSource.setExplosionSource(this), (float)((int)((d10 * d10 + d10) / 2.0D * 8.0D * (double)f3 + 1.0D)));
                         double d11 = EnchantmentProtection.func_92092_a(entity, d10);
@@ -154,7 +154,7 @@ public class Explosion
 
                         if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.disableDamage)
                         {
-                            this.playerKnockbackMap.put((EntityPlayer)entity, new Vec3(d5 * d10, d7 * d10, d9 * d10));
+                            this.playerKnockbackMap.put((EntityPlayer)entity, new Vector3D(d5 * d10, d7 * d10, d9 * d10));
                         }
                     }
                 }
@@ -227,7 +227,7 @@ public class Explosion
         }
     }
 
-    public Map<EntityPlayer, Vec3> getPlayerKnockbackMap()
+    public Map<EntityPlayer, Vector3D> getPlayerKnockbackMap()
     {
         return this.playerKnockbackMap;
     }

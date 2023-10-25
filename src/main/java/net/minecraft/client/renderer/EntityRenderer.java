@@ -68,7 +68,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.util.input.MouseInputFilter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
@@ -405,7 +405,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             double d0 = this.mc.playerController.getBlockReachDistance();
             this.mc.objectMouseOver = entity.rayTrace(d0, partialTicks);
             double d1 = d0;
-            Vec3 vec3 = entity.getPositionEyes(partialTicks);
+            Vector3D vector3D = entity.getPositionEyes(partialTicks);
             boolean flag = false;
             int i = 3;
 
@@ -421,15 +421,15 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
             if (this.mc.objectMouseOver != null)
             {
-                d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
+                d1 = this.mc.objectMouseOver.hitVec.distanceTo(vector3D);
             }
 
-            Vec3 vec31 = entity.getLook(partialTicks);
-            Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
+            Vector3D vec31D = entity.getLook(partialTicks);
+            Vector3D vec32D = vector3D.addVector(vec31D.x * d0, vec31D.y * d0, vec31D.z * d0);
             Entity pointedEntity = null;
-            Vec3 vec33 = null;
+            Vector3D vec33D = null;
             float f = 1.0F;
-            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
+            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31D.x * d0, vec31D.y * d0, vec31D.z * d0).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
             {
                 public boolean apply(Entity p_apply_1_)
                 {
@@ -442,16 +442,16 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 Entity entity1 = value;
                 float f1 = entity1.getCollisionBorderSize();
                 AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1);
-                MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+                MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vector3D, vec32D);
 
-                if (axisalignedbb.isVecInside(vec3)) {
+                if (axisalignedbb.isVecInside(vector3D)) {
                     if (d2 >= 0.0D) {
                         pointedEntity = entity1;
-                        vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+                        vec33D = movingobjectposition == null ? vector3D : movingobjectposition.hitVec;
                         d2 = 0.0D;
                     }
                 } else if (movingobjectposition != null) {
-                    double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+                    double d3 = vector3D.distanceTo(movingobjectposition.hitVec);
 
                     if (d3 < d2 || d2 == 0.0D) {
                         boolean flag1 = false;
@@ -463,26 +463,26 @@ public class EntityRenderer implements IResourceManagerReloadListener
                         if (!flag1 && entity1 == entity.ridingEntity) {
                             if (d2 == 0.0D) {
                                 pointedEntity = entity1;
-                                vec33 = movingobjectposition.hitVec;
+                                vec33D = movingobjectposition.hitVec;
                             }
                         } else {
                             pointedEntity = entity1;
-                            vec33 = movingobjectposition.hitVec;
+                            vec33D = movingobjectposition.hitVec;
                             d2 = d3;
                         }
                     }
                 }
             }
 
-            if (pointedEntity != null && flag && vec3.distanceTo(vec33) > 3.0D)
+            if (pointedEntity != null && flag && vector3D.distanceTo(vec33D) > 3.0D)
             {
                 pointedEntity = null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, null, new BlockPos(vec33));
+                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33D, null, new BlockPos(vec33D));
             }
 
             if (pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null))
             {
-                this.mc.objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+                this.mc.objectMouseOver = new MovingObjectPosition(pointedEntity, vec33D);
 
                 if (pointedEntity instanceof EntityLivingBase || pointedEntity instanceof EntityItemFrame)
                 {
@@ -699,11 +699,11 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     f3 = f3 * 0.1F;
                     f4 = f4 * 0.1F;
                     f5 = f5 * 0.1F;
-                    MovingObjectPosition movingobjectposition = this.mc.theWorld.rayTraceBlocks(new Vec3(d0 + (double)f3, d1 + (double)f4, d2 + (double)f5), new Vec3(d0 - d4 + (double)f3 + (double)f5, d1 - d6 + (double)f4, d2 - d5 + (double)f5));
+                    MovingObjectPosition movingobjectposition = this.mc.theWorld.rayTraceBlocks(new Vector3D(d0 + (double)f3, d1 + (double)f4, d2 + (double)f5), new Vector3D(d0 - d4 + (double)f3 + (double)f5, d1 - d6 + (double)f4, d2 - d5 + (double)f5));
 
                     if (movingobjectposition != null)
                     {
-                        double d7 = movingobjectposition.hitVec.distanceTo(new Vec3(d0, d1, d2));
+                        double d7 = movingobjectposition.hitVec.distanceTo(new Vector3D(d0, d1, d2));
 
                         if (d7 < d3)
                         {
@@ -2101,22 +2101,22 @@ public class EntityRenderer implements IResourceManagerReloadListener
         Entity entity = this.mc.getRenderViewEntity();
         float f = 0.25F + 0.75F * (float)this.mc.gameSettings.renderDistanceChunks / 32.0F;
         f = 1.0F - (float)Math.pow(f, 0.25D);
-        Vec3 vec3 = world.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
-        vec3 = CustomColors.getWorldSkyColor(vec3, world, this.mc.getRenderViewEntity(), partialTicks);
-        float f1 = (float)vec3.xCoord;
-        float f2 = (float)vec3.yCoord;
-        float f3 = (float)vec3.zCoord;
-        Vec3 vec31 = world.getFogColor(partialTicks);
-        vec31 = CustomColors.getWorldFogColor(vec31, world, this.mc.getRenderViewEntity(), partialTicks);
-        this.fogColorRed = (float)vec31.xCoord;
-        this.fogColorGreen = (float)vec31.yCoord;
-        this.fogColorBlue = (float)vec31.zCoord;
+        Vector3D vector3D = world.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
+        vector3D = CustomColors.getWorldSkyColor(vector3D, world, this.mc.getRenderViewEntity(), partialTicks);
+        float f1 = (float) vector3D.x;
+        float f2 = (float) vector3D.y;
+        float f3 = (float) vector3D.z;
+        Vector3D vec31D = world.getFogColor(partialTicks);
+        vec31D = CustomColors.getWorldFogColor(vec31D, world, this.mc.getRenderViewEntity(), partialTicks);
+        this.fogColorRed = (float) vec31D.x;
+        this.fogColorGreen = (float) vec31D.y;
+        this.fogColorBlue = (float) vec31D.z;
 
         if (this.mc.gameSettings.renderDistanceChunks >= 4)
         {
             double d0 = -1.0D;
-            Vec3 vec32 = MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) > 0.0F ? new Vec3(d0, 0.0D, 0.0D) : new Vec3(1.0D, 0.0D, 0.0D);
-            float f5 = (float)entity.getLook(partialTicks).dotProduct(vec32);
+            Vector3D vec32D = MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) > 0.0F ? new Vector3D(d0, 0.0D, 0.0D) : new Vector3D(1.0D, 0.0D, 0.0D);
+            float f5 = (float)entity.getLook(partialTicks).dotProduct(vec32D);
 
             if (f5 < 0.0F)
             {
@@ -2165,10 +2165,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
 
         if (this.cloudFog)
         {
-            Vec3 vec33 = world.getCloudColour(partialTicks);
-            this.fogColorRed = (float)vec33.xCoord;
-            this.fogColorGreen = (float)vec33.yCoord;
-            this.fogColorBlue = (float)vec33.zCoord;
+            Vector3D vec33D = world.getCloudColour(partialTicks);
+            this.fogColorRed = (float) vec33D.x;
+            this.fogColorGreen = (float) vec33D.y;
+            this.fogColorBlue = (float) vec33D.z;
         }
         else if (block.getMaterial() == Material.water)
         {
@@ -2183,13 +2183,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.fogColorRed = 0.02F + f12;
             this.fogColorGreen = 0.02F + f12;
             this.fogColorBlue = 0.2F + f12;
-            Vec3 vec35 = CustomColors.getUnderwaterColor(this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
+            Vector3D vec35D = CustomColors.getUnderwaterColor(this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
 
-            if (vec35 != null)
+            if (vec35D != null)
             {
-                this.fogColorRed = (float)vec35.xCoord;
-                this.fogColorGreen = (float)vec35.yCoord;
-                this.fogColorBlue = (float)vec35.zCoord;
+                this.fogColorRed = (float) vec35D.x;
+                this.fogColorGreen = (float) vec35D.y;
+                this.fogColorBlue = (float) vec35D.z;
             }
         }
         else if (block.getMaterial() == Material.lava)
@@ -2197,13 +2197,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.fogColorRed = 0.6F;
             this.fogColorGreen = 0.1F;
             this.fogColorBlue = 0.0F;
-            Vec3 vec34 = CustomColors.getUnderlavaColor(this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
+            Vector3D vec34D = CustomColors.getUnderlavaColor(this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
 
-            if (vec34 != null)
+            if (vec34D != null)
             {
-                this.fogColorRed = (float)vec34.xCoord;
-                this.fogColorGreen = (float)vec34.yCoord;
-                this.fogColorBlue = (float)vec34.zCoord;
+                this.fogColorRed = (float) vec34D.x;
+                this.fogColorGreen = (float) vec34D.y;
+                this.fogColorBlue = (float) vec34D.z;
             }
         }
 

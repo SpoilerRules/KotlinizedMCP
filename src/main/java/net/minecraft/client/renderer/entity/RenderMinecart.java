@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class RenderMinecart<T extends EntityMinecart> extends Render<T>
 {
@@ -36,34 +36,34 @@ public class RenderMinecart<T extends EntityMinecart> extends Render<T>
         double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
         double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
         double d3 = 0.30000001192092896D;
-        Vec3 vec3 = entity.func_70489_a(d0, d1, d2);
+        Vector3D vector3D = entity.func_70489_a(d0, d1, d2);
         float f3 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
 
-        if (vec3 != null)
+        if (vector3D != null)
         {
-            Vec3 vec31 = entity.func_70495_a(d0, d1, d2, d3);
-            Vec3 vec32 = entity.func_70495_a(d0, d1, d2, -d3);
+            Vector3D vec31D = entity.func_70495_a(d0, d1, d2, d3);
+            Vector3D vec32D = entity.func_70495_a(d0, d1, d2, -d3);
 
-            if (vec31 == null)
+            if (vec31D == null)
             {
-                vec31 = vec3;
+                vec31D = vector3D;
             }
 
-            if (vec32 == null)
+            if (vec32D == null)
             {
-                vec32 = vec3;
+                vec32D = vector3D;
             }
 
-            x += vec3.xCoord - d0;
-            y += (vec31.yCoord + vec32.yCoord) / 2.0D - d1;
-            z += vec3.zCoord - d2;
-            Vec3 vec33 = vec32.addVector(-vec31.xCoord, -vec31.yCoord, -vec31.zCoord);
+            x += vector3D.x - d0;
+            y += (vec31D.y + vec32D.y) / 2.0D - d1;
+            z += vector3D.z - d2;
+            Vector3D vec33D = vec32D.addVector(-vec31D.x, -vec31D.y, -vec31D.z);
 
-            if (vec33.lengthVector() != 0.0D)
+            if (vec33D.length() != 0.0D)
             {
-                vec33 = vec33.normalize();
-                entityYaw = (float)(Math.atan2(vec33.zCoord, vec33.xCoord) * 180.0D / Math.PI);
-                f3 = (float)(Math.atan(vec33.yCoord) * 73.0D);
+                vec33D = vec33D.normalize();
+                entityYaw = (float)(Math.atan2(vec33D.z, vec33D.x) * 180.0D / Math.PI);
+                f3 = (float)(Math.atan(vec33D.y) * 73.0D);
             }
         }
 

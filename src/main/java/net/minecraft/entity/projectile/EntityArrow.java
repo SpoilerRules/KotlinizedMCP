@@ -22,7 +22,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class EntityArrow extends Entity implements IProjectile
@@ -178,7 +178,7 @@ public class EntityArrow extends Entity implements IProjectile
             block.setBlockBoundsBasedOnState(this.worldObj, blockpos);
             AxisAlignedBB axisalignedbb = block.getCollisionBoundingBox(this.worldObj, blockpos, iblockstate);
 
-            if (axisalignedbb != null && axisalignedbb.isVecInside(new Vec3(this.posX, this.posY, this.posZ)))
+            if (axisalignedbb != null && axisalignedbb.isVecInside(new Vector3D(this.posX, this.posY, this.posZ)))
             {
                 this.inGround = true;
             }
@@ -215,15 +215,15 @@ public class EntityArrow extends Entity implements IProjectile
         else
         {
             ++this.ticksInAir;
-            Vec3 vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            Vec3 vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec31, vec3, false, true, false);
-            vec31 = new Vec3(this.posX, this.posY, this.posZ);
-            vec3 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vector3D vec31D = new Vector3D(this.posX, this.posY, this.posZ);
+            Vector3D vector3D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec31D, vector3D, false, true, false);
+            vec31D = new Vector3D(this.posX, this.posY, this.posZ);
+            vector3D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
             if (movingobjectposition != null)
             {
-                vec3 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vector3D = new Vector3D(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
             }
 
             Entity entity = null;
@@ -238,11 +238,11 @@ public class EntityArrow extends Entity implements IProjectile
                 {
                     float f1 = 0.3F;
                     AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().expand((double)f1, (double)f1, (double)f1);
-                    MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec31, vec3);
+                    MovingObjectPosition movingobjectposition1 = axisalignedbb1.calculateIntercept(vec31D, vector3D);
 
                     if (movingobjectposition1 != null)
                     {
-                        double d1 = vec31.squareDistanceTo(movingobjectposition1.hitVec);
+                        double d1 = vec31D.squareDistanceTo(movingobjectposition1.hitVec);
 
                         if (d1 < d0 || d0 == 0.0D)
                         {
@@ -355,9 +355,9 @@ public class EntityArrow extends Entity implements IProjectile
                     IBlockState iblockstate1 = this.worldObj.getBlockState(blockpos1);
                     this.inTile = iblockstate1.getBlock();
                     this.inData = this.inTile.getMetaFromState(iblockstate1);
-                    this.motionX = (double)((float)(movingobjectposition.hitVec.xCoord - this.posX));
-                    this.motionY = (double)((float)(movingobjectposition.hitVec.yCoord - this.posY));
-                    this.motionZ = (double)((float)(movingobjectposition.hitVec.zCoord - this.posZ));
+                    this.motionX = (double)((float)(movingobjectposition.hitVec.x - this.posX));
+                    this.motionY = (double)((float)(movingobjectposition.hitVec.y - this.posY));
+                    this.motionZ = (double)((float)(movingobjectposition.hitVec.z - this.posZ));
                     float f5 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
                     this.posX -= this.motionX / (double)f5 * 0.05000000074505806D;
                     this.posY -= this.motionY / (double)f5 * 0.05000000074505806D;

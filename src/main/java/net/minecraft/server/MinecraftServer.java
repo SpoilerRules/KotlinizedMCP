@@ -53,7 +53,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.Util;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.World;
@@ -1190,9 +1190,9 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return BlockPos.ORIGIN;
     }
 
-    public Vec3 getPositionVector()
+    public Vector3D getPositionVector()
     {
-        return new Vec3(0.0D, 0.0D, 0.0D);
+        return new Vector3D(0.0D, 0.0D, 0.0D);
     }
 
     public World getEntityWorld()

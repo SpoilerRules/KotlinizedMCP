@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class EntityMinecartCommandBlock extends EntityMinecart
@@ -33,9 +33,9 @@ public class EntityMinecartCommandBlock extends EntityMinecart
         {
             return new BlockPos(EntityMinecartCommandBlock.this.posX, EntityMinecartCommandBlock.this.posY + 0.5D, EntityMinecartCommandBlock.this.posZ);
         }
-        public Vec3 getPositionVector()
+        public Vector3D getPositionVector()
         {
-            return new Vec3(EntityMinecartCommandBlock.this.posX, EntityMinecartCommandBlock.this.posY, EntityMinecartCommandBlock.this.posZ);
+            return new Vector3D(EntityMinecartCommandBlock.this.posX, EntityMinecartCommandBlock.this.posY, EntityMinecartCommandBlock.this.posZ);
         }
         public World getEntityWorld()
         {

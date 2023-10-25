@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.src.Config;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.optifine.shaders.SVertexFormat;
 
 public class TexturedQuad
@@ -44,12 +44,12 @@ public class TexturedQuad
 
     public void draw(WorldRenderer renderer, float scale)
     {
-        Vec3 vec3 = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[0].vector3D);
-        Vec3 vec31 = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[2].vector3D);
-        Vec3 vec32 = vec31.crossProduct(vec3).normalize();
-        float f = (float)vec32.xCoord;
-        float f1 = (float)vec32.yCoord;
-        float f2 = (float)vec32.zCoord;
+        Vector3D vector3D = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[0].vector3D);
+        Vector3D vec31D = this.vertexPositions[1].vector3D.subtractReverse(this.vertexPositions[2].vector3D);
+        Vector3D vec32D = vec31D.crossProduct(vector3D).normalize();
+        float f = (float) vec32D.x;
+        float f1 = (float) vec32D.y;
+        float f2 = (float) vec32D.z;
 
         if (this.invertNormal)
         {
@@ -70,7 +70,7 @@ public class TexturedQuad
         for (int i = 0; i < 4; ++i)
         {
             PositionTextureVertex positiontexturevertex = this.vertexPositions[i];
-            renderer.pos(positiontexturevertex.vector3D.xCoord * (double)scale, positiontexturevertex.vector3D.yCoord * (double)scale, positiontexturevertex.vector3D.zCoord * (double)scale).tex((double)positiontexturevertex.texturePositionX, (double)positiontexturevertex.texturePositionY).normal(f, f1, f2).endVertex();
+            renderer.pos(positiontexturevertex.vector3D.x * (double)scale, positiontexturevertex.vector3D.y * (double)scale, positiontexturevertex.vector3D.z * (double)scale).tex((double)positiontexturevertex.texturePositionX, (double)positiontexturevertex.texturePositionY).normal(f, f1, f2).endVertex();
         }
 
         Tessellator.getInstance().draw();

@@ -31,7 +31,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomFishable;
 import net.minecraft.world.EnumDifficulty;
@@ -308,11 +308,11 @@ public class EntityGuardian extends EntityMob
 
             if (this.func_175472_n() && this.isInWater())
             {
-                Vec3 vec3 = this.getLook(0.0F);
+                Vector3D vector3D = this.getLook(0.0F);
 
                 for (int i = 0; i < 2; ++i)
                 {
-                    this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3.xCoord * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vec3.yCoord * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vec3.zCoord * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
+                    this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width - vector3D.x * 1.5D, this.posY + this.rand.nextDouble() * (double)this.height - vector3D.y * 1.5D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width - vector3D.z * 1.5D, 0.0D, 0.0D, 0.0D, new int[0]);
                 }
             }
 

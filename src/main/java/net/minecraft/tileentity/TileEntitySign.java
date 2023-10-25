@@ -16,7 +16,7 @@ import net.minecraft.util.ChatComponentProcessor;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class TileEntitySign extends TileEntity
@@ -65,9 +65,9 @@ public class TileEntitySign extends TileEntity
             {
                 return TileEntitySign.this.pos;
             }
-            public Vec3 getPositionVector()
+            public Vector3D getPositionVector()
             {
-                return new Vec3((double)TileEntitySign.this.pos.getX() + 0.5D, (double)TileEntitySign.this.pos.getY() + 0.5D, (double)TileEntitySign.this.pos.getZ() + 0.5D);
+                return new Vector3D((double)TileEntitySign.this.pos.getX() + 0.5D, (double)TileEntitySign.this.pos.getY() + 0.5D, (double)TileEntitySign.this.pos.getZ() + 0.5D);
             }
             public World getEntityWorld()
             {
@@ -172,9 +172,9 @@ public class TileEntitySign extends TileEntity
             {
                 return TileEntitySign.this.pos;
             }
-            public Vec3 getPositionVector()
+            public Vector3D getPositionVector()
             {
-                return new Vec3((double)TileEntitySign.this.pos.getX() + 0.5D, (double)TileEntitySign.this.pos.getY() + 0.5D, (double)TileEntitySign.this.pos.getZ() + 0.5D);
+                return new Vector3D((double)TileEntitySign.this.pos.getX() + 0.5D, (double)TileEntitySign.this.pos.getY() + 0.5D, (double)TileEntitySign.this.pos.getZ() + 0.5D);
             }
             public World getEntityWorld()
             {

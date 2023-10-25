@@ -7,7 +7,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class S27PacketExplosion implements Packet<INetHandlerPlayClient>
 {
@@ -24,7 +24,7 @@ public class S27PacketExplosion implements Packet<INetHandlerPlayClient>
     {
     }
 
-    public S27PacketExplosion(double p_i45193_1_, double y, double z, float strengthIn, List<BlockPos> affectedBlocksIn, Vec3 p_i45193_9_)
+    public S27PacketExplosion(double p_i45193_1_, double y, double z, float strengthIn, List<BlockPos> affectedBlocksIn, Vector3D p_i45193_9_)
     {
         this.posX = p_i45193_1_;
         this.posY = y;
@@ -34,9 +34,9 @@ public class S27PacketExplosion implements Packet<INetHandlerPlayClient>
 
         if (p_i45193_9_ != null)
         {
-            this.field_149152_f = (float)p_i45193_9_.xCoord;
-            this.field_149153_g = (float)p_i45193_9_.yCoord;
-            this.field_149159_h = (float)p_i45193_9_.zCoord;
+            this.field_149152_f = (float)p_i45193_9_.x;
+            this.field_149153_g = (float)p_i45193_9_.y;
+            this.field_149159_h = (float)p_i45193_9_.z;
         }
     }
 

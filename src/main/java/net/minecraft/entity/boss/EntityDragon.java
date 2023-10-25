@@ -23,7 +23,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -223,10 +223,10 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
                         d6 = -50.0D;
                     }
 
-                    Vec3 vec3 = (new Vec3(this.targetX - this.posX, this.targetY - this.posY, this.targetZ - this.posZ)).normalize();
+                    Vector3D vector3D = (new Vector3D(this.targetX - this.posX, this.targetY - this.posY, this.targetZ - this.posZ)).normalize();
                     double d15 = (double)(-MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F));
-                    Vec3 vec31 = (new Vec3((double)MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F), this.motionY, d15)).normalize();
-                    float f5 = ((float)vec31.dotProduct(vec3) + 0.5F) / 1.5F;
+                    Vector3D vec31D = (new Vector3D((double)MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F), this.motionY, d15)).normalize();
+                    float f5 = ((float) vec31D.dotProduct(vector3D) + 0.5F) / 1.5F;
 
                     if (f5 < 0.0F)
                     {
@@ -257,8 +257,8 @@ public class EntityDragon extends EntityLiving implements IBossDisplayData, IEnt
                         this.moveEntity(this.motionX, this.motionY, this.motionZ);
                     }
 
-                    Vec3 vec32 = (new Vec3(this.motionX, this.motionY, this.motionZ)).normalize();
-                    float f9 = ((float)vec32.dotProduct(vec31) + 1.0F) / 2.0F;
+                    Vector3D vec32D = (new Vector3D(this.motionX, this.motionY, this.motionZ)).normalize();
+                    float f9 = ((float) vec32D.dotProduct(vec31D) + 1.0F) / 2.0F;
                     f9 = 0.8F + 0.15F * f9;
                     this.motionX *= (double)f9;
                     this.motionZ *= (double)f9;

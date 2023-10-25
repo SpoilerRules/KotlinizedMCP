@@ -36,7 +36,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class EntityEnderman extends EntityMob
@@ -120,11 +120,11 @@ public class EntityEnderman extends EntityMob
         }
         else
         {
-            Vec3 vec3 = player.getLook(1.0F).normalize();
-            Vec3 vec31 = new Vec3(this.posX - player.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - (player.posY + (double)player.getEyeHeight()), this.posZ - player.posZ);
-            double d0 = vec31.lengthVector();
-            vec31 = vec31.normalize();
-            double d1 = vec3.dotProduct(vec31);
+            Vector3D vector3D = player.getLook(1.0F).normalize();
+            Vector3D vec31D = new Vector3D(this.posX - player.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - (player.posY + (double)player.getEyeHeight()), this.posZ - player.posZ);
+            double d0 = vec31D.length();
+            vec31D = vec31D.normalize();
+            double d1 = vector3D.dotProduct(vec31D);
             return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(this) : false;
         }
     }
@@ -186,12 +186,12 @@ public class EntityEnderman extends EntityMob
 
     protected boolean teleportToEntity(Entity p_70816_1_)
     {
-        Vec3 vec3 = new Vec3(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
-        vec3 = vec3.normalize();
+        Vector3D vector3D = new Vector3D(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        vector3D = vector3D.normalize();
         double d0 = 16.0D;
-        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.xCoord * d0;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3.yCoord * d0;
-        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.zCoord * d0;
+        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vector3D.x * d0;
+        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vector3D.y * d0;
+        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vector3D.z * d0;
         return this.teleportTo(d1, d2, d3);
     }
 

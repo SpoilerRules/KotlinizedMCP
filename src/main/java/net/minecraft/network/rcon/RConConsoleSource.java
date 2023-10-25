@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class RConConsoleSource implements ICommandSender
@@ -40,9 +40,9 @@ public class RConConsoleSource implements ICommandSender
         return new BlockPos(0, 0, 0);
     }
 
-    public Vec3 getPositionVector()
+    public Vector3D getPositionVector()
     {
-        return new Vec3(0.0D, 0.0D, 0.0D);
+        return new Vector3D(0.0D, 0.0D, 0.0D);
     }
 
     public World getEntityWorld()

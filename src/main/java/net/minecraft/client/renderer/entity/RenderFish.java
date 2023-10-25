@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class RenderFish extends Render<EntityFishHook>
 {
@@ -52,14 +52,14 @@ public class RenderFish extends Render<EntityFishHook>
         {
             float f7 = entity.angler.getSwingProgress(partialTicks);
             float f8 = MathHelper.sin(MathHelper.sqrt_float(f7) * (float)Math.PI);
-            Vec3 vec3 = new Vec3(-0.36D, 0.03D, 0.35D);
-            vec3 = vec3.rotatePitch(-(entity.angler.prevRotationPitch + (entity.angler.rotationPitch - entity.angler.prevRotationPitch) * partialTicks) * (float)Math.PI / 180.0F);
-            vec3 = vec3.rotateYaw(-(entity.angler.prevRotationYaw + (entity.angler.rotationYaw - entity.angler.prevRotationYaw) * partialTicks) * (float)Math.PI / 180.0F);
-            vec3 = vec3.rotateYaw(f8 * 0.5F);
-            vec3 = vec3.rotatePitch(-f8 * 0.7F);
-            double d0 = entity.angler.prevPosX + (entity.angler.posX - entity.angler.prevPosX) * (double)partialTicks + vec3.xCoord;
-            double d1 = entity.angler.prevPosY + (entity.angler.posY - entity.angler.prevPosY) * (double)partialTicks + vec3.yCoord;
-            double d2 = entity.angler.prevPosZ + (entity.angler.posZ - entity.angler.prevPosZ) * (double)partialTicks + vec3.zCoord;
+            Vector3D vector3D = new Vector3D(-0.36D, 0.03D, 0.35D);
+            vector3D = vector3D.rotatePitch(-(entity.angler.prevRotationPitch + (entity.angler.rotationPitch - entity.angler.prevRotationPitch) * partialTicks) * (float)Math.PI / 180.0F);
+            vector3D = vector3D.rotateYaw(-(entity.angler.prevRotationYaw + (entity.angler.rotationYaw - entity.angler.prevRotationYaw) * partialTicks) * (float)Math.PI / 180.0F);
+            vector3D = vector3D.rotateYaw(f8 * 0.5F);
+            vector3D = vector3D.rotatePitch(-f8 * 0.7F);
+            double d0 = entity.angler.prevPosX + (entity.angler.posX - entity.angler.prevPosX) * (double)partialTicks + vector3D.x;
+            double d1 = entity.angler.prevPosY + (entity.angler.posY - entity.angler.prevPosY) * (double)partialTicks + vector3D.y;
+            double d2 = entity.angler.prevPosZ + (entity.angler.posZ - entity.angler.prevPosZ) * (double)partialTicks + vector3D.z;
             double d3 = (double)entity.angler.getEyeHeight();
 
             if (this.renderManager.options != null && this.renderManager.options.thirdPersonView > 0 || entity.angler != Minecraft.getMinecraft().thePlayer)

@@ -20,7 +20,7 @@ import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class Village
@@ -72,19 +72,19 @@ public class Village
 
         if (this.numIronGolems < i && this.villageDoorInfoList.size() > 20 && this.worldObj.rand.nextInt(7000) == 0)
         {
-            Vec3 vec3 = this.func_179862_a(this.center, 2, 4, 2);
+            Vector3D vector3D = this.func_179862_a(this.center, 2, 4, 2);
 
-            if (vec3 != null)
+            if (vector3D != null)
             {
                 EntityIronGolem entityirongolem = new EntityIronGolem(this.worldObj);
-                entityirongolem.setPosition(vec3.xCoord, vec3.yCoord, vec3.zCoord);
+                entityirongolem.setPosition(vector3D.x, vector3D.y, vector3D.z);
                 this.worldObj.spawnEntityInWorld(entityirongolem);
                 ++this.numIronGolems;
             }
         }
     }
 
-    private Vec3 func_179862_a(BlockPos p_179862_1_, int p_179862_2_, int p_179862_3_, int p_179862_4_)
+    private Vector3D func_179862_a(BlockPos p_179862_1_, int p_179862_2_, int p_179862_3_, int p_179862_4_)
     {
         for (int i = 0; i < 10; ++i)
         {
@@ -92,7 +92,7 @@ public class Village
 
             if (this.func_179866_a(blockpos) && this.func_179861_a(new BlockPos(p_179862_2_, p_179862_3_, p_179862_4_), blockpos))
             {
-                return new Vec3((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
+                return new Vector3D((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
             }
         }
 

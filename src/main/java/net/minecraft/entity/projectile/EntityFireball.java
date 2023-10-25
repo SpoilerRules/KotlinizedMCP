@@ -13,7 +13,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public abstract class EntityFireball extends Entity
@@ -115,15 +115,15 @@ public abstract class EntityFireball extends Entity
                 ++this.ticksInAir;
             }
 
-            Vec3 vec3 = new Vec3(this.posX, this.posY, this.posZ);
-            Vec3 vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-            vec3 = new Vec3(this.posX, this.posY, this.posZ);
-            vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vector3D vector3D = new Vector3D(this.posX, this.posY, this.posZ);
+            Vector3D vec31D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vector3D, vec31D);
+            vector3D = new Vector3D(this.posX, this.posY, this.posZ);
+            vec31D = new Vector3D(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
             if (movingobjectposition != null)
             {
-                vec31 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec31D = new Vector3D(movingobjectposition.hitVec.x, movingobjectposition.hitVec.y, movingobjectposition.hitVec.z);
             }
 
             Entity entity = null;
@@ -138,11 +138,11 @@ public abstract class EntityFireball extends Entity
                 {
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand((double)f, (double)f, (double)f);
-                    MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
+                    MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vector3D, vec31D);
 
                     if (movingobjectposition1 != null)
                     {
-                        double d1 = vec3.squareDistanceTo(movingobjectposition1.hitVec);
+                        double d1 = vector3D.squareDistanceTo(movingobjectposition1.hitVec);
 
                         if (d1 < d0 || d0 == 0.0D)
                         {
@@ -289,13 +289,13 @@ public abstract class EntityFireball extends Entity
 
             if (source.getEntity() != null)
             {
-                Vec3 vec3 = source.getEntity().getLookVec();
+                Vector3D vector3D = source.getEntity().getLookVec();
 
-                if (vec3 != null)
+                if (vector3D != null)
                 {
-                    this.motionX = vec3.xCoord;
-                    this.motionY = vec3.yCoord;
-                    this.motionZ = vec3.zCoord;
+                    this.motionX = vector3D.x;
+                    this.motionY = vector3D.y;
+                    this.motionZ = vector3D.z;
                     this.accelerationX = this.motionX * 0.1D;
                     this.accelerationY = this.motionY * 0.1D;
                     this.accelerationZ = this.motionZ * 0.1D;

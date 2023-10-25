@@ -46,7 +46,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -122,7 +122,7 @@ public abstract class Entity implements ICommandSender
     protected int portalCounter;
     public int dimension;
     protected BlockPos lastPortalPos;
-    protected Vec3 lastPortalVec;
+    protected Vector3D lastPortalVec;
     protected EnumFacing teleportDirection;
     private boolean invulnerable;
     protected UUID entityUniqueID;
@@ -1207,7 +1207,7 @@ public abstract class Entity implements ICommandSender
     }
 
     @Beta
-    public Vec3 getLook(float partialTicks) {
+    public Vector3D getLook(float partialTicks) {
         if (mc.gameSettings.getOptionOrdinalValue(GameSettings.Options.RAW_INPUT)) {
             if (partialTicks == 1.0F) return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
             else {
@@ -1218,36 +1218,36 @@ public abstract class Entity implements ICommandSender
         } else return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
     }
 
-    protected final Vec3 getVectorForRotation(float pitch, float yaw)
+    protected final Vector3D getVectorForRotation(float pitch, float yaw)
     {
         float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
         float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
         float f2 = -MathHelper.cos(-pitch * 0.017453292F);
         float f3 = MathHelper.sin(-pitch * 0.017453292F);
-        return new Vec3((double)(f1 * f2), (double)f3, (double)(f * f2));
+        return new Vector3D((double)(f1 * f2), (double)f3, (double)(f * f2));
     }
 
-    public Vec3 getPositionEyes(float partialTicks)
+    public Vector3D getPositionEyes(float partialTicks)
     {
         if (partialTicks == 1.0F)
         {
-            return new Vec3(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
+            return new Vector3D(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
         }
         else
         {
             double d0 = this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks;
             double d1 = this.prevPosY + (this.posY - this.prevPosY) * (double)partialTicks + (double)this.getEyeHeight();
             double d2 = this.prevPosZ + (this.posZ - this.prevPosZ) * (double)partialTicks;
-            return new Vec3(d0, d1, d2);
+            return new Vector3D(d0, d1, d2);
         }
     }
 
     public MovingObjectPosition rayTrace(double blockReachDistance, float partialTicks)
     {
-        Vec3 vec3 = this.getPositionEyes(partialTicks);
-        Vec3 vec31 = this.getLook(partialTicks);
-        Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
-        return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
+        Vector3D vector3D = this.getPositionEyes(partialTicks);
+        Vector3D vec31D = this.getLook(partialTicks);
+        Vector3D vec32D = vector3D.addVector(vec31D.x * blockReachDistance, vec31D.y * blockReachDistance, vec31D.z * blockReachDistance);
+        return this.worldObj.rayTraceBlocks(vector3D, vec32D, false, false, true);
     }
 
     public boolean canBeCollidedWith()
@@ -1711,7 +1711,7 @@ public abstract class Entity implements ICommandSender
         return 0.1F;
     }
 
-    public Vec3 getLookVec()
+    public Vector3D getLookVec()
     {
         return null;
     }
@@ -1732,7 +1732,7 @@ public abstract class Entity implements ICommandSender
                 double d1 = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? this.posZ : this.posX;
                 d1 = Math.abs(MathHelper.func_181160_c(d1 - (double)(blockpattern$patternhelper.getFinger().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE ? 1 : 0), d0, d0 - (double)blockpattern$patternhelper.func_181118_d()));
                 double d2 = MathHelper.func_181160_c(this.posY - 1.0D, (double)blockpattern$patternhelper.getPos().getY(), (double)(blockpattern$patternhelper.getPos().getY() - blockpattern$patternhelper.func_181119_e()));
-                this.lastPortalVec = new Vec3(d1, d2, 0.0D);
+                this.lastPortalVec = new Vector3D(d1, d2, 0.0D);
                 this.teleportDirection = blockpattern$patternhelper.getFinger();
             }
 
@@ -2091,7 +2091,7 @@ public abstract class Entity implements ICommandSender
         return 3;
     }
 
-    public Vec3 func_181014_aG()
+    public Vector3D func_181014_aG()
     {
         return this.lastPortalVec;
     }
@@ -2273,9 +2273,9 @@ public abstract class Entity implements ICommandSender
         return new BlockPos(this.posX, this.posY + 0.5D, this.posZ);
     }
 
-    public Vec3 getPositionVector()
+    public Vector3D getPositionVector()
     {
-        return new Vec3(this.posX, this.posY, this.posZ);
+        return new Vector3D(this.posX, this.posY, this.posZ);
     }
 
     public World getEntityWorld()
@@ -2317,7 +2317,7 @@ public abstract class Entity implements ICommandSender
     {
     }
 
-    public boolean interactAt(EntityPlayer player, Vec3 targetVec3)
+    public boolean interactAt(EntityPlayer player, Vector3D targetVector3D)
     {
         return false;
     }

@@ -2,7 +2,7 @@ package net.minecraft.entity.ai;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.village.Village;
 import net.minecraft.village.VillageDoorInfo;
 
@@ -69,11 +69,11 @@ public class EntityAIMoveIndoors extends EntityAIBase
 
         if (this.entityObj.getDistanceSq(blockpos) > 256.0D)
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.entityObj, 14, 3, new Vec3((double)i + 0.5D, (double)j, (double)k + 0.5D));
+            Vector3D vector3D = RandomPositionGenerator.findRandomTargetBlockTowards(this.entityObj, 14, 3, new Vector3D((double)i + 0.5D, (double)j, (double)k + 0.5D));
 
-            if (vec3 != null)
+            if (vector3D != null)
             {
-                this.entityObj.getNavigator().tryMoveToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord, 1.0D);
+                this.entityObj.getNavigator().tryMoveToXYZ(vector3D.x, vector3D.y, vector3D.z, 1.0D);
             }
         }
         else

@@ -75,7 +75,7 @@ public class GuiIngameMenu extends GuiScreen
                 break;
 
             case 7:
-                this.mc.displayGuiScreen(new GuiShareToLan(this));
+                this.mc.displayGuiScreen(new GuiShareToLAN(this));
         }
     }
 

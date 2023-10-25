@@ -8,7 +8,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.SpawnerAnimals;
 import net.minecraft.world.World;
 
@@ -141,9 +141,9 @@ public class VillageSiege
                         return false;
                     }
 
-                    Vec3 vec3 = this.func_179867_a(new BlockPos(this.field_75532_g, this.field_75538_h, this.field_75539_i));
+                    Vector3D vector3D = this.func_179867_a(new BlockPos(this.field_75532_g, this.field_75538_h, this.field_75539_i));
 
-                    if (vec3 != null)
+                    if (vector3D != null)
                     {
                         break;
                     }
@@ -158,9 +158,9 @@ public class VillageSiege
 
     private boolean spawnZombie()
     {
-        Vec3 vec3 = this.func_179867_a(new BlockPos(this.field_75532_g, this.field_75538_h, this.field_75539_i));
+        Vector3D vector3D = this.func_179867_a(new BlockPos(this.field_75532_g, this.field_75538_h, this.field_75539_i));
 
-        if (vec3 == null)
+        if (vector3D == null)
         {
             return false;
         }
@@ -180,7 +180,7 @@ public class VillageSiege
                 return false;
             }
 
-            entityzombie.setLocationAndAngles(vec3.xCoord, vec3.yCoord, vec3.zCoord, this.worldObj.rand.nextFloat() * 360.0F, 0.0F);
+            entityzombie.setLocationAndAngles(vector3D.x, vector3D.y, vector3D.z, this.worldObj.rand.nextFloat() * 360.0F, 0.0F);
             this.worldObj.spawnEntityInWorld(entityzombie);
             BlockPos blockpos = this.theVillage.getCenter();
             entityzombie.setHomePosAndDistance(blockpos, this.theVillage.getVillageRadius());
@@ -188,7 +188,7 @@ public class VillageSiege
         }
     }
 
-    private Vec3 func_179867_a(BlockPos p_179867_1_)
+    private Vector3D func_179867_a(BlockPos p_179867_1_)
     {
         for (int i = 0; i < 10; ++i)
         {
@@ -196,7 +196,7 @@ public class VillageSiege
 
             if (this.theVillage.func_179866_a(blockpos) && SpawnerAnimals.canCreatureTypeSpawnAtLocation(EntityLiving.SpawnPlacementType.ON_GROUND, this.worldObj, blockpos))
             {
-                return new Vec3((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
+                return new Vector3D((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ());
             }
         }
 

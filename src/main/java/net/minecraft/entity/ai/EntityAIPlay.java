@@ -3,7 +3,7 @@ package net.minecraft.entity.ai;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIPlay extends EntityAIBase
 {
@@ -50,9 +50,9 @@ public class EntityAIPlay extends EntityAIBase
 
             if (this.targetVillager == null)
             {
-                Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
+                Vector3D vector3D = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
 
-                if (vec3 == null)
+                if (vector3D == null)
                 {
                     return false;
                 }
@@ -96,14 +96,14 @@ public class EntityAIPlay extends EntityAIBase
         }
         else if (this.villagerObj.getNavigator().noPath())
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
+            Vector3D vector3D = RandomPositionGenerator.findRandomTarget(this.villagerObj, 16, 3);
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return;
             }
 
-            this.villagerObj.getNavigator().tryMoveToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord, this.speed);
+            this.villagerObj.getNavigator().tryMoveToXYZ(vector3D.x, vector3D.y, vector3D.z, this.speed);
         }
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 import net.optifine.player.CapeUtils;
@@ -208,7 +208,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         this.reloadCapeTimeMs = p_setReloadCapeTimeMs_1_;
     }
 
-    public Vec3 getLook(float partialTicks)
+    public Vector3D getLook(float partialTicks)
     {
         return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
     }

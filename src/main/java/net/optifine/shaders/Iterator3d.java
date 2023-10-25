@@ -2,7 +2,7 @@ package net.optifine.shaders;
 
 import java.util.Iterator;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.optifine.BlockPosM;
 
 public class Iterator3d implements Iterator<BlockPos>
@@ -27,16 +27,16 @@ public class Iterator3d implements Iterator<BlockPos>
         this.kX = flag ? -1 : 1;
         this.kY = flag1 ? -1 : 1;
         this.kZ = flag2 ? -1 : 1;
-        Vec3 vec3 = new Vec3((double)(posEnd.getX() - posStart.getX()), (double)(posEnd.getY() - posStart.getY()), (double)(posEnd.getZ() - posStart.getZ()));
-        Vec3 vec31 = vec3.normalize();
-        Vec3 vec32 = new Vec3(1.0D, 0.0D, 0.0D);
-        double d0 = vec31.dotProduct(vec32);
+        Vector3D vector3D = new Vector3D((double)(posEnd.getX() - posStart.getX()), (double)(posEnd.getY() - posStart.getY()), (double)(posEnd.getZ() - posStart.getZ()));
+        Vector3D vec31D = vector3D.normalize();
+        Vector3D vec32D = new Vector3D(1.0D, 0.0D, 0.0D);
+        double d0 = vec31D.dotProduct(vec32D);
         double d1 = Math.abs(d0);
-        Vec3 vec33 = new Vec3(0.0D, 1.0D, 0.0D);
-        double d2 = vec31.dotProduct(vec33);
+        Vector3D vec33D = new Vector3D(0.0D, 1.0D, 0.0D);
+        double d2 = vec31D.dotProduct(vec33D);
         double d3 = Math.abs(d2);
-        Vec3 vec34 = new Vec3(0.0D, 0.0D, 1.0D);
-        double d4 = vec31.dotProduct(vec34);
+        Vector3D vec34D = new Vector3D(0.0D, 0.0D, 1.0D);
+        double d4 = vec31D.dotProduct(vec34D);
         double d5 = Math.abs(d4);
 
         if (d5 >= d3 && d5 >= d1)

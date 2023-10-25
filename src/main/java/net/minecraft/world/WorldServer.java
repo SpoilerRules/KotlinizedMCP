@@ -51,7 +51,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ReportedException;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.village.VillageCollection;
@@ -956,7 +956,7 @@ public class WorldServer extends World implements IThreadListener
         {
             if (entityplayer.getDistanceSq(x, y, z) < 4096.0D)
             {
-                ((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacket(new S27PacketExplosion(x, y, z, strength, explosion.getAffectedBlockPositions(), (Vec3)explosion.getPlayerKnockbackMap().get(entityplayer)));
+                ((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacket(new S27PacketExplosion(x, y, z, strength, explosion.getAffectedBlockPositions(), (Vector3D)explosion.getPlayerKnockbackMap().get(entityplayer)));
             }
         }
 

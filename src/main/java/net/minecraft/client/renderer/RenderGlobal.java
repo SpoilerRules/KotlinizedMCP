@@ -7,11 +7,8 @@ import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -85,8 +82,8 @@ import net.minecraft.util.Matrix4f;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ReportedException;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
-import net.minecraft.util.Vector3d;
+import net.minecraft.util.Vector3D;
+import net.minecraft.util.Point3D;
 import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.border.WorldBorder;
@@ -166,7 +163,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     private boolean debugFixTerrainFrustum = false;
     private ClippingHelper debugFixedClippingHelper;
     private final Vector4f[] debugTerrainMatrix = new Vector4f[8];
-    private final Vector3d debugTerrainFrustumPosition = new Vector3d();
+    private final Point3D debugTerrainFrustumPosition = new Point3D();
     private boolean vboEnabled = false;
     IRenderChunkFactory renderChunkFactory;
     private double prevRenderSortX;
@@ -1592,11 +1589,11 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
                 if (Config.isCustomColors())
                 {
-                    Vec3 vec3 = new Vec3((double)j / 255.0D, (double)k / 255.0D, (double)l / 255.0D);
-                    vec3 = CustomColors.getWorldSkyColor(vec3, this.theWorld, this.mc.getRenderViewEntity(), 0.0F);
-                    j = (int)(vec3.xCoord * 255.0D);
-                    k = (int)(vec3.yCoord * 255.0D);
-                    l = (int)(vec3.zCoord * 255.0D);
+                    Vector3D vector3D = new Vector3D((double)j / 255.0D, (double)k / 255.0D, (double)l / 255.0D);
+                    vector3D = CustomColors.getWorldSkyColor(vector3D, this.theWorld, this.mc.getRenderViewEntity(), 0.0F);
+                    j = (int)(vector3D.x * 255.0D);
+                    k = (int)(vector3D.y * 255.0D);
+                    l = (int)(vector3D.z * 255.0D);
                 }
 
                 worldrenderer.pos(-100.0D, -100.0D, -100.0D).tex(0.0D, 0.0D).color(j, k, l, 255).endVertex();
@@ -1642,17 +1639,17 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 Shaders.disableTexture2D();
             }
 
-            Vec3 vec3 = this.theWorld.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
-            vec3 = CustomColors.getSkyColor(vec3, this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
+            Vector3D vector3D = this.theWorld.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
+            vector3D = CustomColors.getSkyColor(vector3D, this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
 
             if (flag)
             {
-                Shaders.setSkyColor(vec3);
+                Shaders.setSkyColor(vector3D);
             }
 
-            float f = (float)vec3.xCoord;
-            float f1 = (float)vec3.yCoord;
-            float f2 = (float)vec3.zCoord;
+            float f = (float) vector3D.x;
+            float f1 = (float) vector3D.y;
+            float f2 = (float) vector3D.z;
 
             if (pass != 2)
             {
@@ -1863,7 +1860,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
 
             GlStateManager.color(0.0F, 0.0F, 0.0F);
-            double d0 = this.mc.thePlayer.getPositionEyes(partialTicks).yCoord - this.theWorld.getHorizon();
+            double d0 = this.mc.thePlayer.getPositionEyes(partialTicks).y - this.theWorld.getHorizon();
 
             if (d0 < 0.0D)
             {
@@ -1998,11 +1995,11 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     this.renderEngine.bindTexture(locationCloudsPng);
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                    Vec3 vec3 = this.theWorld.getCloudColour(partialTicks);
-                    float f = (float)vec3.xCoord;
-                    float f1 = (float)vec3.yCoord;
-                    float f2 = (float)vec3.zCoord;
-                    this.cloudRenderer.prepareToRender(false, this.cloudTickCounter, f9, vec3);
+                    Vector3D vector3D = this.theWorld.getCloudColour(partialTicks);
+                    float f = (float) vector3D.x;
+                    float f1 = (float) vector3D.y;
+                    float f2 = (float) vector3D.z;
+                    this.cloudRenderer.prepareToRender(false, this.cloudTickCounter, f9, vector3D);
 
                     if (this.cloudRenderer.shouldUpdateGlList())
                     {
@@ -2087,11 +2084,11 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         this.renderEngine.bindTexture(locationCloudsPng);
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        Vec3 vec3 = this.theWorld.getCloudColour(partialTicks);
-        float f4 = (float)vec3.xCoord;
-        float f5 = (float)vec3.yCoord;
-        float f6 = (float)vec3.zCoord;
-        this.cloudRenderer.prepareToRender(true, this.cloudTickCounter, partialTicks, vec3);
+        Vector3D vector3D = this.theWorld.getCloudColour(partialTicks);
+        float f4 = (float) vector3D.x;
+        float f5 = (float) vector3D.y;
+        float f6 = (float) vector3D.z;
+        this.cloudRenderer.prepareToRender(true, this.cloudTickCounter, partialTicks, vector3D);
 
         if (pass != 2)
         {

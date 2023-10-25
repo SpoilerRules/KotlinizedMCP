@@ -103,9 +103,8 @@ class PseudoMain(private val args: Array<String>) {
         val port: Int = optionSet.valueOf(portOption)
         val username: String = optionSet.valueOf(usernameOption)
         val accessToken: String = optionSet.valueOf(accessTokenOption)
-        val userType: String = optionSet.valueOf(userTypeOption)
 
-        val session = Session(username, uuid, accessToken, userType)
+        val session = Session(username, uuid, accessToken)
         val gameConfiguration = GameConfiguration(
             GameConfiguration.UserInformation(session, userProperties, profileProperties, proxy),
             GameConfiguration.DisplayInformation(width, height, fullscreen, checkGlErrors),

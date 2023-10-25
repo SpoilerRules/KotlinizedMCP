@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.20-RC"
+    kotlin("jvm") version "1.9.20-RC2"
 }
 
 repositories {
@@ -10,21 +10,21 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC2")
 
     // Netty
-    implementation("io.netty:netty-handler:4.1.98.Final")
-    implementation("io.netty:netty-buffer:4.1.98.Final")
-    implementation("io.netty:netty-transport-native-epoll:4.1.98.Final")
-    implementation("io.netty:netty-transport-classes-epoll:4.1.99.Final") // Latest as of October 1
-    implementation("io.netty:netty-common:4.1.98.Final")
-    implementation("io.netty:netty-codec:4.1.98.Final")
-    implementation("io.netty:netty-transport:4.1.98.Final")
-    implementation("io.netty:netty-resolver:4.1.98.Final")
-    implementation("io.netty:netty-transport-native-unix-common:4.1.99.Final") // Latest as of October 1
+    implementation("io.netty:netty-buffer:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-codec:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-common:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-handler:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-resolver:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-transport:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-transport-classes-epoll:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-transport-native-epoll:4.1.100.Final") // Latest as of October 25 (2023)
+    implementation("io.netty:netty-transport-native-unix-common:4.1.100.Final") // Latest as of October 25 (2023)
 
     // System related
-    implementation("com.github.oshi:oshi-core:6.4.5") // Latest as of 2023 August 24
+    implementation("com.github.oshi:oshi-core:6.4.6") // Latest as of October 25 (2023)
 
     // Command line
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") // Latest as of 2023 August 22
@@ -49,16 +49,16 @@ dependencies {
     implementation("net.java.dev.jna:jna-platform:5.13.0") // Latest as of 2023 August 22
 
     // Logging
-    implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of 2023 August 22
-    implementation("org.apache.logging.log4j:log4j-api:2.20.0") // Latest as of 2023 August 22
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0") // Latest as of 2023 August 22
+    implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)
+    implementation("org.apache.logging.log4j:log4j-api:2.21.0") // Latest as of October 25 (2023)
+    implementation("org.apache.logging.log4j:log4j-core:2.21.0") // Latest as of October 25 (2023)
 
     // Miscellaneous
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-text:1.10.0") // Latest as of 2023 September 22
-    implementation("commons-io:commons-io:2.13.0") // Latest as of 2023 August 22
+    implementation("commons-io:commons-io:2.14.0") // Latest as of October 25 (2023)
     implementation("commons-codec:commons-codec:1.16.0") // Latest as of 2023 August 22
-    api("com.google.guava:guava:32.1.2-jre") // Latest as of 2023 August 21
+    api("com.google.guava:guava:32.1.3-jre") // Latest as of October 25 (2023)
     api("com.google.code.gson:gson:2.10.1") // Latest as of 2023 August 21
 
     // Sound Libraries (Pending removal by implementation of LWJGL 3.)

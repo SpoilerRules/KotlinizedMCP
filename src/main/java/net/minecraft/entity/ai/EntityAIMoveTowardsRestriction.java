@@ -2,7 +2,7 @@ package net.minecraft.entity.ai;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIMoveTowardsRestriction extends EntityAIBase
 {
@@ -28,17 +28,17 @@ public class EntityAIMoveTowardsRestriction extends EntityAIBase
         else
         {
             BlockPos blockpos = this.theEntity.getHomePosition();
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, new Vec3((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ()));
+            Vector3D vector3D = RandomPositionGenerator.findRandomTargetBlockTowards(this.theEntity, 16, 7, new Vector3D((double)blockpos.getX(), (double)blockpos.getY(), (double)blockpos.getZ()));
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return false;
             }
             else
             {
-                this.movePosX = vec3.xCoord;
-                this.movePosY = vec3.yCoord;
-                this.movePosZ = vec3.zCoord;
+                this.movePosX = vector3D.x;
+                this.movePosY = vector3D.y;
+                this.movePosZ = vector3D.z;
                 return true;
             }
         }

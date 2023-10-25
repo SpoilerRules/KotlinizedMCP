@@ -3,7 +3,7 @@ package net.minecraft.entity.ai;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIRunAroundLikeCrazy extends EntityAIBase
 {
@@ -24,17 +24,17 @@ public class EntityAIRunAroundLikeCrazy extends EntityAIBase
     {
         if (!this.horseHost.isTame() && this.horseHost.riddenByEntity != null)
         {
-            Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
+            Vector3D vector3D = RandomPositionGenerator.findRandomTarget(this.horseHost, 5, 4);
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return false;
             }
             else
             {
-                this.targetX = vec3.xCoord;
-                this.targetY = vec3.yCoord;
-                this.targetZ = vec3.zCoord;
+                this.targetX = vector3D.x;
+                this.targetY = vector3D.y;
+                this.targetZ = vector3D.z;
                 return true;
             }
         }

@@ -8,7 +8,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 
 public class EntityAIAvoidEntity<T extends Entity> extends EntityAIBase
 {
@@ -58,20 +58,20 @@ public class EntityAIAvoidEntity<T extends Entity> extends EntityAIBase
         else
         {
             this.closestLivingEntity = list.get(0);
-            Vec3 vec3 = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, new Vec3(this.closestLivingEntity.posX, this.closestLivingEntity.posY, this.closestLivingEntity.posZ));
+            Vector3D vector3D = RandomPositionGenerator.findRandomTargetBlockAwayFrom(this.theEntity, 16, 7, new Vector3D(this.closestLivingEntity.posX, this.closestLivingEntity.posY, this.closestLivingEntity.posZ));
 
-            if (vec3 == null)
+            if (vector3D == null)
             {
                 return false;
             }
-            else if (this.closestLivingEntity.getDistanceSq(vec3.xCoord, vec3.yCoord, vec3.zCoord) < this.closestLivingEntity.getDistanceSqToEntity(this.theEntity))
+            else if (this.closestLivingEntity.getDistanceSq(vector3D.x, vector3D.y, vector3D.z) < this.closestLivingEntity.getDistanceSqToEntity(this.theEntity))
             {
                 return false;
             }
             else
             {
-                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord);
-                return this.entityPathEntity == null ? false : this.entityPathEntity.isDestinationSame(vec3);
+                this.entityPathEntity = this.entityPathNavigate.getPathToXYZ(vector3D.x, vector3D.y, vector3D.z);
+                return this.entityPathEntity == null ? false : this.entityPathEntity.isDestinationSame(vector3D);
             }
         }
     }

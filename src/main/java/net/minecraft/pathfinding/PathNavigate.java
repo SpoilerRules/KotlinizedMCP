@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.ChunkCache;
 import net.minecraft.world.World;
 
@@ -21,7 +21,7 @@ public abstract class PathNavigate
     private final IAttributeInstance pathSearchRange;
     private int totalTicks;
     private int ticksAtLastPos;
-    private Vec3 lastPosCheck = new Vec3(0.0D, 0.0D, 0.0D);
+    private Vector3D lastPosCheck = new Vector3D(0.0D, 0.0D, 0.0D);
     private float heightRequirement = 1.0F;
     private final PathFinder pathFinder;
 
@@ -128,9 +128,9 @@ public abstract class PathNavigate
             else
             {
                 this.speed = speedIn;
-                Vec3 vec3 = this.getEntityPosition();
+                Vector3D vector3D = this.getEntityPosition();
                 this.ticksAtLastPos = this.totalTicks;
-                this.lastPosCheck = vec3;
+                this.lastPosCheck = vector3D;
                 return true;
             }
         }
@@ -153,10 +153,10 @@ public abstract class PathNavigate
             }
             else if (this.currentPath != null && this.currentPath.getCurrentPathIndex() < this.currentPath.getCurrentPathLength())
             {
-                Vec3 vec3 = this.getEntityPosition();
-                Vec3 vec31 = this.currentPath.getVectorFromIndex(this.theEntity, this.currentPath.getCurrentPathIndex());
+                Vector3D vector3D = this.getEntityPosition();
+                Vector3D vec31D = this.currentPath.getVectorFromIndex(this.theEntity, this.currentPath.getCurrentPathIndex());
 
-                if (vec3.yCoord > vec31.yCoord && !this.theEntity.onGround && MathHelper.floor_double(vec3.xCoord) == MathHelper.floor_double(vec31.xCoord) && MathHelper.floor_double(vec3.zCoord) == MathHelper.floor_double(vec31.zCoord))
+                if (vector3D.y > vec31D.y && !this.theEntity.onGround && MathHelper.floor_double(vector3D.x) == MathHelper.floor_double(vec31D.x) && MathHelper.floor_double(vector3D.z) == MathHelper.floor_double(vec31D.z))
                 {
                     this.currentPath.setCurrentPathIndex(this.currentPath.getCurrentPathIndex() + 1);
                 }
@@ -164,11 +164,11 @@ public abstract class PathNavigate
 
             if (!this.noPath())
             {
-                Vec3 vec32 = this.currentPath.getPosition(this.theEntity);
+                Vector3D vec32D = this.currentPath.getPosition(this.theEntity);
 
-                if (vec32 != null)
+                if (vec32D != null)
                 {
-                    AxisAlignedBB axisalignedbb1 = (new AxisAlignedBB(vec32.xCoord, vec32.yCoord, vec32.zCoord, vec32.xCoord, vec32.yCoord, vec32.zCoord)).expand(0.5D, 0.5D, 0.5D);
+                    AxisAlignedBB axisalignedbb1 = (new AxisAlignedBB(vec32D.x, vec32D.y, vec32D.z, vec32D.x, vec32D.y, vec32D.z)).expand(0.5D, 0.5D, 0.5D);
                     List<AxisAlignedBB> list = this.worldObj.getCollidingBoundingBoxes(this.theEntity, axisalignedbb1.addCoord(0.0D, -1.0D, 0.0D));
                     double d0 = -1.0D;
                     axisalignedbb1 = axisalignedbb1.offset(0.0D, 1.0D, 0.0D);
@@ -178,7 +178,7 @@ public abstract class PathNavigate
                         d0 = axisalignedbb.calculateYOffset(axisalignedbb1, d0);
                     }
 
-                    this.theEntity.getMoveHelper().setMoveTo(vec32.xCoord, vec32.yCoord + d0, vec32.zCoord, this.speed);
+                    this.theEntity.getMoveHelper().setMoveTo(vec32D.x, vec32D.y + d0, vec32D.z, this.speed);
                 }
             }
         }
@@ -186,12 +186,12 @@ public abstract class PathNavigate
 
     protected void pathFollow()
     {
-        Vec3 vec3 = this.getEntityPosition();
+        Vector3D vector3D = this.getEntityPosition();
         int i = this.currentPath.getCurrentPathLength();
 
         for (int j = this.currentPath.getCurrentPathIndex(); j < this.currentPath.getCurrentPathLength(); ++j)
         {
-            if (this.currentPath.getPathPointFromIndex(j).yCoord != (int)vec3.yCoord)
+            if (this.currentPath.getPathPointFromIndex(j).yCoord != (int) vector3D.y)
             {
                 i = j;
                 break;
@@ -202,9 +202,9 @@ public abstract class PathNavigate
 
         for (int k = this.currentPath.getCurrentPathIndex(); k < i; ++k)
         {
-            Vec3 vec31 = this.currentPath.getVectorFromIndex(this.theEntity, k);
+            Vector3D vec31D = this.currentPath.getVectorFromIndex(this.theEntity, k);
 
-            if (vec3.squareDistanceTo(vec31) < (double)f)
+            if (vector3D.squareDistanceTo(vec31D) < (double)f)
             {
                 this.currentPath.setCurrentPathIndex(k + 1);
             }
@@ -216,27 +216,27 @@ public abstract class PathNavigate
 
         for (int i1 = i - 1; i1 >= this.currentPath.getCurrentPathIndex(); --i1)
         {
-            if (this.isDirectPathBetweenPoints(vec3, this.currentPath.getVectorFromIndex(this.theEntity, i1), j1, k1, l))
+            if (this.isDirectPathBetweenPoints(vector3D, this.currentPath.getVectorFromIndex(this.theEntity, i1), j1, k1, l))
             {
                 this.currentPath.setCurrentPathIndex(i1);
                 break;
             }
         }
 
-        this.checkForStuck(vec3);
+        this.checkForStuck(vector3D);
     }
 
-    protected void checkForStuck(Vec3 positionVec3)
+    protected void checkForStuck(Vector3D positionVector3D)
     {
         if (this.totalTicks - this.ticksAtLastPos > 100)
         {
-            if (positionVec3.squareDistanceTo(this.lastPosCheck) < 2.25D)
+            if (positionVector3D.squareDistanceTo(this.lastPosCheck) < 2.25D)
             {
                 this.clearPathEntity();
             }
 
             this.ticksAtLastPos = this.totalTicks;
-            this.lastPosCheck = positionVec3;
+            this.lastPosCheck = positionVector3D;
         }
     }
 
@@ -250,7 +250,7 @@ public abstract class PathNavigate
         this.currentPath = null;
     }
 
-    protected abstract Vec3 getEntityPosition();
+    protected abstract Vector3D getEntityPosition();
 
     protected abstract boolean canNavigate();
 
@@ -263,5 +263,5 @@ public abstract class PathNavigate
     {
     }
 
-    protected abstract boolean isDirectPathBetweenPoints(Vec3 posVec31, Vec3 posVec32, int sizeX, int sizeY, int sizeZ);
+    protected abstract boolean isDirectPathBetweenPoints(Vector3D posDVec31, Vector3D posDVec32, int sizeX, int sizeY, int sizeZ);
 }

@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.Vector3D;
 import net.minecraft.world.World;
 
 public class CommandSummon extends CommandBase
@@ -45,10 +45,10 @@ public class CommandSummon extends CommandBase
         {
             String s = args[0];
             BlockPos blockpos = sender.getPosition();
-            Vec3 vec3 = sender.getPositionVector();
-            double d0 = vec3.xCoord;
-            double d1 = vec3.yCoord;
-            double d2 = vec3.zCoord;
+            Vector3D vector3D = sender.getPositionVector();
+            double d0 = vector3D.x;
+            double d1 = vector3D.y;
+            double d2 = vector3D.z;
 
             if (args.length >= 4)
             {
