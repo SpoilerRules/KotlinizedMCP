@@ -52,7 +52,6 @@ class PseudoMain(private val args: Array<String>) {
         val profilePropertiesOption: OptionSpec<String> =
             optionParser.accepts("profileProperties").withRequiredArg().defaultsTo("{}")
         val assetIndexOption: OptionSpec<String> = optionParser.accepts("assetIndex").withRequiredArg()
-        val userTypeOption: OptionSpec<String> = optionParser.accepts("userType").withRequiredArg().defaultsTo("legacy")
         val nonOptions: OptionSpec<String> = optionParser.nonOptions()
         val optionSet: OptionSet = optionParser.parse(*args)
         val ignoredArgs: List<String> = optionSet.valuesOf(nonOptions)
