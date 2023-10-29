@@ -22,7 +22,6 @@ public class Main {
         System.setProperty("java.net.preferIPv4Stack", "true");
         OptionParser optionParser = new OptionParser();
         optionParser.allowsUnrecognizedOptions();
-        optionParser.accepts("demo");
         optionParser.accepts("fullscreen");
         optionParser.accepts("checkGlErrors");
         OptionSpec<String> serverOption = optionParser.accepts("server").withRequiredArg();
@@ -43,7 +42,6 @@ public class Main {
         OptionSpec<String> userPropertiesOption = optionParser.accepts("userProperties").withRequiredArg().defaultsTo("{}");
         OptionSpec<String> profilePropertiesOption = optionParser.accepts("profileProperties").withRequiredArg().defaultsTo("{}");
         OptionSpec<String> assetIndexOption = optionParser.accepts("assetIndex").withRequiredArg();
-        OptionSpec<String> userTypeOption = optionParser.accepts("userType").withRequiredArg().defaultsTo("legacy");
         OptionSpec<String> remainingOptions = optionParser.nonOptions();
         OptionSet optionSet = optionParser.parse(args);
         List<String> remainingArgs = optionSet.valuesOf(remainingOptions);
@@ -78,7 +76,6 @@ public class Main {
         int height = optionSet.valueOf(heightOption);
         boolean fullscreen = optionSet.has("fullscreen");
         boolean checkGlErrors = optionSet.has("checkGlErrors");
-        boolean demoMode = optionSet.has("demo");
         String version = optionSet.valueOf(versionOption);
         Gson gson = (new GsonBuilder()).registerTypeAdapter(PropertyMap.class, new Serializer()).create();
         PropertyMap userProperties = gson.fromJson(optionSet.valueOf(userPropertiesOption), PropertyMap.class);
@@ -91,7 +88,7 @@ public class Main {
         String server = optionSet.valueOf(serverOption);
         Integer port = optionSet.valueOf(portOption);
         Session session = new Session(optionSet.valueOf(usernameOption), uuid, optionSet.valueOf(accessTokenOption));
-        GameConfiguration gameConfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, userProperties, profileProperties, proxy), new GameConfiguration.DisplayInformation(width, height, fullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcePackDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(demoMode, version), new GameConfiguration.ServerInformation(server, port));
+        GameConfiguration gameConfiguration = new GameConfiguration(new GameConfiguration.UserInformation(session, userProperties, profileProperties, proxy), new GameConfiguration.DisplayInformation(width, height, fullscreen, checkGlErrors), new GameConfiguration.FolderInformation(gameDir, resourcePackDir, assetsDir, assetIndex), new GameConfiguration.GameInformation(version), new GameConfiguration.ServerInformation(server, port));
         Runtime.getRuntime().addShutdownHook(new Thread("Client Shutdown Thread") {
             public void run() {
                 Minecraft.stopIntegratedServer();

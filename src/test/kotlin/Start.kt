@@ -8,7 +8,6 @@ object Start {
             "--username", "little_haxor",
             "--accessToken", "0",
             "--uuid", "41cdf1dc-19cd-460e-92d8-5e5dd13848ad",
-            "--userType", "offline",
             "--userProperties", "{}",
 
             // Version-related

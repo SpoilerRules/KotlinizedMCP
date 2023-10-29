@@ -1,37 +1,23 @@
 package net.minecraft.util
 
+import org.apache.logging.log4j.LogManager
 import java.util.IllegalFormatException
 
-class StringTranslate {
+object StringTranslate {
+    private val logger = LogManager.getLogger()
+
     private val numericVariablePattern = Regex("%(\\d+\\$)?[\\d.]*[df]")
     private val languageMap: MutableMap<String, String> = mutableMapOf()
     private var lastUpdateTimeInMilliseconds: Long = System.currentTimeMillis()
 
-    companion object {
-        @JvmStatic
-        val instance = StringTranslate()
-    }
-
     init {
-        val inputStream = StringTranslate::class.java.getResourceAsStream("/assets/minecraft/lang/en_US.lang")
-        try {
-            inputStream?.bufferedReader(Charsets.UTF_8).use { reader ->
-                if (reader != null) {
-                    for (line in reader.readLines()) {
-                        if (line.isNotEmpty() && line[0] != '#') {
-                            val parts = line.split('=', limit = 2)
-                            if (parts.size == 2) {
-                                val key = parts[0]
-                                val value = numericVariablePattern.replace(parts[1], "%$1s")
-                                languageMap[key] = value
-                            }
-                        }
-                    }
-                }
+        StringTranslate::class.java.getResourceAsStream("/assets/minecraft/lang/en_US.lang")
+            ?.bufferedReader(Charsets.UTF_8)?.use { reader ->
+            reader.readLines().filter { it.isNotEmpty() && it[0] != '#' }.map { it.split('=', limit = 2) }
+                .filter { it.size == 2 }.forEach { (key, value) ->
+                languageMap[key] = numericVariablePattern.replace(value, "%$1s")
             }
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-        }
+        } ?: logger.error("Error: Null InputStream")
     }
 
     fun translateKey(key: String): String = languageMap[key] ?: key

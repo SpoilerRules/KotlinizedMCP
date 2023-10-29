@@ -21,7 +21,6 @@ class PseudoMain(private val args: Array<String>) {
         System.setProperty("java.net.preferIPv4Stack", "true")
         val optionParser = OptionParser()
         optionParser.allowsUnrecognizedOptions()
-        optionParser.accepts("demo")
         optionParser.accepts("fullscreen")
         optionParser.accepts("checkGlErrors")
         val serverOption: OptionSpec<String> = optionParser.accepts("server").withRequiredArg()
@@ -86,7 +85,6 @@ class PseudoMain(private val args: Array<String>) {
         val height: Int = optionSet.valueOf(heightOption)
         val fullscreen: Boolean = optionSet.has("fullscreen")
         val checkGlErrors: Boolean = optionSet.has("checkGlErrors")
-        val demo: Boolean = optionSet.has("demo")
         val version: String = optionSet.valueOf(versionOption)
         val gson: Gson = GsonBuilder().registerTypeAdapter(PropertyMap::class.java, Serializer()).create()
         val userProperties: PropertyMap =
@@ -108,7 +106,7 @@ class PseudoMain(private val args: Array<String>) {
             GameConfiguration.UserInformation(session, userProperties, profileProperties, proxy),
             GameConfiguration.DisplayInformation(width, height, fullscreen, checkGlErrors),
             GameConfiguration.FolderInformation(gameDir, resourcePackDir, assetsDir, assetIndex),
-            GameConfiguration.GameInformation(demo, version),
+            GameConfiguration.GameInformation(version),
             GameConfiguration.ServerInformation(server, port)
         )
 

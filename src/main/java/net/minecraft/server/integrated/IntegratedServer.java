@@ -33,7 +33,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.WorldServerMulti;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.demo.DemoWorldServer;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 import net.optifine.ClearWater;
@@ -67,12 +66,11 @@ public class IntegratedServer extends MinecraftServer
         this.setServerOwner(mcIn.getSession().getUsername());
         this.setFolderName(folderName);
         this.setWorldName(worldName);
-        this.setDemo(mcIn.isDemo());
         this.canCreateBonusChest(settings.isBonusChestEnabled());
         this.setBuildLimit(256);
         this.setConfigManager(new IntegratedPlayerList(this));
         this.mc = mcIn;
-        this.theWorldSettings = this.isDemo() ? DemoWorldServer.demoWorldSettings : settings;
+        this.theWorldSettings = settings;
         ISaveHandler isavehandler = this.getActiveAnvilConverter().getSaveLoader(folderName, false);
         WorldInfo worldinfo = isavehandler.loadWorldInfo();
 
@@ -120,7 +118,7 @@ public class IntegratedServer extends MinecraftServer
 
         if (flag)
         {
-            WorldServer worldserver = this.isDemo() ? (WorldServer)((WorldServer)(new DemoWorldServer(this, isavehandler, worldinfo, 0, this.theProfiler)).init()) : (WorldServer)(new WorldServer(this, isavehandler, worldinfo, 0, this.theProfiler)).init();
+            WorldServer worldserver = (WorldServer)(new WorldServer(this, isavehandler, worldinfo, 0, this.theProfiler)).init();
             worldserver.initialize(this.theWorldSettings);
             Integer[] ainteger = (Integer[])((Integer[])Reflector.call(Reflector.DimensionManager_getStaticDimensionIDs, new Object[0]));
             Integer[] ainteger1 = ainteger;
@@ -166,16 +164,8 @@ public class IntegratedServer extends MinecraftServer
                     i1 = 1;
                 }
 
-                if (l == 0)
-                {
-                    if (this.isDemo())
-                    {
-                        this.worldServers[l] = (WorldServer)(new DemoWorldServer(this, isavehandler, worldinfo, i1, this.theProfiler)).init();
-                    }
-                    else
-                    {
-                        this.worldServers[l] = (WorldServer)(new WorldServer(this, isavehandler, worldinfo, i1, this.theProfiler)).init();
-                    }
+                if (l == 0) {
+                    this.worldServers[l] = (WorldServer) (new WorldServer(this, isavehandler, worldinfo, i1, this.theProfiler)).init();
 
                     this.worldServers[l].initialize(this.theWorldSettings);
                 }

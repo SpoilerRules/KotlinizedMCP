@@ -66,8 +66,7 @@ public class LanguageManager implements IResourceManagerReloadListener
         }
 
         currentLocale.loadLocaleDataFiles(resourceManager, list);
-        StringTranslate stringTranslate = StringTranslate.getInstance();
-        stringTranslate.replaceWith(currentLocale.properties);
+        StringTranslate.INSTANCE.replaceWith(currentLocale.properties);
 
     }
 

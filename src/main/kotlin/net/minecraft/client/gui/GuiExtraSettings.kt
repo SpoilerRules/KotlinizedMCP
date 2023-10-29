@@ -6,8 +6,7 @@ import net.minecraft.client.settings.GameSettings
 class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
 
     override fun initGui() {
-        val centerWidth = width / 2
-        val centerHeight = height / 2 - 20
+        val centerHeight = super.centerHeight - 20
 
         data class OptionPosition(val option: GameSettings.Options, val x: Int, val y: Int)
 

@@ -47,22 +47,23 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Set<String> PROTOCOLS = Sets.newHashSet("http", "https");
     private static final Splitter NEWLINE_SPLITTER = Splitter.on('\n');
-    protected Minecraft mc;
+    public Minecraft mc = Minecraft.getMinecraft();
     protected RenderItem itemRender;
     public int width;
     public int height;
-    protected List<GuiButton> buttonList = Lists.newArrayList();
+    public int centerWidth;
+    public int centerHeight;
+    public static List<GuiButton> buttonList = Lists.newArrayList();
     protected List<GuiLabel> labelList = Lists.newArrayList();
     public boolean allowUserInput;
-    protected FontRenderer fontRendererObject;
+    protected FontRenderer fontRendererObject = mc.fontRendererObj;
     private GuiButton selectedButton;
     private int eventButton;
     private long lastMouseEvent;
     private int touchValue;
     private URI clickedLinkURI;
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
-    {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         for (GuiButton guiButton : this.buttonList) {
             guiButton.drawButton(this.mc, mouseX, mouseY);
         }
@@ -432,6 +433,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         this.fontRendererObject = mc.fontRendererObj;
         this.width = width;
         this.height = height;
+        centerWidth = this.width / 2;
+        centerHeight = this.height / 2;
         this.buttonList.clear();
         this.initGui();
     }

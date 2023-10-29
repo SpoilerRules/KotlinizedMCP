@@ -1,7 +1,7 @@
 # Evanescent - Kotlinized MCP for Minecraft 1.8.9
 
 [![Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)](https://github.com/SpoilerRules/KotlinizedMCP)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20--RC-blue.svg)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20--RC2-blue.svg)](https://kotlinlang.org/)
 [![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![Gradle](https://img.shields.io/badge/Gradle-8.4-orange.svg)](https://gradle.org/)
 [![OptiFine](https://img.shields.io/badge/OptiFine-Integrated-green.svg)](https://optifine.net/)
@@ -31,7 +31,7 @@ Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies
 Absolutely! This project is created to aid client developers by providing a user-friendly template. You should consider using Evanescent, also known as KotlinizedMCP, for the following reasons:
 - Aims to always use the latest dependencies and support the latest LTS JDK.
 - Uses Gradle (Kotlin Script DSL) to simplify setting up dependencies, compiling, and customizing the project, making your development experience smoother.
-- Majority of classes being rewritten in Kotlin/JVM to enhance performance, readability, and maintainability while utilizing modern features of Java and Kotlin/JVM.
+- The majority of classes being rewritten in Kotlin/JVM to enhance performance, readability, and maintainability while utilizing modern features of Java and Kotlin/JVM.
 - Includes built-in features such as in-game Microsoft Login, removal of support for outdated features like Minecraft Realms, integration with OptiFine, and more. Check out the full list of built-in features in the [Built-in Features](#built-in-features) section.
 
 #### Is Evanescent (KotlinizedMCP) based on decompiled MCP 1.8.9?
@@ -47,10 +47,10 @@ Yes, you are welcome to use any JVM languages to work on Evanescent for your ind
 - ✅ Extra Settings, offering options like Hit Delay, Auto Sprint, and more.
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed Twitch Broadcast support.
+- ✅ Removed Demo version support
 
 ## Pending Built-in Features
 
-- ❌ Removed Demo version support.
 - ❌ Removed Snooper support.
 - ❌ Implemented raw input.
 - ❌ Implemented camera shake customization.

@@ -247,26 +247,6 @@ chat.stream.emote=(%s) * %s %s
 menu.playdemo=Play Demo World
 menu.resetdemo=Reset Demo World
 
-demo.day.1=This demo will last five game days, do your best!
-demo.day.2=Day Two
-demo.day.3=Day Three
-demo.day.4=Day Four
-demo.day.5=This is your last day!
-demo.day.warning=Your time is almost up!
-demo.day.6=You have passed your fifth day, use F2 to save a screenshot of your creation
-demo.reminder=The demo time has expired, buy the game to continue or start a new world!
-demo.remainingTime=Remaining time: %s
-demo.demoExpired=Demo time's up!
-demo.help.movement=Use %1$s, %2$s, %3$s, %4$s and the mouse to move around
-demo.help.movementShort=Move by pressing %1$s, %2$s, %3$s, %4$s
-demo.help.movementMouse=Look around using the mouse
-demo.help.jump=Jump by pressing %1$s
-demo.help.inventory=Use %1$s to open your inventory
-demo.help.title=Minecraft Demo Mode
-demo.help.fullWrapped=This demo will last 5 ingame days (about 1 hour and 40 minutes of real time). Check the achievements for hints! Have fun!
-demo.help.buy=Purchase Now!
-demo.help.later=Continue Playing!
-
 connect.connecting=Connecting to the server...
 connect.authorizing=Logging in...
 connect.failed=Failed to connect to the server
@@ -441,9 +421,6 @@ options.stream.chat.userFilter.mods=Moderators
 
 difficulty.lock.title=Lock World Difficulty
 difficulty.lock.question=Are you sure you want to lock the difficulty of this world? This will set this world to always be %1$s, and you will never be able to change that again.
-
-title.oldgl1=Old graphics card detected; this may prevent you from
-title.oldgl2=playing in the future as OpenGL 2.0 will be required.
 
 controls.title=Controls
 controls.reset=Reset

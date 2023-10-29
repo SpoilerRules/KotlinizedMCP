@@ -56,12 +56,10 @@ public class GameConfiguration
 
     public static class GameInformation
     {
-        public final boolean isDemo;
         public final String version;
 
-        public GameInformation(boolean isDemoIn, String versionIn)
+        public GameInformation(String versionIn)
         {
-            this.isDemo = isDemoIn;
             this.version = versionIn;
         }
     }

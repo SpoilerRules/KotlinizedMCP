@@ -103,8 +103,8 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
 tasks.jar {
-/*  ↓  To change the name of the JAR file, modify the string below. ←  */
-    //                     ↓ ↓ ↓
+//  ↓ To change the name of the JAR file, modify the string below. ←
+//                         ↓ ↓ ↓
     archiveBaseName.set("Evanescent")
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

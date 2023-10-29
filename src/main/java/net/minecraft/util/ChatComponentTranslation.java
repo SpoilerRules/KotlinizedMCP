@@ -54,15 +54,6 @@ public class ChatComponentTranslation extends ChatComponentStyle
         catch (ChatComponentTranslationFormatException chatcomponenttranslationformatexception)
         {
             this.children.clear();
-
-            try
-            {
-                this.initializeFromFormat(StatCollector.translateToFallback(this.key));
-            }
-            catch (ChatComponentTranslationFormatException var5)
-            {
-                throw chatcomponenttranslationformatexception;
-            }
         }
     }
 
