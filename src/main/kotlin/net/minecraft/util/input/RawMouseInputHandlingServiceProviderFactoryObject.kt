@@ -1,4 +1,11 @@
 package net.minecraft.util.input
+
+/**
+ *
+ * this supposed to detect mouse and get raw input from it.
+ * (no work because I don't know how to implement this correctly.)
+ *
+ */
 /*
 import kotlinx.coroutines.*
 import net.java.games.input.Controller
@@ -8,7 +15,6 @@ import net.minecraft.client.Minecraft
 import java.lang.reflect.Constructor
 
 class RawMouseInputHandlingServiceProviderFactoryObject {
-    // Delta for mouse
     private var deltaX = MouseInputHelper().deltaX
     private var deltaY = MouseInputHelper().deltaY
 
@@ -28,7 +34,7 @@ class RawMouseInputHandlingServiceProviderFactoryObject {
 
     /**
      *
-     * Tries to find mouse if mouse is not defined already.
+     * Try to find mouse if mouse is not defined already.
      *
      */
     fun indexMouse() = runBlocking {

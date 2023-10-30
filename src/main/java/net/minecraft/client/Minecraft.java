@@ -1,6 +1,5 @@
 package net.minecraft.client;
 
-import annotations.ExperimentalState;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
@@ -21,6 +20,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.inputhandler.KeyboardInputHandler;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -197,7 +197,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private IReloadableResourceManager mcResourceManager;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
-    private Framebuffer framebufferMc;
+    public Framebuffer framebufferMc;
     private TextureMap textureMapBlocks;
     private SoundHandler mcSoundHandler;
     private MusicTicker mcMusicTicker;
@@ -1443,7 +1443,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     this.debugCrashKeyPressTime = getSystemTime();
                 }
 
-                this.dispatchKeypresses();
+                KeyboardInputHandler.INSTANCE.dispatchKeypresses(this);
 
                 if (Keyboard.getEventKeyState()) {
                     if (k == 62 && this.entityRenderer != null) {
@@ -2292,7 +2292,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return this.thePlayer != null ? (this.thePlayer.worldObj.provider instanceof WorldProviderHell ? MusicTicker.MusicType.NETHER : (this.thePlayer.worldObj.provider instanceof WorldProviderEnd ? (BossStatus.bossName != null && BossStatus.statusBarTime > 0 ? MusicTicker.MusicType.END_BOSS : MusicTicker.MusicType.END) : (this.thePlayer.capabilities.isCreativeMode && this.thePlayer.capabilities.allowFlying ? MusicTicker.MusicType.CREATIVE : MusicTicker.MusicType.GAME))) : MusicTicker.MusicType.MENU;
     }
 
-    @ExperimentalState
+  /*  @ExperimentalState
     public void dispatchKeypresses() {
         int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() : Keyboard.getEventKey();
 
@@ -2307,7 +2307,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
             }
         }
-    }
+    }*/
 
     public MinecraftSessionService getSessionService() {
         return this.sessionService;

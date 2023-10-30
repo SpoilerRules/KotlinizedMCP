@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.inputhandler.KeyboardInputHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -64,7 +65,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     private URI clickedLinkURI;
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        for (GuiButton guiButton : this.buttonList) {
+        for (GuiButton guiButton : buttonList) {
             guiButton.drawButton(this.mc, mouseX, mouseY);
         }
 
@@ -394,7 +395,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         if (mouseButton == 0) {
             GuiButton clickedButton = null;
 
-            for (GuiButton guibutton : this.buttonList) {
+            for (GuiButton guibutton : buttonList) {
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     clickedButton = guibutton;
                     break; // exits da loop to prevent over iteration during phasing state (concurrent modification)
@@ -435,7 +436,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         this.height = height;
         centerWidth = this.width / 2;
         centerHeight = this.height / 2;
-        this.buttonList.clear();
+        buttonList.clear();
         this.initGui();
     }
 
@@ -502,6 +503,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
     }
 
+    // keyboard input handler
     public void handleKeyboardInput() throws IOException
     {
         if (Keyboard.getEventKeyState())
@@ -509,7 +511,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
         }
 
-        this.mc.dispatchKeypresses();
+        KeyboardInputHandler.INSTANCE.dispatchKeypresses(mc);
     }
 
     public void updateScreen()

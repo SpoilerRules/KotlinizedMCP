@@ -1,6 +1,5 @@
 package net.minecraft.client.gui.inventory;
 
-import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -13,6 +12,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+
+import java.io.IOException;
 
 public class GuiInventory extends InventoryEffectRenderer
 {
@@ -37,7 +38,7 @@ public class GuiInventory extends InventoryEffectRenderer
 
     public void initGui()
     {
-        this.buttonList.clear();
+        buttonList.clear();
 
         if (this.mc.playerController.isInCreativeMode())
         {
@@ -51,7 +52,8 @@ public class GuiInventory extends InventoryEffectRenderer
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObject.drawString(LocalizationHelper.translate("container.crafting", new Object[0]), 86, 16, 4210752);
+        this.fontRendererObject.drawString(LocalizationHelper.translate("container.crafting"
+        ), 86, 16, 4210752);
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
@@ -86,10 +88,10 @@ public class GuiInventory extends InventoryEffectRenderer
         GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
-        ent.renderYawOffset = (float)Math.atan((double)(mouseX / 40.0F)) * 20.0F;
-        ent.rotationYaw = (float)Math.atan((double)(mouseX / 40.0F)) * 40.0F;
-        ent.rotationPitch = -((float)Math.atan((double)(mouseY / 40.0F))) * 20.0F;
+        GlStateManager.rotate(-((float)Math.atan(mouseY / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
+        ent.renderYawOffset = (float)Math.atan(mouseX / 40.0F) * 20.0F;
+        ent.rotationYaw = (float)Math.atan(mouseX / 40.0F) * 40.0F;
+        ent.rotationPitch = -((float)Math.atan(mouseY / 40.0F)) * 20.0F;
         ent.rotationYawHead = ent.rotationYaw;
         ent.prevRotationYawHead = ent.rotationYaw;
         GlStateManager.translate(0.0F, 0.0F, 0.0F);

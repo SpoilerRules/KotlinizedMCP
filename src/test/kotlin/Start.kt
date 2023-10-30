@@ -1,4 +1,4 @@
-import net.minecraft.client.main.PseudoMain as Main
+import net.minecraft.client.main.ClientInitializer
 
 object Start {
     @JvmStatic
@@ -18,6 +18,6 @@ object Start {
             "--gameDir", System.getProperty("user.dir"),
             "--assetsDir", "assets"
         )
-        Main(args + defaultArgs).main()
+        ClientInitializer.main(args + defaultArgs)
     }
 }
