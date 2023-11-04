@@ -322,8 +322,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         this.fogColor2 = this.fogColor1;
         this.thirdPersonDistanceTemp = this.thirdPersonDistance;
 
-        if (this.mc.gameSettings.smoothCamera)
-        {
+        if (this.mc.gameSettings.smoothCamera) {
             float f = this.mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
             float f1 = f * f * f * 8.0F;
             this.smoothCamFilterX = this.mouseInputFilterXAxis.smooth(this.smoothCamYaw, 0.05F * f1);
@@ -331,9 +330,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.smoothCamPartialTicks = 0.0F;
             this.smoothCamYaw = 0.0F;
             this.smoothCamPitch = 0.0F;
-        }
-        else
-        {
+        } else {
             this.smoothCamFilterX = 0.0F;
             this.smoothCamFilterY = 0.0F;
             this.mouseInputFilterXAxis.reset();
@@ -546,23 +543,18 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 flag = GameSettings.isKeyDown(this.mc.gameSettings.ofKeyBindZoom);
             }
 
-            if (flag)
-            {
-                if (!Config.zoomMode)
-                {
+            if (flag) {
+                if (!Config.zoomMode) {
                     Config.zoomMode = true;
                     Config.zoomSmoothCamera = this.mc.gameSettings.smoothCamera;
                     this.mc.gameSettings.smoothCamera = true;
                     this.mc.renderGlobal.displayListEntitiesDirty = true;
                 }
 
-                if (Config.zoomMode)
-                {
+                if (Config.zoomMode) {
                     f /= 4.0F;
                 }
-            }
-            else if (Config.zoomMode)
-            {
+            } else if (Config.zoomMode) {
                 Config.zoomMode = false;
                 this.mc.gameSettings.smoothCamera = Config.zoomSmoothCamera;
                 this.mouseInputFilterXAxis = new MouseInputFilter();

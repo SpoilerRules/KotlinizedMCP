@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.inputhandler.InputService;
 import net.minecraft.client.inputhandler.KeyboardInputHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -511,7 +512,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
             this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
         }
 
-        KeyboardInputHandler.INSTANCE.dispatchKeypresses(mc);
+        InputService.Companion.beginHandlingKeyInput(true);
     }
 
     public void updateScreen()

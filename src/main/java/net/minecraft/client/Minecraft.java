@@ -19,8 +19,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.inputhandler.KeyboardInputHandler;
+import net.minecraft.client.inputhandler.InputService;
 import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
@@ -50,7 +49,6 @@ import net.minecraft.entity.EntityLeashKnot;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.item.*;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Bootstrap;
 import net.minecraft.init.Items;
@@ -64,7 +62,6 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
-import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.profiler.IPlayerUsage;
 import net.minecraft.profiler.PlayerUsageSnooper;
 import net.minecraft.profiler.Profiler;
@@ -90,8 +87,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
@@ -119,6 +114,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             new DisplayMode(2560, 1600),
             new DisplayMode(2880, 1800)
     );
+    private static final InputService.Companion inputService = InputService.Companion;
     public static byte[] memoryReserve = new byte[10485760];
     private static Minecraft theMinecraft;
     private static int debugFPS;
@@ -138,6 +134,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private final MinecraftSessionService sessionService;
     private final Queue<FutureTask<?>> scheduledTasks = Queues.newArrayDeque();
     private final Thread mcThread = Thread.currentThread();
+    private final PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());
+    private final int tempDisplayWidth;
+    private final int tempDisplayHeight;
+    private final long field_175615_aJ = 0L;
     public PlayerControllerMP playerController;
     public int displayWidth;
     public int displayHeight;
@@ -163,7 +163,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public boolean field_175614_C = false;
     public boolean field_175611_D = false;
     public boolean renderChunksMany = true;
-    long systemTime = getSystemTime();
+    public long systemTime = getSystemTime();
+    public int leftClickCounter;
+    public int rightClickDelayTimer;
+    public Framebuffer framebufferMc;
     long startNanoTime = System.nanoTime();
     //private Window window;
     volatile boolean running = true;
@@ -175,35 +178,28 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private boolean fullscreen;
     private boolean hasCrashed;
     private CrashReport crashReporter;
-    private final PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());
     private RenderManager renderManager;
     private RenderItem renderItem;
     private ItemRenderer itemRenderer;
     private Entity renderViewEntity;
     private Session session;
     private boolean isGamePaused;
-    private int leftClickCounter;
-    private final int tempDisplayWidth;
-    private final int tempDisplayHeight;
     private IntegratedServer theIntegratedServer;
     private ISaveFormat saveLoader;
-    private int rightClickDelayTimer;
     private String serverName;
     private int serverPort;
     private int joinPlayerCounter;
     private NetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
-    private long debugCrashKeyPressTime = -1L;
+    private final long debugCrashKeyPressTime = -1L;
     private IReloadableResourceManager mcResourceManager;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
-    public Framebuffer framebufferMc;
     private TextureMap textureMapBlocks;
     private SoundHandler mcSoundHandler;
     private MusicTicker mcMusicTicker;
     private ResourceLocation mojangLogo;
     private SkinManager skinManager;
-    private final long field_175615_aJ = 0L;
     private ModelManager modelManager;
     private BlockRendererDispatcher blockRenderDispatcher;
     private String debugProfilerName = "root";
@@ -995,7 +991,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    private void updateDebugProfilerName(int keyCount) {
+    public void updateDebugProfilerName(int keyCount) {
         List<Profiler.Result> list = this.mcProfiler.getProfilingData(this.debugProfilerName);
 
         if (list != null && !list.isEmpty()) {
@@ -1153,7 +1149,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    private void sendClickBlockToController(boolean leftClick) {
+    public void sendClickBlockToController(boolean leftClick) {
         if (!leftClick) {
             this.leftClickCounter = 0;
         }
@@ -1175,7 +1171,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     /**
      * Removed hit delay.
      */
-    private void clickMouse() {
+    public void clickMouse() {
         if (leftClickCounter <= 0) {
             thePlayer.swingItem();
             if (objectMouseOver != null) {
@@ -1194,7 +1190,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     /**
      * Called when user clicked he's mouse right button (place)
      */
-    private void rightClickMouse() {
+    public void rightClickMouse() {
         if (!playerController.getIsHittingBlock()) {
             rightClickDelayTimer = 4;
             boolean isActionPerformed = true;
@@ -1372,7 +1368,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             }
         }
 
-        if (this.currentScreen == null || this.currentScreen.allowUserInput) {
+       /*starts here if (this.currentScreen == null || this.currentScreen.allowUserInput) {
             this.mcProfiler.endStartSection("mouse");
 
             while (Mouse.next()) {
@@ -1443,7 +1439,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     this.debugCrashKeyPressTime = getSystemTime();
                 }
 
-                KeyboardInputHandler.INSTANCE.dispatchKeypresses(this);
+                KeyboardInputHandler.INSTANCE.handleKeypress(this);
 
                 if (Keyboard.getEventKeyState()) {
                     if (k == 62 && this.entityRenderer != null) {
@@ -1578,10 +1574,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
             }
 
-            while (this.gameSettings.keyBindChat.isPressed() && flag) {
-                this.displayGuiScreen(new GuiChat());
-            }
-
             if (this.currentScreen == null && this.gameSettings.keyBindCommand.isPressed() && flag) {
                 this.displayGuiScreen(new GuiChat("/"));
             }
@@ -1618,7 +1610,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             }
 
             this.sendClickBlockToController(this.currentScreen == null && this.gameSettings.keyBindAttack.isKeyDown() && this.inGameHasFocus);
-        }
+        } // ends here */
+        inputService.beginHandlingKeyInput(false);
 
         if (this.theWorld != null) {
             if (this.thePlayer != null) {
@@ -1858,7 +1851,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return this.thePlayer != null ? this.thePlayer.sendQueue : null;
     }
 
-    private void middleClickMouse() {
+    public void middleClickMouse() {
         if (this.objectMouseOver != null) {
             boolean flag = this.thePlayer.capabilities.isCreativeMode;
             int i = 0;

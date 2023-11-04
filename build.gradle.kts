@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.20-RC2"
+    kotlin("jvm") version "1.9.20"
 }
 
 repositories {
@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
 
     // Netty
     implementation("io.netty:netty-buffer:4.1.100.Final") // Latest as of October 25 (2023)
@@ -117,7 +117,9 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.withType<JavaExec> {
-    val osType = if (System.getProperty("os.name").lowercase().contains("windows")) "windows" else "linux"
+    val osType = System.getProperty("os.name").lowercase().let {
+        if (it.contains("windows")) "windows" else "linux"
+    }
     systemProperty("java.library.path", "${projectDir}${File.separator}test_natives${File.separator}$osType")
 }
 

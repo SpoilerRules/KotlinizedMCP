@@ -124,7 +124,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         this.inventoryContainer = new ContainerPlayer(this.inventory, !worldIn.isRemote, this);
         this.openContainer = this.inventoryContainer;
         BlockPos blockpos = worldIn.getSpawnPoint();
-        this.setLocationAndAngles((double)blockpos.getX() + 0.5D, (double)(blockpos.getY() + 1), (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
+        this.setLocationAndAngles((double)blockpos.getX() + 0.5D, blockpos.getY() + 1, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
         this.unused180 = 180.0F;
         this.fireResistance = 20;
     }
@@ -567,12 +567,10 @@ public abstract class EntityPlayer extends EntityLivingBase
 
             List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, axisalignedbb);
 
-            for (int i = 0; i < list.size(); ++i)
-            {
-                Entity entity = (Entity)list.get(i);
+            for (Entity value : list) {
+                Entity entity = (Entity) value;
 
-                if (!entity.isDead)
-                {
+                if (!entity.isDead) {
                     this.collideWithPlayer(entity);
                 }
             }
@@ -2076,7 +2074,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         else
         {
             ItemStack itemstack = this.getCurrentEquippedItem();
-            return itemstack != null && itemstack.hasDisplayName() ? itemstack.getDisplayName().equals(code.getLock()) : false;
+            return itemstack != null && itemstack.hasDisplayName() && itemstack.getDisplayName().equals(code.getLock());
         }
     }
 
@@ -2196,6 +2194,6 @@ public abstract class EntityPlayer extends EntityLivingBase
         NOT_POSSIBLE_NOW,
         TOO_FAR_AWAY,
         OTHER_PROBLEM,
-        NOT_SAFE;
+        NOT_SAFE
     }
 }

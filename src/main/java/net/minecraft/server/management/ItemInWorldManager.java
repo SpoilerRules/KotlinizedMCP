@@ -44,7 +44,7 @@ public class ItemInWorldManager
         this.gameType = type;
         type.configurePlayerCapabilities(this.thisPlayerMP.capabilities);
         this.thisPlayerMP.sendPlayerAbilities();
-        this.thisPlayerMP.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S38PacketPlayerListItem(S38PacketPlayerListItem.Action.UPDATE_GAME_MODE, new EntityPlayerMP[] {this.thisPlayerMP}));
+        this.thisPlayerMP.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S38PacketPlayerListItem(S38PacketPlayerListItem.Action.UPDATE_GAME_MODE, this.thisPlayerMP));
     }
 
     public WorldSettings.GameType getGameType()
@@ -132,7 +132,7 @@ public class ItemInWorldManager
     {
         if (this.isCreative())
         {
-            if (!this.theWorld.extinguishFire((EntityPlayer)null, pos, side))
+            if (!this.theWorld.extinguishFire(null, pos, side))
             {
                 this.tryHarvestBlock(pos);
             }
@@ -141,30 +141,25 @@ public class ItemInWorldManager
         {
             Block block = this.theWorld.getBlockState(pos).getBlock();
 
-            if (this.gameType.isAdventure())
-            {
-                if (this.gameType == WorldSettings.GameType.SPECTATOR)
-                {
+            if (this.gameType.isAdventure()) {
+                if (this.gameType == WorldSettings.GameType.SPECTATOR) {
                     return;
                 }
 
-                if (!this.thisPlayerMP.isAllowEdit())
-                {
+                if (!this.thisPlayerMP.isAllowEdit()) {
                     ItemStack itemstack = this.thisPlayerMP.getCurrentEquippedItem();
 
-                    if (itemstack == null)
-                    {
+                    if (itemstack == null) {
                         return;
                     }
 
-                    if (!itemstack.canDestroy(block))
-                    {
+                    if (!itemstack.canDestroy(block)) {
                         return;
                     }
                 }
             }
 
-            this.theWorld.extinguishFire((EntityPlayer)null, pos, side);
+            this.theWorld.extinguishFire(null, pos, side);
             this.initialDamage = this.curblockDamage;
             float f = 1.0F;
 
@@ -237,11 +232,10 @@ public class ItemInWorldManager
         return flag;
     }
 
-    public boolean tryHarvestBlock(BlockPos pos)
+    public void tryHarvestBlock(BlockPos pos)
     {
         if (this.gameType.isCreative() && this.thisPlayerMP.getHeldItem() != null && this.thisPlayerMP.getHeldItem().getItem() instanceof ItemSword)
         {
-            return false;
         }
         else
         {
@@ -252,7 +246,7 @@ public class ItemInWorldManager
             {
                 if (this.gameType == WorldSettings.GameType.SPECTATOR)
                 {
-                    return false;
+                    return;
                 }
 
                 if (!this.thisPlayerMP.isAllowEdit())
@@ -261,12 +255,12 @@ public class ItemInWorldManager
 
                     if (itemstack == null)
                     {
-                        return false;
+                        return;
                     }
 
                     if (!itemstack.canDestroy(iblockstate.getBlock()))
                     {
-                        return false;
+                        return;
                     }
                 }
             }
@@ -299,15 +293,13 @@ public class ItemInWorldManager
                 }
             }
 
-            return flag1;
         }
     }
 
-    public boolean tryUseItem(EntityPlayer player, World worldIn, ItemStack stack)
+    public void tryUseItem(EntityPlayer player, World worldIn, ItemStack stack)
     {
         if (this.gameType == WorldSettings.GameType.SPECTATOR)
         {
-            return false;
         }
         else
         {
@@ -315,7 +307,7 @@ public class ItemInWorldManager
             int j = stack.getMetadata();
             ItemStack itemstack = stack.useItemRightClick(worldIn, player);
 
-            if (itemstack != stack || itemstack != null && (itemstack.stackSize != i || itemstack.getMaxItemUseDuration() > 0 || itemstack.getMetadata() != j))
+            if (itemstack != stack || itemstack.stackSize != i || itemstack.getMaxItemUseDuration() > 0 || itemstack.getMetadata() != j)
             {
                 player.inventory.mainInventory[player.inventory.currentItem] = itemstack;
 
@@ -339,16 +331,14 @@ public class ItemInWorldManager
                     ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
                 }
 
-                return true;
             }
             else
             {
-                return false;
             }
         }
     }
 
-    public boolean activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
+    public void activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
     {
         if (this.gameType == WorldSettings.GameType.SPECTATOR)
         {
@@ -367,16 +357,13 @@ public class ItemInWorldManager
                 if (ilockablecontainer != null)
                 {
                     player.displayGUIChest(ilockablecontainer);
-                    return true;
                 }
             }
             else if (tileentity instanceof IInventory)
             {
                 player.displayGUIChest((IInventory)tileentity);
-                return true;
             }
 
-            return false;
         }
         else
         {
@@ -386,13 +373,12 @@ public class ItemInWorldManager
 
                 if (iblockstate.getBlock().onBlockActivated(worldIn, pos, iblockstate, player, side, offsetX, offsetY, offsetZ))
                 {
-                    return true;
+                    return;
                 }
             }
 
             if (stack == null)
             {
-                return false;
             }
             else if (this.isCreative())
             {
@@ -401,11 +387,10 @@ public class ItemInWorldManager
                 boolean flag = stack.onItemUse(player, worldIn, pos, side, offsetX, offsetY, offsetZ);
                 stack.setItemDamage(j);
                 stack.stackSize = i;
-                return flag;
             }
             else
             {
-                return stack.onItemUse(player, worldIn, pos, side, offsetX, offsetY, offsetZ);
+                stack.onItemUse(player, worldIn, pos, side, offsetX, offsetY, offsetZ);
             }
         }
     }

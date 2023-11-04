@@ -26,7 +26,7 @@ object ButtonHandler {
     data class LanguageButtonPosition(val buttonID: ButtonID, val x: Int, val y: Int)
 
     fun initializeButtons(centerHeight: Int, centerWidth: Int) {
-        val expectedVerticalHeight = centerHeight / 2 + 48
+        val expectedVerticalHeight = centerHeight / 2 + 54
         val buttonList = GuiScreen.buttonList
 
         val clientButtons = listOf(

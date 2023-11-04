@@ -518,7 +518,7 @@ public class GuiIngame extends Gui
         }
 
         int totalHeight = allScores.size() * fontHeight;
-        int verticalCenter = screenResolution.getScaledHeight() / 2 + totalHeight / 3;
+        int verticalPosition = screenResolution.getScaledHeight() / 2 + totalHeight / 2;
         int horizontalMargin = 4;
         int scoreboardRightEdge = screenResolution.getScaledWidth() - displayNameWidth - horizontalMargin;
         int scoreIndex = 0;
@@ -528,7 +528,7 @@ public class GuiIngame extends Gui
             ScorePlayerTeam playerTeam = gameScoreboard.getPlayersTeam(individualScore.getPlayerName());
             String playerName = ScorePlayerTeam.formatPlayerName(playerTeam, individualScore.getPlayerName());
 
-            int verticalOffset = verticalCenter - scoreIndex * fontHeight;
+            int verticalOffset = verticalPosition - scoreIndex * fontHeight;
             int scoreboardLeftEdge = screenResolution.getScaledWidth() - horizontalMargin + 2;
             drawRect(scoreboardRightEdge - 2, verticalOffset, scoreboardLeftEdge, verticalOffset + fontHeight, 1342177280);
             fontRenderer.drawString(playerName, scoreboardRightEdge, verticalOffset, 553648127);

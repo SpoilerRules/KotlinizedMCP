@@ -110,13 +110,12 @@ object ClientInitializer {
             ServerInformation(server, port)
         )
 
-        Runtime.getRuntime().addShutdownHook(object : Thread("Client Shutdown Thread") {
-            override fun run() {
-                Minecraft.stopIntegratedServer()
-            }
-        })
+        Runtime.getRuntime().addShutdownHook(Thread {
+            Minecraft.stopIntegratedServer()
+        }.apply { name = "Client Shutdown Thread" })
 
-        Thread.currentThread().name = "Client thread"
+        Thread.currentThread().apply { name = "Client thread" }
+
         Minecraft(gameConfiguration).run()
     }
 }
