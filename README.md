@@ -47,7 +47,7 @@ Yes, you are welcome to use any JVM languages to work on Evanescent for your ind
 - ✅ Extra Settings, offering options like Hit Delay, Auto Sprint, and more.
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed Twitch Broadcast support.
-- ✅ Removed Demo version support
+- ✅ Removed Demo version support.
 
 ## Pending Built-in Features
 
