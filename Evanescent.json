@@ -7,12 +7,22 @@
   "type": "release",
   "libraries": [
     {
-      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20-RC2",
+      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20-RC2/kotlin-stdlib-1.9.20-RC2.jar",
-          "sha1": "e940cb22e48c53e1e36d11d5ac97552a9de98d3e",
-          "size": 1718948
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20/kotlin-stdlib-1.9.20.jar",
+          "sha1": "e58b4816ac517e9cc5df1db051120c63d4cde669",
+          "size": 1718949
+        }
+      }
+    },
+    {
+      "name": "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.7.3/kotlinx-coroutines-core-1.7.3.jar",
+          "sha1": "e4e63122407750bcfae0f646bef4cd5df85e0a72",
+          "size": 87702
         }
       }
     },
@@ -567,6 +577,6 @@
     "url": "https://piston-meta.mojang.com/v1/packages/43b2f3021fe9f7d768378de95538e22da3ee8301/1.14.json"
   },
   "assets": "1.8",
-  "mainClass": "net.minecraft.client.main.Main",
+  "mainClass": "net.minecraft.client.main.ClientInitializer",
   "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userProperties ${user_properties}"
 }
