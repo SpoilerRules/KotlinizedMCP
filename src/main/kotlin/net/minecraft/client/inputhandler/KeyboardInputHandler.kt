@@ -1,6 +1,7 @@
 package net.minecraft.client.inputhandler
 
 import annotations.ExperimentalState
+import kotlinx.coroutines.*
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiControls
 import net.minecraft.client.gui.GuiScreen
@@ -18,6 +19,7 @@ class KeyboardInputHandler : InputService() {
         private const val KEY_EVENT_ZERO = 0
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun handleParticularKeypresses() {
         val keyEvent = if (Keyboard.getEventKey() == 0) Keyboard.getEventCharacter() else Keyboard.getEventKey()
 
@@ -48,14 +50,15 @@ class KeyboardInputHandler : InputService() {
         if (activeScreen !is GuiControls) {
             when (keyEvent) {
                 mc.gameSettings.keyBindFullscreen.keyCode -> mc.toggleFullscreen()
-                mc.gameSettings.keyBindScreenshot.keyCode -> mc.ingameGUI.chatGUI.printChatMessage(
-                    ScreenshotHandler.takeScreenshot(
+                mc.gameSettings.keyBindScreenshot.keyCode -> {
+                    val screenshotMessage = ScreenshotHandler.takeScreenshot(
                         mc.mcDataDir,
                         mc.displayWidth,
                         mc.displayHeight,
                         mc.framebufferMc
                     )
-                )
+                    mc.ingameGUI.chatGUI.printChatMessage(screenshotMessage)
+                }
             }
         }
     }

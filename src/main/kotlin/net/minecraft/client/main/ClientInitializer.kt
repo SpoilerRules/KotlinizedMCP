@@ -46,25 +46,23 @@ object ClientInitializer {
         val userPropertiesOption: OptionSpec<String> = optionParser.accepts("userProperties").withRequiredArg().defaultsTo("{}")
         val profilePropertiesOption: OptionSpec<String> = optionParser.accepts("profileProperties").withRequiredArg().defaultsTo("{}")
         val assetIndexOption: OptionSpec<String> = optionParser.accepts("assetIndex").withRequiredArg()
-        val remainingOptions: OptionSpec<String> = optionParser.nonOptions()
 
         val optionSet = optionParser.parse(*args)
-        val remainingArgs = optionSet.valuesOf(remainingOptions)
 
-        if (remainingArgs.isNotEmpty()) {
-            println("Completely ignored arguments: $remainingArgs")
+        val remainingOptions: OptionSpec<String> = optionParser.nonOptions()
+
+        optionSet.valuesOf(remainingOptions).takeIf { it.isNotEmpty() }?.let {
+            println("Completely ignored arguments: $it")
         }
 
         val proxyHost = optionSet.valueOf(proxyHostOption)
-        val proxy = if (proxyHost != null) {
+        val proxy = proxyHost?.let {
             try {
-                Proxy(Proxy.Type.SOCKS, InetSocketAddress(proxyHost, optionSet.valueOf(proxyPortOption)))
+                Proxy(Proxy.Type.SOCKS, InetSocketAddress(it, optionSet.valueOf(proxyPortOption)))
             } catch (e: Exception) {
                 throw RuntimeException(e)
             }
-        } else {
-            Proxy.NO_PROXY
-        }
+        } ?: Proxy.NO_PROXY
 
         val proxyUser = optionSet.valueOf(proxyUserOption)
         val proxyPass = optionSet.valueOf(proxyPassOption)
