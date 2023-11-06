@@ -1,24 +1,28 @@
 package net.minecraft.util.input
 
 class MouseInputFilter {
-    private var currentDelta = 0.0F
-    private var previousDelta = 0.0F
-    private var smoothedDelta = 0.0F
+    private var currentDelta = 0f
+    private var previousDelta = 0f
+    private var smoothedDelta = 0f
 
-    fun Float.smooth(smoothingFactor: Float) = also {
-        currentDelta += this
-        val delta = ((currentDelta - previousDelta) * smoothingFactor).let {
-            smoothedDelta += (it - smoothedDelta) * 0.5F
-            when {
-                it > 0.0F && it > smoothedDelta -> smoothedDelta
-                it < 0.0F && it < smoothedDelta -> smoothedDelta
-                else -> it
-            }
+    fun smooth(inputDelta: Float, smoothingFactor: Float): Float {
+        currentDelta += inputDelta
+
+        val delta = ((currentDelta - previousDelta) * smoothingFactor).let { delta ->
+            smoothedDelta += (delta - smoothedDelta) * 0.5f
+
+            if ((delta > 0.0f && delta > smoothedDelta) || (delta < 0.0f && delta < smoothedDelta)) smoothedDelta else delta
         }
+
         previousDelta += delta
+
+        return delta
     }
 
     fun reset() {
-        currentDelta = 0.0F.also { previousDelta = it; smoothedDelta = it }
+        currentDelta = 0f
+        previousDelta = 0f
+        smoothedDelta = 0f
     }
 }
+

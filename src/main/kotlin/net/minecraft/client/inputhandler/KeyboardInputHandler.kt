@@ -1,7 +1,6 @@
 package net.minecraft.client.inputhandler
 
 import annotations.ExperimentalState
-import kotlinx.coroutines.*
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiControls
 import net.minecraft.client.gui.GuiScreen
@@ -19,7 +18,6 @@ class KeyboardInputHandler : InputService() {
         private const val KEY_EVENT_ZERO = 0
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     fun handleParticularKeypresses() {
         val keyEvent = if (Keyboard.getEventKey() == 0) Keyboard.getEventCharacter() else Keyboard.getEventKey()
 
