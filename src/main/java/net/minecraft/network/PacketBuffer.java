@@ -5,9 +5,17 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.ByteBufProcessor;
 import io.netty.handler.codec.DecoderException;
 import io.netty.handler.codec.EncoderException;
+import io.netty.util.ByteProcessor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTSizeTracker;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.IChatComponent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,15 +27,6 @@ import java.nio.channels.ScatteringByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-
-import io.netty.util.ByteProcessor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTSizeTracker;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IChatComponent;
 
 public class PacketBuffer extends ByteBuf
 {
@@ -78,13 +77,11 @@ public class PacketBuffer extends ByteBuf
         this.writeLong(pos.toLong());
     }
 
-    public IChatComponent readChatComponent() throws IOException
-    {
+    public IChatComponent readChatComponent() {
         return IChatComponent.Serializer.jsonToComponent(this.readStringFromBuffer(32767));
     }
 
-    public void writeChatComponent(IChatComponent component) throws IOException
-    {
+    public void writeChatComponent(IChatComponent component) {
         this.writeString(IChatComponent.Serializer.componentToJson(component));
     }
 
@@ -340,14 +337,23 @@ public class PacketBuffer extends ByteBuf
         return this.buf.alloc();
     }
 
-    public ByteOrder order()
-    {
-        return this.buf.order();
+    /**
+     * Returns the <a href="https://en.wikipedia.org/wiki/Endianness">endianness</a>
+     * of this buffer.
+     *
+     * @deprecated use the Little Endian accessors, e.g. {@code getShortLE}, {@code getIntLE}
+     * instead of creating a buffer with swapped {@code endianness}.
+     */
+    @Override
+    @Deprecated
+    public ByteOrder order() {
+        return null;
     }
 
-    public ByteBuf order(ByteOrder p_order_1_)
-    {
-        return this.buf.order(p_order_1_);
+    @Override
+    @Deprecated
+    public ByteBuf order(ByteOrder endianness) {
+        throw new UnsupportedOperationException("order(ByteOrder) is not supported.");
     }
 
     public ByteBuf unwrap()
@@ -804,10 +810,9 @@ public class PacketBuffer extends ByteBuf
      * @param l
      * @param i1
      * @return
-     * @throws IOException
      */
     @Override
-    public int setBytes(int i, FileChannel fileChannel, long l, int i1) throws IOException {
+    public int setBytes(int i, FileChannel fileChannel, long l, int i1) {
         return 0;
     }
 
@@ -1009,7 +1014,6 @@ public class PacketBuffer extends ByteBuf
 
     /**
      * @param i
-     * @param charset
      * @return
      */
     @Override
@@ -1018,7 +1022,6 @@ public class PacketBuffer extends ByteBuf
     }
 
     /**
-     * @param fileChannel
      * @param l
      * @param i
      * @return
@@ -1160,10 +1163,9 @@ public class PacketBuffer extends ByteBuf
      * @param l
      * @param i
      * @return
-     * @throws IOException
      */
     @Override
-    public int writeBytes(FileChannel fileChannel, long l, int i) throws IOException {
+    public int writeBytes(FileChannel fileChannel, long l, int i) {
         return 0;
     }
 
@@ -1242,24 +1244,12 @@ public class PacketBuffer extends ByteBuf
         return 0;
     }
 
-    public int forEachByte(ByteBufProcessor p_forEachByte_1_)
-    {
-        return this.buf.forEachByte(p_forEachByte_1_);
+    public int forEachByte() {
+        throw new UnsupportedOperationException("forEachByte(ByteBufProcessor) is not supported.");
     }
 
-    public int forEachByte(int p_forEachByte_1_, int p_forEachByte_2_, ByteBufProcessor p_forEachByte_3_)
-    {
-        return this.buf.forEachByte(p_forEachByte_1_, p_forEachByte_2_, p_forEachByte_3_);
-    }
-
-    public int forEachByteDesc(ByteBufProcessor p_forEachByteDesc_1_)
-    {
-        return this.buf.forEachByteDesc(p_forEachByteDesc_1_);
-    }
-
-    public int forEachByteDesc(int p_forEachByteDesc_1_, int p_forEachByteDesc_2_, ByteBufProcessor p_forEachByteDesc_3_)
-    {
-        return this.buf.forEachByteDesc(p_forEachByteDesc_1_, p_forEachByteDesc_2_, p_forEachByteDesc_3_);
+    public int forEachByteDesc() {
+        throw new UnsupportedOperationException("forEachByteDesc(ByteBufProcessor) is not supported.");
     }
 
     public ByteBuf copy()
@@ -1383,9 +1373,15 @@ public class PacketBuffer extends ByteBuf
         return this.buf.hashCode();
     }
 
-    public boolean equals(Object p_equals_1_)
-    {
-        return this.buf.equals(p_equals_1_);
+    public boolean equals(Object p_equals_1_) {
+        if (this == p_equals_1_) {
+            return true;
+        }
+        if (p_equals_1_ == null || getClass() != p_equals_1_.getClass()) {
+            return false;
+        }
+        PacketBuffer that = (PacketBuffer) p_equals_1_;
+        return this.buf.equals(that.buf);
     }
 
     public int compareTo(ByteBuf p_compareTo_1_)
@@ -1418,7 +1414,6 @@ public class PacketBuffer extends ByteBuf
 
     /**
      * @param o
-     * @return
      */
     @Override
     public ByteBuf touch(Object o) {
