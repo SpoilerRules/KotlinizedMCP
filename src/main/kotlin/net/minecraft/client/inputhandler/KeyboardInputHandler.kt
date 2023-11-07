@@ -35,27 +35,26 @@ class KeyboardInputHandler : InputService() {
                 mc.gameSettings.keyBindDrop.keyCode -> player?.takeUnless { it.isSpectator }
                     ?.dropOneItem(GuiScreen.isCtrlKeyDown())
 
-                mc.gameSettings.keyBindInventory.keyCode -> {
-                    if (mc.playerController.isRidingHorse) player?.sendHorseInventory()
-                    else {
-                        mc.netHandler.addToSendQueue(C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT))
-                        mc.displayGuiScreen(GuiInventory(player))
-                    }
+                mc.gameSettings.keyBindInventory.keyCode -> if (mc.playerController.isRidingHorse) {
+                    player?.sendHorseInventory()
+                } else {
+                    mc.netHandler.addToSendQueue(C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT))
+                    mc.displayGuiScreen(GuiInventory(player))
                 }
             }
-        }
 
-        if (activeScreen !is GuiControls) {
-            when (keyEvent) {
-                mc.gameSettings.keyBindFullscreen.keyCode -> mc.toggleFullscreen()
-                mc.gameSettings.keyBindScreenshot.keyCode -> {
-                    val screenshotMessage = ScreenshotHandler.takeScreenshot(
-                        mc.mcDataDir,
-                        mc.displayWidth,
-                        mc.displayHeight,
-                        mc.framebufferMc
-                    )
-                    mc.ingameGUI.chatGUI.printChatMessage(screenshotMessage)
+            if (activeScreen !is GuiControls) {
+                when (keyEvent) {
+                    mc.gameSettings.keyBindFullscreen.keyCode -> mc.toggleFullscreen()
+                    mc.gameSettings.keyBindScreenshot.keyCode -> {
+                        val screenshotMessage = ScreenshotHandler.takeScreenshot(
+                            mc.mcDataDir,
+                            mc.displayWidth,
+                            mc.displayHeight,
+                            mc.framebufferMc
+                        )
+                        mc.ingameGUI.chatGUI.printChatMessage(screenshotMessage)
+                    }
                 }
             }
         }

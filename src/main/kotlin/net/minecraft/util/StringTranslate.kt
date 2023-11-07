@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager
 import java.util.IllegalFormatException
 
 object StringTranslate {
-    private val logger = LogManager.getLogger()
+    private val logger by lazy { LogManager.getLogger() }
 
     private val numericVariablePattern = Regex("%(\\d+\\$)?[\\d.]*[df]")
     private val languageMap: MutableMap<String, String> = mutableMapOf()

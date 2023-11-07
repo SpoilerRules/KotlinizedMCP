@@ -7,7 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Config;
@@ -18,23 +21,19 @@ public class HttpUtils
     public static final String SERVER_URL = "http://s.optifine.net";
     public static final String POST_URL = "http://optifine.net";
 
-    public static byte[] get(String urlStr) throws IOException
-    {
+    public static byte[] get(String urlStr) throws IOException, URISyntaxException {
         HttpURLConnection httpurlconnection = null;
         byte[] abyte1;
 
-        try
-        {
-            URL url = new URL(urlStr);
-            httpurlconnection = (HttpURLConnection)url.openConnection(Minecraft.getMinecraft().getProxy());
+        try {
+            URI uri = new URI(urlStr);
+            httpurlconnection = (HttpURLConnection) uri.toURL().openConnection(Minecraft.getMinecraft().getProxy());
             httpurlconnection.setDoInput(true);
             httpurlconnection.setDoOutput(false);
             httpurlconnection.connect();
 
-            if (httpurlconnection.getResponseCode() / 100 != 2)
-            {
-                if (httpurlconnection.getErrorStream() != null)
-                {
+            if (httpurlconnection.getResponseCode() / 100 != 2) {
+                if (httpurlconnection.getErrorStream() != null) {
                     Config.readAll(httpurlconnection.getErrorStream());
                 }
 
@@ -45,29 +44,20 @@ public class HttpUtils
             byte[] abyte = new byte[httpurlconnection.getContentLength()];
             int i = 0;
 
-            while (true)
-            {
+            do {
                 int j = inputstream.read(abyte, i, abyte.length - i);
 
-                if (j < 0)
-                {
+                if (j < 0) {
                     throw new IOException("Input stream closed: " + urlStr);
                 }
 
                 i += j;
 
-                if (i >= abyte.length)
-                {
-                    break;
-                }
-            }
+            } while (i < abyte.length);
 
             abyte1 = abyte;
-        }
-        finally
-        {
-            if (httpurlconnection != null)
-            {
+        } finally {
+            if (httpurlconnection != null) {
                 httpurlconnection.disconnect();
             }
         }
@@ -75,21 +65,17 @@ public class HttpUtils
         return abyte1;
     }
 
-    public static String post(String urlStr, Map headers, byte[] content) throws IOException
-    {
+    public static String post(String urlStr, Map headers, byte[] content) throws IOException, URISyntaxException {
         HttpURLConnection httpurlconnection = null;
         String s3;
 
-        try
-        {
-            URL url = new URL(urlStr);
-            httpurlconnection = (HttpURLConnection)url.openConnection(Minecraft.getMinecraft().getProxy());
+        try {
+            URI uri = new URI(urlStr);
+            httpurlconnection = (HttpURLConnection) uri.toURL().openConnection(Minecraft.getMinecraft().getProxy());
             httpurlconnection.setRequestMethod("POST");
 
-            if (headers != null)
-            {
-                for (Object s : headers.keySet())
-                {
+            if (headers != null) {
+                for (Object s : headers.keySet()) {
                     String s1 = "" + headers.get(s);
                     httpurlconnection.setRequestProperty((String) s, s1);
                 }
@@ -106,24 +92,20 @@ public class HttpUtils
             outputstream.flush();
             outputstream.close();
             InputStream inputstream = httpurlconnection.getInputStream();
-            InputStreamReader inputstreamreader = new InputStreamReader(inputstream, "ASCII");
+            InputStreamReader inputstreamreader = new InputStreamReader(inputstream, StandardCharsets.US_ASCII);
             BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
-            StringBuffer stringbuffer = new StringBuffer();
+            StringBuilder stringbuffer = new StringBuilder();
             String s2;
 
-            while ((s2 = bufferedreader.readLine()) != null)
-            {
+            while ((s2 = bufferedreader.readLine()) != null) {
                 stringbuffer.append(s2);
                 stringbuffer.append('\r');
             }
 
             bufferedreader.close();
             s3 = stringbuffer.toString();
-        }
-        finally
-        {
-            if (httpurlconnection != null)
-            {
+        } finally {
+            if (httpurlconnection != null) {
                 httpurlconnection.disconnect();
             }
         }

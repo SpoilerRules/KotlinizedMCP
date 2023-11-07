@@ -42,12 +42,13 @@ Yes, you are welcome to use any JVM languages to work on Evanescent for your ind
 
 ## Built-in Features
 
+- ✅ Asynchronous screenshot handling process.
 - ✅ Command detection is case-insensitive.
 - ✅ Simple Microsoft login in-game.
 - ✅ Extra Settings, offering options like Hit Delay, Auto Sprint, and more.
 - ✅ Removed Minecraft Realms support.
 - ✅ Removed Twitch Broadcast support.
-- ✅ Removed Demo version support
+- ✅ Removed Demo version support.
 
 ## Pending Built-in Features
 
