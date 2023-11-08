@@ -123,13 +123,11 @@ public class GuiShaders extends GuiScreenOF
                                 case 1:
                                     String s = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {Shaders.shaderPacksDir.getAbsolutePath()});
 
-                                    try
-                                    {
-                                        Runtime.getRuntime().exec(s);
+                                    try {
+                                        ProcessBuilder processBuilder = new ProcessBuilder(s.split("\\s+"));
+                                        processBuilder.start();
                                         return;
-                                    }
-                                    catch (IOException ioexception)
-                                    {
+                                    } catch (IOException ioexception) {
                                         ioexception.printStackTrace();
                                         break;
                                     }

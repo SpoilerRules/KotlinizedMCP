@@ -47,7 +47,7 @@ public class MapGenStructureIO
 
             if (oclass != null)
             {
-                structurestart = (StructureStart)oclass.newInstance();
+                structurestart = (StructureStart)oclass.getDeclaredConstructor().newInstance();
             }
         }
         catch (Exception exception)
@@ -78,7 +78,7 @@ public class MapGenStructureIO
 
             if (oclass != null)
             {
-                structurecomponent = (StructureComponent)oclass.newInstance();
+                structurecomponent = (StructureComponent)oclass.getDeclaredConstructor().newInstance();
             }
         }
         catch (Exception exception)

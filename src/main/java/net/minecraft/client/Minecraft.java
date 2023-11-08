@@ -1223,7 +1223,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
                             if (currentItem.stackSize == 0) {
                                 thePlayer.inventory.mainInventory[thePlayer.inventory.currentItem] = null;
-                            } else if (currentItem.stackSize != initialStackSize || playerController.isInCreativeMode()) {
+                            } else if (currentItem.stackSize != initialStackSize) {
                                 entityRenderer.itemRenderer.resetEquippedProgress();
                             }
                         }

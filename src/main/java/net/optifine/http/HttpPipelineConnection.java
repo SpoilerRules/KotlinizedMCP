@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Proxy;
 import java.net.Socket;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,8 +18,8 @@ public class HttpPipelineConnection
     private String host;
     private int port;
     private Proxy proxy;
-    private List<HttpPipelineRequest> listRequests;
-    private List<HttpPipelineRequest> listRequestsSend;
+    private final List<HttpPipelineRequest> listRequests;
+    private final List<HttpPipelineRequest> listRequestsSend;
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -30,7 +31,6 @@ public class HttpPipelineConnection
     private int keepaliveMaxCount;
     private long timeLastActivityMs;
     private boolean terminated;
-    private static final String LF = "\n";
     public static final int TIMEOUT_CONNECT_MS = 5000;
     public static final int TIMEOUT_READ_MS = 5000;
     private static final Pattern patternFullUrl = Pattern.compile("^[a-zA-Z]+://.*");
@@ -132,7 +132,7 @@ public class HttpPipelineConnection
 
     public synchronized HttpPipelineRequest getNextRequestSend() throws InterruptedException, IOException
     {
-        if (this.listRequestsSend.size() <= 0 && this.outputStream != null)
+        if (this.listRequestsSend.size() == 0 && this.outputStream != null)
         {
             this.outputStream.flush();
         }
@@ -147,7 +147,7 @@ public class HttpPipelineConnection
 
     private HttpPipelineRequest getNextRequest(List<HttpPipelineRequest> list, boolean remove) throws InterruptedException
     {
-        while (list.size() <= 0)
+        while (list.size() == 0)
         {
             this.checkTimeout();
             this.wait(1000L);
@@ -198,8 +198,7 @@ public class HttpPipelineConnection
         }
     }
 
-    public synchronized void onResponseReceived(HttpPipelineRequest pr, HttpResponse resp)
-    {
+    public synchronized void onResponseReceived(HttpPipelineRequest pr, HttpResponse resp) throws URISyntaxException {
         if (!this.terminated)
         {
             this.responseReceived = true;

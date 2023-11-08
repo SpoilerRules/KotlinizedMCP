@@ -2,6 +2,7 @@ package net.optifine;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 import net.minecraft.util.client.ClientBrandEnum;
@@ -21,7 +22,7 @@ public class VersionCheckThread extends Thread
         try
         {
             Config.dbg("Checking for new version");
-            URL url = new URL("http://optifine.net/version/1.8.9/HD_U.txt");
+            URL url = new URI("http://optifine.net/version/1.8.9/HD_U.txt").toURL();
             httpurlconnection = (HttpURLConnection)url.openConnection();
 
             if (Config.getGameSettings().snooperEnabled)

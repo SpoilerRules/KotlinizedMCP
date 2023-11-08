@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Config;
@@ -29,8 +30,7 @@ public class PlayerConfigurationParser
         this.player = player;
     }
 
-    public PlayerConfiguration parsePlayerConfiguration(JsonElement je)
-    {
+    public PlayerConfiguration parsePlayerConfiguration(JsonElement je) throws URISyntaxException {
         if (je == null)
         {
             throw new JsonParseException("JSON object is null, player: " + this.player);
@@ -101,8 +101,7 @@ public class PlayerConfigurationParser
         }
     }
 
-    private BufferedImage downloadTextureImage(String texturePath)
-    {
+    private BufferedImage downloadTextureImage(String texturePath) throws URISyntaxException {
         String s = HttpUtils.getPlayerItemsUrl() + "/" + texturePath;
 
         try

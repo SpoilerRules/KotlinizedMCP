@@ -4,6 +4,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://libraries.minecraft.net/")
     maven("https://repo.marcloud.net/")
     maven("https://jitpack.io")
 }
@@ -70,9 +71,9 @@ dependencies {
     implementation("com.paulscode.sound:librarylwjglopenal:20100824")
 
     // Mojang
-    implementation("com.ibm.icu:icu4j:51.2") // Neutral
+    implementation("com.ibm.icu:icu4j:icu4j-70.1") // Neutral
 
-    api("com.mojang:authlib:1.5.21") // Neutral
+    api("com.mojang:authlib:3.11.50")
 
     // Microsoft account support
     implementation("com.github.CCBlueX:Elixir:1.2.6") {
@@ -83,6 +84,17 @@ dependencies {
     // Testing (useless for now)
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if (requested.group == "com.ibm.icu" && requested.name == "icu4j") {
+                useVersion("70.1")
+                because("Force the usage of JAR instead of POM for icu4j.")
+            }
+        }
+    }
 }
 
 sourceSets {

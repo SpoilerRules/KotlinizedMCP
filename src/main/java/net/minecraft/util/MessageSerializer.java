@@ -18,7 +18,8 @@ import org.apache.logging.log4j.MarkerManager;
 public class MessageSerializer extends MessageToByteEncoder<Packet>
 {
     private static final Logger logger = LogManager.getLogger();
-    private static final Marker RECEIVED_PACKET_MARKER = MarkerManager.getMarker("PACKET_SENT", NetworkManager.logMarkerPackets);
+    Marker logMarkerPackets = MarkerManager.getMarker("LOG_MARKER_PACKETS");
+    Marker RECEIVED_PACKET_MARKER = MarkerManager.getMarker("PACKET_SENT").addParents(logMarkerPackets);
     private final EnumPacketDirection direction;
 
     public MessageSerializer(EnumPacketDirection direction)

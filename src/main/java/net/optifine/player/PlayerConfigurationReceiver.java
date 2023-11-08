@@ -5,9 +5,11 @@ import com.google.gson.JsonParser;
 import net.minecraft.src.Config;
 import net.optifine.http.IFileDownloadListener;
 
+import java.nio.charset.StandardCharsets;
+
 public class PlayerConfigurationReceiver implements IFileDownloadListener
 {
-    private String player = null;
+    private String player;
 
     public PlayerConfigurationReceiver(String player)
     {
@@ -18,16 +20,15 @@ public class PlayerConfigurationReceiver implements IFileDownloadListener
     {
         if (bytes != null)
         {
-            try
-            {
-                String s = new String(bytes, "ASCII");
-                JsonParser jsonparser = new JsonParser();
-                JsonElement jsonelement = jsonparser.parse(s);
-                PlayerConfigurationParser playerconfigurationparser = new PlayerConfigurationParser(this.player);
-                PlayerConfiguration playerconfiguration = playerconfigurationparser.parsePlayerConfiguration(jsonelement);
+            try {
+                String s = new String(bytes, StandardCharsets.US_ASCII);
 
-                if (playerconfiguration != null)
-                {
+                JsonElement jsonElement = JsonParser.parseString(s);
+
+                PlayerConfigurationParser playerconfigurationparser = new PlayerConfigurationParser(this.player);
+                PlayerConfiguration playerconfiguration = playerconfigurationparser.parsePlayerConfiguration(jsonElement);
+
+                if (playerconfiguration != null) {
                     playerconfiguration.setInitialized(true);
                     PlayerConfigurations.setPlayerConfiguration(this.player, playerconfiguration);
                 }
