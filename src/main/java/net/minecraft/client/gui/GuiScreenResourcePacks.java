@@ -119,14 +119,12 @@ public class GuiScreenResourcePacks extends GuiScreen
                 {
                     String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {s});
 
-                    try
-                    {
-                        Runtime.getRuntime().exec(s1);
+                    try {
+                        String[] cmdarray = {s1};
+                        Runtime.getRuntime().exec(cmdarray);
                         return;
-                    }
-                    catch (IOException ioexception)
-                    {
-                        logger.error((String)"Couldn\'t open file", (Throwable)ioexception);
+                    } catch (IOException ioexception) {
+                        logger.error((String)"Couldn't open file", (Throwable)ioexception);
                     }
                 }
 
