@@ -17,12 +17,12 @@
       }
     },
     {
-      "name": "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3",
+      "name": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/1.7.3/kotlinx-coroutines-core-1.7.3.jar",
-          "sha1": "e4e63122407750bcfae0f646bef4cd5df85e0a72",
-          "size": 87702
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.7.3/kotlinx-coroutines-core-jvm-1.7.3.jar",
+          "sha1": "2b09627576f0989a436a00a4a54b55fa5026fb86",
+          "size": 1551152
         }
       }
     },
