@@ -11,7 +11,7 @@
 
 ## Introduction
 
-This branch is designed to aid developers by providing a pre-built JSON file (https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json) for the Minecraft Launcher (https://www.minecraft.net/en-us/download). The JSON file includes all necessary dependencies, arguments, and required data. This branch maintains strict compatibility with the MCP branch (https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp) to prevent any compatibility issues.
+This branch is designed to aid developers by providing a pre-built [JSON file](https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json) for the [Minecraft Launcher](https://www.minecraft.net/en-us/download). The [JSON file](https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json) includes all necessary dependencies, arguments, and required data. This branch maintains strict compatibility with the [MCP branch](https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp) to prevent any compatibility issues.
 
 # Quick Usage Guide
 
