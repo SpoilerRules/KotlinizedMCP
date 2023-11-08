@@ -11,7 +11,7 @@ repositories {
 dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") // Latest as of November 06 (2023)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") // Latest as of November 06 (2023)
 
     // Netty
     implementation("io.netty:netty-buffer:4.1.100.Final") // Latest as of October 25 (2023)
