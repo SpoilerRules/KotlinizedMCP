@@ -1,72 +1,50 @@
 # Evanescent - Kotlinized MCP for Minecraft 1.8.9
 
-[![Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)](https://github.com/SpoilerRules/KotlinizedMCP)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20--Beta2-blue.svg)](https://kotlinlang.org/)
-[![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/technologies/javase-downloads.html)
-[![Gradle](https://img.shields.io/badge/Gradle-8.4--rc--3-orange.svg)](https://gradle.org/)
-[![OptiFine](https://img.shields.io/badge/OptiFine-Integrated-green.svg)](https://optifine.net/)
+[![Minecraft Version](https://img.shields.io/badge/Minecraft-1.8.9-brightgreen.svg)](https://www.minecraft.net/)
 
 ## Table of Contents
 - [Introduction](#introduction)
-- [JDK Version and Dependencies](#jdk-version-and-dependencies)
-- [Frequently Asked Questions](#frequently-asked-questions)
-- [Built-in Features](#built-in-features)
-- [Pending Built-in Features](#pending-built-in-features)
-- [Why the Name "Evanescent"?](#why-the-name-evanescent)
-- [Community](#community)
+- [Quick Usage Guide](#quick-usage-guide)
 - [Contributions](#contributions)
+- [Community](#community)
 - [License](#license)
 
 ## Introduction
 
-Evanescent is a Minecraft client project that takes MCP 1.8.9 and rewrites it in Kotlin/JVM. This rewrite is designed to offer optimized performance, enhanced readability, and improved conciseness. Powered by the Gradle Kotlin DSL, it ensures smooth dependency setup and fast compilation. We've also integrated OptiFine to save developers valuable time and provide native support for IntelliJ IDEA.
+This branch is designed to aid developers by providing a pre-built JSON file (https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json) for the Minecraft Launcher (https://www.minecraft.net/en-us/download). The JSON file includes all necessary dependencies, arguments, and required data. This branch maintains strict compatibility with the MCP branch (https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp) to prevent any compatibility issues.
 
-## JDK Version and Dependencies
+# Quick Usage Guide
 
-Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies up to date to ensure the best performance and security.
+1. Compile the [MCP](https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp) to obtain the [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)) file.
+2. Create a folder named "Evanescent" anywhere you prefer.
+3. Place the [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)) file and the [JSON file](https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json) in the "Evanescent" folder.
+4. Move the "Evanescent" folder to the "versions" directory in your .minecraft folder.
+5. Test to ensure functionality and observe the results.
 
-## Frequently Asked Questions
-
-#### Is Evanescent (KotlinizedMCP) designed for me to create my Minecraft 1.8.9 client, similar to a typical decompiled MCP 1.8.9?
-Absolutely! This project is created to aid client developers by providing a user-friendly template. You should consider using Evanescent, also known as KotlinizedMCP, for the following reasons:
-- Aims to always use the latest dependencies and support the latest LTS JDK.
-- Uses Gradle (Kotlin Script DSL) to simplify setting up dependencies, compiling, and customizing the project, making your development experience smoother.
-- Majority of classes being rewritten in Kotlin/JVM to enhance performance, readability, and maintainability while utilizing modern features of Java and Kotlin/JVM.
-- Includes built-in features such as in-game Microsoft Login, removal of support for outdated features like Minecraft Realms, integration with OptiFine, and more. Check out the full list of built-in features in the [Built-in Features](#built-in-features) section.
-
-#### Is Evanescent (KotlinizedMCP) based on decompiled MCP 1.8.9?
-Yes, Evanescent, also known as KotlinizedMCP, is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
-
-#### Can I use other JVM languages, such as Scala, for development?
-Yes, you can use any JVM languages to work on Evanescent. Please be aware that our primary focus for contributions is in Kotlin/JVM, given the project's name, "KotlinizedMCP". You can find further details on contributing to the project in the [Contributions](#contributions) section.
-
-## Built-in Features
-
-- ✅ Removed score display on the right side of the scoreboard.
-- ✅ Removed Minecraft Realms support.
-- ✅ Removed hit delay.
-- ✅ Command detection is case-insensitive.
-- ✅ Simple Microsoft login in-game.
-- ✅ Simple Automatic Sprint feature.
-
-## Pending Built-in Features
-
-- ❌ Removed Twitch Broadcast support.
-- ❌ Implemented raw input.
-
-## Why the Name "Evanescent"?
-
-The name “Evanescent” means something that fades away quickly. We chose this name because this client is only a starting point for your own project, and you can customize it as you wish.
-
-## Community
-
-Join the discussion, connect with fellow developers, and ask for help or support at our [Discord server](https://discord.gg/nG9UzMGa7k).
+Note: If you've modified the [source code](https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp), you may need to adjust elements like the [ID](https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json#L2) or manage dependencies accordingly.
 
 ## Contributions
 
-Contributions are greatly appreciated and mainly accepted in Kotlin/JVM. Feel free to contribute to the project and help make it even better!
+We greatly appreciate contributions to this project and aim to maintain consistency and quality. To ensure a smooth contribution process, please adhere to the following guidelines:
 
-If you are interested in actively contributing and have already made at least one contribution, we encourage you to join our [Discord server](https://discord.gg/nG9UzMGa7k) and request the "Contributor" role. Ensure that your GitHub account is linked to your Discord profile. Finally, you need to visit [this channel](https://discord.com/channels/1153066699453636680/1153415081946783805) to access information about our goals, schedules, and other relevant details. This will help you stay updated and aligned with our project's policies, which may affect the acceptance of your contributions.
+1. **Dependency Inclusion**:
+    - Ensure that any dependencies you add are listed in the [Gradle Build file](https://github.com/SpoilerRules/KotlinizedMCP/blob/mcp/build.gradle.kts) from the [MCP branch](https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp).
+    - Make sure to remove dependencies that are no longer necessary, and ensure they are removed from the [Gradle Build file](https://github.com/SpoilerRules/KotlinizedMCP/blob/mcp/build.gradle.kts) as well.
+
+2. **Version Consistency**:
+    - Verify that any dependencies you add are consistent with the versions specified in the [Gradle Build file](https://github.com/SpoilerRules/KotlinizedMCP/blob/mcp/build.gradle.kts) from the [MCP branch](https://github.com/SpoilerRules/KotlinizedMCP/tree/mcp).
+
+3. **Excluding Test Dependencies**:
+    - Do not add test-related dependencies such as [JUnit](https://junit.org/).
+
+4. **Testing and Validation**:
+    - Before submitting a pull request, thoroughly test and debug how the [Minecraft Launcher](https://www.minecraft.net/en-us/download) reacts to the [JSON file](https://github.com/SpoilerRules/KotlinizedMCP/blob/launch-ready/Evanescent.json). Ensure that your changes do not introduce any issues.
+
+By following these guidelines, you can help maintain the integrity and compatibility of this project. Thank you for your contributions!
+
+## Community
+
+If you have questions or wish to engage in discussions related to the project, we encourage you to join our [Discord server](https://discord.gg/nG9UzMGa7k).
 
 ## License
 
