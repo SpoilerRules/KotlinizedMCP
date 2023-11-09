@@ -234,7 +234,7 @@ public class WorldClient extends World
 
     public Entity getEntityByID(int id)
     {
-        return (Entity)(id == this.mc.thePlayer.getEntityId() ? this.mc.thePlayer : super.getEntityByID(id));
+        return id == this.mc.thePlayer.getEntityId() ? this.mc.thePlayer : super.getEntityByID(id);
     }
 
     public Entity removeEntityFromWorld(int entityID)
@@ -292,7 +292,7 @@ public class WorldClient extends World
 
             if (flag && iblockstate.getBlock() == Blocks.barrier)
             {
-                this.spawnParticle(EnumParticleTypes.BARRIER, (double)((float)k + 0.5F), (double)((float)l + 0.5F), (double)((float)i1 + 0.5F), 0.0D, 0.0D, 0.0D, new int[0]);
+                this.spawnParticle(EnumParticleTypes.BARRIER, (double)((float)k + 0.5F), (double)((float)l + 0.5F), (double)((float)i1 + 0.5F), 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -301,21 +301,18 @@ public class WorldClient extends World
     {
         this.loadedEntityList.removeAll(this.unloadedEntityList);
 
-        for (int i = 0; i < this.unloadedEntityList.size(); ++i)
-        {
-            Entity entity = (Entity)this.unloadedEntityList.get(i);
+        for (Entity value : this.unloadedEntityList) {
+            Entity entity = (Entity) value;
             int j = entity.chunkCoordX;
             int k = entity.chunkCoordZ;
 
-            if (entity.addedToChunk && this.isChunkLoaded(j, k, true))
-            {
+            if (entity.addedToChunk && this.isChunkLoaded(j, k, true)) {
                 this.getChunkFromChunkCoords(j, k).removeEntity(entity);
             }
         }
 
-        for (int l = 0; l < this.unloadedEntityList.size(); ++l)
-        {
-            this.onEntityRemoved((Entity)this.unloadedEntityList.get(l));
+        for (Entity entity : this.unloadedEntityList) {
+            this.onEntityRemoved((Entity) entity);
         }
 
         this.unloadedEntityList.clear();
@@ -354,17 +351,13 @@ public class WorldClient extends World
     public CrashReportCategory addWorldInfoToCrashReport(CrashReport report)
     {
         CrashReportCategory crashreportcategory = super.addWorldInfoToCrashReport(report);
-        crashreportcategory.addCrashSectionCallable("Forced entities", new Callable<String>()
-        {
-            public String call()
-            {
+        crashreportcategory.addCrashSectionCallable("Forced entities", new Callable<>() {
+            public String call() {
                 return WorldClient.this.entityList.size() + " total; " + WorldClient.this.entityList.toString();
             }
         });
-        crashreportcategory.addCrashSectionCallable("Retry entities", new Callable<String>()
-        {
-            public String call()
-            {
+        crashreportcategory.addCrashSectionCallable("Retry entities", new Callable<>() {
+            public String call() {
                 return WorldClient.this.entitySpawnQueue.size() + " total; " + WorldClient.this.entitySpawnQueue.toString();
             }
         });

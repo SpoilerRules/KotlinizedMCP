@@ -1302,7 +1302,12 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
 
     public void handleEntityProperties(S20PacketEntityProperties packetIn) {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
-        Entity entity = this.clientWorldController.getEntityByID(packetIn.getEntityId());
+        Entity entity;
+        if (this.clientWorldController != null) {
+            entity = this.clientWorldController.getEntityByID(packetIn.getEntityId());
+        } else {
+            entity = null;
+        }
 
         if (entity != null) {
             if (!(entity instanceof EntityLivingBase)) {

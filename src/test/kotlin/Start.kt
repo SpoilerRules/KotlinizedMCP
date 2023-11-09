@@ -3,7 +3,7 @@ import net.minecraft.client.main.ClientInitializer
 object Start {
     @JvmStatic
     fun main(args: Array<String>) {
-        val defaultArgs = mapOf(
+        val additionalArgs = mapOf(
             // Account-related
             "--username" to "little_haxor",
             "--accessToken" to "0",
@@ -19,6 +19,6 @@ object Start {
             "--assetsDir" to "assets"
         ).flatMap { listOf(it.key, it.value) }.toTypedArray()
 
-        ClientInitializer.main(args + defaultArgs)
+        ClientInitializer.main(args + additionalArgs)
     }
 }
