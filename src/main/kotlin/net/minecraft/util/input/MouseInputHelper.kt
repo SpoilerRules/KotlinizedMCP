@@ -7,9 +7,6 @@ class MouseInputHelper {
     @JvmField var deltaX = 0
     @JvmField var deltaY = 0
 
-    private val screenWidth by lazy { Display.getWidth() / 2 }
-    private val screenHeight by lazy { Display.getHeight() / 2 }
-
     fun captureMouseCursor() {
         Mouse.setGrabbed(true)
         deltaX = 0
@@ -17,7 +14,7 @@ class MouseInputHelper {
     }
 
     fun releaseMouseCursor() {
-        Mouse.setCursorPosition(screenWidth, screenHeight)
+        Mouse.setCursorPosition(Display.getWidth() / 2, Display.getHeight() / 2)
         Mouse.setGrabbed(false)
     }
 
