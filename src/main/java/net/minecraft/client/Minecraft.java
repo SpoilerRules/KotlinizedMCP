@@ -1299,7 +1299,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return this.mcMusicTicker;
     }
 
-    public void runTick() throws IOException {
+    public void runTick() {
         if (this.rightClickDelayTimer > 0) {
             --this.rightClickDelayTimer;
         }

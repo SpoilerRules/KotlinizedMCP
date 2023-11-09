@@ -1,11 +1,7 @@
 package net.minecraft.client.inputhandler
 
-import annotations.ExperimentalState
 import net.minecraft.block.material.Material
 import net.minecraft.client.settings.KeyBinding
-import net.minecraft.util.BlockPos
-import net.minecraft.util.MathHelper
-import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import org.lwjgl.input.Mouse
 
@@ -64,7 +60,7 @@ class MouseInputHandler : InputService() {
         when {
             mc.gameSettings.keyBindAttack.isPressed -> handleLeftClick()
             mc.gameSettings.keyBindPickBlock.isPressed -> mc.middleClickMouse()
-        //    mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 && !player!!.isUsingItem -> mc.rightClickMouse()
+            mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 && !player!!.isUsingItem -> mc.rightClickMouse()
             mc.gameSettings.keyBindUseItem.isPressed -> mc.rightClickMouse()
             player!!.isUsingItem && !mc.gameSettings.keyBindUseItem.isKeyDown -> mc.playerController.onStoppedUsingItem(player)
         }
