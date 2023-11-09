@@ -54,6 +54,8 @@ dependencies {
     implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)
     implementation("org.apache.logging.log4j:log4j-api:2.21.0") // Latest as of October 25 (2023)
     implementation("org.apache.logging.log4j:log4j-core:2.21.0") // Latest as of October 25 (2023)
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.21.1") // Latest as of November 08 (2023)
+    implementation("org.slf4j:slf4j-api:2.0.9") // Latest as of November 08 (2023)
 
     // Miscellaneous
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
@@ -72,7 +74,6 @@ dependencies {
 
     // Mojang
     implementation("com.ibm.icu:icu4j:icu4j-70.1") // Neutral
-
     api("com.mojang:authlib:3.11.50")
 
     // Microsoft account support
@@ -91,7 +92,7 @@ configurations.all {
         eachDependency {
             if (requested.group == "com.ibm.icu" && requested.name == "icu4j") {
                 useVersion("70.1")
-                because("Force the usage of JAR instead of POM for icu4j.")
+                because("Force the usage of JAR instead of POM for icu4j dependency.")
             }
         }
     }

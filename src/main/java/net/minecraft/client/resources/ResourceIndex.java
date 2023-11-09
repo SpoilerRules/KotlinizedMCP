@@ -31,18 +31,16 @@ public class ResourceIndex
             File file2 = new File(p_i1047_1_, "indexes/" + p_i1047_2_ + ".json");
             BufferedReader bufferedreader = null;
 
-            try
-            {
+            try {
                 bufferedreader = Files.newReader(file2, Charsets.UTF_8);
-                JsonObject jsonobject = (new JsonParser()).parse((Reader)bufferedreader).getAsJsonObject();
-                JsonObject jsonobject1 = JsonUtils.getJsonObject(jsonobject, "objects", (JsonObject)null);
+                JsonElement jsonElement = JsonParser.parseReader(bufferedreader);
+                JsonObject jsonobject = jsonElement.getAsJsonObject();
+                JsonObject jsonobject1 = JsonUtils.getJsonObject(jsonobject, "objects", (JsonObject) null);
 
-                if (jsonobject1 != null)
-                {
-                    for (Entry<String, JsonElement> entry : jsonobject1.entrySet())
-                    {
-                        JsonObject jsonobject2 = (JsonObject)entry.getValue();
-                        String s = (String)entry.getKey();
+                if (jsonobject1 != null) {
+                    for (Entry<String, JsonElement> entry : jsonobject1.entrySet()) {
+                        JsonObject jsonobject2 = entry.getValue().getAsJsonObject();
+                        String s = entry.getKey();
                         String[] astring = s.split("/", 2);
                         String s1 = astring.length == 1 ? astring[0] : astring[0] + ":" + astring[1];
                         String s2 = JsonUtils.getString(jsonobject2, "hash");
@@ -50,18 +48,12 @@ public class ResourceIndex
                         this.resourceMap.put(s1, file3);
                     }
                 }
-            }
-            catch (JsonParseException var20)
-            {
+            } catch (JsonParseException var20) {
                 logger.error("Unable to parse resource index file: " + file2);
-            }
-            catch (FileNotFoundException var21)
-            {
-                logger.error("Can\'t find the resource index file: " + file2);
-            }
-            finally
-            {
-                IOUtils.closeQuietly((Reader)bufferedreader);
+            } catch (FileNotFoundException var21) {
+                logger.error("Can't find the resource index file: " + file2);
+            } finally {
+                IOUtils.closeQuietly(bufferedreader);
             }
         }
     }

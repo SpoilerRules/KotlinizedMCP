@@ -56,19 +56,15 @@ public class SimpleResource implements IResource
         }
         else
         {
-            if (this.mcmetaJson == null && !this.mcmetaJsonChecked)
-            {
+            if (this.mcmetaJson == null && !this.mcmetaJsonChecked) {
                 this.mcmetaJsonChecked = true;
                 BufferedReader bufferedreader = null;
 
-                try
-                {
+                try {
                     bufferedreader = new BufferedReader(new InputStreamReader(this.mcmetaInputStream));
-                    this.mcmetaJson = (new JsonParser()).parse((Reader)bufferedreader).getAsJsonObject();
-                }
-                finally
-                {
-                    IOUtils.closeQuietly((Reader)bufferedreader);
+                    this.mcmetaJson = JsonParser.parseReader(bufferedreader).getAsJsonObject();
+                } finally {
+                    IOUtils.closeQuietly(bufferedreader);
                 }
             }
 
@@ -94,13 +90,12 @@ public class SimpleResource implements IResource
         {
             return true;
         }
-        else if (!(p_equals_1_ instanceof SimpleResource))
+        else if (!(p_equals_1_ instanceof SimpleResource simpleresource))
         {
             return false;
         }
         else
         {
-            SimpleResource simpleresource = (SimpleResource)p_equals_1_;
 
             if (this.srResourceLocation != null)
             {
@@ -116,17 +111,9 @@ public class SimpleResource implements IResource
 
             if (this.resourcePackName != null)
             {
-                if (!this.resourcePackName.equals(simpleresource.resourcePackName))
-                {
-                    return false;
-                }
+                return this.resourcePackName.equals(simpleresource.resourcePackName);
             }
-            else if (simpleresource.resourcePackName != null)
-            {
-                return false;
-            }
-
-            return true;
+            else return simpleresource.resourcePackName == null;
         }
     }
 

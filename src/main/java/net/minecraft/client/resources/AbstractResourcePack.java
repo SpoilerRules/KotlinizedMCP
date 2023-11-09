@@ -1,6 +1,7 @@
 package net.minecraft.client.resources;
 
 import com.google.common.base.Charsets;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
@@ -68,18 +69,14 @@ public abstract class AbstractResourcePack implements IResourcePack
         JsonObject jsonobject = null;
         BufferedReader bufferedreader = null;
 
-        try
-        {
+        try {
             bufferedreader = new BufferedReader(new InputStreamReader(p_110596_1_, Charsets.UTF_8));
-            jsonobject = (new JsonParser()).parse((Reader)bufferedreader).getAsJsonObject();
-        }
-        catch (RuntimeException runtimeexception)
-        {
+            JsonElement jsonElement = JsonParser.parseReader(bufferedreader);
+            jsonobject = jsonElement.getAsJsonObject();
+        } catch (RuntimeException runtimeexception) {
             throw new JsonParseException(runtimeexception);
-        }
-        finally
-        {
-            IOUtils.closeQuietly((Reader)bufferedreader);
+        } finally {
+            IOUtils.closeQuietly(bufferedreader);
         }
 
         return p_110596_0_.parseMetadataSection(p_110596_2_, jsonobject);

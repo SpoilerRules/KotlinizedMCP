@@ -64,7 +64,7 @@ class MouseInputHandler : InputService() {
         when {
             mc.gameSettings.keyBindAttack.isPressed -> handleLeftClick()
             mc.gameSettings.keyBindPickBlock.isPressed -> mc.middleClickMouse()
-            mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 && !player!!.isUsingItem -> mc.rightClickMouse()
+        //    mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 && !player!!.isUsingItem -> mc.rightClickMouse()
             mc.gameSettings.keyBindUseItem.isPressed -> mc.rightClickMouse()
             player!!.isUsingItem && !mc.gameSettings.keyBindUseItem.isKeyDown -> mc.playerController.onStoppedUsingItem(player)
         }

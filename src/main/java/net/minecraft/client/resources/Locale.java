@@ -3,20 +3,21 @@ package net.minecraft.client.resources;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
+import net.minecraft.util.ResourceLocation;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
 
 public class Locale
 {
     private static final Splitter splitter = Splitter.on('=').limit(2);
-    private static final Pattern pattern = Pattern.compile("%(\\d+\\$)?[\\d\\.]*[df]");
+    private static final Pattern pattern = Pattern.compile("%(\\d+\\$)?[\\d.]*[df]");
     Map<String, String> properties = Maps.<String, String>newHashMap();
     private boolean unicode;
 
@@ -92,7 +93,7 @@ public class Locale
 
     private void loadLocaleData(InputStream inputStreamIn) throws IOException
     {
-        for (String s : IOUtils.readLines(inputStreamIn, Charsets.UTF_8))
+        for (String s : IOUtils.readLines(inputStreamIn, StandardCharsets.UTF_8))
         {
             if (!s.isEmpty() && s.charAt(0) != 35)
             {
