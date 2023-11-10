@@ -17,7 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 public abstract class GuiContainer extends GuiScreen
 {
@@ -38,7 +40,7 @@ public abstract class GuiContainer extends GuiScreen
     private ItemStack returningStack;
     private Slot currentDragTargetSlot;
     private long dragItemDropDelay;
-    protected final Set<Slot> dragSplittingSlots = Sets.<Slot>newHashSet();
+    protected final Set<Slot> dragSplittingSlots = Sets.newHashSet();
     protected boolean dragSplitting;
     private int dragSplittingLimit;
     private int dragSplittingButton;
@@ -621,36 +623,27 @@ public abstract class GuiContainer extends GuiScreen
         this.mc.playerController.windowClick(this.inventorySlots.windowId, slotId, clickedButton, clickType, this.mc.thePlayer);
     }
 
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
-        {
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
             this.mc.thePlayer.closeScreen();
         }
 
         this.checkHotbarKeys(keyCode);
 
-        if (this.theSlot != null && this.theSlot.getHasStack())
-        {
-            if (keyCode == this.mc.gameSettings.keyBindPickBlock.getKeyCode())
-            {
+        if (this.theSlot != null && this.theSlot.getHasStack()) {
+            if (keyCode == this.mc.gameSettings.keyBindPickBlock.getKeyCode()) {
                 this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, 0, 3);
-            }
-            else if (keyCode == this.mc.gameSettings.keyBindDrop.getKeyCode())
-            {
+            } else if (keyCode == this.mc.gameSettings.keyBindDrop.getKeyCode()) {
                 this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, isCtrlKeyDown() ? 1 : 0, 4);
             }
         }
     }
 
-    protected boolean checkHotbarKeys(int keyCode)
-    {
-        if (this.mc.thePlayer.inventory.getItemStack() == null && this.theSlot != null)
-        {
-            for (int i = 0; i < 9; ++i)
-            {
-                if (keyCode == this.mc.gameSettings.keyBindsHotbar[i].getKeyCode())
-                {
+    // TODO: handle mouse buttons as well
+    protected boolean checkHotbarKeys(int keyCode) {
+        if (this.mc.thePlayer.inventory.getItemStack() == null && this.theSlot != null) {
+            for (int i = 0; i < 9; ++i) {
+                if (keyCode == this.mc.gameSettings.keyBindsHotbar[i].getKeyCode()) {
                     this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, i, 2);
                     return true;
                 }

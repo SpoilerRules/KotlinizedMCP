@@ -6,8 +6,8 @@ package net.minecraft.util.input
  * (no work because I don't know how to implement this correctly.)
  *
  */
-/*
-import kotlinx.coroutines.*
+
+/*import kotlinx.coroutines.*
 import net.java.games.input.Controller
 import net.java.games.input.ControllerEnvironment
 import net.java.games.input.Mouse
@@ -15,8 +15,9 @@ import net.minecraft.client.Minecraft
 import java.lang.reflect.Constructor
 
 class RawMouseInputHandlingServiceProviderFactoryObject {
-    private var deltaX = MouseInputHelper().deltaX
-    private var deltaY = MouseInputHelper().deltaY
+    private val mouseInputHelper = MouseInputHelper()
+    private var deltaX = mouseInputHelper.deltaX
+    private var deltaY = mouseInputHelper.deltaY
 
     // Completely null safe. Provided by Spoili. (the most skillful Kotlin Multiplatform developer)
     private fun createDefaultEnvironment(): ControllerEnvironment? {
@@ -74,5 +75,4 @@ class RawMouseInputHandlingServiceProviderFactoryObject {
         }
     }
 }
-
- */
+*/
