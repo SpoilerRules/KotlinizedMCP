@@ -216,7 +216,7 @@ public class MathHelper {
     }
 
     public static int roundUp(int p_154354_0_, int p_154354_1_) {
-        if (p_154354_1_ == 0) {
+      /*  if (p_154354_1_ == 0) {
             return 0;
         } else if (p_154354_0_ == 0) {
             return p_154354_1_;
@@ -227,7 +227,8 @@ public class MathHelper {
 
             int i = p_154354_0_ % p_154354_1_;
             return i == 0 ? p_154354_0_ : p_154354_0_ + p_154354_1_ - i;
-        }
+        }*/
+        return XMathHelper.INSTANCE.roundUpToNearestMultiple(p_154354_0_, p_154354_1_);
     }
 
     public static int func_180183_b(float p_180183_0_, float p_180183_1_, float p_180183_2_) {
@@ -240,7 +241,7 @@ public class MathHelper {
         return i;
     }
 
-    public static int func_180188_d(int p_180188_0_, int p_180188_1_) {
+    public static int blendRGBColors(int p_180188_0_, int p_180188_1_) {
         int i = (p_180188_0_ & 16711680) >> 16;
         int j = (p_180188_1_ & 16711680) >> 16;
         int k = (p_180188_0_ & 65280) >> 8;
@@ -267,10 +268,10 @@ public class MathHelper {
         return i;
     }
 
-    public static UUID getRandomUuid(Random rand) {
-        long i = rand.nextLong() & -61441L | 16384L;
-        long j = rand.nextLong() & 4611686018427387903L | Long.MIN_VALUE;
-        return new UUID(i, j);
+    public static UUID generateRandomUUID(Random random) {
+        long mostSignificantBits = random.nextLong() & -61441L | 16384L;
+        long leastSignificantBits = random.nextLong() & 4611686018427387903L | Long.MIN_VALUE;
+        return new UUID(mostSignificantBits, leastSignificantBits);
     }
 
     public static double func_181160_c(double p_181160_0_, double p_181160_2_, double p_181160_4_) {

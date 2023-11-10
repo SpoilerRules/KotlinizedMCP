@@ -58,4 +58,15 @@ object XMathHelper {
      * @return An integer representation of the RGB color values.
      */
     fun convertHSVToRGB(h: Float, s: Float, v: Float) = Color.getHSBColor(h, s, v).rgb
+
+    /**
+     * Rounds up a number to the nearest multiple.
+     * @param num The number to be rounded up.
+     * @param multiple The multiple to round up to.
+     * @return The rounded-up result.
+     */
+    fun roundUpToNearestMultiple(num: Int, multiple: Int): Int = run {
+        val division = num.toDouble() / multiple.toDouble()
+        (multiple * ceil(division)).toInt()
+    }
 }

@@ -156,7 +156,7 @@ public abstract class Entity implements ICommandSender
         this.rand = new Random();
         this.fireResistance = 1;
         this.firstUpdate = true;
-        this.entityUniqueID = MathHelper.getRandomUuid(this.rand);
+        this.entityUniqueID = MathHelper.generateRandomUUID(this.rand);
         this.cmdResultStats = new CommandResultStats();
         this.worldObj = worldIn;
         this.setPosition(0.0D, 0.0D, 0.0D);

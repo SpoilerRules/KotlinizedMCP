@@ -14,10 +14,9 @@ open class InputService {
     protected val player: EntityPlayerSP? = mc.thePlayer
     protected val activeScreen: GuiScreen? = mc.currentScreen
     protected var currentItem: ItemStack? = player?.inventory?.getCurrentItem()
-    protected val potentialTimeResolution by lazy { mc.systemTime - mc.systemTime }
+    protected val potentialTimeResolution = mc.systemTime - mc.systemTime
 
     companion object {
-
         fun beginHandlingKeyInput(basicKeypressOnly: Boolean) {
             val mouseInputHandler = MouseInputHandler()
             val keyboardInputHandler = KeyboardInputHandler()

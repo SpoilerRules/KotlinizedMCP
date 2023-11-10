@@ -375,7 +375,7 @@ public class SoundManager
                         else
                         {
                             boolean flag = p_sound.canRepeat() && p_sound.getRepeatDelay() == 0;
-                            String s = MathHelper.getRandomUuid(ThreadLocalRandom.current()).toString();
+                            String s = MathHelper.generateRandomUUID(ThreadLocalRandom.current()).toString();
 
                             if (soundpoolentry.isStreamingSound())
                             {
