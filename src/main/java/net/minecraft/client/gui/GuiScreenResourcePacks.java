@@ -36,26 +36,23 @@ public class GuiScreenResourcePacks extends GuiScreen
 
     public void initGui()
     {
-        this.buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, LocalizationHelper.translate("resourcePack.openFolder", new Object[0])));
-        this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, LocalizationHelper.translate("gui.done", new Object[0])));
+        buttonList.add(new GuiOptionButton(2, this.width / 2 - 154, this.height - 48, LocalizationHelper.translate("resourcePack.openFolder")));
+        buttonList.add(new GuiOptionButton(1, this.width / 2 + 4, this.height - 48, LocalizationHelper.translate("gui.done")));
 
-        if (!this.changed)
-        {
-            this.availableResourcePacks = Lists.<ResourcePackListEntry>newArrayList();
-            this.selectedResourcePacks = Lists.<ResourcePackListEntry>newArrayList();
+        if (!this.changed) {
+            this.availableResourcePacks = Lists.newArrayList();
+            this.selectedResourcePacks = Lists.newArrayList();
             ResourcePackRepository resourcepackrepository = this.mc.getResourcePackRepository();
             resourcepackrepository.updateRepositoryEntriesAll();
             List<ResourcePackRepository.Entry> list = Lists.newArrayList(resourcepackrepository.getRepositoryEntriesAll());
             list.removeAll(resourcepackrepository.getRepositoryEntries());
 
             // TODO: make indexing async
-            for (ResourcePackRepository.Entry resourcepackrepository$entry : list)
-            {
+            for (ResourcePackRepository.Entry resourcepackrepository$entry : list) {
                 this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry));
             }
 
-            for (ResourcePackRepository.Entry resourcepackrepository$entry1 : Lists.reverse(resourcepackrepository.getRepositoryEntries()))
-            {
+            for (ResourcePackRepository.Entry resourcepackrepository$entry1 : Lists.reverse(resourcepackrepository.getRepositoryEntries())) {
                 this.selectedResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry1));
             }
 
@@ -116,7 +113,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                     }
                     catch (IOException ioexception1)
                     {
-                        logger.error((String)"Couldn't open file", (Throwable)ioexception1);
+                        logger.error("Couldn't open file", ioexception1);
                     }
                 }
                 else if (Util.getOSType() == Util.EnumOS.WINDOWS)
@@ -133,7 +130,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                         }
                         reader.close();
                     } catch (IOException ioexception) {
-                        logger.error((String)"Couldn't open file", (Throwable)ioexception);
+                        logger.error("Couldn't open file", ioexception);
                     }
                 }
 
@@ -142,7 +139,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                 try
                 {
                     Class<?> oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null);
+                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke(null);
                     oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, file1.toURI());
                 }
                 catch (Throwable throwable)
