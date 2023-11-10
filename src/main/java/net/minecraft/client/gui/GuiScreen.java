@@ -4,8 +4,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.client.inputhandler.InputService;
-import net.minecraft.client.inputhandler.KeyboardInputHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -75,14 +75,13 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         }
     }
 
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        if (keyCode == 1)
-        {
-            this.mc.displayGuiScreen(null);
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1) {
+            if (!(mc.currentScreen instanceof GuiMainMenu)) {
+                this.mc.displayGuiScreen(null);
+            }
 
-            if (this.mc.currentScreen == null)
-            {
+            if (this.mc.currentScreen == null) {
                 this.mc.setIngameFocus();
             }
         }
