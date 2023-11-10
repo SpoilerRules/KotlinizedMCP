@@ -1,8 +1,11 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +48,7 @@ public class GuiScreenResourcePacks extends GuiScreen
             List<ResourcePackRepository.Entry> list = Lists.newArrayList(resourcepackrepository.getRepositoryEntriesAll());
             list.removeAll(resourcepackrepository.getRepositoryEntries());
 
+            // TODO: make indexing async
             for (ResourcePackRepository.Entry resourcepackrepository$entry : list)
             {
                 this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry));
@@ -112,17 +116,22 @@ public class GuiScreenResourcePacks extends GuiScreen
                     }
                     catch (IOException ioexception1)
                     {
-                        logger.error((String)"Couldn\'t open file", (Throwable)ioexception1);
+                        logger.error((String)"Couldn't open file", (Throwable)ioexception1);
                     }
                 }
                 else if (Util.getOSType() == Util.EnumOS.WINDOWS)
                 {
-                    String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {s});
+                    String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", s);
 
                     try {
                         String[] cmdarray = {s1};
-                        Runtime.getRuntime().exec(cmdarray);
-                        return;
+                        Process process = Runtime.getRuntime().exec(cmdarray);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
+                        reader.close();
                     } catch (IOException ioexception) {
                         logger.error((String)"Couldn't open file", (Throwable)ioexception);
                     }
@@ -133,12 +142,12 @@ public class GuiScreenResourcePacks extends GuiScreen
                 try
                 {
                     Class<?> oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
-                    oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, new Object[] {file1.toURI()});
+                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke((Object)null);
+                    oclass.getMethod("browse", new Class[] {URI.class}).invoke(object, file1.toURI());
                 }
                 catch (Throwable throwable)
                 {
-                    logger.error("Couldn\'t open link", throwable);
+                    logger.error("Couldn't open link", throwable);
                     flag = true;
                 }
 
@@ -152,7 +161,7 @@ public class GuiScreenResourcePacks extends GuiScreen
             {
                 if (this.changed)
                 {
-                    List<ResourcePackRepository.Entry> list = Lists.<ResourcePackRepository.Entry>newArrayList();
+                    List<ResourcePackRepository.Entry> list = Lists.newArrayList();
 
                     for (ResourcePackListEntry resourcepacklistentry : this.selectedResourcePacks)
                     {
@@ -203,8 +212,8 @@ public class GuiScreenResourcePacks extends GuiScreen
         this.drawBackground(0);
         this.availableResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
         this.selectedResourcePacksList.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("resourcePack.title", new Object[0]), this.width / 2, 16, 16777215);
-        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("resourcePack.folderInfo", new Object[0]), this.width / 2 - 77, this.height - 26, 8421504);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("resourcePack.title"), this.width / 2, 16, 16777215);
+        this.drawCenteredString(this.fontRendererObject, LocalizationHelper.translate("resourcePack.folderInfo"), this.width / 2 - 77, this.height - 26, 8421504);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 

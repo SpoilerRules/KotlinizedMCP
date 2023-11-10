@@ -12,7 +12,10 @@ repositories {
 dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") // Latest as of November 06 (2023)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+    } // Latest as of November 06 (2023)
 
     // Netty
     implementation("io.netty:netty-buffer:4.1.100.Final") // Latest as of October 25 (2023)
@@ -26,7 +29,11 @@ dependencies {
     implementation("io.netty:netty-transport-native-unix-common:4.1.100.Final") // Latest as of October 25 (2023)
 
     // System related
-    implementation("com.github.oshi:oshi-core:6.4.6") // Latest as of October 25 (2023)
+    implementation("com.github.oshi:oshi-core:6.4.6") {
+        exclude(group = "net.java.dev.jna", module = "jna-platform")
+        exclude(group = "net.java.dev.jna", module = "jna")
+        exclude(group = "org.slf4j", module = "slf4j-api")
+    } // Latest as of October 25 (2023)
 
     // Command line
     implementation("net.sf.jopt-simple:jopt-simple:5.0.4") // Latest as of 2023 August 22
@@ -48,7 +55,9 @@ dependencies {
 
     // JNA (Java Native Access)
     implementation("net.java.dev.jna:jna:5.13.0") // Latest as of 2023 August 22
-    implementation("net.java.dev.jna:jna-platform:5.13.0") // Latest as of 2023 August 22
+    implementation("net.java.dev.jna:jna-platform:5.13.0") {
+        exclude(group = "net.java.dev.jna", module = "jna")
+    } // Latest as of 2023 August 22
 
     // Logging
     implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)

@@ -4,11 +4,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.Language;
 import net.minecraft.client.resources.LanguageManager;
 import net.minecraft.client.settings.GameSettings;
+import org.apache.logging.log4j.LogManager;
 
 public class GuiLanguage extends GuiScreen
 {
@@ -89,11 +92,15 @@ public class GuiLanguage extends GuiScreen
         {
             super(mcIn, GuiLanguage.this.width, GuiLanguage.this.height, 32, GuiLanguage.this.height - 65 + 4, 18);
 
-            for (Language language : GuiLanguage.this.languageManager.getLanguages())
-            {
-                this.languageMap.put(language.getLanguageCode(), language);
-                this.langCodeList.add(language.getLanguageCode());
-            }
+            CompletableFuture.runAsync(() -> {
+                for (Language language : GuiLanguage.this.languageManager.getLanguages()) {
+                    this.languageMap.put(language.getLanguageCode(), language);
+                    this.langCodeList.add(language.getLanguageCode());
+                }
+            }).exceptionally(sadevent -> {
+                LogManager.getLogger().error("Failed indexing languages, please contact your developer as soon as possible.", sadevent);
+                return null;
+            });
         }
 
         protected int getSize()
