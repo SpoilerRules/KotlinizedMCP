@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.guiconstruction.PlateHandler;
 import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.client.inputhandler.InputService;
 import net.minecraft.client.renderer.GlStateManager;

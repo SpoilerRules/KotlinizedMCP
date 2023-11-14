@@ -49,14 +49,14 @@ object ButtonHandler {
                 add(GuiButton(buttonID.id, x, y, buttonWidth, buttonHeight, buttonText))
             }
 
-            playButtons.forEach { (buttonID, x, y ,buttonText) ->
-                add(GuiButton(buttonID.id , x , y , buttonText))
+            playButtons.forEach { (buttonID, x, y, buttonText) ->
+                add(GuiButton(buttonID.id, x, y, buttonText))
             }
 
             additionalButtons.forEach { position ->
                 when (position) {
-                    is LanguageButtonPosition -> add(GuiButtonLanguage(position.buttonID.id , position.x , position.y))
-                    is SimpleButtonPosition -> add(GuiButton(position.buttonID.id , position.x , position.y , position.buttonText))
+                    is LanguageButtonPosition -> add(GuiButtonLanguage(position.buttonID.id, position.x, position.y))
+                    is SimpleButtonPosition -> add(GuiButton(position.buttonID.id, position.x, position.y, position.buttonText))
                 }
             }
         }
@@ -64,11 +64,11 @@ object ButtonHandler {
 
     fun handleButtonClick(button: GuiButton?, parentScreenInstance: GuiMainMenu, mc: Minecraft) {
         when (button?.id) {
-            ButtonID.OPTIONS_MENU.id -> mc.displayGuiScreen(GuiOptions(parentScreenInstance , mc.gameSettings))
+            ButtonID.OPTIONS_MENU.id -> mc.displayGuiScreen(GuiOptions(parentScreenInstance, mc.gameSettings))
             ButtonID.QUIT_GAME.id -> mc.shutdown()
             ButtonID.SINGLE_PLAYER.id -> mc.displayGuiScreen(GuiSelectWorld(parentScreenInstance))
             ButtonID.MULTI_PLAYER.id -> mc.displayGuiScreen(GuiMultiplayer(parentScreenInstance))
-            ButtonID.LANGUAGE_SELECTION.id -> mc.displayGuiScreen(GuiLanguage(parentScreenInstance , mc.gameSettings , mc.languageManager))
+            ButtonID.LANGUAGE_SELECTION.id -> mc.displayGuiScreen(GuiLanguage(parentScreenInstance, mc.gameSettings, mc.languageManager))
             ButtonID.MICROSOFT_LOGIN.id -> LoginHandler.initiateLogin()
         }
     }

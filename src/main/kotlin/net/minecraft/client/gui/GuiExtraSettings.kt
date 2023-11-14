@@ -8,14 +8,12 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
     override fun initGui() {
         val centerHeight = super.centerHeight - 20
 
-        data class OptionPosition(val option: GameSettings.Options, val x: Int, val y: Int)
-
         val options = listOf(
-            OptionPosition(GameSettings.Options.AUTO_SPRINT, centerWidth - 75, centerHeight + 15), // Correctly implemented.
-            OptionPosition(GameSettings.Options.RAW_INPUT, centerWidth - 190, centerHeight - 75), // Not correctly implemented. Placeholder as in-use of current module (Mouse Delay Fix).
-            OptionPosition(GameSettings.Options.CAMERA_SHAKE, centerWidth - 190, centerHeight - 30), // Not correctly implemented. Placeholder as in-use of current module (Hurt Shake).
-            OptionPosition(GameSettings.Options.JUMP_DELAY, centerWidth + 50, centerHeight - 75), // Correctly Implemented.
-            OptionPosition(GameSettings.Options.SCORE_DISPLAY, centerWidth + 50, centerHeight - 30) // Correctly Implemented.
+            createOptionButton(GameSettings.Options.AUTO_SPRINT, centerWidth - 75, centerHeight + 15), // Correctly implemented.
+            createOptionButton(GameSettings.Options.RAW_INPUT, centerWidth - 190, centerHeight - 75), // Not correctly implemented. Placeholder as in-use of current module (Mouse Delay Fix).
+            createOptionButton(GameSettings.Options.CAMERA_SHAKE, centerWidth - 190, centerHeight - 30), // Not correctly implemented. Placeholder as in-use of current module (Hurt Shake).
+            createOptionButton(GameSettings.Options.JUMP_DELAY, centerWidth + 50, centerHeight - 75), // Correctly Implemented.
+            createOptionButton(GameSettings.Options.SCORE_DISPLAY, centerWidth + 50, centerHeight - 30) // Correctly Implemented.
         )
 
         buttonList.run {
