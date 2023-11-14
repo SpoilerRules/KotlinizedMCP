@@ -49,9 +49,9 @@ class GuiExtraSettings(private val parentScreen: GuiScreen) : GuiScreen() {
 
         when (button.id) {
             1 -> mc.displayGuiScreen(parentScreen)
-            in 0 until 100 -> (button as? GuiOptionButton)?.let {
-                mc.gameSettings.setOptionValue(it.returnEnumOptions(), 1)
-                it.displayString = mc.gameSettings.getKeyBinding(GameSettings.Options.getEnumOptions(it.id))
+            in 0 until 100 ->  if (button is GuiOptionButton) {
+                mc.gameSettings.setOptionValue(button.returnEnumOptions(), 1)
+                button.displayString = mc.gameSettings.getKeyBinding(GameSettings.Options.getEnumOptions(button.id))
             }
         }
     }
