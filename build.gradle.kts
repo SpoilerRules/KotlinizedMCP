@@ -60,13 +60,15 @@ dependencies {
     } // Latest as of 2023 August 22
 
     // Logging
-    implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)
     implementation("org.apache.logging.log4j:log4j-api:2.21.0") // Latest as of October 25 (2023)
     implementation("org.apache.logging.log4j:log4j-core:2.21.0") // Latest as of October 25 (2023)
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.21.1") // Latest as of November 08 (2023)
-    implementation("org.slf4j:slf4j-api:2.0.9") // Latest as of November 08 (2023)
+    runtimeOnly("org.slf4j:slf4j-api:2.0.9") // Latest as of November 08 (2023)
+    runtimeOnly("com.mojang:logging:1.1.1") {
+        exclude(group = "org.apache.logging.log4j")
+    } // Latest as of November 14 (2023)
 
     // Miscellaneous
+    implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-text:1.10.0") // Latest as of 2023 September 22
     implementation("commons-io:commons-io:2.14.0") // Latest as of October 25 (2023)
