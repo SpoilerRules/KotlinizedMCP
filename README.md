@@ -1,7 +1,7 @@
 # Evanescent - Kotlinized MCP for Minecraft 1.8.9
 
 [![Progress](https://img.shields.io/badge/Progress-0.9%25-yellow.svg)](https://github.com/SpoilerRules/KotlinizedMCP)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-blue.svg?logo=kotlin)](https://kotlinlang.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.21-blue.svg?logo=kotlin)](https://kotlinlang.org/)
 [![Java](https://img.shields.io/badge/Java-21-blue.svg?logo=java&logoColor=white)](https://www.oracle.com/java/technologies/javase-downloads.html)
 [![Gradle](https://img.shields.io/badge/Gradle-8.4-orange.svg?logo=gradle)](https://gradle.org/)
 [![OptiFine](https://img.shields.io/badge/OptiFine-Integrated-green.svg)](https://optifine.net/)
