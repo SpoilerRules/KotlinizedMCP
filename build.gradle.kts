@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.21"
 }
 
 repositories {
@@ -11,10 +11,10 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-common")
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib-jdk8")
+        exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
+        exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
     } // Latest as of November 06 (2023)
 
     // Netty
@@ -30,9 +30,9 @@ dependencies {
 
     // System related
     implementation("com.github.oshi:oshi-core:6.4.6") {
-        exclude(group = "net.java.dev.jna", module = "jna-platform")
-        exclude(group = "net.java.dev.jna", module = "jna")
-        exclude(group = "org.slf4j", module = "slf4j-api")
+        exclude("net.java.dev.jna", "jna-platform")
+        exclude("net.java.dev.jna", "jna")
+        exclude("org.slf4j", "slf4j-api")
     } // Latest as of October 25 (2023)
 
     // Command line
@@ -56,15 +56,20 @@ dependencies {
     // JNA (Java Native Access)
     implementation("net.java.dev.jna:jna:5.13.0") // Latest as of 2023 August 22
     implementation("net.java.dev.jna:jna-platform:5.13.0") {
-        exclude(group = "net.java.dev.jna", module = "jna")
+        exclude("net.java.dev.jna", "jna")
     } // Latest as of 2023 August 22
 
     // Logging
-    implementation("org.apache.logging.log4j:log4j-api:2.21.0") // Latest as of October 25 (2023)
-    implementation("org.apache.logging.log4j:log4j-core:2.21.0") // Latest as of October 25 (2023)
+    implementation("org.apache.logging.log4j:log4j-api:2.21.1") // Latest as of November 14 (2023)
+    implementation("org.apache.logging.log4j:log4j-core:2.21.1") // Latest as of November 14 (2023)
     runtimeOnly("org.slf4j:slf4j-api:2.0.9") // Latest as of November 08 (2023)
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.21.1") {
+        exclude("org.apache.logging.log4j")
+        exclude("org.slf4j")
+    } // Latest as of November 14
     runtimeOnly("com.mojang:logging:1.1.1") {
-        exclude(group = "org.apache.logging.log4j")
+        exclude("org.apache.logging.log4j")
+        exclude("org.slf4j")
     } // Latest as of November 14 (2023)
 
     // Miscellaneous
@@ -89,12 +94,12 @@ dependencies {
 
     // Microsoft account support
     implementation("com.github.CCBlueX:Elixir:1.2.6") {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
-        exclude(group = "com.mojang", module = "authlib")
+        exclude("org.jetbrains.kotlin", "kotlin-stdlib")
+        exclude("com.mojang", "authlib")
     }
 
     // Testing (useless for now)
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.21")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -128,7 +133,7 @@ group = "spoiligaming"
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
-tasks.jar {
+tasks.jar{
 //  ↓ To change the name of the JAR file, modify the string below. ←
 //                         ↓ ↓ ↓
     archiveBaseName.set("Evanescent")
