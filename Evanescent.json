@@ -4,15 +4,14 @@
     "component": "java-runtime-gamma",
     "majorVersion": 21
   },
-  "type": "release",
   "libraries": [
     {
-      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.20",
+      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.21",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.20/kotlin-stdlib-1.9.20.jar",
-          "sha1": "e58b4816ac517e9cc5df1db051120c63d4cde669",
-          "size": 1718949
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.21/kotlin-stdlib-1.9.21.jar",
+          "sha1": "17ee3e873d439566c7d8354403b5f3d9744c4c9c",
+          "size": 1718945
         }
       }
     },
@@ -409,24 +408,55 @@
       }
     },
     {
-      "name": "org.apache.logging.log4j:log4j-api:2.21.0",
+      "name": "org.apache.logging.log4j:log4j-api:2.21.1",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.21.0/log4j-api-2.21.0.jar",
-          "sha1": "760192f2b69eacf4a4afc78e5a1d7a8de054fcbd",
-          "size": 317471
+          "url": "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.21.1/log4j-api-2.21.1.jar",
+          "sha1": "74c65e87b9ce1694a01524e192d7be989ba70486",
+          "size": 317479
         }
       }
     },
     {
-      "name": "org.apache.logging.log4j:log4j-core:2.21.0",
+      "name": "org.apache.logging.log4j:log4j-core:2.21.1",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.21.0/log4j-core-2.21.0.jar",
-          "sha1": "122e1a9e0603cc9eae07b0846a6ff01f2454bc49",
-          "size": 1895888
+          "url": "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.21.1/log4j-core-2.21.1.jar",
+          "sha1": "0eba8eac8d464791c84e4bafa0fea7cdf7113168",
+          "size": 1895892
         }
       }
+    },
+    {
+      "name": "org.slf4j:slf4j-api:2.0.9",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/2.0.9/slf4j-api-2.0.9.jar",
+          "sha1": "7cf2726fdcfbc8610f9a71fb3ed639871f315340",
+          "size": 64579
+        }
+      }
+    },
+    {
+      "name": "org.apache.logging.log4j:log4j-slf4j-impl:2.21.1",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.21.1/log4j-slf4j-impl-2.21.1.jar",
+          "sha1": "ff1aee5bd64af15f153fb054ad21ba90aeb2ae79",
+          "size": 24482
+        }
+      }
+    },
+    {
+      "downloads": {
+        "artifact": {
+          "path": "com/mojang/logging/1.1.1/logging-1.1.1.jar",
+          "sha1": "832b8e6674a9b325a5175a3a6267dfaf34c85139",
+          "size": 15343,
+          "url": "https://libraries.minecraft.net/com/mojang/logging/1.1.1/logging-1.1.1.jar"
+        }
+      },
+      "name": "com.mojang:logging:1.1.1"
     },
     {
       "name": "org.apache.commons:commons-lang3:3.13.0",
@@ -549,26 +579,38 @@
       }
     },
     {
-      "name": "com.ibm.icu:icu4j-core-mojang:51.2",
+      "name": "com.ibm.icu:icu4j:icu4j-70.1",
       "downloads": {
         "artifact": {
-          "url": "https://libraries.minecraft.net/com/ibm/icu/icu4j-core-mojang/51.2/icu4j-core-mojang-51.2.jar",
-          "sha1": "63d216a9311cca6be337c1e458e587f99d382b84",
-          "size": 1634692
+          "url": "https://libraries.minecraft.net/com/ibm/icu/icu4j/70.1/icu4j-70.1.jar",
+          "sha1": "dfa3a1fbc55bf5db8c6e79fc0935ac7ab1202950",
+          "size": 13708936
         }
       }
     },
     {
-      "name": "com.mojang:authlib:1.5.21",
+      "name": "com.mojang:authlib:3.11.50",
       "downloads": {
         "artifact": {
-          "url": "https://libraries.minecraft.net/com/mojang/authlib/1.5.21/authlib-1.5.21.jar",
-          "sha1": "aefba0d5b53fbcb70860bc8046ab95d5854c07a5",
-          "size": 64412
+          "url": "https://libraries.minecraft.net/com/mojang/authlib/3.11.50/authlib-3.11.50.jar",
+          "sha1": "d26e165f536bed17538fd1e6bd0668e8b2ce131a",
+          "size": 120233
         }
       }
     }
   ],
+  "logging": {
+    "client": {
+      "argument": "-Dlog4j.configurationFile=${path}",
+      "file": {
+        "id": "client-1.12.xml",
+        "sha1": "bd65e7d2e3c237be76cfbef4c2405033d7f91521",
+        "size": 888,
+        "url": "https://piston-data.mojang.com/v1/objects/bd65e7d2e3c237be76cfbef4c2405033d7f91521/client-1.12.xml"
+      },
+      "type": "log4j2-xml"
+    }
+  },
   "assetIndex": {
     "id": "1.14",
     "sha1": "43b2f3021fe9f7d768378de95538e22da3ee8301",
