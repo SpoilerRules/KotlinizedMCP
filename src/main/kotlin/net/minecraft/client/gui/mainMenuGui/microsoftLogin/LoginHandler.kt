@@ -70,7 +70,7 @@ object LoginHandler {
 
             override fun authError(error: String) {
                 log.error("Microsoft authentication error: $error")
-                authServer.stop(isInterrupt = true)
+            //    authServer.stop(isInterrupt = true)
                 isLoginInProgress = false
             }
         })
