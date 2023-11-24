@@ -57,12 +57,16 @@ class MouseInputHandler : InputService() {
     }
 
     private fun handleMouseClicks() {
-        when {
-            mc.gameSettings.keyBindAttack.isPressed -> handleLeftClick()
-            mc.gameSettings.keyBindPickBlock.isPressed -> mc.middleClickMouse()
-            mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 && !player!!.isUsingItem -> mc.rightClickMouse()
-            mc.gameSettings.keyBindUseItem.isPressed -> mc.rightClickMouse()
-            player!!.isUsingItem && !mc.gameSettings.keyBindUseItem.isKeyDown -> mc.playerController.onStoppedUsingItem(player)
+        player?.let {
+            if (!it.isUsingItem) {
+                when {
+                    mc.gameSettings.keyBindAttack.isPressed -> handleLeftClick()
+                    mc.gameSettings.keyBindPickBlock.isPressed -> mc.middleClickMouse()
+                    mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 -> mc.rightClickMouse()
+                }
+            } else if (!mc.gameSettings.keyBindUseItem.isKeyDown) {
+                mc.playerController.onStoppedUsingItem(it)
+            }
         }
 
         mc.sendClickBlockToController(activeScreen == null && mc.gameSettings.keyBindAttack.isKeyDown && mc.inGameHasFocus)
