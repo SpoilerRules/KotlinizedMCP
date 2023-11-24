@@ -12,7 +12,6 @@ open class PlateHandler {
         val buttonHeight: Int,
         val buttonText: String
     )
-
     data class ClassicRedirectButton(val buttonID: Int, val x: Int, val y: Int, val buttonText: String)
 
     protected val createOptionButton = { option: GameSettings.Options, x: Int, y: Int -> OptionButton(option, x, y) }
