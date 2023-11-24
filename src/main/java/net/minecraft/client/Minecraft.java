@@ -138,6 +138,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private final int tempDisplayWidth;
     private final int tempDisplayHeight;
     private final long field_175615_aJ = 0L;
+    private final long debugCrashKeyPressTime = -1L;
     public PlayerControllerMP playerController;
     public int displayWidth;
     public int displayHeight;
@@ -191,7 +192,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private int joinPlayerCounter;
     private NetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
-    private final long debugCrashKeyPressTime = -1L;
     private IReloadableResourceManager mcResourceManager;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
@@ -998,7 +998,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             Profiler.Result profiler$result = list.remove(0);
 
             if (keyCount == 0) {
-                if (profiler$result.field_76331_c.length() > 0) {
+                if (!profiler$result.field_76331_c.isEmpty()) {
                     int i = this.debugProfilerName.lastIndexOf(".");
 
                     if (i >= 0) {
@@ -1009,7 +1009,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 --keyCount;
 
                 if (keyCount < list.size() && !list.get(keyCount).field_76331_c.equals("unspecified")) {
-                    if (this.debugProfilerName.length() > 0) {
+                    if (!this.debugProfilerName.isEmpty()) {
                         this.debugProfilerName = this.debugProfilerName + ".";
                     }
 
@@ -1088,7 +1088,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 s = s + "[0] ";
             }
 
-            if (profiler$result.field_76331_c.length() == 0) {
+            if (profiler$result.field_76331_c.isEmpty()) {
                 s = s + "ROOT ";
             } else {
                 s = s + profiler$result.field_76331_c + " ";
@@ -1344,11 +1344,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             } catch (Throwable throwable1) {
                 CrashReport crashreport = CrashReport.makeCrashReport(throwable1, "Updating screen events");
                 CrashReportCategory crashreportcategory = crashreport.makeCategory("Affected screen");
-                crashreportcategory.addCrashSectionCallable("Screen name", new Callable<String>() {
-                    public String call() throws Exception {
-                        return Minecraft.this.currentScreen.getClass().getCanonicalName();
-                    }
-                });
+                crashreportcategory.addCrashSectionCallable("Screen name", () -> Minecraft.this.currentScreen.getClass().getCanonicalName());
                 throw new ReportedException(crashreport);
             }
 
@@ -1358,11 +1354,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 } catch (Throwable throwable) {
                     CrashReport crashreport1 = CrashReport.makeCrashReport(throwable, "Ticking screen");
                     CrashReportCategory crashreportcategory1 = crashreport1.makeCategory("Affected screen");
-                    crashreportcategory1.addCrashSectionCallable("Screen name", new Callable<String>() {
-                        public String call() throws Exception {
-                            return Minecraft.this.currentScreen.getClass().getCanonicalName();
-                        }
-                    });
+                    crashreportcategory1.addCrashSectionCallable("Screen name", () -> Minecraft.this.currentScreen.getClass().getCanonicalName());
                     throw new ReportedException(crashreport1);
                 }
             }
@@ -1885,57 +1877,36 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                     return;
                 }
 
-                if (this.objectMouseOver.entityHit instanceof EntityPainting) {
-                    item = Items.painting;
-                } else if (this.objectMouseOver.entityHit instanceof EntityLeashKnot) {
-                    item = Items.lead;
-                } else if (this.objectMouseOver.entityHit instanceof EntityItemFrame entityitemframe) {
-                    ItemStack itemstack = entityitemframe.getDisplayedItem();
-
-                    if (itemstack == null) {
-                        item = Items.item_frame;
-                    } else {
-                        item = itemstack.getItem();
-                        i = itemstack.getMetadata();
+                switch (this.objectMouseOver.entityHit) {
+                    case EntityPainting entityPainting -> item = Items.painting;
+                    case EntityLeashKnot entityLeashKnot -> item = Items.lead;
+                    case EntityItemFrame entityitemframe -> {
+                        ItemStack itemstack = entityitemframe.getDisplayedItem();
+                        if (itemstack == null) {
+                            item = Items.item_frame;
+                        } else {
+                            item = itemstack.getItem();
+                            i = itemstack.getMetadata();
+                            flag1 = true;
+                        }
+                    }
+                    case EntityMinecart entityminecart -> item = switch (entityminecart.getMinecartType()) {
+                        case FURNACE -> Items.furnace_minecart;
+                        case CHEST -> Items.chest_minecart;
+                        case TNT -> Items.tnt_minecart;
+                        case HOPPER -> Items.hopper_minecart;
+                        case COMMAND_BLOCK -> Items.command_block_minecart;
+                        default -> Items.minecart;
+                    };
+                    case EntityBoat entityBoat -> item = Items.boat;
+                    case EntityArmorStand entityArmorStand -> item = Items.armor_stand;
+                    default -> {
+                        item = Items.spawn_egg;
+                        i = EntityList.getEntityID(this.objectMouseOver.entityHit);
                         flag1 = true;
-                    }
-                } else if (this.objectMouseOver.entityHit instanceof EntityMinecart entityminecart) {
-
-                    switch (entityminecart.getMinecartType()) {
-                        case FURNACE:
-                            item = Items.furnace_minecart;
-                            break;
-
-                        case CHEST:
-                            item = Items.chest_minecart;
-                            break;
-
-                        case TNT:
-                            item = Items.tnt_minecart;
-                            break;
-
-                        case HOPPER:
-                            item = Items.hopper_minecart;
-                            break;
-
-                        case COMMAND_BLOCK:
-                            item = Items.command_block_minecart;
-                            break;
-
-                        default:
-                            item = Items.minecart;
-                    }
-                } else if (this.objectMouseOver.entityHit instanceof EntityBoat) {
-                    item = Items.boat;
-                } else if (this.objectMouseOver.entityHit instanceof EntityArmorStand) {
-                    item = Items.armor_stand;
-                } else {
-                    item = Items.spawn_egg;
-                    i = EntityList.getEntityID(this.objectMouseOver.entityHit);
-                    flag1 = true;
-
-                    if (!EntityList.entityEggs.containsKey(Integer.valueOf(i))) {
-                        return;
+                        if (!EntityList.entityEggs.containsKey(i)) {
+                            return;
+                        }
                     }
                 }
             }
@@ -1978,75 +1949,33 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public CrashReport addGraphicsAndWorldToCrashReport(CrashReport theCrash) {
-        theCrash.getCategory().addCrashSectionCallable("Launched Version", new Callable<String>() {
-            public String call() throws Exception {
-                return Minecraft.this.launchedVersion;
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("LWJGL", new Callable<String>() {
-            public String call() {
-                return Sys.getVersion();
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("OpenGL", new Callable<String>() {
-            public String call() {
-                return GL11.glGetString(GL11.GL_RENDERER) + " GL version " + GL11.glGetString(GL11.GL_VERSION) + ", " + GL11.glGetString(GL11.GL_VENDOR);
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("GL Caps", new Callable<String>() {
-            public String call() {
-                return OpenGlHelper.getLogText();
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("Using VBOs", new Callable<String>() {
-            public String call() {
-                return Minecraft.this.gameSettings.useVbo ? "Yes" : "No";
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("Is Modded", new Callable<String>() {
-            public String call() throws Exception {
-                return ClientBrandEnum.CLIENT_MOD_NAME;
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("Type", new Callable<String>() {
-            public String call() throws Exception {
-                return "Client (map_client.txt)";
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("Resource Packs", new Callable<String>() {
-            public String call() throws Exception {
-                StringBuilder stringbuilder = new StringBuilder();
+        theCrash.getCategory().addCrashSectionCallable("Launched Version", () -> Minecraft.this.launchedVersion);
+        theCrash.getCategory().addCrashSectionCallable("LWJGL", Sys::getVersion);
+        theCrash.getCategory().addCrashSectionCallable("OpenGL", () -> GL11.glGetString(GL11.GL_RENDERER) + " GL version " + GL11.glGetString(GL11.GL_VERSION) + ", " + GL11.glGetString(GL11.GL_VENDOR));
+        theCrash.getCategory().addCrashSectionCallable("GL Caps", OpenGlHelper::getLogText);
+        theCrash.getCategory().addCrashSectionCallable("Using VBOs", () -> Minecraft.this.gameSettings.useVbo ? "Yes" : "No");
+        theCrash.getCategory().addCrashSectionCallable("Is Modded", () -> ClientBrandEnum.CLIENT_MOD_NAME);
+        theCrash.getCategory().addCrashSectionCallable("Type", () -> "Client (map_client.txt)");
+        theCrash.getCategory().addCrashSectionCallable("Resource Packs", () -> {
+            StringBuilder stringbuilder = new StringBuilder();
 
-                for (String s : Minecraft.this.gameSettings.resourcePacks) {
-                    if (stringbuilder.length() > 0) {
-                        stringbuilder.append(", ");
-                    }
-
-                    stringbuilder.append(s);
-
-                    if (Minecraft.this.gameSettings.incompatibleResourcePacks.contains(s)) {
-                        stringbuilder.append(" (incompatible)");
-                    }
+            for (String s : Minecraft.this.gameSettings.resourcePacks) {
+                if (!stringbuilder.isEmpty()) {
+                    stringbuilder.append(", ");
                 }
 
-                return stringbuilder.toString();
+                stringbuilder.append(s);
+
+                if (Minecraft.this.gameSettings.incompatibleResourcePacks.contains(s)) {
+                    stringbuilder.append(" (incompatible)");
+                }
             }
+
+            return stringbuilder.toString();
         });
-        theCrash.getCategory().addCrashSectionCallable("Current Language", new Callable<String>() {
-            public String call() throws Exception {
-                return Minecraft.this.mcLanguageManager.getCurrentLanguage().toString();
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("Profiler Position", new Callable<String>() {
-            public String call() throws Exception {
-                return Minecraft.this.mcProfiler.profilingEnabled ? Minecraft.this.mcProfiler.getNameOfLastSection() : "N/A (disabled)";
-            }
-        });
-        theCrash.getCategory().addCrashSectionCallable("CPU", new Callable<String>() {
-            public String call() {
-                return OpenGlHelper.getCpu();
-            }
-        });
+        theCrash.getCategory().addCrashSectionCallable("Current Language", () -> Minecraft.this.mcLanguageManager.getCurrentLanguage().toString());
+        theCrash.getCategory().addCrashSectionCallable("Profiler Position", () -> Minecraft.this.mcProfiler.profilingEnabled ? Minecraft.this.mcProfiler.getNameOfLastSection() : "N/A (disabled)");
+        theCrash.getCategory().addCrashSectionCallable("CPU", OpenGlHelper::getCpu);
 
         if (this.theWorld != null) {
             this.theWorld.addWorldInfoToCrashReport(theCrash);
@@ -2056,11 +1985,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public ListenableFuture<Object> scheduleResourcesRefresh() {
-        return this.addScheduledTask(new Runnable() {
-            public void run() {
-                Minecraft.this.refreshResources();
-            }
-        });
+        return this.addScheduledTask(Minecraft.this::refreshResources);
     }
 
     public void addServerStatsToSnooper(PlayerUsageSnooper playerSnooper) {
@@ -2143,7 +2068,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         playerSnooper.addStatToSnooper("gl_caps[ARB_shadow_ambient]", Boolean.valueOf(contextcapabilities.GL_ARB_shadow_ambient));
         playerSnooper.addStatToSnooper("gl_caps[ARB_stencil_texturing]", Boolean.valueOf(contextcapabilities.GL_ARB_stencil_texturing));
         playerSnooper.addStatToSnooper("gl_caps[ARB_sync]", Boolean.valueOf(contextcapabilities.GL_ARB_sync));
-        playerSnooper.addStatToSnooper("gl_caps[ARB_tessellation_shader]", Boolean.valueOf(contextcapabilities.GL_ARB_tessellation_shader));
+        playerSnooper.addStatToSnooper("gl_caps[ARB_tessellation_shader]", contextcapabilities.GL_ARB_tessellation_shader);
         playerSnooper.addStatToSnooper("gl_caps[ARB_texture_border_clamp]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_border_clamp));
         playerSnooper.addStatToSnooper("gl_caps[ARB_texture_buffer_object]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_buffer_object));
         playerSnooper.addStatToSnooper("gl_caps[ARB_texture_cube_map]", Boolean.valueOf(contextcapabilities.GL_ARB_texture_cube_map));
