@@ -37,10 +37,16 @@ object XMathHelper {
 
     /**
      * Floors a float value to an integer.
+     *
      * @param value The float value.
      * @return The largest integer less than or equal to the value.
+     * @throws Error if the value is not a float or double.
      */
-    fun floorToInteger(value: Float) = floor(value).toInt()
+    fun floorToInteger(value: Any): Int = when (value) {
+        is Float -> floor(value).toInt()
+        is Double -> floor(value).toInt()
+        else -> throw Error("Value must be float or double")
+    }
 
     /**
      * Calculates the arc tangent of y/x in radians, with a range from -PI to PI.

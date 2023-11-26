@@ -243,11 +243,11 @@ public class ChunkProviderHell implements IChunkProvider
         ChunkPrimer chunkprimer = new ChunkPrimer();
         this.func_180515_a(x, z, chunkprimer);
         this.func_180516_b(x, z, chunkprimer);
-        this.netherCaveGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+        this.netherCaveGenerator.generate(this.worldObj, x, z, chunkprimer);
 
         if (this.field_177466_i)
         {
-            this.genNetherBridge.generate(this, this.worldObj, x, z, chunkprimer);
+            this.genNetherBridge.generate(this.worldObj, x, z, chunkprimer);
         }
 
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
@@ -463,7 +463,7 @@ public class ChunkProviderHell implements IChunkProvider
 
     public void recreateStructures(Chunk chunkIn, int x, int z)
     {
-        this.genNetherBridge.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+        this.genNetherBridge.generate(this.worldObj, x, z, (ChunkPrimer)null);
     }
 
     public Chunk provideChunk(BlockPos blockPosIn)

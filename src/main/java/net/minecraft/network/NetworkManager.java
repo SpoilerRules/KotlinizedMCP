@@ -298,7 +298,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
             ((ITickable)this.packetListener).update();
         }
 
-        this.channel.flush();
+        if (this.channel != null) this.channel.flush();
     }
 
     /**

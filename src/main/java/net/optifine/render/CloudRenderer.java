@@ -39,37 +39,28 @@ public class CloudRenderer
 
     public boolean shouldUpdateGlList()
     {
-        if (!this.updated)
+        if (!this.updated || this.renderFancy != this.updateRenderFancy || this.cloudTickCounter >= this.updateCloudTickCounter + 20)
         {
             return true;
         }
-        else if (this.renderFancy != this.updateRenderFancy)
+
+        double diffX = Math.abs(this.cloudColor.x - this.updateCloudColor.x);
+        double diffY = Math.abs(this.cloudColor.y - this.updateCloudColor.y);
+        double diffZ = Math.abs(this.cloudColor.z - this.updateCloudColor.z);
+
+        if (diffX > 0.003D || diffY > 0.003D || diffZ > 0.003D)
         {
             return true;
         }
-        else if (this.cloudTickCounter >= this.updateCloudTickCounter + 20)
-        {
-            return true;
-        }
-        else if (Math.abs(this.cloudColor.x - this.updateCloudColor.x) > 0.003D)
-        {
-            return true;
-        }
-        else if (Math.abs(this.cloudColor.y - this.updateCloudColor.y) > 0.003D)
-        {
-            return true;
-        }
-        else if (Math.abs(this.cloudColor.z - this.updateCloudColor.z) > 0.003D)
-        {
-            return true;
-        }
-        else
-        {
-            Entity entity = this.mc.getRenderViewEntity();
-            boolean flag = this.updatePlayerY + (double)entity.getEyeHeight() < 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F);
-            boolean flag1 = entity.prevPosY + (double)entity.getEyeHeight() < 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F);
-            return flag1 != flag;
-        }
+
+        Entity entity = this.mc.getRenderViewEntity();
+        double eyeHeight = entity.getEyeHeight();
+        double cloudHeight = 128.0D + this.mc.gameSettings.ofCloudsHeight * 128.0F;
+
+        boolean flag = this.updatePlayerY + eyeHeight < cloudHeight;
+        boolean flag1 = entity.prevPosY + eyeHeight < cloudHeight;
+
+        return flag1 != flag;
     }
 
     public void startUpdateGlList()
@@ -93,13 +84,14 @@ public class CloudRenderer
     public void renderGlList()
     {
         Entity entity = this.mc.getRenderViewEntity();
-        double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * (double)this.partialTicks;
-        double d1 = entity.prevPosY + (entity.posY - entity.prevPosY) * (double)this.partialTicks;
-        double d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double)this.partialTicks;
-        double d3 = (double)((float)(this.cloudTickCounter - this.updateCloudTickCounter) + this.partialTicks);
+        double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * this.partialTicks;
+        double d1 = entity.prevPosY + (entity.posY - entity.prevPosY) * this.partialTicks;
+        double d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * this.partialTicks;
+        double d3 = this.cloudTickCounter - this.updateCloudTickCounter + this.partialTicks;
         float f = (float)(d0 - this.updatePlayerX + d3 * 0.03D);
         float f1 = (float)(d1 - this.updatePlayerY);
         float f2 = (float)(d2 - this.updatePlayerZ);
+
         GlStateManager.pushMatrix();
 
         if (this.renderFancy)

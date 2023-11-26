@@ -183,37 +183,37 @@ public class ChunkProviderGenerate implements IChunkProvider
 
         if (this.settings.useCaves)
         {
-            this.caveGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.caveGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useRavines)
         {
-            this.ravineGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.ravineGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useMineShafts && this.mapFeaturesEnabled)
         {
-            this.mineshaftGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.mineshaftGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useVillages && this.mapFeaturesEnabled)
         {
-            this.villageGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.villageGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useStrongholds && this.mapFeaturesEnabled)
         {
-            this.strongholdGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.strongholdGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useTemples && this.mapFeaturesEnabled)
         {
-            this.scatteredFeatureGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.scatteredFeatureGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         if (this.settings.useMonuments && this.mapFeaturesEnabled)
         {
-            this.oceanMonumentGenerator.generate(this, this.worldObj, x, z, chunkprimer);
+            this.oceanMonumentGenerator.generate(this.worldObj, x, z, chunkprimer);
         }
 
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
@@ -518,27 +518,27 @@ public class ChunkProviderGenerate implements IChunkProvider
     {
         if (this.settings.useMineShafts && this.mapFeaturesEnabled)
         {
-            this.mineshaftGenerator.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            this.mineshaftGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
 
         if (this.settings.useVillages && this.mapFeaturesEnabled)
         {
-            this.villageGenerator.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            this.villageGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
 
         if (this.settings.useStrongholds && this.mapFeaturesEnabled)
         {
-            this.strongholdGenerator.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            this.strongholdGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
 
         if (this.settings.useTemples && this.mapFeaturesEnabled)
         {
-            this.scatteredFeatureGenerator.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            this.scatteredFeatureGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
 
         if (this.settings.useMonuments && this.mapFeaturesEnabled)
         {
-            this.oceanMonumentGenerator.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            this.oceanMonumentGenerator.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
     }
 

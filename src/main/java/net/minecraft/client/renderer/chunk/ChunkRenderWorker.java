@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumWorldBlockLayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 public class ChunkRenderWorker implements Runnable
 {
@@ -25,7 +26,7 @@ public class ChunkRenderWorker implements Runnable
 
     public ChunkRenderWorker(ChunkRenderDispatcher p_i46201_1_)
     {
-        this(p_i46201_1_, (RegionRenderCacheBuilder)null);
+        this(p_i46201_1_, null);
     }
 
     public ChunkRenderWorker(ChunkRenderDispatcher chunkRenderDispatcherIn, RegionRenderCacheBuilder regionRenderCacheBuilderIn)
@@ -143,14 +144,8 @@ public class ChunkRenderWorker implements Runnable
             }
 
             final ListenableFuture<List<Object>> listenablefuture = Futures.allAsList(lvt_8_1_);
-            generator.addFinishRunnable(new Runnable()
-            {
-                public void run()
-                {
-                    listenablefuture.cancel(false);
-                }
-            });
-            Futures.addCallback(listenablefuture, new FutureCallback<List<Object>>() {
+            generator.addFinishRunnable(() -> listenablefuture.cancel(false));
+            Futures.addCallback(listenablefuture, new FutureCallback<>() {
                 public void onSuccess(List<Object> result) {
                     ChunkRenderWorker.this.freeRenderBuilder(generator);
                     generator.getLock().lock();
@@ -166,7 +161,7 @@ public class ChunkRenderWorker implements Runnable
                     generator.getRenderChunk().setCompiledChunk(lvt_7_1_);
                 }
 
-                public void onFailure(Throwable t) {
+                public void onFailure(@NotNull Throwable t) {
                     ChunkRenderWorker.this.freeRenderBuilder(generator);
 
                     if (!(t instanceof CancellationException) && !(t instanceof InterruptedException)) {

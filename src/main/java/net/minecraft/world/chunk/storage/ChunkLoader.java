@@ -30,7 +30,7 @@ public class ChunkLoader
         }
         catch (ClassCastException var5)
         {
-            chunkloader$anvilconverterdata.lastUpdated = (long)nbt.getInteger("LastUpdate");
+            chunkloader$anvilconverterdata.lastUpdated = nbt.getInteger("LastUpdate");
         }
 
         return chunkloader$anvilconverterdata;
@@ -52,47 +52,25 @@ public class ChunkLoader
         compound.setBoolean("TerrainPopulated", p_76690_0_.terrainPopulated);
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int j = 0; j < 8; ++j)
-        {
-            boolean flag = true;
+        for (int j = 0; j < 8; ++j) {
+            int l = j << 4;
+            boolean flag = isFlag(p_76690_0_, l);
 
-            for (int k = 0; k < 16 && flag; ++k)
-            {
-                for (int l = 0; l < 16 && flag; ++l)
-                {
-                    for (int i1 = 0; i1 < 16; ++i1)
-                    {
-                        int j1 = k << 11 | i1 << 7 | l + (j << 4);
-                        int k1 = p_76690_0_.blocks[j1];
-
-                        if (k1 != 0)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (!flag)
-            {
+            if (!flag) {
                 byte[] abyte1 = new byte[4096];
                 NibbleArray nibblearray = new NibbleArray();
                 NibbleArray nibblearray1 = new NibbleArray();
                 NibbleArray nibblearray2 = new NibbleArray();
 
-                for (int j3 = 0; j3 < 16; ++j3)
-                {
-                    for (int l1 = 0; l1 < 16; ++l1)
-                    {
-                        for (int i2 = 0; i2 < 16; ++i2)
-                        {
-                            int j2 = j3 << 11 | i2 << 7 | l1 + (j << 4);
-                            int k2 = p_76690_0_.blocks[j2];
-                            abyte1[l1 << 8 | i2 << 4 | j3] = (byte)(k2 & 255);
-                            nibblearray.set(j3, l1, i2, p_76690_0_.data.get(j3, l1 + (j << 4), i2));
-                            nibblearray1.set(j3, l1, i2, p_76690_0_.skyLight.get(j3, l1 + (j << 4), i2));
-                            nibblearray2.set(j3, l1, i2, p_76690_0_.blockLight.get(j3, l1 + (j << 4), i2));
+                for (int j3 = 0; j3 < 16; ++j3) {
+                    for (int l1 = 0; l1 < 16; ++l1) {
+                        for (int i2 = 0; i2 < 16; ++i2) {
+                            int j2 = j3 << 11 | i2 << 7 | l1 + l;
+                            int block = p_76690_0_.blocks[j2];
+                            abyte1[l1 << 8 | i2 << 4 | j3] = (byte)(block & 255);
+                            nibblearray.set(j3, l1, i2, p_76690_0_.data.get(j3, l1 + l, i2));
+                            nibblearray1.set(j3, l1, i2, p_76690_0_.skyLight.get(j3, l1 + l, i2));
+                            nibblearray2.set(j3, l1, i2, p_76690_0_.blockLight.get(j3, l1 + l, i2));
                         }
                     }
                 }
@@ -128,6 +106,25 @@ public class ChunkLoader
         {
             compound.setTag("TileTicks", p_76690_0_.tileTicks);
         }
+    }
+
+    private static boolean isFlag(AnvilConverterData p_76690_0_, int l) {
+        boolean flag = false;
+
+        for (int k = 0; k < 16 && !flag; ++k) {
+            for (int i1 = 0; i1 < 16 && !flag; ++i1) {
+                for (int j1 = 0; j1 < 16; ++j1) {
+                    int k1 = k << 11 | j1 << 7 | i1 + l;
+                    int block = p_76690_0_.blocks[k1];
+
+                    if (block != 0) {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return flag;
     }
 
     public static class AnvilConverterData

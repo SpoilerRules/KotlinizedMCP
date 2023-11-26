@@ -144,7 +144,7 @@ public class ChunkProviderFlat implements IChunkProvider
 
         for (MapGenBase mapgenbase : this.structureGenerators)
         {
-            mapgenbase.generate(this, this.worldObj, x, z, chunkprimer);
+            mapgenbase.generate(this.worldObj, x, z, chunkprimer);
         }
 
         Chunk chunk = new Chunk(this.worldObj, chunkprimer, x, z);
@@ -277,7 +277,7 @@ public class ChunkProviderFlat implements IChunkProvider
     {
         for (MapGenStructure mapgenstructure : this.structureGenerators)
         {
-            mapgenstructure.generate(this, this.worldObj, x, z, (ChunkPrimer)null);
+            mapgenstructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
     }
 

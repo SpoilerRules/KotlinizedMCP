@@ -3,7 +3,6 @@ package net.minecraft.world.gen;
 import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.chunk.IChunkProvider;
 
 public class MapGenBase
 {
@@ -11,7 +10,7 @@ public class MapGenBase
     protected Random rand = new Random();
     protected World worldObj;
 
-    public void generate(IChunkProvider chunkProviderIn, World worldIn, int x, int z, ChunkPrimer chunkPrimerIn)
+    public void generate(World worldIn, int x, int z, ChunkPrimer chunkPrimerIn)
     {
         int i = this.range;
         this.worldObj = worldIn;
@@ -19,9 +18,14 @@ public class MapGenBase
         long j = this.rand.nextLong();
         long k = this.rand.nextLong();
 
-        for (int l = x - i; l <= x + i; ++l)
+        int minRangeX = x - i;
+        int maxRangeX = x + i;
+        int minRangeZ = z - i;
+        int maxRangeZ = z + i;
+
+        for (int l = minRangeX; l <= maxRangeX; ++l)
         {
-            for (int i1 = z - i; i1 <= z + i; ++i1)
+            for (int i1 = minRangeZ; i1 <= maxRangeZ; ++i1)
             {
                 long j1 = (long)l * j;
                 long k1 = (long)i1 * k;

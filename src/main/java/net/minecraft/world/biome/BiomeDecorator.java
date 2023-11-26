@@ -1,6 +1,10 @@
 package net.minecraft.world.biome;
 
+import java.util.Objects;
 import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
@@ -75,14 +79,7 @@ public class BiomeDecorator
             this.currentWorld = worldIn;
             String s = worldIn.getWorldInfo().getGeneratorOptions();
 
-            if (s != null)
-            {
-                this.chunkProviderSettings = ChunkProviderSettings.Factory.jsonToFactory(s).func_177864_b();
-            }
-            else
-            {
-                this.chunkProviderSettings = ChunkProviderSettings.Factory.jsonToFactory("").func_177864_b();
-            }
+            this.chunkProviderSettings = ChunkProviderSettings.Factory.jsonToFactory(Objects.requireNonNullElse(s, "")).func_177864_b();
 
             this.randomGenerator = random;
             this.field_180294_c = p_180292_4_;
@@ -340,12 +337,9 @@ public class BiomeDecorator
                 int l13 = this.randomGenerator.nextInt(16) + 8;
                 int i17 = this.randomGenerator.nextInt(248) + 8;
 
-                if (i17 > 0)
-                {
-                    int k19 = this.randomGenerator.nextInt(i17);
-                    BlockPos blockpos6 = this.field_180294_c.add(i10, k19, l13);
-                    (new WorldGenLiquids(Blocks.flowing_water)).generate(this.currentWorld, this.randomGenerator, blockpos6);
-                }
+                int k19 = this.randomGenerator.nextInt(i17);
+                BlockPos blockpos6 = this.field_180294_c.add(i10, k19, l13);
+                (new WorldGenLiquids(Blocks.flowing_water)).generate(this.currentWorld, this.randomGenerator, blockpos6);
             }
 
             for (int l5 = 0; l5 < 20; ++l5)
@@ -379,34 +373,51 @@ public class BiomeDecorator
             }
         }
 
-        for (int j = 0; j < blockCount; ++j)
-        {
-            BlockPos blockpos = this.field_180294_c.add(this.randomGenerator.nextInt(16), this.randomGenerator.nextInt(maxHeight - minHeight) + minHeight, this.randomGenerator.nextInt(16));
+        int finalMaxHeight = maxHeight;
+        int finalMinHeight = minHeight;
+        IntStream.range(0, blockCount).forEach(j -> {
+            BlockPos blockpos = this.field_180294_c.add(this.randomGenerator.nextInt(16), this.randomGenerator.nextInt(finalMaxHeight - finalMinHeight) + finalMinHeight, this.randomGenerator.nextInt(16));
             generator.generate(this.currentWorld, this.randomGenerator, blockpos);
-        }
+        });
     }
 
     protected void genStandardOre2(int blockCount, WorldGenerator generator, int centerHeight, int spread)
     {
-        for (int i = 0; i < blockCount; ++i)
-        {
+        IntStream.range(0, blockCount).forEach(i -> {
             BlockPos blockpos = this.field_180294_c.add(this.randomGenerator.nextInt(16), this.randomGenerator.nextInt(spread) + this.randomGenerator.nextInt(spread) + centerHeight - spread, this.randomGenerator.nextInt(16));
             generator.generate(this.currentWorld, this.randomGenerator, blockpos);
-        }
+        });
     }
 
     protected void generateOres()
     {
-        this.genStandardOre1(this.chunkProviderSettings.dirtCount, this.dirtGen, this.chunkProviderSettings.dirtMinHeight, this.chunkProviderSettings.dirtMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.gravelCount, this.gravelGen, this.chunkProviderSettings.gravelMinHeight, this.chunkProviderSettings.gravelMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.dioriteCount, this.dioriteGen, this.chunkProviderSettings.dioriteMinHeight, this.chunkProviderSettings.dioriteMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.graniteCount, this.graniteGen, this.chunkProviderSettings.graniteMinHeight, this.chunkProviderSettings.graniteMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.andesiteCount, this.andesiteGen, this.chunkProviderSettings.andesiteMinHeight, this.chunkProviderSettings.andesiteMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.coalCount, this.coalGen, this.chunkProviderSettings.coalMinHeight, this.chunkProviderSettings.coalMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.ironCount, this.ironGen, this.chunkProviderSettings.ironMinHeight, this.chunkProviderSettings.ironMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.goldCount, this.goldGen, this.chunkProviderSettings.goldMinHeight, this.chunkProviderSettings.goldMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.redstoneCount, this.redstoneGen, this.chunkProviderSettings.redstoneMinHeight, this.chunkProviderSettings.redstoneMaxHeight);
-        this.genStandardOre1(this.chunkProviderSettings.diamondCount, this.diamondGen, this.chunkProviderSettings.diamondMinHeight, this.chunkProviderSettings.diamondMaxHeight);
-        this.genStandardOre2(this.chunkProviderSettings.lapisCount, this.lapisGen, this.chunkProviderSettings.lapisCenterHeight, this.chunkProviderSettings.lapisSpread);
+        Stream.of(
+                new Ore(this.chunkProviderSettings.dirtCount, this.dirtGen, this.chunkProviderSettings.dirtMinHeight, this.chunkProviderSettings.dirtMaxHeight),
+                new Ore(this.chunkProviderSettings.gravelCount, this.gravelGen, this.chunkProviderSettings.gravelMinHeight, this.chunkProviderSettings.gravelMaxHeight),
+                new Ore(this.chunkProviderSettings.dioriteCount, this.dioriteGen, this.chunkProviderSettings.dioriteMinHeight, this.chunkProviderSettings.dioriteMaxHeight),
+                new Ore(this.chunkProviderSettings.graniteCount, this.graniteGen, this.chunkProviderSettings.graniteMinHeight, this.chunkProviderSettings.graniteMaxHeight),
+                new Ore(this.chunkProviderSettings.andesiteCount, this.andesiteGen, this.chunkProviderSettings.andesiteMinHeight, this.chunkProviderSettings.andesiteMaxHeight),
+                new Ore(this.chunkProviderSettings.coalCount, this.coalGen, this.chunkProviderSettings.coalMinHeight, this.chunkProviderSettings.coalMaxHeight),
+                new Ore(this.chunkProviderSettings.ironCount, this.ironGen, this.chunkProviderSettings.ironMinHeight, this.chunkProviderSettings.ironMaxHeight),
+                new Ore(this.chunkProviderSettings.goldCount, this.goldGen, this.chunkProviderSettings.goldMinHeight, this.chunkProviderSettings.goldMaxHeight),
+                new Ore(this.chunkProviderSettings.redstoneCount, this.redstoneGen, this.chunkProviderSettings.redstoneMinHeight, this.chunkProviderSettings.redstoneMaxHeight),
+                new Ore(this.chunkProviderSettings.diamondCount, this.diamondGen, this.chunkProviderSettings.diamondMinHeight, this.chunkProviderSettings.diamondMaxHeight)
+        ).forEach(ore -> genStandardOre1(ore.count, ore.generator, ore.minHeight, ore.maxHeight));
+
+        genStandardOre2(this.chunkProviderSettings.lapisCount, this.lapisGen, this.chunkProviderSettings.lapisCenterHeight, this.chunkProviderSettings.lapisSpread);
+    }
+
+    static class Ore {
+        int count;
+        WorldGenerator generator;
+        int minHeight;
+        int maxHeight;
+
+        Ore(int count, WorldGenerator generator, int minHeight, int maxHeight) {
+            this.count = count;
+            this.generator = generator;
+            this.minHeight = minHeight;
+            this.maxHeight = maxHeight;
+        }
     }
 }
