@@ -296,7 +296,11 @@ public class TextureUtils
                     TextureUtils.resourcesReloaded(var1);
                 }
             };
-            ireloadableresourcemanager.registerReloadListener(iresourcemanagerreloadlistener);
+            try {
+                ireloadableresourcemanager.registerReloadListener(iresourcemanagerreloadlistener);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         ITickableTextureObject itickabletextureobject = new ITickableTextureObject()

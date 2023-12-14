@@ -7,6 +7,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import net.minecraft.client.Minecraft;
@@ -94,8 +97,7 @@ public class ChunkRenderWorker implements Runnable
             float f2 = (float)lvt_2_1_.posZ;
             ChunkCompileTaskGenerator.Type chunkcompiletaskgenerator$type = generator.getType();
 
-            if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK)
-            {
+            if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.REBUILD_CHUNK) {
                 generator.getRenderChunk().rebuildChunk(f, f1, f2, generator);
             }
             else if (chunkcompiletaskgenerator$type == ChunkCompileTaskGenerator.Type.RESORT_TRANSPARENCY)
@@ -132,6 +134,7 @@ public class ChunkRenderWorker implements Runnable
             {
                 for (EnumWorldBlockLayer enumworldblocklayer : EnumWorldBlockLayer.values())
                 {
+                    if (lvt_7_1_ == null) return;
                     if (lvt_7_1_.isLayerStarted(enumworldblocklayer))
                     {
                         lvt_8_1_.add(this.chunkRenderDispatcher.uploadChunk(enumworldblocklayer, generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(enumworldblocklayer), generator.getRenderChunk(), lvt_7_1_));

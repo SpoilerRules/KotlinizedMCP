@@ -62,7 +62,7 @@ public class MapGenVillage extends MapGenStructure
 
         int k = chunkX / this.field_82665_g;
         int l = chunkZ / this.field_82665_g;
-        Random random = this.worldObj.setRandomSeed(k, l, 10387312);
+        Random random = this.worldObject.setRandomSeed(k, l, 10387312);
         k = k * this.field_82665_g;
         l = l * this.field_82665_g;
         k = k + random.nextInt(this.field_82665_g - this.field_82666_h);
@@ -70,7 +70,7 @@ public class MapGenVillage extends MapGenStructure
 
         if (i == k && j == l)
         {
-            boolean flag = this.worldObj.getWorldChunkManager().areBiomesViable(i * 16 + 8, j * 16 + 8, 0, villageSpawnBiomes);
+            boolean flag = this.worldObject.getWorldChunkManager().areBiomesViable(i * 16 + 8, j * 16 + 8, 0, villageSpawnBiomes);
 
             if (flag)
             {
@@ -83,7 +83,7 @@ public class MapGenVillage extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenVillage.Start(this.worldObj, this.rand, chunkX, chunkZ, this.terrainType);
+        return new MapGenVillage.Start(this.worldObject, this.randomGenerator, chunkX, chunkZ, this.terrainType);
     }
 
     public static class Start extends StructureStart

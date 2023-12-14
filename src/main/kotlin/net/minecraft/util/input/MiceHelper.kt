@@ -3,7 +3,7 @@ package net.minecraft.util.input
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 
-class MouseInputHelper {
+class MiceHelper {
     @JvmField var deltaX = 0
     @JvmField var deltaY = 0
 

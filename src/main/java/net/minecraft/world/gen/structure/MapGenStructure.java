@@ -24,13 +24,13 @@ public abstract class MapGenStructure extends MapGenBase
 
     public abstract String getStructureName();
 
-    protected final void recursiveGenerate(World worldIn, final int chunkX, final int chunkZ, int p_180701_4_, int p_180701_5_, ChunkPrimer chunkPrimerIn)
+    protected final void recursiveGenerate(World worldIn, final int chunkX, final int chunkZ, int centerX, int centerZ, ChunkPrimer chunkPrimerIn)
     {
         this.initializeStructureData(worldIn);
 
         if (!this.structureMap.containsKey(Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ))))
         {
-            this.rand.nextInt();
+            this.randomGenerator.nextInt();
 
             try
             {
@@ -95,7 +95,7 @@ public abstract class MapGenStructure extends MapGenBase
 
     public boolean func_175795_b(BlockPos pos)
     {
-        this.initializeStructureData(this.worldObj);
+        this.initializeStructureData(this.worldObject);
         return this.func_175797_c(pos) != null;
     }
 
@@ -148,14 +148,14 @@ public abstract class MapGenStructure extends MapGenBase
 
     public BlockPos getClosestStrongholdPos(World worldIn, BlockPos pos)
     {
-        this.worldObj = worldIn;
+        this.worldObject = worldIn;
         this.initializeStructureData(worldIn);
-        this.rand.setSeed(worldIn.getSeed());
-        long i = this.rand.nextLong();
-        long j = this.rand.nextLong();
+        this.randomGenerator.setSeed(worldIn.getSeed());
+        long i = this.randomGenerator.nextLong();
+        long j = this.randomGenerator.nextLong();
         long k = (long)(pos.getX() >> 4) * i;
         long l = (long)(pos.getZ() >> 4) * j;
-        this.rand.setSeed(k ^ l ^ worldIn.getSeed());
+        this.randomGenerator.setSeed(k ^ l ^ worldIn.getSeed());
         this.recursiveGenerate(worldIn, pos.getX() >> 4, pos.getZ() >> 4, 0, 0, (ChunkPrimer)null);
         double d0 = Double.MAX_VALUE;
         BlockPos blockpos = null;

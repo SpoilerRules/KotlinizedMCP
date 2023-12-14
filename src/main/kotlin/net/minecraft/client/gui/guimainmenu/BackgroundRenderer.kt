@@ -25,7 +25,7 @@ object BackgroundRenderer : Gui() {
     private var viewportTexture = DynamicTexture(256, 256)
     private var backgroundTexture = mc.textureManager.getDynamicTextureLocation("background", viewportTexture)
 
-    private const val numberOfLayers = 3
+    private const val NUMBER_OF_LAYERS = 3
 
     fun initializePanorama(width: Int, height: Int, panoramaTimer: Int, partialTicks: Float) {
         GlStateManager.disableAlpha()
@@ -93,9 +93,9 @@ object BackgroundRenderer : Gui() {
         worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR)
         GlStateManager.disableAlpha()
 
-        for (layerIndex in 0 until numberOfLayers) {
+        for (layerIndex in 0 until NUMBER_OF_LAYERS) {
             val transparency = 1.0f / (layerIndex + 1).toFloat()
-            val textureOffset = (layerIndex - numberOfLayers / 2).toFloat() / 256.0f
+            val textureOffset = (layerIndex - NUMBER_OF_LAYERS / 2).toFloat() / 256.0f
 
             val positions = listOf(
                 Pair(windowWidth.toDouble(), windowHeight.toDouble()),

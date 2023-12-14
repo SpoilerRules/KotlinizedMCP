@@ -12,7 +12,7 @@ public class ListedRenderChunk extends RenderChunk
 
     public ListedRenderChunk(World worldIn, RenderGlobal renderGlobalIn, BlockPos pos, int indexIn)
     {
-        super(worldIn, renderGlobalIn, pos, indexIn);
+        super(worldIn, renderGlobalIn, pos);
     }
 
     public int getDisplayList(EnumWorldBlockLayer layer, CompiledChunk p_178600_2_)

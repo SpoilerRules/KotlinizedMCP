@@ -66,7 +66,7 @@ public class MapGenStronghold extends MapGenStructure
         if (!this.ranBiomeCheck)
         {
             Random random = new Random();
-            random.setSeed(this.worldObj.getSeed());
+            random.setSeed(this.worldObject.getSeed());
             double d0 = random.nextDouble() * Math.PI * 2.0D;
             int i = 1;
 
@@ -75,7 +75,7 @@ public class MapGenStronghold extends MapGenStructure
                 double d1 = (1.25D * (double)i + random.nextDouble()) * this.field_82671_h * (double)i;
                 int k = (int)Math.round(Math.cos(d0) * d1);
                 int l = (int)Math.round(Math.sin(d0) * d1);
-                BlockPos blockpos = this.worldObj.getWorldChunkManager().findBiomePosition((k << 4) + 8, (l << 4) + 8, 112, this.field_151546_e, random);
+                BlockPos blockpos = this.worldObject.getWorldChunkManager().findBiomePosition((k << 4) + 8, (l << 4) + 8, 112, this.field_151546_e, random);
 
                 if (blockpos != null)
                 {
@@ -126,7 +126,7 @@ public class MapGenStronghold extends MapGenStructure
     {
         MapGenStronghold.Start mapgenstronghold$start;
 
-        for (mapgenstronghold$start = new MapGenStronghold.Start(this.worldObj, this.rand, chunkX, chunkZ); mapgenstronghold$start.getComponents().isEmpty() || ((StructureStrongholdPieces.Stairs2)mapgenstronghold$start.getComponents().get(0)).strongholdPortalRoom == null; mapgenstronghold$start = new MapGenStronghold.Start(this.worldObj, this.rand, chunkX, chunkZ))
+        for (mapgenstronghold$start = new MapGenStronghold.Start(this.worldObject, this.randomGenerator, chunkX, chunkZ); mapgenstronghold$start.getComponents().isEmpty() || ((StructureStrongholdPieces.Stairs2)mapgenstronghold$start.getComponents().get(0)).strongholdPortalRoom == null; mapgenstronghold$start = new MapGenStronghold.Start(this.worldObject, this.randomGenerator, chunkX, chunkZ))
         {
             ;
         }

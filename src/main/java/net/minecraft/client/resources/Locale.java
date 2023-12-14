@@ -14,122 +14,93 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Locale
-{
-    private static final Splitter splitter = Splitter.on('=').limit(2);
-    private static final Pattern pattern = Pattern.compile("%(\\d+\\$)?[\\d.]*[df]");
-    Map<String, String> properties = Maps.<String, String>newHashMap();
-    private boolean unicode;
+public class Locale {
+    private static final Splitter KEY_VALUE_SPLITTER = Splitter.on('=').limit(2);
+    private static final Pattern FORMAT_PATTERN = Pattern.compile("%(\\d+\\$)?[\\d.]*[df]");
+    public final Map<String, String> translations = Maps.newHashMap();
+    private boolean isUnicode;
 
-    public synchronized void loadLocaleDataFiles(IResourceManager resourceManager, List<String> languageList)
-    {
-        this.properties.clear();
+    public synchronized void loadTranslations(IResourceManager resourceManager, List<String> languages) throws IOException {
+        translations.clear();
 
-        for (String s : languageList)
-        {
-            String s1 = String.format("lang/%s.lang", new Object[] {s});
+        for (String language : languages) {
+            String languageFile = String.format("lang/%s.lang", language);
 
-            for (String s2 : resourceManager.getResourceDomains())
-            {
-                try
-                {
-                    this.loadLocaleData(resourceManager.getAllResources(new ResourceLocation(s2, s1)));
-                }
-                catch (IOException var9)
-                {
-                    ;
-                }
+            for (String resourceDomain : resourceManager.getResourceDomains()) {
+                ResourceLocation resourceLocation = new ResourceLocation(resourceDomain, languageFile);
+
+                loadTranslationFiles(resourceManager.getAllResources(resourceLocation));
             }
         }
 
-        this.checkUnicode();
+        checkUnicodeStatus();
     }
 
-    public boolean isUnicode()
-    {
-        return this.unicode;
+    public boolean isUnicode() {
+        return this.isUnicode;
     }
 
-    private void checkUnicode()
-    {
-        this.unicode = false;
-        int i = 0;
-        int j = 0;
+    private void checkUnicodeStatus() {
+        int unicodeCount = 0;
+        int totalCount = 0;
 
-        for (String s : this.properties.values())
-        {
-            int k = s.length();
-            j += k;
+        for (String value : translations.values()) {
+            int length = value.length();
+            totalCount += length;
 
-            for (int l = 0; l < k; ++l)
-            {
-                if (s.charAt(l) >= 256)
-                {
-                    ++i;
+            for (int i = 0; i < length; ++i) {
+                if (value.charAt(i) >= 256) {
+                    ++unicodeCount;
                 }
             }
         }
 
-        float f = (float)i / (float)j;
-        this.unicode = (double)f > 0.1D;
+        float unicodeRatio = (float) unicodeCount / totalCount;
+        isUnicode = unicodeRatio > 0.1;
     }
 
-    private void loadLocaleData(List<IResource> resourcesList) throws IOException
-    {
-        for (IResource iresource : resourcesList)
-        {
-            InputStream inputstream = iresource.getInputStream();
+    private void loadTranslationFiles(List<IResource> resources) {
+        for (IResource resource : resources) {
+            InputStream inputStream = resource.getInputStream();
 
-            try
-            {
-                this.loadLocaleData(inputstream);
-            }
-            finally
-            {
-                IOUtils.closeQuietly(inputstream);
+            try {
+                loadTranslationData(inputStream);
+            } finally {
+                IOUtils.closeQuietly(inputStream);
             }
         }
     }
 
-    private void loadLocaleData(InputStream inputStreamIn) throws IOException
-    {
-        for (String s : IOUtils.readLines(inputStreamIn, StandardCharsets.UTF_8))
-        {
-            if (!s.isEmpty() && s.charAt(0) != 35)
-            {
-                String[] astring = (String[])Iterables.toArray(splitter.split(s), String.class);
+    private void loadTranslationData(InputStream inputStream) {
+        for (String line : IOUtils.readLines(inputStream, StandardCharsets.UTF_8)) {
+            if (!line.isEmpty() && line.charAt(0) != '#') {
+                String[] keyValue = Iterables.toArray(KEY_VALUE_SPLITTER.split(line), String.class);
 
-                if (astring != null && astring.length == 2)
-                {
-                    String s1 = astring[0];
-                    String s2 = pattern.matcher(astring[1]).replaceAll("%$1s");
-                    this.properties.put(s1, s2);
+                if (keyValue.length == 2) {
+                    String key = keyValue[0];
+                    String value = FORMAT_PATTERN.matcher(keyValue[1]).replaceAll("%$1s");
+                    translations.put(key, value);
                 }
             }
         }
     }
 
-    private String translateKeyPrivate(String translateKey)
-    {
-        String s = (String)this.properties.get(translateKey);
-        return s == null ? translateKey : s;
+    private String translateKey(String key) {
+        String translation = translations.get(key);
+        return translation == null ? key : translation;
     }
 
-    public String formatMessage(String translateKey, Object[] parameters)
-    {
-        String s = this.translateKeyPrivate(translateKey);
+    public String formatTranslation(String key, Object[] parameters) {
+        String translation = translateKey(key);
 
-        try
-        {
-            return String.format(s, parameters);
-        }
-        catch (IllegalFormatException var5)
-        {
-            return "Format error: " + s;
+        try {
+            return String.format(translation, parameters);
+        } catch (IllegalFormatException e) {
+            return "Format error: " + translation;
         }
     }
 
-    public Map<String, String> getProperties() {
-        return properties;
+    public Map<String, String> getTranslations() {
+        return translations;
     }
 }

@@ -484,7 +484,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             {
                 this.searchField.setVisible(true);
                 this.searchField.setCanLoseFocus(false);
-                this.searchField.setFocused(true);
+                this.searchField.setFocus(true);
                 this.searchField.setText("");
                 this.updateCreativeSearch();
             }
@@ -492,7 +492,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer
             {
                 this.searchField.setVisible(false);
                 this.searchField.setCanLoseFocus(true);
-                this.searchField.setFocused(false);
+                this.searchField.setFocus(false);
             }
         }
 

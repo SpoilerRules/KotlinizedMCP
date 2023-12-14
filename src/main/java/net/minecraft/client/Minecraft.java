@@ -3,7 +3,6 @@ package net.minecraft.client;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
-import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListenableFutureTask;
@@ -73,7 +72,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.*;
 import net.minecraft.util.client.ClientBrandEnum;
-import net.minecraft.util.input.MouseInputHelper;
+import net.minecraft.util.input.MiceHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
@@ -82,6 +81,7 @@ import net.minecraft.world.chunk.storage.AnvilSaveConverter;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
+import net.optifine.Lagometer;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -115,7 +115,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             new DisplayMode(2880, 1800)
     );
     private static final InputService.Companion inputService = InputService.Companion;
-    public static byte[] memoryReserve = new byte[10485760];
     private static Minecraft theMinecraft;
     private static int debugFPS;
     public final File mcDataDir;
@@ -130,15 +129,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private final boolean jvm64bit;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List<IResourcePack> defaultResourcePacks = Lists.newArrayList();
-    private final DefaultResourcePack mcDefaultResourcePack;
+    public final DefaultResourcePack mcDefaultResourcePack;
     private final MinecraftSessionService sessionService;
     private final Queue<FutureTask<?>> scheduledTasks = Queues.newArrayDeque();
     private final Thread mcThread = Thread.currentThread();
     private final PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());
-    private final int tempDisplayWidth;
-    private final int tempDisplayHeight;
-    private final long field_175615_aJ = 0L;
-    private final long debugCrashKeyPressTime = -1L;
+    public final int tempDisplayWidth;
+    public final int tempDisplayHeight;
     public PlayerControllerMP playerController;
     public int displayWidth;
     public int displayHeight;
@@ -157,7 +154,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public boolean skipRenderWorld;
     public MovingObjectPosition objectMouseOver;
     public GameSettings gameSettings;
-    public MouseInputHelper mouseHelper;
+    public MiceHelper mouseHelper;
     public boolean inGameHasFocus;
     public String debug = "";
     public boolean field_175613_B = false;
@@ -176,9 +173,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     long prevFrameTime = -1L;
     private ServerData currentServerData;
     private TextureManager renderEngine;
-    private boolean fullscreen;
-    private boolean hasCrashed;
-    private CrashReport crashReporter;
+    public boolean fullscreen;
+    public boolean hasGameCrashed;
+    public CrashReport crashReport;
     private RenderManager renderManager;
     private RenderItem renderItem;
     private ItemRenderer itemRenderer;
@@ -196,11 +193,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
     private TextureMap textureMapBlocks;
-    private SoundHandler mcSoundHandler;
+    public SoundHandler mcSoundHandler;
     private MusicTicker mcMusicTicker;
     private ResourceLocation mojangLogo;
     private SkinManager skinManager;
-    private ModelManager modelManager;
     private BlockRendererDispatcher blockRenderDispatcher;
     private String debugProfilerName = "root";
 
@@ -307,53 +303,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.session = session;
     }
 
-    public void run() {
-        this.running = true;
+    public void startGame() throws LWJGLException, IOException {
+        final GameDisplayHandler gameDisplayHandler = new GameDisplayHandler();
 
-        try {
-            startGame();
-        } catch (Throwable throwable) {
-            logger.error("An error occurred while initializing the game:", throwable);
-        }
-
-        while (true) {
-            try {
-                while (this.running) {
-                    if (!this.hasCrashed || this.crashReporter == null) {
-                        try {
-                            this.runGameLoop();
-                        } catch (OutOfMemoryError var10) {
-                            this.freeMemory();
-                            this.displayGuiScreen(new GuiMemoryErrorScreen());
-                            System.gc();
-                        }
-                    } else {
-                        this.displayCrashReport(this.crashReporter);
-                    }
-                }
-            } catch (MinecraftError var12) {
-                break;
-            } catch (ReportedException reportedexception) {
-                this.addGraphicsAndWorldToCrashReport(reportedexception.getCrashReport());
-                this.freeMemory();
-                logger.fatal("Reported exception thrown!", reportedexception);
-                this.displayCrashReport(reportedexception.getCrashReport());
-                break;
-            } catch (Throwable throwable1) {
-                CrashReport crashreport1 = this.addGraphicsAndWorldToCrashReport(new CrashReport("Unexpected error", throwable1));
-                this.freeMemory();
-                logger.fatal("Unreported exception thrown!", throwable1);
-                this.displayCrashReport(crashreport1);
-                break;
-            } finally {
-                this.shutdownMinecraftApplet();
-            }
-
-            return;
-        }
-    }
-
-    private void startGame() throws LWJGLException {
         try {
             this.gameSettings = new GameSettings(getMinecraft(), getMinecraft().mcDataDir);
         } catch (NoClassDefFoundError e) {
@@ -370,9 +322,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         logger.info("LWJGL Version: " + Sys.getVersion());
 
         // set up display and resources
-        setWindowIcon();
+        gameDisplayHandler.setWindowIcon();
         setInitialDisplayMode();
-        createDisplay();
+        gameDisplayHandler.initializeGameWindow();
         OpenGlHelper.initializeTextures();
 
         // framebuffer
@@ -433,7 +385,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         });
 
         // initialize mouse helper
-        this.mouseHelper = new MouseInputHelper();
+        this.mouseHelper = new MiceHelper();
 
         // check and enable OpenGL settings
         checkGLError("Pre startup");
@@ -458,9 +410,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.renderEngine.loadTickableTexture(TextureMap.locationBlocksTexture, this.textureMapBlocks);
         this.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         this.textureMapBlocks.setBlurMipmapDirect(false, this.gameSettings.mipmapLevels > 0);
-        this.modelManager = new ModelManager(this.textureMapBlocks);
-        this.mcResourceManager.registerReloadListener(this.modelManager);
-        this.renderItem = new RenderItem(this.renderEngine, this.modelManager);
+        ModelManager modelManager = new ModelManager(this.textureMapBlocks);
+        this.mcResourceManager.registerReloadListener(modelManager);
+        this.renderItem = new RenderItem(this.renderEngine, modelManager);
         this.renderManager = new RenderManager(this.renderEngine, this.renderItem);
 
         // Initialize item renderer, entity renderer, block render dispatcher, and render global
@@ -468,7 +420,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcResourceManager.registerReloadListener(this.renderItem);
         this.entityRenderer = new EntityRenderer(this, this.mcResourceManager);
         this.mcResourceManager.registerReloadListener(this.entityRenderer);
-        this.blockRenderDispatcher = new BlockRendererDispatcher(this.modelManager.getBlockModelShapes(), this.gameSettings);
+        this.blockRenderDispatcher = new BlockRendererDispatcher(modelManager.getBlockModelShapes(), this.gameSettings);
         this.mcResourceManager.registerReloadListener(this.blockRenderDispatcher);
         this.renderGlobal = new RenderGlobal(this);
         this.mcResourceManager.registerReloadListener(this.renderGlobal);
@@ -512,25 +464,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.metadataSerializer_.registerMetadataSectionType(new LanguageMetadataSectionSerializer(), LanguageMetadataSection.class);
     }
 
-    private void createDisplay() throws LWJGLException {
-        Display.setResizable(true);
-        Display.setTitle(ClientBrandEnum.WINDOW_DISPLAY_TITLE);
-
-        try {
-            Display.create(new PixelFormat().withDepthBits(24));
-        } catch (LWJGLException lwjglexception) {
-            logger.error("Couldn't set pixel translate", lwjglexception);
-            if (fullscreen) updateDisplayMode();
-        }
-
-        if (!Display.isCreated()) logger.error("Failed to create display");
-
-        if (!GLContext.getCapabilities().OpenGL32) {
-            System.out.println("OpenGL 3.2 is not supported. Exiting the game.");
-            System.exit(0);
-        }
-    }
-
     private void setInitialDisplayMode() throws LWJGLException {
         if (this.fullscreen) {
             Display.setFullscreen(true);
@@ -539,29 +472,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.displayHeight = Math.max(1, displaymode.getHeight());
         } else {
             Display.setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
-        }
-    }
-
-    private void setWindowIcon() {
-        Util.EnumOS util$enumos = Util.getOSType();
-
-        if (util$enumos != Util.EnumOS.OSX) {
-            InputStream inputstream = null;
-            InputStream inputstream1 = null;
-
-            try {
-                inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
-                inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
-
-                if (inputstream != null && inputstream1 != null) {
-                    Display.setIcon(new ByteBuffer[]{this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)});
-                }
-            } catch (IOException ioexception) {
-                logger.error("Couldn't set icon", ioexception);
-            } finally {
-                IOUtils.closeQuietly(inputstream);
-                IOUtils.closeQuietly(inputstream1);
-            }
         }
     }
 
@@ -574,8 +484,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void crashed(CrashReport crash) {
-        this.hasCrashed = true;
-        this.crashReporter = crash;
+        this.hasGameCrashed = true;
+        this.crashReport = crash;
     }
 
     public void displayCrashReport(CrashReport crashReportIn) {
@@ -612,12 +522,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         try {
             this.mcResourceManager.reloadResources(list);
-        } catch (RuntimeException runtimeexception) {
+        } catch (RuntimeException | IOException runtimeexception) {
             logger.info("Caught error stitching, removing all assigned resourcepacks", runtimeexception);
             list.clear();
             list.addAll(this.defaultResourcePacks);
             this.mcResourcePackRepository.setRepositories(Collections.emptyList());
-            this.mcResourceManager.reloadResources(list);
+            try {
+                this.mcResourceManager.reloadResources(list);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             this.gameSettings.resourcePacks.clear();
             this.gameSettings.incompatibleResourcePacks.clear();
             this.gameSettings.saveOptions();
@@ -630,7 +544,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    private ByteBuffer readImageToBuffer(InputStream imageStream) throws IOException {
+    public ByteBuffer readImageToBuffer(InputStream imageStream) throws IOException {
         BufferedImage bufferedimage = ImageIO.read(imageStream);
         int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), null, 0, bufferedimage.getWidth());
         ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
@@ -643,48 +557,34 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return bytebuffer;
     }
 
-    private void updateDisplayMode() throws LWJGLException {
-        Set<DisplayMode> set = Sets.newHashSet();
-        Collections.addAll(set, Display.getAvailableDisplayModes());
-        DisplayMode displaymode = Display.getDesktopDisplayMode();
+    private void setOptimalDisplayMode() throws LWJGLException {
+        Set<DisplayMode> availableModes = new HashSet<>(Arrays.asList(Display.getAvailableDisplayModes()));
+        DisplayMode desktopMode = Display.getDesktopDisplayMode();
 
-        if (!set.contains(displaymode) && Util.getOSType() == Util.EnumOS.OSX) {
-            label53:
+        if (!availableModes.contains(desktopMode) && Util.getOSType() == Util.EnumOS.OSX) {
+            for (DisplayMode targetMode : macDisplayModes) {
+                boolean isModeAvailable = availableModes.stream().anyMatch(mode ->
+                        mode.getBitsPerPixel() == 32 &&
+                                mode.getWidth() == targetMode.getWidth() &&
+                                mode.getHeight() == targetMode.getHeight());
 
-            for (DisplayMode displaymode1 : macDisplayModes) {
-                boolean flag = true;
+                if (!isModeAvailable) {
+                    Optional<DisplayMode> optionalMode = availableModes.stream().filter(mode ->
+                            mode.getBitsPerPixel() == 32 &&
+                                    mode.getWidth() == targetMode.getWidth() / 2 &&
+                                    mode.getHeight() == targetMode.getHeight() / 2).findFirst();
 
-                for (DisplayMode displaymode2 : set) {
-                    if (displaymode2.getBitsPerPixel() == 32 && displaymode2.getWidth() == displaymode1.getWidth() && displaymode2.getHeight() == displaymode1.getHeight()) {
-                        flag = false;
+                    if (optionalMode.isPresent()) {
+                        desktopMode = optionalMode.get();
                         break;
                     }
-                }
-
-                if (!flag) {
-                    Iterator iterator = set.iterator();
-                    DisplayMode displaymode3;
-
-                    while (true) {
-                        if (!iterator.hasNext()) {
-                            continue label53;
-                        }
-
-                        displaymode3 = (DisplayMode) iterator.next();
-
-                        if (displaymode3.getBitsPerPixel() == 32 && displaymode3.getWidth() == displaymode1.getWidth() / 2 && displaymode3.getHeight() == displaymode1.getHeight() / 2) {
-                            break;
-                        }
-                    }
-
-                    displaymode = displaymode3;
                 }
             }
         }
 
-        Display.setDisplayMode(displaymode);
-        this.displayWidth = displaymode.getWidth();
-        this.displayHeight = displaymode.getHeight();
+        Display.setDisplayMode(desktopMode);
+        this.displayWidth = desktopMode.getWidth();
+        this.displayHeight = desktopMode.getHeight();
     }
 
     private void drawSplashScreen(TextureManager textureManagerInstance) throws LWJGLException {
@@ -796,28 +696,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    public void shutdownMinecraftApplet() {
-        try {
-            logger.info("Stopping!");
-
-            try {
-                this.loadWorld(null);
-            } catch (Throwable var5) {
-            }
-
-            this.mcSoundHandler.unloadSounds();
-        } finally {
-            Display.destroy();
-
-            if (!this.hasCrashed) {
-                System.exit(0);
-            }
-        }
-
-        System.gc();
-    }
-
-    private void runGameLoop() throws IOException {
+    public void runGameLoop() {
         long i = System.nanoTime();
         this.mcProfiler.startSection("root");
 
@@ -931,6 +810,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.mcProfiler.endSection();
+
+        Lagometer.showLagometer(new ScaledResolution(this));
     }
 
     public void updateDisplay() {
@@ -961,34 +842,24 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
+    /**
+     * Retrieves the limit framerate of the game.
+     *
+     * <p>
+     * This method returns the refresh rate of the desktop display mode if the world is null and the current screen is not null or if the current screen is an instance of GuiPauseMenu.
+     * Otherwise, it returns the framerate limit defined in the game settings.
+     * </p>
+     *
+     * @return the limit framerate. If the world is null and the current screen is not null or if the current screen is an instance of GuiPauseMenu, it returns the refresh rate of the desktop display mode.
+     * Otherwise, it returns the framerate limit from the game settings.
+     */
     public int getLimitFramerate() {
-        return this.theWorld == null && this.currentScreen != null ? 30 : this.gameSettings.limitFramerate;
+        int refreshRate = Display.getDesktopDisplayMode().getFrequency();
+        return (this.theWorld == null && this.currentScreen != null) || this.currentScreen instanceof GuiPauseScreen ? refreshRate : this.gameSettings.limitFramerate;
     }
 
     public boolean isFramerateLimitBelowMax() {
         return (float) this.getLimitFramerate() < GameSettings.Options.FRAMERATE_LIMIT.getValueMax();
-    }
-
-    public void freeMemory() {
-        try {
-            memoryReserve = new byte[0];
-            this.renderGlobal.deleteAllDisplayLists();
-        } catch (Throwable throwable) {
-            logger.info("Error while deleting display lists: " + throwable.getMessage());
-        }
-
-        try {
-            System.gc();
-            this.loadWorld(null);
-        } catch (Throwable throwable) {
-            logger.info("Error while loading world: " + throwable.getMessage());
-        }
-
-        try {
-            System.gc();
-        } catch (Throwable throwable) {
-            logger.info("Error during System garbage collection: " + throwable.getMessage());
-        }
     }
 
     public void updateDebugProfilerName(int keyCount) {
@@ -1049,17 +920,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             double d0 = 0.0D;
 
             for (Profiler.Result result : list) {
-                Profiler.Result profiler$result1 = result;
-                int i1 = MathHelper.floor_double(profiler$result1.field_76332_a / 4.0D) + 1;
+                int i1 = MathHelper.floor_double(result.field_76332_a / 4.0D) + 1;
                 worldrenderer.begin(6, DefaultVertexFormats.POSITION_COLOR);
-                int j1 = profiler$result1.getColor();
+                int j1 = result.getColor();
                 int k1 = j1 >> 16 & 255;
                 int l1 = j1 >> 8 & 255;
                 int i2 = j1 & 255;
                 worldrenderer.pos(j, k, 0.0D).color(k1, l1, i2, 255).endVertex();
 
                 for (int j2 = i1; j2 >= 0; --j2) {
-                    float f = (float) ((d0 + profiler$result1.field_76332_a * (double) j2 / (double) i1) * Math.PI * 2.0D / 100.0D);
+                    float f = (float) ((d0 + result.field_76332_a * (double) j2 / (double) i1) * Math.PI * 2.0D / 100.0D);
                     float f1 = MathHelper.sin(f) * (float) i;
                     float f2 = MathHelper.cos(f) * (float) i * 0.5F;
                     worldrenderer.pos((float) j + f1, (float) k - f2, 0.0D).color(k1, l1, i2, 255).endVertex();
@@ -1069,7 +939,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 worldrenderer.begin(5, DefaultVertexFormats.POSITION_COLOR);
 
                 for (int i3 = i1; i3 >= 0; --i3) {
-                    float f3 = (float) ((d0 + profiler$result1.field_76332_a * (double) i3 / (double) i1) * Math.PI * 2.0D / 100.0D);
+                    float f3 = (float) ((d0 + result.field_76332_a * (double) i3 / (double) i1) * Math.PI * 2.0D / 100.0D);
                     float f4 = MathHelper.sin(f3) * (float) i;
                     float f5 = MathHelper.cos(f3) * (float) i * 0.5F;
                     worldrenderer.pos((float) j + f4, (float) k - f5, 0.0D).color(k1 >> 1, l1 >> 1, i2 >> 1, 255).endVertex();
@@ -1077,7 +947,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
 
                 tessellator.draw();
-                d0 += profiler$result1.field_76332_a;
+                d0 += result.field_76332_a;
             }
 
             DecimalFormat decimalformat = new DecimalFormat("##0.00");
@@ -1117,7 +987,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void shutdown() {
-        this.running = false;
+        GameInitializer.Companion.setGameRunning(false);
     }
 
     public void setIngameFocus() {
@@ -1141,7 +1011,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     public void displayInGameMenu() {
         if (this.currentScreen == null) {
-            this.displayGuiScreen(new GuiIngameMenu());
+            this.displayGuiScreen(new GuiPauseScreen());
 
             if (this.isSingleplayer() && !this.theIntegratedServer.getPublic()) {
                 this.mcSoundHandler.pauseSounds();
@@ -1237,13 +1107,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    public void toggleFullscreen() {
+    public void switchFullscreenMode() {
         try {
             this.fullscreen = !this.fullscreen;
             this.gameSettings.fullScreen = this.fullscreen;
 
             if (this.fullscreen) {
-                this.updateDisplayMode();
+                this.setOptimalDisplayMode();
                 this.displayWidth = Display.getDisplayMode().getWidth();
                 this.displayHeight = Display.getDisplayMode().getHeight();
 
@@ -1687,8 +1557,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     public void launchIntegratedServer(String folderName, String worldName, WorldSettings worldSettingsIn) {
         this.loadWorld(null);
-        // Pending removal: forced garbage collection is not good for health.
-        System.gc();
         ISaveHandler isavehandler = this.saveLoader.getSaveLoader(folderName, false);
         WorldInfo worldinfo = isavehandler.loadWorldInfo();
 
@@ -1803,7 +1671,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             this.thePlayer = null;
         }
 
-        System.gc();
         this.systemTime = 0L;
     }
 
@@ -2218,7 +2085,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             if (!(this.currentScreen instanceof GuiControls) || ((GuiControls) this.currentScreen).time <= getSystemTime() - 20L) {
                 if (Keyboard.getEventKeyState()) {
                     if (i == this.gameSettings.keyBindFullscreen.getKeyCode()) {
-                        this.toggleFullscreen();
+                        this.switchFullscreenMode();
                     } else if (i == this.gameSettings.keyBindScreenshot.getKeyCode()) {
                         this.ingameGUI.getChatGUI().printChatMessage(ScreenshotHandler.takeScreenshot(this.mcDataDir, this.displayWidth, this.displayHeight, this.framebufferMc));
                     }

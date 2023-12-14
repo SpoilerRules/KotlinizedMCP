@@ -62,7 +62,7 @@ public class MapGenScatteredFeature extends MapGenStructure
 
         int k = chunkX / this.maxDistanceBetweenScatteredFeatures;
         int l = chunkZ / this.maxDistanceBetweenScatteredFeatures;
-        Random random = this.worldObj.setRandomSeed(k, l, 14357617);
+        Random random = this.worldObject.setRandomSeed(k, l, 14357617);
         k = k * this.maxDistanceBetweenScatteredFeatures;
         l = l * this.maxDistanceBetweenScatteredFeatures;
         k = k + random.nextInt(this.maxDistanceBetweenScatteredFeatures - this.minDistanceBetweenScatteredFeatures);
@@ -70,7 +70,7 @@ public class MapGenScatteredFeature extends MapGenStructure
 
         if (i == k && j == l)
         {
-            BiomeGenBase biomegenbase = this.worldObj.getWorldChunkManager().getBiomeGenerator(new BlockPos(i * 16 + 8, 0, j * 16 + 8));
+            BiomeGenBase biomegenbase = this.worldObject.getWorldChunkManager().getBiomeGenerator(new BlockPos(i * 16 + 8, 0, j * 16 + 8));
 
             if (biomegenbase == null)
             {
@@ -91,7 +91,7 @@ public class MapGenScatteredFeature extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new MapGenScatteredFeature.Start(this.worldObj, this.rand, chunkX, chunkZ);
+        return new MapGenScatteredFeature.Start(this.worldObject, this.randomGenerator, chunkX, chunkZ);
     }
 
     public boolean func_175798_a(BlockPos p_175798_1_)

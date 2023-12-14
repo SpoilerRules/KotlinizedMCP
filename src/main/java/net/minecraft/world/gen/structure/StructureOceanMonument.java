@@ -70,7 +70,7 @@ public class StructureOceanMonument extends MapGenStructure
 
         int k = chunkX / this.field_175800_f;
         int l = chunkZ / this.field_175800_f;
-        Random random = this.worldObj.setRandomSeed(k, l, 10387313);
+        Random random = this.worldObject.setRandomSeed(k, l, 10387313);
         k = k * this.field_175800_f;
         l = l * this.field_175800_f;
         k = k + (random.nextInt(this.field_175800_f - this.field_175801_g) + random.nextInt(this.field_175800_f - this.field_175801_g)) / 2;
@@ -78,12 +78,12 @@ public class StructureOceanMonument extends MapGenStructure
 
         if (i == k && j == l)
         {
-            if (this.worldObj.getWorldChunkManager().getBiomeGenerator(new BlockPos(i * 16 + 8, 64, j * 16 + 8), (BiomeGenBase)null) != BiomeGenBase.deepOcean)
+            if (this.worldObject.getWorldChunkManager().getBiomeGenerator(new BlockPos(i * 16 + 8, 64, j * 16 + 8), (BiomeGenBase)null) != BiomeGenBase.deepOcean)
             {
                 return false;
             }
 
-            boolean flag = this.worldObj.getWorldChunkManager().areBiomesViable(i * 16 + 8, j * 16 + 8, 29, field_175802_d);
+            boolean flag = this.worldObject.getWorldChunkManager().areBiomesViable(i * 16 + 8, j * 16 + 8, 29, field_175802_d);
 
             if (flag)
             {
@@ -96,7 +96,7 @@ public class StructureOceanMonument extends MapGenStructure
 
     protected StructureStart getStructureStart(int chunkX, int chunkZ)
     {
-        return new StructureOceanMonument.StartMonument(this.worldObj, this.rand, chunkX, chunkZ);
+        return new StructureOceanMonument.StartMonument(this.worldObject, this.randomGenerator, chunkX, chunkZ);
     }
 
     public List<BiomeGenBase.SpawnListEntry> getScatteredFeatureSpawnList()

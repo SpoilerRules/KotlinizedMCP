@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.mojang.authlib.properties.PropertyMap
 import joptsimple.OptionParser
 import joptsimple.OptionSpec
+import net.minecraft.client.GameInitializer
 import net.minecraft.client.Minecraft
 import net.minecraft.client.main.GameConfiguration.*
 import net.minecraft.util.Session
@@ -114,6 +115,8 @@ object ClientInitializer {
 
         Thread.currentThread().apply { name = "Client thread" }
 
-        Minecraft(gameConfiguration).run()
+        Minecraft(gameConfiguration)
+
+        GameInitializer().runGame()
     }
 }

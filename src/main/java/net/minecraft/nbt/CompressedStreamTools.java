@@ -39,15 +39,9 @@ public class CompressedStreamTools
 
     public static void writeCompressed(NBTTagCompound p_74799_0_, OutputStream outputStream) throws IOException
     {
-        DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(outputStream)));
 
-        try
-        {
+        try (DataOutputStream dataoutputstream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(outputStream)))) {
             write(p_74799_0_, dataoutputstream);
-        }
-        finally
-        {
-            dataoutputstream.close();
         }
     }
 
@@ -79,15 +73,9 @@ public class CompressedStreamTools
 
     public static void write(NBTTagCompound p_74795_0_, File p_74795_1_) throws IOException
     {
-        DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(p_74795_1_));
 
-        try
-        {
+        try (DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(p_74795_1_))) {
             write(p_74795_0_, dataoutputstream);
-        }
-        finally
-        {
-            dataoutputstream.close();
         }
     }
 
@@ -122,7 +110,7 @@ public class CompressedStreamTools
 
     public static NBTTagCompound read(DataInput p_152456_0_, NBTSizeTracker p_152456_1_) throws IOException
     {
-        NBTBase nbtbase = func_152455_a(p_152456_0_, 0, p_152456_1_);
+        NBTBase nbtbase = func_152455_a(p_152456_0_, p_152456_1_);
 
         if (nbtbase instanceof NBTTagCompound)
         {
@@ -150,7 +138,7 @@ public class CompressedStreamTools
         }
     }
 
-    private static NBTBase func_152455_a(DataInput p_152455_0_, int p_152455_1_, NBTSizeTracker p_152455_2_) throws IOException
+    private static NBTBase func_152455_a(DataInput p_152455_0_, NBTSizeTracker p_152455_2_) throws IOException
     {
         byte b0 = p_152455_0_.readByte();
 
@@ -165,7 +153,9 @@ public class CompressedStreamTools
 
             try
             {
-                nbtbase.read(p_152455_0_, p_152455_1_, p_152455_2_);
+                if (nbtbase != null) {
+                    nbtbase.read(p_152455_0_, 0, p_152455_2_);
+                }
                 return nbtbase;
             }
             catch (IOException ioexception)
@@ -173,7 +163,7 @@ public class CompressedStreamTools
                 CrashReport crashreport = CrashReport.makeCrashReport(ioexception, "Loading NBT data");
                 CrashReportCategory crashreportcategory = crashreport.makeCategory("NBT Tag");
                 crashreportcategory.addCrashSection("Tag name", "[UNNAMED TAG]");
-                crashreportcategory.addCrashSection("Tag type", Byte.valueOf(b0));
+                crashreportcategory.addCrashSection("Tag type", b0);
                 throw new ReportedException(crashreport);
             }
         }

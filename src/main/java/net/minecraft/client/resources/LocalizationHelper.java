@@ -28,7 +28,7 @@ public class LocalizationHelper {
     public static String translate(String translateKey, Object... parameters) {
         if (currentLocale == null) throw new IllegalStateException("Current locale has not been set. Call setCurrentLocale() first.");
 
-        return currentLocale.formatMessage(translateKey, parameters);
+        return currentLocale.formatTranslation(translateKey, parameters);
     }
 
     /**
@@ -39,6 +39,6 @@ public class LocalizationHelper {
     public static Map<String, String> getLocaleProperties() {
         if (currentLocale == null) throw new IllegalStateException("Current locale has not been set. Call setCurrentLocale() first.");
 
-        return currentLocale.getProperties();
+        return currentLocale.getTranslations();
     }
 }

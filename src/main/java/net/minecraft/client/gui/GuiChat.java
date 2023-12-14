@@ -43,7 +43,7 @@ public class GuiChat extends GuiScreen
         this.inputField = new GuiTextField(0, this.fontRendererObject, 4, this.height - 12, this.width - 4, 12);
         this.inputField.setMaxStringLength(100);
         this.inputField.setEnableBackgroundDrawing(false);
-        this.inputField.setFocused(true);
+        this.inputField.setFocus(true);
         this.inputField.setText(this.defaultInputFieldText);
         this.inputField.setCanLoseFocus(false);
     }
@@ -170,7 +170,7 @@ public class GuiChat extends GuiScreen
     {
         if (this.playerNamesFound)
         {
-            this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
+            this.inputField.deleteFromCursor(this.inputField.findPosition(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
 
             if (this.autocompleteIndex >= this.foundPlayerNames.size())
             {
@@ -179,7 +179,7 @@ public class GuiChat extends GuiScreen
         }
         else
         {
-            int i = this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false);
+            int i = this.inputField.findPosition(-1, this.inputField.getCursorPosition(), false);
             this.foundPlayerNames.clear();
             this.autocompleteIndex = 0;
             String s1 = this.inputField.getText().substring(0, this.inputField.getCursorPosition());
@@ -285,12 +285,12 @@ public class GuiChat extends GuiScreen
                 }
             }
 
-            String s1 = this.inputField.getText().substring(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false));
+            String s1 = this.inputField.getText().substring(this.inputField.findPosition(-1, this.inputField.getCursorPosition(), false));
             String s2 = StringUtils.getCommonPrefix(p_146406_1_);
 
             if (s2.length() > 0 && !s1.equalsIgnoreCase(s2))
             {
-                this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
+                this.inputField.deleteFromCursor(this.inputField.findPosition(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
                 this.inputField.writeText(s2);
             }
             else if (this.foundPlayerNames.size() > 0)

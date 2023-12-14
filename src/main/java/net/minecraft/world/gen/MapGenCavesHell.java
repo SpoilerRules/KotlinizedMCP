@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class MapGenCavesHell extends MapGenBase {
     protected void func_180705_a(long p_180705_1_, int p_180705_3_, int p_180705_4_, ChunkPrimer p_180705_5_, double p_180705_6_, double p_180705_8_, double p_180705_10_) {
-        this.func_180704_a(p_180705_1_, p_180705_3_, p_180705_4_, p_180705_5_, p_180705_6_, p_180705_8_, p_180705_10_, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
+        this.func_180704_a(p_180705_1_, p_180705_3_, p_180705_4_, p_180705_5_, p_180705_6_, p_180705_8_, p_180705_10_, 1.0F + this.randomGenerator.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
     }
 
     protected void func_180704_a(long p_180704_1_, int p_180704_3_, int p_180704_4_, ChunkPrimer p_180704_5_, double p_180704_6_, double p_180704_8_, double p_180704_10_, float p_180704_12_, float p_180704_13_, float p_180704_14_, int p_180704_15_, int p_180704_16_, double p_180704_17_) {
@@ -21,7 +21,7 @@ public class MapGenCavesHell extends MapGenBase {
         Random random = new Random(p_180704_1_);
 
         if (p_180704_16_ <= 0) {
-            int i = this.range * 16 - 16;
+            int i = this.generationRange * 16 - 16;
             p_180704_16_ = i - random.nextInt(i / 4);
         }
 
@@ -154,29 +154,29 @@ public class MapGenCavesHell extends MapGenBase {
         }
     }
 
-    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int p_180701_4_, int p_180701_5_, ChunkPrimer chunkPrimerIn) {
-        int i = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(10) + 1) + 1);
+    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int centerX, int centerZ, ChunkPrimer chunkPrimerIn) {
+        int i = this.randomGenerator.nextInt(this.randomGenerator.nextInt(this.randomGenerator.nextInt(10) + 1) + 1);
 
-        if (this.rand.nextInt(5) != 0) {
+        if (this.randomGenerator.nextInt(5) != 0) {
             i = 0;
         }
 
         for (int j = 0; j < i; ++j) {
-            double d0 = chunkX * 16 + this.rand.nextInt(16);
-            double d1 = this.rand.nextInt(128);
-            double d2 = chunkZ * 16 + this.rand.nextInt(16);
+            double d0 = chunkX * 16 + this.randomGenerator.nextInt(16);
+            double d1 = this.randomGenerator.nextInt(128);
+            double d2 = chunkZ * 16 + this.randomGenerator.nextInt(16);
             int k = 1;
 
-            if (this.rand.nextInt(4) == 0) {
-                this.func_180705_a(this.rand.nextLong(), p_180701_4_, p_180701_5_, chunkPrimerIn, d0, d1, d2);
-                k += this.rand.nextInt(4);
+            if (this.randomGenerator.nextInt(4) == 0) {
+                this.func_180705_a(this.randomGenerator.nextLong(), centerX, centerZ, chunkPrimerIn, d0, d1, d2);
+                k += this.randomGenerator.nextInt(4);
             }
 
             for (int l = 0; l < k; ++l) {
-                float f = this.rand.nextFloat() * (float) Math.PI * 2.0F;
-                float f1 = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
-                float f2 = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
-                this.func_180704_a(this.rand.nextLong(), p_180701_4_, p_180701_5_, chunkPrimerIn, d0, d1, d2, f2 * 2.0F, f, f1, 0, 0, 0.5D);
+                float f = this.randomGenerator.nextFloat() * (float) Math.PI * 2.0F;
+                float f1 = (this.randomGenerator.nextFloat() - 0.5F) * 2.0F / 8.0F;
+                float f2 = this.randomGenerator.nextFloat() * 2.0F + this.randomGenerator.nextFloat();
+                this.func_180704_a(this.randomGenerator.nextLong(), centerX, centerZ, chunkPrimerIn, d0, d1, d2, f2 * 2.0F, f, f1, 0, 0, 0.5D);
             }
         }
     }

@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.lang.management.ManagementFactory;
@@ -94,7 +95,7 @@ public class CrashReport
 
     public void getSectionsInStringBuilder(StringBuilder builder)
     {
-        if ((this.stacktrace == null || this.stacktrace.length == 0) && this.crashReportSections.size() > 0)
+        if ((this.stacktrace == null || this.stacktrace.length == 0) && !this.crashReportSections.isEmpty())
         {
             this.stacktrace = ArrayUtils.subarray(this.crashReportSections.get(0).getStackTrace(), 0, 1);
         }
@@ -126,25 +127,7 @@ public class CrashReport
     {
         StringWriter stringwriter = null;
         PrintWriter printwriter = null;
-        Throwable throwable = this.cause;
-
-        if (throwable.getMessage() == null)
-        {
-            if (throwable instanceof NullPointerException)
-            {
-                throwable = new NullPointerException(this.description);
-            }
-            else if (throwable instanceof StackOverflowError)
-            {
-                throwable = new StackOverflowError(this.description);
-            }
-            else if (throwable instanceof OutOfMemoryError)
-            {
-                throwable = new OutOfMemoryError(this.description);
-            }
-
-            throwable.setStackTrace(this.cause.getStackTrace());
-        }
+        Throwable throwable = getThrowable();
 
         String s = throwable.toString();
 
@@ -162,6 +145,26 @@ public class CrashReport
         }
 
         return s;
+    }
+
+    @NotNull
+    private Throwable getThrowable() {
+        Throwable throwable = this.cause;
+
+        if (throwable.getMessage() == null)
+        {
+            switch (throwable) {
+                case NullPointerException nullPointerException ->
+                        throwable = new NullPointerException(this.description);
+                case StackOverflowError stackOverflowError -> throwable = new StackOverflowError(this.description);
+                case OutOfMemoryError outOfMemoryError -> throwable = new OutOfMemoryError(this.description);
+                default -> {
+                }
+            }
+
+            throwable.setStackTrace(this.cause.getStackTrace());
+        }
+        return throwable;
     }
 
     public String getCompleteReport()
@@ -210,7 +213,7 @@ public class CrashReport
         {
             if (toFile.getParentFile() != null)
             {
-                toFile.getParentFile().mkdirs();
+                toFile.getParentFile().mkdir();
             }
 
             try

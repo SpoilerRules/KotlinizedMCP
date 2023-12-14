@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") {
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
@@ -100,7 +100,7 @@ dependencies {
 
     // Testing (useless for now)
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.21")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -128,8 +128,6 @@ sourceSets {
     }
 }
 
-group = "spoiligaming"
-
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
@@ -139,6 +137,10 @@ tasks.jar{
     archiveBaseName.set("Evanescent")
 
     duplicatesStrategy = DuplicatesStrategy.FAIL
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.withType<JavaCompile> {

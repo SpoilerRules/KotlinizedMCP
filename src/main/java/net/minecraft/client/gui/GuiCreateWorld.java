@@ -73,7 +73,7 @@ public class GuiCreateWorld extends GuiScreen
         this.buttonList.add(this.btnCustomizeType = new GuiButton(8, this.width / 2 + 5, 120, 150, 20, LocalizationHelper.translate("selectWorld.customizeType", new Object[0])));
         this.btnCustomizeType.visible = false;
         this.worldNameField = new GuiTextField(9, this.fontRendererObject, this.width / 2 - 100, 60, 200, 20);
-        this.worldNameField.setFocused(true);
+        this.worldNameField.setFocus(true);
         this.worldNameField.setText(this.worldName);
         this.worldSeedField = new GuiTextField(10, this.fontRendererObject, this.width / 2 - 100, 60, 200, 20);
         this.worldSeedField.setText(this.worldSeed);

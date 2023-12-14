@@ -4,38 +4,34 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 
-public class MapGenBase
-{
-    protected int range = 8;
-    protected Random rand = new Random();
-    protected World worldObj;
+public class MapGenBase {
+    protected int generationRange = 8;
+    protected Random randomGenerator = new Random();
+    protected World worldObject;
 
-    public void generate(World worldIn, int x, int z, ChunkPrimer chunkPrimerIn)
-    {
-        int i = this.range;
-        this.worldObj = worldIn;
-        this.rand.setSeed(worldIn.getSeed());
-        long j = this.rand.nextLong();
-        long k = this.rand.nextLong();
+    public void generate(World worldIn, int centerX, int centerZ, ChunkPrimer chunkPrimerIn) {
+        int range = this.generationRange;
+        this.worldObject = worldIn;
+        this.randomGenerator.setSeed(worldIn.getSeed());
+        long seedX = this.randomGenerator.nextLong();
+        long seedZ = this.randomGenerator.nextLong();
+        long worldSeed = worldIn.getSeed();
 
-        int minRangeX = x - i;
-        int maxRangeX = x + i;
-        int minRangeZ = z - i;
-        int maxRangeZ = z + i;
+        int minX = centerX - range;
+        int maxX = centerX + range;
+        int minZ = centerZ - range;
+        int maxZ = centerZ + range;
 
-        for (int l = minRangeX; l <= maxRangeX; ++l)
-        {
-            for (int i1 = minRangeZ; i1 <= maxRangeZ; ++i1)
-            {
-                long j1 = (long)l * j;
-                long k1 = (long)i1 * k;
-                this.rand.setSeed(j1 ^ k1 ^ worldIn.getSeed());
-                this.recursiveGenerate(worldIn, l, i1, x, z, chunkPrimerIn);
+        for (int x = minX; x <= maxX; ++x) {
+            long xSeed = (long) x * seedX;
+            for (int z = minZ; z <= maxZ; ++z) {
+                long zSeed = (long) z * seedZ;
+                this.randomGenerator.setSeed(xSeed ^ zSeed ^ worldSeed);
+                this.recursiveGenerate(worldIn, x, z, centerX, centerZ, chunkPrimerIn);
             }
         }
     }
 
-    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int p_180701_4_, int p_180701_5_, ChunkPrimer chunkPrimerIn)
-    {
+    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int centerX, int centerZ, ChunkPrimer chunkPrimerIn) {
     }
 }

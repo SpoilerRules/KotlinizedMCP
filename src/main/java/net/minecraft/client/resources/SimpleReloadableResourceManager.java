@@ -86,8 +86,7 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         this.setResourceDomains.clear();
     }
 
-    public void reloadResources(List<IResourcePack> resourcesPacksList)
-    {
+    public void reloadResources(List<IResourcePack> resourcesPacksList) throws IOException {
         this.clearResources();
         logger.info("Reloading ResourceManager: " + joinerResourcePacks.join(resourcesPacksList.stream().map(IResourcePack::getPackName).collect(Collectors.toList())));
 
@@ -99,14 +98,12 @@ public class SimpleReloadableResourceManager implements IReloadableResourceManag
         this.notifyReloadListeners();
     }
 
-    public void registerReloadListener(IResourceManagerReloadListener reloadListener)
-    {
+    public void registerReloadListener(IResourceManagerReloadListener reloadListener) throws IOException {
         this.reloadListeners.add(reloadListener);
         reloadListener.onResourceManagerReload(this);
     }
 
-    private void notifyReloadListeners()
-    {
+    private void notifyReloadListeners() throws IOException {
         for (IResourceManagerReloadListener iresourcemanagerreloadlistener : this.reloadListeners)
         {
             iresourcemanagerreloadlistener.onResourceManagerReload(this);

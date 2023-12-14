@@ -41,7 +41,7 @@ public class GuiCommandBlock extends GuiScreen
         this.buttonList.add(this.field_175390_s = new GuiButton(4, this.width / 2 + 150 - 20, 150, 20, 20, "O"));
         this.commandTextField = new GuiTextField(2, this.fontRendererObject, this.width / 2 - 150, 50, 300, 20);
         this.commandTextField.setMaxStringLength(32767);
-        this.commandTextField.setFocused(true);
+        this.commandTextField.setFocus(true);
         this.commandTextField.setText(this.localCommandBlock.getCommand());
         this.previousOutputTextField = new GuiTextField(3, this.fontRendererObject, this.width / 2 - 150, 150, 276, 20);
         this.previousOutputTextField.setMaxStringLength(32767);

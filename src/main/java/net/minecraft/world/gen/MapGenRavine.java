@@ -22,7 +22,7 @@ public class MapGenRavine extends MapGenBase
 
         if (p_180707_16_ <= 0)
         {
-            int i = this.range * 16 - 16;
+            int i = this.generationRange * 16 - 16;
             p_180707_16_ = i - random.nextInt(i / 4);
         }
 
@@ -183,7 +183,7 @@ public class MapGenRavine extends MapGenBase
                                                     if (flag && p_180707_5_.getBlockState(j3, j2 - 1, i2).getBlock() == Blocks.dirt)
                                                     {
                                                         blockpos$mutableblockpos.set(j3 + p_180707_3_ * 16, 0, i2 + p_180707_4_ * 16);
-                                                        p_180707_5_.setBlockState(j3, j2 - 1, i2, this.worldObj.getBiomeGenForCoords(blockpos$mutableblockpos).topBlock);
+                                                        p_180707_5_.setBlockState(j3, j2 - 1, i2, this.worldObject.getBiomeGenForCoords(blockpos$mutableblockpos).topBlock);
                                                     }
                                                 }
                                             }
@@ -203,21 +203,21 @@ public class MapGenRavine extends MapGenBase
         }
     }
 
-    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int p_180701_4_, int p_180701_5_, ChunkPrimer chunkPrimerIn)
+    protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int centerX, int centerZ, ChunkPrimer chunkPrimerIn)
     {
-        if (this.rand.nextInt(50) == 0)
+        if (this.randomGenerator.nextInt(50) == 0)
         {
-            double d0 = (double)(chunkX * 16 + this.rand.nextInt(16));
-            double d1 = (double)(this.rand.nextInt(this.rand.nextInt(40) + 8) + 20);
-            double d2 = (double)(chunkZ * 16 + this.rand.nextInt(16));
+            double d0 = (double)(chunkX * 16 + this.randomGenerator.nextInt(16));
+            double d1 = (double)(this.randomGenerator.nextInt(this.randomGenerator.nextInt(40) + 8) + 20);
+            double d2 = (double)(chunkZ * 16 + this.randomGenerator.nextInt(16));
             int i = 1;
 
             for (int j = 0; j < i; ++j)
             {
-                float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
-                float f1 = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
-                float f2 = (this.rand.nextFloat() * 2.0F + this.rand.nextFloat()) * 2.0F;
-                this.func_180707_a(this.rand.nextLong(), p_180701_4_, p_180701_5_, chunkPrimerIn, d0, d1, d2, f2, f, f1, 0, 0, 3.0D);
+                float f = this.randomGenerator.nextFloat() * (float)Math.PI * 2.0F;
+                float f1 = (this.randomGenerator.nextFloat() - 0.5F) * 2.0F / 8.0F;
+                float f2 = (this.randomGenerator.nextFloat() * 2.0F + this.randomGenerator.nextFloat()) * 2.0F;
+                this.func_180707_a(this.randomGenerator.nextLong(), centerX, centerZ, chunkPrimerIn, d0, d1, d2, f2, f, f1, 0, 0, 3.0D);
             }
         }
     }

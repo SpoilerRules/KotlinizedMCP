@@ -1,6 +1,7 @@
 package net.minecraft.client.inputhandler
 
 import annotations.ExperimentalState
+import net.minecraft.client.GameDisplayHandler
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiControls
 import net.minecraft.client.gui.GuiScreen
@@ -45,7 +46,7 @@ class KeyboardInputHandler : InputService() {
 
             if (activeScreen !is GuiControls) {
                 when (keyEvent) {
-                    mc.gameSettings.keyBindFullscreen.keyCode -> mc.toggleFullscreen()
+                    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
                     mc.gameSettings.keyBindScreenshot.keyCode -> {
                         val screenshotMessage = ScreenshotHandler.takeScreenshot(
                             mc.mcDataDir,
