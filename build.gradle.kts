@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // Kotlin
-        implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") {
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
