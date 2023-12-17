@@ -99,23 +99,27 @@ class GameDisplayHandler : CommonGameElement() {
     fun initializeGameWindow() {
         Display.setResizable(true)
         Display.setTitle(ClientBrandEnum.WINDOW_DISPLAY_TITLE)
+        setWindowIcon()
 
-        try {
+        if (mc.fullscreen) {
+            Display.setFullscreen(true)
+            mc.displayWidth = max(1, Display.getDisplayMode().width)
+            mc.displayHeight = max(1, Display.getDisplayMode().height)
+        } else {
+            Display.setDisplayMode(DisplayMode(mc.displayWidth, mc.displayHeight))
+        }
+
+        runCatching {
             Display.create(PixelFormat().withDepthBits(24))
-        } catch (e: LWJGLException) {
+        }.onFailure { e ->
             logger.error("Couldn't set pixel translate", e)
-
-            if (mc.fullscreen) {
-                setOptimalDisplayMode()
-            }
+            if (mc.fullscreen) setOptimalDisplayMode()
         }
 
-        if (!Display.isCreated()) {
-            throw RuntimeException("Failed to create display")
-        }
+        check(Display.isCreated()) { "Failed to create display" }
     }
 
-    fun setWindowIcon() {
+    private fun setWindowIcon() {
         if (Util.getOSType() == Util.EnumOS.OSX) return
 
         try {

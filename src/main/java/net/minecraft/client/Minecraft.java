@@ -322,8 +322,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         logger.info("LWJGL Version: " + Sys.getVersion());
 
         // set up display and resources
-        gameDisplayHandler.setWindowIcon();
-        setInitialDisplayMode();
         gameDisplayHandler.initializeGameWindow();
         OpenGlHelper.initializeTextures();
 
@@ -444,7 +442,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mojangLogo = null;
         this.loadingScreen = new LoadingScreenRenderer(this);
 
-        // enable or disable vsyc
+        // enable or disable vsync
         try {
             Display.setVSyncEnabled(this.gameSettings.enableVsync);
         } catch (OpenGLException var2) {
@@ -462,17 +460,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.metadataSerializer_.registerMetadataSectionType(new AnimationMetadataSectionSerializer(), AnimationMetadataSection.class);
         this.metadataSerializer_.registerMetadataSectionType(new PackMetadataSectionSerializer(), PackMetadataSection.class);
         this.metadataSerializer_.registerMetadataSectionType(new LanguageMetadataSectionSerializer(), LanguageMetadataSection.class);
-    }
-
-    private void setInitialDisplayMode() throws LWJGLException {
-        if (this.fullscreen) {
-            Display.setFullscreen(true);
-            DisplayMode displaymode = Display.getDisplayMode();
-            this.displayWidth = Math.max(1, displaymode.getWidth());
-            this.displayHeight = Math.max(1, displaymode.getHeight());
-        } else {
-            Display.setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
-        }
     }
 
     public Framebuffer getFramebuffer() {

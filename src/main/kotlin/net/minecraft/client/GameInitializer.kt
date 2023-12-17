@@ -53,6 +53,10 @@ class GameInitializer : CommonGameElement() {
         shutdownGame()
     }
 
+    private fun loadGame() {
+
+    }
+
     private fun initializeGameResources() {
         TODO()
     }

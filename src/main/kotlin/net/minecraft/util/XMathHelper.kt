@@ -71,8 +71,5 @@ object XMathHelper {
      * @param multiple The multiple to round up to.
      * @return The rounded-up result.
      */
-    fun roundUpToNearestMultiple(num: Int, multiple: Int): Int = run {
-        val division = num.toDouble() / multiple.toDouble()
-        (multiple * ceil(division)).toInt()
-    }
+    fun roundUpToNearestMultiple(num: Int, multiple: Int): Int = (multiple * ceil(num.toDouble() / multiple.toDouble())).toInt()
 }
