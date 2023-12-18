@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Native Start" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="21" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="Start" />
+    <module name="Evanescent.test" />
+    <selectedOptions>
+      <option name="environmentVariables" visible="false" />
+    </selectedOptions>
+    <option name="VM_PARAMETERS" value="-Xmx4G -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:-UseCompressedOops -XX:+UseThreadPriorities -XX:+UseCompressedClassPointers -XX:+OptimizeStringConcat" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/workspace" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
