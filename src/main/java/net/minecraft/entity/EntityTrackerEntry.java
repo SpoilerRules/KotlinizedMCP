@@ -216,7 +216,7 @@ public class EntityTrackerEntry
                         this.lastTrackedEntityMotionX = this.trackedEntity.motionX;
                         this.lastTrackedEntityMotionY = this.trackedEntity.motionY;
                         this.motionZ = this.trackedEntity.motionZ;
-                        this.sendPacketToTrackedPlayers(new S12PacketEntityVelocity(this.trackedEntity.getEntityId(), this.lastTrackedEntityMotionX, this.lastTrackedEntityMotionY, this.motionZ));
+                        this.sendPacketToTrackedPlayers(new S12PacketEntityVelocity(this.trackedEntity.getEntityId(), (int) this.lastTrackedEntityMotionX, (int) this.lastTrackedEntityMotionY, (int) this.motionZ));
                     }
                 }
 
@@ -381,7 +381,12 @@ public class EntityTrackerEntry
 
                     if (this.sendVelocityUpdates && !(packet instanceof S0FPacketSpawnMob))
                     {
-                        playerMP.playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(this.trackedEntity.getEntityId(), this.trackedEntity.motionX, this.trackedEntity.motionY, this.trackedEntity.motionZ));
+                        playerMP.playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(
+                                this.trackedEntity.getEntityId(),
+                                (int) this.trackedEntity.motionX,
+                                (int) this.trackedEntity.motionY,
+                                (int) this.trackedEntity.motionZ
+                        ));
                     }
 
                     if (this.trackedEntity.ridingEntity != null)
