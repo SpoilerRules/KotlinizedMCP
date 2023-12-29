@@ -5,6 +5,7 @@
 #ifndef CASUALPRINTER_H
 #define CASUALPRINTER_H
 
+#include <cstdint>
 #include <iostream>
 
 #include "ansi_color/ColorEnum.h"
@@ -21,7 +22,7 @@ public:
 		system("pause");
 	}
 
-	static void forceExit(const u_int secondsToWait) {
+	static void forceExit(const uint16_t secondsToWait) {
 		for (auto i = secondsToWait; i > 0; --i) {
 			std::cout << "\r"
 			<< to_string(ColorEnum::RESET) + "[" + to_string(ColorEnum::YELLOW) + "WARNING" + to_string(ColorEnum::RESET) + "]"
