@@ -47,4 +47,4 @@ We welcome contributions to enhance the project. To maintain code consistency, p
 
 ## License
 
-This project is governed by the GNU General Public License v3.0. The scope of this license is limited to the source code directly present in this clean branch of the repository. Additional source code used during the development and compilation process, for which we have not obtained rights, is not covered by the GPL license.
+This project is governed by the [GNU General Public License v3.0](https://github.com/SpoilerRules/KotlinizedMCP/blob/setup-wizard/LICENSE). The scope of this license is limited to the source code directly present in this clean branch of the repository. Additional source code used during the development and compilation process, for which we have not obtained rights, is not covered by the GPL license.
