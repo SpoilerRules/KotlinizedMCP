@@ -2,10 +2,10 @@
 /.idea/*
 !/.idea/codeStyles/
 
-/.cmake-build-*/
-/.cmake-build-debug/
-/.cmake-build-debug-visual-studio/
-/.cmake-build-release-visual-studio/
+/cmake-build-*/
+/cmake-build-debug/
+/cmake-build-debug-visual-studio/
+/cmake-build-release-visual-studio/
 
 # Prerequisites
 *.d
