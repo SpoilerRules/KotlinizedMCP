@@ -72,7 +72,7 @@ If you are interested in actively contributing and have already made at least on
 
 ## License
 
-This project is licensed under the Evanescent License, Version 1.0. Please review the [LICENSE](https://github.com/SpoilerRules/KotlinizedMCP/blob/main/LICENSE.md) file for more details.
+This project is licensed under the Evanescent License, Version 1.0. Please review the [LICENSE](https://github.com/SpoilerRules/KotlinizedMCP/blob/main/LICENSE) file for more details.
 
 ---
 
