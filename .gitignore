@@ -1,9 +1,9 @@
 # Project folders
-.idea
-.cmake-build-*/
-.cmake-build-debug/
-.cmake-build-debug-visual-studio/
-.cmake-build-release-visual-studio/
+/.idea/*
+/.cmake-build-*/
+/.cmake-build-debug/
+/.cmake-build-debug-visual-studio/
+/.cmake-build-release-visual-studio/
 
 # Prerequisites
 *.d
