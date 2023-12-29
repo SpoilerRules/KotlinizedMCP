@@ -1,5 +1,7 @@
 # Project folders
 /.idea/*
+!/.idea/codeStyles/
+
 /.cmake-build-*/
 /.cmake-build-debug/
 /.cmake-build-debug-visual-studio/
