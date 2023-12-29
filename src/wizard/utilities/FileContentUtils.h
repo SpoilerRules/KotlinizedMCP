@@ -151,7 +151,7 @@ namespace w_fictu {
                     fclose(fp);
                 } else {
                     Logger::printError("A suspicious error occurred during installation of content.");
-                    CasualPrinter::printExit();
+                    CasualPrinter::forceExit(5);
                 }
             }
 
