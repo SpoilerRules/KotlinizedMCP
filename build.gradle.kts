@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3") {
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
         exclude("org.jetbrains.kotlin", "kotlin-stdlib-jdk8")
@@ -73,7 +73,7 @@ dependencies {
     } // Latest as of November 14 (2023)
 
     // Miscellaneous
-    implementation("org.apache.commons:commons-compress:1.23.0") // Latest as of October 25 (2023)
+    implementation("org.apache.commons:commons-compress:1.25.0") // Latest as of December 22 (2023)
     implementation("org.apache.commons:commons-lang3:3.13.0") // Latest as of 2023 August 22
     implementation("org.apache.commons:commons-text:1.10.0") // Latest as of 2023 September 22
     implementation("commons-io:commons-io:2.14.0") // Latest as of October 25 (2023)
@@ -131,7 +131,7 @@ sourceSets {
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
-tasks.jar{
+tasks.jar {
 //  ↓ To change the name of the JAR file, modify the string below. ←
 //                         ↓ ↓ ↓
     archiveBaseName.set("Evanescent")
