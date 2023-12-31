@@ -6,12 +6,12 @@
   },
   "libraries": [
     {
-      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.21",
+      "name": "org.jetbrains.kotlin:kotlin-stdlib:1.9.22",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.21/kotlin-stdlib-1.9.21.jar",
-          "sha1": "17ee3e873d439566c7d8354403b5f3d9744c4c9c",
-          "size": 1718945
+          "url": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.22/kotlin-stdlib-1.9.22.jar",
+          "sha1": "d6c44cd08d8f3f9bece8101216dbe6553365c6e3",
+          "size": 1718956
         }
       }
     },
@@ -338,26 +338,6 @@
       }
     },
     {
-      "name": "org.lwjgl.lwjgl:lwjgl:2.9.3",
-      "downloads": {
-        "artifact": {
-          "url": "https://repo.maven.apache.org/maven2/org/lwjgl/lwjgl/lwjgl/2.9.3/lwjgl-2.9.3.jar",
-          "sha1": "3df168ac74e4a8c96562cdff24ad352e255bf89c",
-          "size": 1053471
-        }
-      }
-    },
-    {
-      "name": "org.lwjgl.lwjgl:lwjgl_util:2.9.3",
-      "downloads": {
-        "artifact": {
-          "url": "https://repo.maven.apache.org/maven2/org/lwjgl/lwjgl/lwjgl_util/2.9.3/lwjgl_util-2.9.3.jar",
-          "sha1": "751f06b62424da056954c67288fd5c494431e350",
-          "size": 173911
-        }
-      }
-    },
-    {
       "name": "org.apache.httpcomponents:httpclient:4.5.14",
       "downloads": {
         "artifact": {
@@ -398,12 +378,12 @@
       }
     },
     {
-      "name": "org.apache.commons:commons-compress:1.24.0",
+      "name": "org.apache.commons:commons-compress:1.25.0",
       "downloads": {
         "artifact": {
-          "url": "https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar",
-          "sha1": "b4b1b5a3d9573b2970fddab236102c0a4d27d35e",
-          "size": 1076223
+          "url": "https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.25.0/commons-compress-1.25.0.jar",
+          "sha1": "9d35aec423da6c8a7f93d7e9e1c6b1d9fe14bb5e",
+          "size": 1080823
         }
       }
     },
