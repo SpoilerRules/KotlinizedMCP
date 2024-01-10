@@ -1,9 +1,17 @@
 package net.minecraft.client
 
+import annotations.ExperimentalState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.minecraft.client.gui.GuiMemoryErrorScreen
+import net.minecraft.client.renderer.OpenGlHelper
+import net.minecraft.client.settings.GameSettings
+import net.minecraft.client.shader.Framebuffer
 import net.minecraft.crash.CrashReport
 import net.minecraft.util.MinecraftError
 import net.minecraft.util.ReportedException
+import net.minecraft.util.input.MiceHelper
 import org.lwjgl.opengl.Display
 import kotlin.system.exitProcess
 
@@ -54,11 +62,38 @@ class GameInitializer : CommonGameElement() {
     }
 
     private fun loadGame() {
-
+        // rung ame loop
     }
 
-    private fun initializeGameResources() {
-        TODO()
+    @ExperimentalState
+    fun initializeGameResources() {
+        mc.gameSettings = GameSettings(mc, mc.mcDataDir)
+
+        GameDisplayHandler().initializeGameWindow()
+        OpenGlHelper.initializeTextures()
+
+        runBlocking(Dispatchers.IO) {
+            listOf(
+                launch { mc.defaultResourcePacks.add(mc.mcDefaultResourcePack) },
+                launch { mc.registerMetadataSerializers() },
+                launch { mc.mouseHelper = MiceHelper() },
+                launch { mc.registerMetadataSerializers() }
+            ).forEach { it.join() }
+        }
+
+     /*   println("INITIALIZING RESOURCE PACK REPO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+        super.resourcePackRepository = ResourcePackRepository(
+            mc.fileResourcepacks,
+            File(mc.mcDataDir, "server-resource-packs"),
+            mc.mcDefaultResourcePack,
+            mc.metadataSerializer_,
+            mc.gameSettings
+        )
+
+        mc.mcResourceManager = SimpleReloadableResourceManager(mc.metadataSerializer_)*/
+
+        mc.framebufferMc = Framebuffer(mc.displayWidth, mc.displayHeight, true)
+        mc.framebufferMc.setFramebufferColor(0.0f, 0.0f, 0.0f, 0.0f)
     }
 
     private fun shutdownGame() {

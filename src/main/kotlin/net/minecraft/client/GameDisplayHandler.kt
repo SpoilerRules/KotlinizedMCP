@@ -1,15 +1,14 @@
 package net.minecraft.client
 
+import kotlinx.coroutines.runBlocking
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Util
 import net.minecraft.util.client.ClientBrandEnum
 import org.apache.logging.log4j.LogManager
-import org.lwjgl.LWJGLException
 import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.DisplayMode
 import org.lwjgl.opengl.PixelFormat
-import java.io.IOException
 import kotlin.math.max
 
 class GameDisplayHandler : CommonGameElement() {
@@ -64,7 +63,7 @@ class GameDisplayHandler : CommonGameElement() {
                 Display.setVSyncEnabled(mc.gameSettings.enableVsync)
                 mc.updateDisplay()
             }.onFailure {
-                LogManager.getLogger().error("Couldn't toggle fullscreen", it)
+                LogManager.getLogger().error("Failed to toggle full screen", it)
             }
         }
 
@@ -101,18 +100,22 @@ class GameDisplayHandler : CommonGameElement() {
         Display.setTitle(ClientBrandEnum.WINDOW_DISPLAY_TITLE)
         setWindowIcon()
 
-        if (mc.fullscreen) {
+        if (mc.fullscreen || mc.gameSettings.fullScreen) {
             Display.setFullscreen(true)
             mc.displayWidth = max(1, Display.getDisplayMode().width)
             mc.displayHeight = max(1, Display.getDisplayMode().height)
         } else {
+            if (mc.gameSettings.overrideHeight > 0 && mc.gameSettings.overrideWidth > 0) {
+                mc.displayWidth = mc.gameSettings.overrideWidth
+                mc.displayHeight = mc.gameSettings.overrideHeight
+            }
             Display.setDisplayMode(DisplayMode(mc.displayWidth, mc.displayHeight))
         }
 
         runCatching {
             Display.create(PixelFormat().withDepthBits(24))
-        }.onFailure { e ->
-            logger.error("Couldn't set pixel translate", e)
+        }.onFailure {
+            logger.error("Couldn't set pixel translate", it)
             if (mc.fullscreen) setOptimalDisplayMode()
         }
 
@@ -122,19 +125,17 @@ class GameDisplayHandler : CommonGameElement() {
     private fun setWindowIcon() {
         if (Util.getOSType() == Util.EnumOS.OSX) return
 
-        try {
-            val smallIconStream =
-                mc.mcDefaultResourcePack.getInputStreamAssets(ResourceLocation("icons/icon_16x16.png"))
-            val largeIconStream =
-                mc.mcDefaultResourcePack.getInputStreamAssets(ResourceLocation("icons/icon_32x32.png"))
-
-            smallIconStream?.let { smallStream ->
-                largeIconStream?.let { largeStream ->
-                    Display.setIcon(arrayOf(mc.readImageToBuffer(smallStream), mc.readImageToBuffer(largeStream)))
+        runCatching {
+            listOf("icon_16x16.png", "icon_32x32.png")
+                .map { ResourceLocation("icons/$it") }
+                .mapNotNull { mc.mcDefaultResourcePack.getInputStreamAssets(it) }
+                .map { mc.readImageToBuffer(it) }.apply {
+                    if (this.size == 2) {
+                        Display.setIcon(this.toTypedArray())
+                    }
                 }
-            }
-        } catch (e: IOException) {
-            logger.error("Failed to set window icon.", e)
+        }.onFailure {
+            logger.error("Failed to set window icon.", it)
         }
     }
 }

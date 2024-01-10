@@ -2,6 +2,8 @@ package net.minecraft.client.resources;
 
 import com.google.gson.JsonParseException;
 import java.io.IOException;
+
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -20,7 +22,7 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
     public ResourcePackListEntryDefault(GuiScreenResourcePacks resourcePacksGUIIn)
     {
         super(resourcePacksGUIIn);
-        this.field_148320_d = this.mc.getResourcePackRepository().rprDefaultResourcePack;
+        this.field_148320_d = CommonResourceElement.Companion.getResourcePackRepository().rprDefaultResourcePack;
         DynamicTexture dynamictexture;
 
         try
@@ -43,7 +45,7 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
     protected String func_148311_a() {
         try {
             PackMetadataSection packMetadataSection = this.field_148320_d.getPackMetadata(
-                    this.mc.getResourcePackRepository().rprMetadataSerializer, "pack");
+                    CommonResourceElement.Companion.getResourcePackRepository().rprMetadataSerializer, "pack");
 
             if (packMetadataSection != null) {
                 return packMetadataSection.getPackDescription().getFormattedText();

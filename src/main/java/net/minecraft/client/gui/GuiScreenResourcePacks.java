@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.ResourcePackListEntry;
 import net.minecraft.client.resources.ResourcePackListEntryDefault;
@@ -42,7 +44,7 @@ public class GuiScreenResourcePacks extends GuiScreen
         if (!this.changed) {
             this.availableResourcePacks = Lists.newArrayList();
             this.selectedResourcePacks = Lists.newArrayList();
-            ResourcePackRepository resourcepackrepository = this.mc.getResourcePackRepository();
+            ResourcePackRepository resourcepackrepository = CommonResourceElement.Companion.getResourcePackRepository();
             resourcepackrepository.updateRepositoryEntriesAll();
             List<ResourcePackRepository.Entry> list = Lists.newArrayList(resourcepackrepository.getRepositoryEntriesAll());
             list.removeAll(resourcepackrepository.getRepositoryEntries());
@@ -100,7 +102,7 @@ public class GuiScreenResourcePacks extends GuiScreen
         {
             if (button.id == 2)
             {
-                File file1 = this.mc.getResourcePackRepository().getDirResourcepacks();
+                File file1 = CommonResourceElement.Companion.getResourcePackRepository().getDirResourcepacks();
                 String s = file1.getAbsolutePath();
 
                 if (Util.getOSType() == Util.EnumOS.OSX)
@@ -169,7 +171,7 @@ public class GuiScreenResourcePacks extends GuiScreen
                     }
 
                     Collections.reverse(list);
-                    this.mc.getResourcePackRepository().setRepositories(list);
+                    CommonResourceElement.Companion.getResourcePackRepository().setRepositories(list);
                     this.mc.gameSettings.resourcePacks.clear();
                     this.mc.gameSettings.incompatibleResourcePacks.clear();
 

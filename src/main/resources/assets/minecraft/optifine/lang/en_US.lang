@@ -698,8 +698,8 @@ options.fullscreen.tooltip.3=  OFF - use window mode
 options.fullscreen.tooltip.4=Fullscreen mode may be faster or slower than
 options.fullscreen.tooltip.5=window mode, depending on the graphics card.
 
-of.options.FULLSCREEN_MODE=Fullscreen Mode
-of.options.FULLSCREEN_MODE.tooltip.1=Fullscreen mode
+of.options.FULLSCREEN_MODE=Fullscreen Resolution
+of.options.FULLSCREEN_MODE.tooltip.1=Fullscreen Resolution
 of.options.FULLSCREEN_MODE.tooltip.2=  Default - use desktop screen resolution, slower
 of.options.FULLSCREEN_MODE.tooltip.3=  WxH - use custom screen resolution, may be faster
 of.options.FULLSCREEN_MODE.tooltip.4=The selected resolution is used in fullscreen mode (F11).

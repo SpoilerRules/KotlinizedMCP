@@ -32,6 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -893,7 +894,7 @@ public class Shaders
             updateBlockLightLevel();
         }
 
-        if (mc.getResourcePackRepository() != null)
+        if (CommonResourceElement.Companion.getResourcePackRepository() != null)
         {
             CustomBlockLayers.update();
         }

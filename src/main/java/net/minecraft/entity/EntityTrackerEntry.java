@@ -80,7 +80,7 @@ public class EntityTrackerEntry
     private double lastTrackedEntityPosY;
     private double lastTrackedEntityPosZ;
     private boolean firstUpdateDone;
-    private boolean sendVelocityUpdates;
+    private final boolean sendVelocityUpdates;
     private int ticksSinceLastForcedTeleport;
     private Entity field_85178_v;
     private boolean ridingEntity;

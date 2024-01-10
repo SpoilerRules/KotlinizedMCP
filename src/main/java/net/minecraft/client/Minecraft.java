@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import annotations.PendingRemoval;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
@@ -87,6 +88,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
@@ -106,7 +108,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
-public class Minecraft implements IThreadListener, IPlayerUsage {
+public class Minecraft extends CommonResourceElement implements IThreadListener, IPlayerUsage {
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
     private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
@@ -120,15 +122,15 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public final File mcDataDir;
     public final FrameTimer frameTimer = new FrameTimer();
     public final Profiler mcProfiler = new Profiler();
-    private final File fileResourcepacks;
+    public final File fileResourcepacks;
     private final PropertyMap profileProperties;
     private final net.minecraft.util.Timer timer = new net.minecraft.util.Timer(20.0F);
     private final File fileAssets;
     private final String launchedVersion;
     private final Proxy proxy;
     private final boolean jvm64bit;
-    private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
-    private final List<IResourcePack> defaultResourcePacks = Lists.newArrayList();
+    public final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
+    public final List<IResourcePack> defaultResourcePacks = Lists.newArrayList();
     public final DefaultResourcePack mcDefaultResourcePack;
     private final MinecraftSessionService sessionService;
     private final Queue<FutureTask<?>> scheduledTasks = Queues.newArrayDeque();
@@ -189,8 +191,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private int joinPlayerCounter;
     private NetworkManager myNetworkManager;
     private boolean integratedServerIsRunning;
-    private IReloadableResourceManager mcResourceManager;
-    private ResourcePackRepository mcResourcePackRepository;
+    public IReloadableResourceManager mcResourceManager;
     private LanguageManager mcLanguageManager;
     private TextureMap textureMapBlocks;
     public SoundHandler mcSoundHandler;
@@ -304,36 +305,15 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void startGame() throws LWJGLException, IOException {
-        final GameDisplayHandler gameDisplayHandler = new GameDisplayHandler();
+        final GameInitializer gameInitializer = new GameInitializer();
 
-        try {
-            this.gameSettings = new GameSettings(getMinecraft(), getMinecraft().mcDataDir);
-        } catch (NoClassDefFoundError e) {
-            logger.fatal("Failed", e);
-        }
-        this.defaultResourcePacks.add(this.mcDefaultResourcePack);
-
-        if (this.gameSettings.overrideHeight > 0 && this.gameSettings.overrideWidth > 0) {
-            this.displayWidth = this.gameSettings.overrideWidth;
-            this.displayHeight = this.gameSettings.overrideHeight;
-        }
+        gameInitializer.initializeGameResources();
 
         // log LWJGL version
         logger.info("LWJGL Version: " + Sys.getVersion());
 
-        // set up display and resources
-        gameDisplayHandler.initializeGameWindow();
-        OpenGlHelper.initializeTextures();
-
-        // framebuffer
-        this.framebufferMc = new Framebuffer(this.displayWidth, this.displayHeight, true);
-        this.framebufferMc.setFramebufferColor(0.0F, 0.0F, 0.0F, 0.0F);
-
-        // metadata serializers
-        registerMetadataSerializers();
-
         // resource pack repository
-        this.mcResourcePackRepository = new ResourcePackRepository(
+        super.resourcePackRepository = new ResourcePackRepository(
                 this.fileResourcepacks,
                 new File(this.mcDataDir, "server-resource-packs"),
                 this.mcDefaultResourcePack,
@@ -343,6 +323,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         // resource manager and language manager
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
+
         this.mcLanguageManager = new LanguageManager(this.metadataSerializer_, this.gameSettings.language);
         this.mcResourceManager.registerReloadListener(this.mcLanguageManager);
 
@@ -381,9 +362,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 return "Error: " + exception.getLocalizedMessage();
             }
         });
-
-        // initialize mouse helper
-        this.mouseHelper = new MiceHelper();
 
         // check and enable OpenGL settings
         checkGLError("Pre startup");
@@ -454,7 +432,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.renderGlobal.makeEntityOutlineShader();
     }
 
-    private void registerMetadataSerializers() {
+    @PendingRemoval
+    public void registerMetadataSerializers() {
         this.metadataSerializer_.registerMetadataSectionType(new TextureMetadataSectionSerializer(), TextureMetadataSection.class);
         this.metadataSerializer_.registerMetadataSectionType(new FontMetadataSectionSerializer(), FontMetadataSection.class);
         this.metadataSerializer_.registerMetadataSectionType(new AnimationMetadataSectionSerializer(), AnimationMetadataSection.class);
@@ -499,12 +478,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public void refreshResources() {
         List<IResourcePack> list = Lists.newArrayList(this.defaultResourcePacks);
 
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : this.mcResourcePackRepository.getRepositoryEntries()) {
+        for (ResourcePackRepository.Entry resourcepackrepository$entry : super.resourcePackRepository.getRepositoryEntries()) {
             list.add(resourcepackrepository$entry.getResourcePack());
         }
 
-        if (this.mcResourcePackRepository.getResourcePackInstance() != null) {
-            list.add(this.mcResourcePackRepository.getResourcePackInstance());
+        if (super.resourcePackRepository.getResourcePackInstance() != null) {
+            list.add(super.resourcePackRepository.getResourcePackInstance());
         }
 
         try {
@@ -513,7 +492,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             logger.info("Caught error stitching, removing all assigned resourcepacks", runtimeexception);
             list.clear();
             list.addAll(this.defaultResourcePacks);
-            this.mcResourcePackRepository.setRepositories(Collections.emptyList());
+            super.resourcePackRepository.setRepositories(Collections.emptyList());
             try {
                 this.mcResourceManager.reloadResources(list);
             } catch (IOException e) {
@@ -799,6 +778,15 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcProfiler.endSection();
 
         Lagometer.showLagometer(new ScaledResolution(this));
+
+        var keyEvent = (Keyboard.getEventKey() == 0) ? Keyboard.getEventCharacter() : Keyboard.getEventKey();
+
+        if (keyEvent == this.gameSettings.keyBindFullscreen.getKeyCode()) System.out.println("pressed f11");
+
+        if (keyEvent != 0 || !Keyboard.isRepeatEvent() || Keyboard.getEventKeyState()) {
+            if (!(this.currentScreen instanceof GuiControls) && keyEvent == this.gameSettings.keyBindFullscreen.getKeyCode())
+                this.switchFullscreenMode();
+        }
     }
 
     public void updateDisplay() {
@@ -1022,25 +1010,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             } else {
                 this.playerController.resetBlockRemoving();
             }
-        }
-    }
-
-    /**
-     * Removed hit delay.
-     */
-    public void clickMouse() {
-        if (leftClickCounter <= 0) {
-            thePlayer.swingItem();
-            if (objectMouseOver != null) {
-                switch (objectMouseOver.typeOfHit) {
-                    case ENTITY -> playerController.attackEntity(thePlayer, objectMouseOver.entityHit);
-                    case BLOCK -> {
-                        BlockPos blockpos = objectMouseOver.getBlockPos();
-                        if (theWorld.getBlockState(blockpos).getBlock().getMaterial() != Material.air)
-                            playerController.clickBlock(blockpos, objectMouseOver.sideHit);
-                    }
-                }
-            } else logger.warn("An issue occurred while performing the left click action.");
         }
     }
 
@@ -1625,7 +1594,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         if (worldClientIn == null && this.theWorld != null) {
-            this.mcResourcePackRepository.clearResourcePack();
+            super.resourcePackRepository.clearResourcePack();
             this.ingameGUI.resetPlayersOverlayFooterHeader();
             this.setServerData(null);
             this.integratedServerIsRunning = false;
@@ -1851,10 +1820,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         playerSnooper.addClientStat("current_action", this.getCurrentAction());
         String s = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "little" : "big";
         playerSnooper.addClientStat("endianness", s);
-        playerSnooper.addClientStat("resource_packs", this.mcResourcePackRepository.getRepositoryEntries().size());
+        playerSnooper.addClientStat("resource_packs", super.resourcePackRepository.getRepositoryEntries().size());
         int i = 0;
 
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : this.mcResourcePackRepository.getRepositoryEntries()) {
+        for (ResourcePackRepository.Entry resourcepackrepository$entry : super.resourcePackRepository.getRepositoryEntries()) {
             playerSnooper.addClientStat("resource_pack[" + i++ + "]", resourcepackrepository$entry.getResourcePackName());
         }
 
@@ -2034,10 +2003,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     public IResourceManager getResourceManager() {
         return this.mcResourceManager;
-    }
-
-    public ResourcePackRepository getResourcePackRepository() {
-        return this.mcResourcePackRepository;
     }
 
     public LanguageManager getLanguageManager() {

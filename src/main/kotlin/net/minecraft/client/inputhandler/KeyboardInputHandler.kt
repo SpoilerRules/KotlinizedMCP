@@ -15,14 +15,10 @@ import org.lwjgl.input.Keyboard
 class KeyboardInputHandler : InputService() {
     private val debugKeyProcessor = DebugKeyProcessor()
 
-    companion object {
-        private const val ZERO_NUMBER = 0
-    }
-
     fun handleParticularKeypresses() {
         val keyEvent = if (Keyboard.getEventKey() == 0) Keyboard.getEventCharacter() else Keyboard.getEventKey()
 
-        if (keyEvent == ZERO_NUMBER || Keyboard.isRepeatEvent() || !Keyboard.getEventKeyState()) return
+        if (keyEvent == 0 || Keyboard.isRepeatEvent() || !Keyboard.getEventKeyState()) return
 
         if (activeScreen == null || activeScreen.allowUserInput) {
             when (keyEvent) {
@@ -46,7 +42,7 @@ class KeyboardInputHandler : InputService() {
 
             if (activeScreen !is GuiControls) {
                 when (keyEvent) {
-                    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
+                //    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
                     mc.gameSettings.keyBindScreenshot.keyCode -> {
                         val screenshotMessage = ScreenshotHandler.takeScreenshot(
                             mc.mcDataDir,
@@ -69,7 +65,7 @@ class KeyboardInputHandler : InputService() {
 
         handleHotbarSelection()
 
-        if (mc.leftClickCounter > ZERO_NUMBER) mc.leftClickCounter--
+        if (mc.leftClickCounter > 0) mc.leftClickCounter--
 
         while (Keyboard.next()) {
             handleParticularKeypresses()
@@ -77,7 +73,7 @@ class KeyboardInputHandler : InputService() {
 
             mc.gameSettings.keyBindTogglePerspective.takeIf { it.isPressed }?.let {
                 mc.gameSettings.thirdPersonView = (mc.gameSettings.thirdPersonView + 1) % 3
-                mc.entityRenderer?.loadEntityShader(if (mc.gameSettings.thirdPersonView == ZERO_NUMBER) mc.renderViewEntity else null)
+                mc.entityRenderer?.loadEntityShader(if (mc.gameSettings.thirdPersonView == 0) mc.renderViewEntity else null)
                 mc.renderGlobal.setDisplayListEntitiesDirty()
             }
 

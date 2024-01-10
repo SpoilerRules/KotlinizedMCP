@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
@@ -72,7 +74,7 @@ public class BlockAliases
 
         if (shaderPack != null)
         {
-            if (Reflector.Loader_getActiveModList.exists() && Minecraft.getMinecraft().getResourcePackRepository() == null)
+            if (Reflector.Loader_getActiveModList.exists() && CommonResourceElement.Companion.getResourcePackRepository() == null)
             {
                 Config.dbg("[Shaders] Delayed loading of block mappings after resources are loaded");
                 updateOnResourcesReloaded = true;

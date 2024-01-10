@@ -27,6 +27,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -974,30 +976,31 @@ public class Config
         }
     }
 
-    public static IResourcePack[] getResourcePacks()
-    {
-        ResourcePackRepository resourcepackrepository = minecraft.getResourcePackRepository();
-        List list = resourcepackrepository.getRepositoryEntries();
-        List list1 = new ArrayList();
+    public static IResourcePack[] getResourcePacks() {
+        ResourcePackRepository resourcepackrepository = CommonResourceElement.Companion.getResourcePackRepository();
 
-        for (Object o: list)
-        {
-            ResourcePackRepository.Entry resourcepackrepository$entry = (ResourcePackRepository.Entry) o;
-            list1.add(resourcepackrepository$entry.getResourcePack());
+        if (resourcepackrepository == null) {
+            return new IResourcePack[0];
         }
 
-        if (resourcepackrepository.getResourcePackInstance() != null)
-        {
-            list1.add(resourcepackrepository.getResourcePackInstance());
+        List<ResourcePackRepository.Entry> list = resourcepackrepository.getRepositoryEntries();
+        List<IResourcePack> list1 = new ArrayList<>();
+
+        for (ResourcePackRepository.Entry entry : list) {
+            list1.add(entry.getResourcePack());
         }
 
-        IResourcePack[] airesourcepack = (IResourcePack[])((IResourcePack[])list1.toArray(new IResourcePack[list1.size()]));
-        return airesourcepack;
+        IResourcePack resourcePackInstance = resourcepackrepository.getResourcePackInstance();
+        if (resourcePackInstance != null) {
+            list1.add(resourcePackInstance);
+        }
+
+        return list1.toArray(new IResourcePack[0]);
     }
 
     public static String getResourcePackNames()
     {
-        if (minecraft.getResourcePackRepository() == null)
+        if (CommonResourceElement.Companion.getResourcePackRepository() == null)
         {
             return "";
         }
@@ -1033,7 +1036,7 @@ public class Config
 
             if (defaultResourcePackLazy == null)
             {
-                ResourcePackRepository resourcepackrepository = minecraft.getResourcePackRepository();
+                ResourcePackRepository resourcepackrepository = CommonResourceElement.Companion.getResourcePackRepository();
 
                 if (resourcepackrepository != null)
                 {
@@ -1051,39 +1054,28 @@ public class Config
         return iresourcepack == getDefaultResourcePack();
     }
 
-    public static IResourcePack getDefiningResourcePack(ResourceLocation p_getDefiningResourcePack_0_)
-    {
-        ResourcePackRepository resourcepackrepository = minecraft.getResourcePackRepository();
-        IResourcePack iresourcepack = resourcepackrepository.getResourcePackInstance();
+    public static IResourcePack getDefiningResourcePack(ResourceLocation p_getDefiningResourcePack_0_) {
+        ResourcePackRepository resourcepackrepository = CommonResourceElement.Companion.getResourcePackRepository();
 
-        if (iresourcepack != null && iresourcepack.resourceExists(p_getDefiningResourcePack_0_))
-        {
+        if (resourcepackrepository == null) {
+            return null;
+        }
+
+        IResourcePack iresourcepack = resourcepackrepository.getResourcePackInstance();
+        if (iresourcepack != null && iresourcepack.resourceExists(p_getDefiningResourcePack_0_)) {
             return iresourcepack;
         }
-        else
-        {
-            List<ResourcePackRepository.Entry> list = resourcepackrepository.repositoryEntries;
 
-            for (int i = list.size() - 1; i >= 0; --i)
-            {
-                ResourcePackRepository.Entry resourcepackrepository$entry = (ResourcePackRepository.Entry)list.get(i);
-                IResourcePack iresourcepack1 = resourcepackrepository$entry.getResourcePack();
-
-                if (iresourcepack1.resourceExists(p_getDefiningResourcePack_0_))
-                {
-                    return iresourcepack1;
-                }
-            }
-
-            if (getDefaultResourcePack().resourceExists(p_getDefiningResourcePack_0_))
-            {
-                return getDefaultResourcePack();
-            }
-            else
-            {
-                return null;
+        List<ResourcePackRepository.Entry> list = resourcepackrepository.getRepositoryEntries();
+        for (int i = list.size() - 1; i >= 0; --i) {
+            IResourcePack iresourcepack1 = list.get(i).getResourcePack();
+            if (iresourcepack1.resourceExists(p_getDefiningResourcePack_0_)) {
+                return iresourcepack1;
             }
         }
+
+        IResourcePack defaultResourcePack = getDefaultResourcePack();
+        return defaultResourcePack.resourceExists(p_getDefiningResourcePack_0_) ? defaultResourcePack : null;
     }
 
     public static RenderGlobal getRenderGlobal()
@@ -1452,7 +1444,7 @@ public class Config
         for (int i = 0; i < adisplaymode.length; ++i)
         {
             DisplayMode displaymode = adisplaymode[i];
-            String s = "" + displaymode.getWidth() + "x" + displaymode.getHeight();
+            String s = displaymode.getWidth() + "x" + displaymode.getHeight();
             astring[i] = s;
         }
 

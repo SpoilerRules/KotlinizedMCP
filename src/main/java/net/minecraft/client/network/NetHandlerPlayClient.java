@@ -8,6 +8,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
+import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.util.client.ClientBrandEnum;
 import net.minecraft.client.Minecraft;
@@ -1094,7 +1095,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
 
                 if (levelFile.isFile()) {
                     this.netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.ACCEPTED));
-                    ListenableFuture<?> resourceFuture = mc.getResourcePackRepository().setResourcePackInstance(levelFile);
+                    ListenableFuture<?> resourceFuture = CommonResourceElement.Companion.getResourcePackRepository().setResourcePackInstance(levelFile);
                     Futures.addCallback(resourceFuture, new FutureCallback<Object>() {
                         public void onSuccess(Object result) {
                             NetHandlerPlayClient.this.netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.SUCCESSFULLY_LOADED));
@@ -1113,7 +1114,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
                             mc.getCurrentServerData().setResourceMode(ServerData.ServerResourceMode.ENABLED);
                         }
                         this.netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.ACCEPTED));
-                        ListenableFuture<Object> promptFuture = mc.getResourcePackRepository().downloadResourcePack(url, hash);
+                        ListenableFuture<Object> promptFuture = CommonResourceElement.Companion.getResourcePackRepository().downloadResourcePack(url, hash);
                         Futures.addCallback(promptFuture, new FutureCallback<>() {
                             public void onSuccess(Object result) {
                                 NetHandlerPlayClient.this.netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.SUCCESSFULLY_LOADED));
