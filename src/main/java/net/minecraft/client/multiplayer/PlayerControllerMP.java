@@ -337,95 +337,107 @@ public class PlayerControllerMP
         }
     }
 
-    public boolean onPlayerRightClick(EntityPlayerSP player, WorldClient worldIn, ItemStack heldStack, BlockPos hitPos, EnumFacing side, Vector3D hitVec)
-    {
+  /*  public boolean onPlayerRightClick(EntityPlayerSP player, WorldClient world, ItemStack heldItem, BlockPos position, EnumFacing side, Vector3D hitVector) {
         this.syncCurrentPlayItem();
-        float f = (float)(hitVec.x - (double)hitPos.getX());
-        float f1 = (float)(hitVec.y - (double)hitPos.getY());
-        float f2 = (float)(hitVec.z - (double)hitPos.getZ());
-        boolean flag = false;
+        float hitVecX = (float) (hitVector.x - (double) position.getX());
+        float hitVecY = (float) (hitVector.y - (double) position.getY());
+        float hitVecZ = (float) (hitVector.z - (double) position.getZ());
+        boolean isBlockActivated = false;
 
-        if (!this.mc.theWorld.getWorldBorder().contains(hitPos))
-        {
+        if (!this.mc.theWorld.getWorldBorder().contains(position)) {
             return false;
-        }
-        else
-        {
-            if (this.currentGameType != WorldSettings.GameType.SPECTATOR)
-            {
-                IBlockState iblockstate = worldIn.getBlockState(hitPos);
+        } else {
+            if (this.currentGameType != WorldSettings.GameType.SPECTATOR) {
+                IBlockState blockState = world.getBlockState(position);
 
-                if ((!player.isSneaking() || player.getHeldItem() == null) && iblockstate.getBlock().onBlockActivated(worldIn, hitPos, iblockstate, player, side, f, f1, f2))
-                {
-                    flag = true;
+                if ((!player.isSneaking() || player.getHeldItem() == null) && blockState.getBlock().onBlockActivated(world, position, blockState, player, side, hitVecX, hitVecY, hitVecZ)) {
+                    isBlockActivated = true;
                 }
 
-                if (!flag && heldStack != null && heldStack.getItem() instanceof ItemBlock)
-                {
-                    ItemBlock itemblock = (ItemBlock)heldStack.getItem();
-
-                    if (!itemblock.canPlaceBlockOnSide(worldIn, hitPos, side, player, heldStack))
-                    {
+                if (!isBlockActivated && heldItem != null && heldItem.getItem() instanceof ItemBlock itemBlock) {
+                    if (!itemBlock.canPlaceBlockOnSide(world, position, side, player, heldItem)) {
                         return false;
                     }
                 }
             }
 
-            this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(hitPos, side.getIndex(), player.inventory.getCurrentItem(), f, f1, f2));
+            this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(position, side.getIndex(), player.inventory.getCurrentItem(), hitVecX, hitVecY, hitVecZ));
 
-            if (!flag && this.currentGameType != WorldSettings.GameType.SPECTATOR)
-            {
-                if (heldStack == null)
-                {
+            if (!isBlockActivated && this.currentGameType != WorldSettings.GameType.SPECTATOR) {
+                if (heldItem == null) {
                     return false;
+                } else if (this.currentGameType.isCreative()) {
+                    int metadata = heldItem.getMetadata();
+                    int stackSize = heldItem.stackSize;
+                    boolean isItemUsed = heldItem.onItemUse(player, world, position, side, hitVecX, hitVecY, hitVecZ);
+                    heldItem.setItemDamage(metadata);
+                    heldItem.stackSize = stackSize;
+                    return isItemUsed;
+                } else {
+                    return heldItem.onItemUse(player, world, position, side, hitVecX, hitVecY, hitVecZ);
                 }
-                else if (this.currentGameType.isCreative())
-                {
-                    int i = heldStack.getMetadata();
-                    int j = heldStack.stackSize;
-                    boolean flag1 = heldStack.onItemUse(player, worldIn, hitPos, side, f, f1, f2);
-                    heldStack.setItemDamage(i);
-                    heldStack.stackSize = j;
-                    return flag1;
-                }
-                else
-                {
-                    return heldStack.onItemUse(player, worldIn, hitPos, side, f, f1, f2);
-                }
-            }
-            else
-            {
+            } else {
                 return true;
             }
         }
-    }
+    }*/
+    public boolean onPlayerRightClick(EntityPlayerSP player, WorldClient world, ItemStack heldItem, BlockPos position, EnumFacing side, Vector3D hitVector) {
+        this.syncCurrentPlayItem();
+        float hitVecX = (float) (hitVector.x - (double) position.getX());
+        float hitVecY = (float) (hitVector.y - (double) position.getY());
+        float hitVecZ = (float) (hitVector.z - (double) position.getZ());
 
-    public boolean sendUseItem(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn)
-    {
-        if (this.currentGameType == WorldSettings.GameType.SPECTATOR)
-        {
+        if (!this.mc.theWorld.getWorldBorder().contains(position)) {
             return false;
         }
-        else
-        {
+
+        if (this.currentGameType == WorldSettings.GameType.SPECTATOR) {
+            return true;
+        }
+
+        IBlockState blockState = world.getBlockState(position);
+        boolean isBlockActivated = (!player.isSneaking() || player.getHeldItem() == null) && blockState.getBlock().onBlockActivated(world, position, blockState, player, side, hitVecX, hitVecY, hitVecZ);
+
+        if (!isBlockActivated && heldItem != null && heldItem.getItem() instanceof ItemBlock itemBlock && !itemBlock.canPlaceBlockOnSide(world, position, side, player, heldItem)) {
+            return false;
+        }
+
+        this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(position, side.getIndex(), player.inventory.getCurrentItem(), hitVecX, hitVecY, hitVecZ));
+
+        if (heldItem == null) {
+            return false;
+        }
+
+        if (this.currentGameType.isCreative()) {
+            int metadata = heldItem.getMetadata();
+            int stackSize = heldItem.stackSize;
+            boolean isItemUsed = heldItem.onItemUse(player, world, position, side, hitVecX, hitVecY, hitVecZ);
+            heldItem.setItemDamage(metadata);
+            heldItem.stackSize = stackSize;
+            return isItemUsed;
+        }
+
+        return heldItem.onItemUse(player, world, position, side, hitVecX, hitVecY, hitVecZ);
+    }
+
+    public boolean sendUseItem(EntityPlayer playerIn, World worldIn, ItemStack itemStackIn) {
+        if (this.currentGameType == WorldSettings.GameType.SPECTATOR) {
+            return false;
+        } else {
             this.syncCurrentPlayItem();
             this.netClientHandler.addToSendQueue(new C08PacketPlayerBlockPlacement(playerIn.inventory.getCurrentItem()));
             int i = itemStackIn.stackSize;
             ItemStack itemstack = itemStackIn.useItemRightClick(worldIn, playerIn);
 
-            if (itemstack != itemStackIn || itemstack != null && itemstack.stackSize != i)
-            {
+            if (itemstack != itemStackIn || itemstack != null && itemstack.stackSize != i) {
                 playerIn.inventory.mainInventory[playerIn.inventory.currentItem] = itemstack;
 
-                if (itemstack.stackSize == 0)
-                {
+                if (itemstack.stackSize == 0) {
                     playerIn.inventory.mainInventory[playerIn.inventory.currentItem] = null;
                 }
 
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }

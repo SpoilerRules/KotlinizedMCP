@@ -108,7 +108,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
-public class Minecraft extends CommonResourceElement implements IThreadListener, IPlayerUsage {
+public class Minecraft implements IThreadListener, IPlayerUsage {
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
     private static final Logger logger = LogManager.getLogger();
     private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/mojang.png");
@@ -313,13 +313,13 @@ public class Minecraft extends CommonResourceElement implements IThreadListener,
         logger.info("LWJGL Version: " + Sys.getVersion());
 
         // resource pack repository
-        super.resourcePackRepository = new ResourcePackRepository(
+        CommonResourceElement.Companion.setResourcePackRepository(new ResourcePackRepository(
                 this.fileResourcepacks,
                 new File(this.mcDataDir, "server-resource-packs"),
                 this.mcDefaultResourcePack,
                 this.metadataSerializer_,
                 this.gameSettings
-        );
+        ));
 
         // resource manager and language manager
         this.mcResourceManager = new SimpleReloadableResourceManager(this.metadataSerializer_);
@@ -478,12 +478,12 @@ public class Minecraft extends CommonResourceElement implements IThreadListener,
     public void refreshResources() {
         List<IResourcePack> list = Lists.newArrayList(this.defaultResourcePacks);
 
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : super.resourcePackRepository.getRepositoryEntries()) {
+        for (ResourcePackRepository.Entry resourcepackrepository$entry : CommonResourceElement.Companion.getResourcePackRepository().getRepositoryEntries()) {
             list.add(resourcepackrepository$entry.getResourcePack());
         }
 
-        if (super.resourcePackRepository.getResourcePackInstance() != null) {
-            list.add(super.resourcePackRepository.getResourcePackInstance());
+        if (CommonResourceElement.Companion.getResourcePackRepository().getResourcePackInstance() != null) {
+            list.add(CommonResourceElement.Companion.getResourcePackRepository().getResourcePackInstance());
         }
 
         try {
@@ -492,7 +492,7 @@ public class Minecraft extends CommonResourceElement implements IThreadListener,
             logger.info("Caught error stitching, removing all assigned resourcepacks", runtimeexception);
             list.clear();
             list.addAll(this.defaultResourcePacks);
-            super.resourcePackRepository.setRepositories(Collections.emptyList());
+            CommonResourceElement.Companion.getResourcePackRepository().setRepositories(Collections.emptyList());
             try {
                 this.mcResourceManager.reloadResources(list);
             } catch (IOException e) {
@@ -1594,7 +1594,7 @@ public class Minecraft extends CommonResourceElement implements IThreadListener,
         }
 
         if (worldClientIn == null && this.theWorld != null) {
-            super.resourcePackRepository.clearResourcePack();
+            CommonResourceElement.Companion.getResourcePackRepository().clearResourcePack();
             this.ingameGUI.resetPlayersOverlayFooterHeader();
             this.setServerData(null);
             this.integratedServerIsRunning = false;
@@ -1820,10 +1820,10 @@ public class Minecraft extends CommonResourceElement implements IThreadListener,
         playerSnooper.addClientStat("current_action", this.getCurrentAction());
         String s = ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN ? "little" : "big";
         playerSnooper.addClientStat("endianness", s);
-        playerSnooper.addClientStat("resource_packs", super.resourcePackRepository.getRepositoryEntries().size());
+        playerSnooper.addClientStat("resource_packs", CommonResourceElement.Companion.getResourcePackRepository().getRepositoryEntries().size());
         int i = 0;
 
-        for (ResourcePackRepository.Entry resourcepackrepository$entry : super.resourcePackRepository.getRepositoryEntries()) {
+        for (ResourcePackRepository.Entry resourcepackrepository$entry : CommonResourceElement.Companion.getResourcePackRepository().getRepositoryEntries()) {
             playerSnooper.addClientStat("resource_pack[" + i++ + "]", resourcepackrepository$entry.getResourcePackName());
         }
 

@@ -139,24 +139,13 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         {
             int i = this.getHorseType();
 
-            switch (i)
-            {
-                case 0:
-                default:
-                    return StatCollector.translateToLocal("entity.horse.name");
-
-                case 1:
-                    return StatCollector.translateToLocal("entity.donkey.name");
-
-                case 2:
-                    return StatCollector.translateToLocal("entity.mule.name");
-
-                case 3:
-                    return StatCollector.translateToLocal("entity.zombiehorse.name");
-
-                case 4:
-                    return StatCollector.translateToLocal("entity.skeletonhorse.name");
-            }
+            return switch (i) {
+                default -> StatCollector.translateToLocal("entity.horse.name");
+                case 1 -> StatCollector.translateToLocal("entity.donkey.name");
+                case 2 -> StatCollector.translateToLocal("entity.mule.name");
+                case 3 -> StatCollector.translateToLocal("entity.zombiehorse.name");
+                case 4 -> StatCollector.translateToLocal("entity.skeletonhorse.name");
+            };
         }
     }
 
@@ -338,7 +327,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         Entity entity = source.getEntity();
-        return this.riddenByEntity != null && this.riddenByEntity.equals(entity) ? false : super.attackEntityFrom(source, amount);
+        return (this.riddenByEntity == null || !this.riddenByEntity.equals(entity)) && super.attackEntityFrom(source, amount);
     }
 
     public int getTotalArmorValue()
@@ -724,54 +713,35 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
     }
 
-    public boolean interact(EntityPlayer player)
-    {
+    public boolean interact(EntityPlayer player) {
         ItemStack itemstack = player.inventory.getCurrentItem();
 
-        if (itemstack != null && itemstack.getItem() == Items.spawn_egg)
-        {
+        if (itemstack != null && itemstack.getItem() == Items.spawn_egg) {
             return super.interact(player);
-        }
-        else if (!this.isTame() && this.isUndead())
-        {
+        } else if (!this.isTame() && this.isUndead()) {
             return false;
-        }
-        else if (this.isTame() && this.isAdultHorse() && player.isSneaking())
-        {
+        } else if (this.isTame() && this.isAdultHorse() && player.isSneaking()) {
             this.openGUI(player);
             return true;
-        }
-        else if (this.func_110253_bW() && this.riddenByEntity != null)
-        {
+        } else if (this.func_110253_bW() && this.riddenByEntity != null) {
             return super.interact(player);
-        }
-        else
-        {
-            if (itemstack != null)
-            {
+        } else {
+            if (itemstack != null) {
                 boolean flag = false;
 
-                if (this.canWearArmor())
-                {
+                if (this.canWearArmor()) {
                     int i = -1;
 
-                    if (itemstack.getItem() == Items.iron_horse_armor)
-                    {
+                    if (itemstack.getItem() == Items.iron_horse_armor) {
                         i = 1;
-                    }
-                    else if (itemstack.getItem() == Items.golden_horse_armor)
-                    {
+                    } else if (itemstack.getItem() == Items.golden_horse_armor) {
                         i = 2;
-                    }
-                    else if (itemstack.getItem() == Items.diamond_horse_armor)
-                    {
+                    } else if (itemstack.getItem() == Items.diamond_horse_armor) {
                         i = 3;
                     }
 
-                    if (i >= 0)
-                    {
-                        if (!this.isTame())
-                        {
+                    if (i >= 0) {
+                        if (!this.isTame()) {
                             this.makeHorseRearWithSound();
                             return true;
                         }
@@ -781,88 +751,68 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
                     }
                 }
 
-                if (!flag && !this.isUndead())
-                {
+                if (!flag && !this.isUndead()) {
                     float f = 0.0F;
                     int j = 0;
                     int k = 0;
 
-                    if (itemstack.getItem() == Items.wheat)
-                    {
+                    if (itemstack.getItem() == Items.wheat) {
                         f = 2.0F;
                         j = 20;
                         k = 3;
-                    }
-                    else if (itemstack.getItem() == Items.sugar)
-                    {
+                    } else if (itemstack.getItem() == Items.sugar) {
                         f = 1.0F;
                         j = 30;
                         k = 3;
-                    }
-                    else if (Block.getBlockFromItem(itemstack.getItem()) == Blocks.hay_block)
-                    {
+                    } else if (Block.getBlockFromItem(itemstack.getItem()) == Blocks.hay_block) {
                         f = 20.0F;
                         j = 180;
-                    }
-                    else if (itemstack.getItem() == Items.apple)
-                    {
+                    } else if (itemstack.getItem() == Items.apple) {
                         f = 3.0F;
                         j = 60;
                         k = 3;
-                    }
-                    else if (itemstack.getItem() == Items.golden_carrot)
-                    {
+                    } else if (itemstack.getItem() == Items.golden_carrot) {
                         f = 4.0F;
                         j = 60;
                         k = 5;
 
-                        if (this.isTame() && this.getGrowingAge() == 0)
-                        {
+                        if (this.isTame() && this.getGrowingAge() == 0) {
                             flag = true;
                             this.setInLove(player);
                         }
-                    }
-                    else if (itemstack.getItem() == Items.golden_apple)
-                    {
+                    } else if (itemstack.getItem() == Items.golden_apple) {
                         f = 10.0F;
                         j = 240;
                         k = 10;
 
-                        if (this.isTame() && this.getGrowingAge() == 0)
-                        {
+                        if (this.isTame() && this.getGrowingAge() == 0) {
                             flag = true;
                             this.setInLove(player);
                         }
                     }
 
-                    if (this.getHealth() < this.getMaxHealth() && f > 0.0F)
-                    {
+                    if (this.getHealth() < this.getMaxHealth() && f > 0.0F) {
                         this.heal(f);
                         flag = true;
                     }
 
-                    if (!this.isAdultHorse() && j > 0)
-                    {
+                    if (!this.isAdultHorse() && j > 0) {
                         this.addGrowth(j);
                         flag = true;
                     }
 
-                    if (k > 0 && (flag || !this.isTame()) && k < this.getMaxTemper())
-                    {
+                    if (k > 0 && (flag || !this.isTame()) && k < this.getMaxTemper()) {
                         flag = true;
                         this.increaseTemper(k);
                     }
 
-                    if (flag)
-                    {
+                    if (flag) {
                         this.func_110266_cB();
                     }
                 }
 
-                if (!this.isTame() && !flag)
-                {
-                    if (itemstack != null && itemstack.interactWithEntity(player, this))
-                    {
+                if (!this.isTame() && !flag) {
+                    if (itemstack != null && itemstack.interactWithEntity(player, this)) {
                         return true;
                     }
 
@@ -870,45 +820,35 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
                     return true;
                 }
 
-                if (!flag && this.canCarryChest() && !this.isChested() && itemstack.getItem() == Item.getItemFromBlock(Blocks.chest))
-                {
+                if (!flag && this.canCarryChest() && !this.isChested() && itemstack.getItem() == Item.getItemFromBlock(Blocks.chest)) {
                     this.setChested(true);
                     this.playSound("mob.chickenplop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
                     flag = true;
                     this.initHorseChest();
                 }
 
-                if (!flag && this.func_110253_bW() && !this.isHorseSaddled() && itemstack.getItem() == Items.saddle)
-                {
+                if (!flag && this.func_110253_bW() && !this.isHorseSaddled() && itemstack.getItem() == Items.saddle) {
                     this.openGUI(player);
                     return true;
                 }
 
-                if (flag)
-                {
-                    if (!player.capabilities.isCreativeMode && --itemstack.stackSize == 0)
-                    {
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
+                if (flag) {
+                    if (!player.capabilities.isCreativeMode && --itemstack.stackSize == 0) {
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack) null);
                     }
 
                     return true;
                 }
             }
 
-            if (this.func_110253_bW() && this.riddenByEntity == null)
-            {
-                if (itemstack != null && itemstack.interactWithEntity(player, this))
-                {
+            if (this.func_110253_bW() && this.riddenByEntity == null) {
+                if (itemstack != null && itemstack.interactWithEntity(player, this)) {
                     return true;
-                }
-                else
-                {
+                } else {
                     this.mountTo(player);
                     return true;
                 }
-            }
-            else
-            {
+            } else {
                 return super.interact(player);
             }
         }

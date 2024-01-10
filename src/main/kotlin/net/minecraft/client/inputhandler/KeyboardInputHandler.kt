@@ -22,7 +22,7 @@ class KeyboardInputHandler : InputService() {
 
         if (activeScreen == null || activeScreen.allowUserInput) {
             when (keyEvent) {
-                mc.gameSettings.keyBindChat.keyCode -> mc.theWorld?.let {
+                mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory) mc.theWorld?.let {
                     mapOf(
                         EntityPlayer.EnumChatVisibility.FULL to { mc.displayGuiScreen(GuiChat()) },
                         EntityPlayer.EnumChatVisibility.SYSTEM to { mc.displayGuiScreen(GuiChat("/")) }
@@ -42,6 +42,7 @@ class KeyboardInputHandler : InputService() {
 
             if (activeScreen !is GuiControls) {
                 when (keyEvent) {
+                    //todo: make fullscreen bind work everywhere
                 //    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
                     mc.gameSettings.keyBindScreenshot.keyCode -> {
                         val screenshotMessage = ScreenshotHandler.takeScreenshot(

@@ -62,7 +62,7 @@ class MouseInputHandler : InputService() {
                 when {
                     mc.gameSettings.keyBindAttack.isPressed -> handleLeftClick()
                     mc.gameSettings.keyBindPickBlock.isPressed -> mc.middleClickMouse()
-                    mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 -> mc.rightClickMouse()
+                    mc.gameSettings.keyBindUseItem.isKeyDown && mc.rightClickDelayTimer == 0 -> handleRightClick()
                 }
             } else if (!mc.gameSettings.keyBindUseItem.isKeyDown) {
                 mc.playerController.onStoppedUsingItem(it)
@@ -116,6 +116,46 @@ class MouseInputHandler : InputService() {
      *
      * @return void
      */
+    fun handleRightClick() {
+        if (!mc.playerController.isHittingBlock) {
+            mc.rightClickDelayTimer = 4
+            var isActionPerformed = true
+            val currentItem = currentItem
+
+            when (mc.objectMouseOver?.typeOfHit) {
+                MovingObjectType.ENTITY -> {
+                    if (mc.playerController.isPlayerRightClickingOnEntity(player, mc.objectMouseOver.entityHit, mc.objectMouseOver) ||
+                        mc.playerController.interactWithEntitySendPacket(player, mc.objectMouseOver.entityHit)) {
+                        isActionPerformed = false
+                    }
+                }
+                MovingObjectType.BLOCK -> {
+                    val blockPos = mc.objectMouseOver.blockPos
+                    if (!mc.theWorld.getBlockState(blockPos).block.material.equals(Material.air)) {
+                        val initialStackSize = currentItem?.stackSize ?: 0
+
+                        if (mc.playerController.onPlayerRightClick(player, mc.theWorld, currentItem, blockPos, mc.objectMouseOver.sideHit, mc.objectMouseOver.hitVec)) {
+                            isActionPerformed = false
+                            player?.swingItem()
+                        }
+
+                        currentItem?.let {
+                            when {
+                                it.stackSize == 0 -> player?.inventory!!.mainInventory[player.inventory!!.currentItem] = null
+                                it.stackSize != initialStackSize -> mc.entityRenderer.itemRenderer.resetEquippedProgress()
+                            }
+                        }
+                    }
+                }
+
+                else -> logger.warn("Null returned as 'hitResult', this shouldn't happen!")
+            }
+
+            if (isActionPerformed && currentItem != null && mc.playerController.sendUseItem(player, mc.theWorld, currentItem)) {
+                mc.entityRenderer.itemRenderer.resetEquippedProgress2()
+            }
+        }
+    }
     /*   private fun handleRightClick() {
         if (mc.playerController.isHittingBlock) return
 
