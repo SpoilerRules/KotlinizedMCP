@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  push:
+    branches: [ mcp ]
+  pull_request:
+    branches: [ mcp ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Setting up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: oracle
+          java-version: 21
+
+      - name: Grant permissions to Gradlew
+        run: sudo chmod +x ./gradlew
+
+      - name: Setup and build
+        run: ./gradlew setupCiWorkspace && ./gradlew build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Evanescent
+          path: build/libs/Evanescent.jar
