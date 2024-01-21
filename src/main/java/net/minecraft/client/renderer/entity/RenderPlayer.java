@@ -4,12 +4,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.layers.LayerArrow;
-import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.client.renderer.entity.layers.LayerCape;
-import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
-import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
-import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
+import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -18,9 +13,10 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
 
+import static org.lwjgl.opengl.GL11.*;
+
 public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
 {
-    private boolean smallArms;
 
     public RenderPlayer(RenderManager renderManager)
     {
@@ -30,7 +26,6 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
     public RenderPlayer(RenderManager renderManager, boolean useSmallArms)
     {
         super(renderManager, new ModelPlayer(0.0F, useSmallArms), 0.5F);
-        this.smallArms = useSmallArms;
         this.addLayer(new LayerBipedArmor(this));
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerArrow(this));
@@ -136,7 +131,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
             {
                 Score score = scoreboard.getValueFromObjective(entityIn.getName(), scoreobjective);
                 this.renderLivingLabel(entityIn, score.getScorePoints() + " " + scoreobjective.getDisplayName(), x, y, z, 64);
-                y += (double)((float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_177069_9_);
+                y += (float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_177069_9_;
             }
         }
 
@@ -152,7 +147,10 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         modelplayer.swingProgress = 0.0F;
         modelplayer.isSneak = false;
         modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         modelplayer.renderRightArm();
+        GlStateManager.disableBlend();
     }
 
     public void renderLeftArm(AbstractClientPlayer clientPlayer)
@@ -164,19 +162,23 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         modelplayer.isSneak = false;
         modelplayer.swingProgress = 0.0F;
         modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, clientPlayer);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
         modelplayer.renderLeftArm();
+        GlStateManager.disableBlend();
     }
 
     protected void renderLivingAt(AbstractClientPlayer entityLivingBaseIn, double x, double y, double z)
     {
-        if (entityLivingBaseIn.isEntityAlive() && entityLivingBaseIn.isPlayerSleeping())
-        {
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+        if (entityLivingBaseIn.isEntityAlive() && entityLivingBaseIn.isPlayerSleeping()) {
             super.renderLivingAt(entityLivingBaseIn, x + (double)entityLivingBaseIn.renderOffsetX, y + (double)entityLivingBaseIn.renderOffsetY, z + (double)entityLivingBaseIn.renderOffsetZ);
         }
-        else
-        {
+        else {
             super.renderLivingAt(entityLivingBaseIn, x, y, z);
         }
+        GlStateManager.enableBlend();
     }
 
     protected void rotateCorpse(AbstractClientPlayer bat, float p_77043_2_, float p_77043_3_, float partialTicks)
