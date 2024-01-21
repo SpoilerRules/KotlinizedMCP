@@ -1,37 +1,20 @@
 package net.optifine.shaders.config;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import net.minecraft.src.Config;
-import net.optifine.expr.ExpressionFloatArrayCached;
-import net.optifine.expr.ExpressionFloatCached;
-import net.optifine.expr.ExpressionParser;
-import net.optifine.expr.ExpressionType;
-import net.optifine.expr.IExpression;
-import net.optifine.expr.IExpressionBool;
-import net.optifine.expr.IExpressionFloat;
-import net.optifine.expr.IExpressionFloatArray;
-import net.optifine.expr.ParseException;
+import net.optifine.expr.*;
 import net.optifine.render.GlAlphaState;
 import net.optifine.render.GlBlendState;
-import net.optifine.shaders.IShaderPack;
-import net.optifine.shaders.Program;
-import net.optifine.shaders.SMCLog;
-import net.optifine.shaders.ShaderUtils;
-import net.optifine.shaders.Shaders;
+import net.optifine.shaders.*;
 import net.optifine.shaders.uniform.CustomUniform;
 import net.optifine.shaders.uniform.CustomUniforms;
 import net.optifine.shaders.uniform.ShaderExpressionResolver;
 import net.optifine.shaders.uniform.UniformType;
 import net.optifine.util.StrUtils;
+
+import java.io.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ShaderPackParser
 {
@@ -879,7 +862,7 @@ public class ShaderPackParser
         {
             String s2 = astring[0];
             String s1 = astring[1];
-            Integer integer = (Integer)mapAlphaFuncs.get(s2);
+            Integer integer = mapAlphaFuncs.get(s2);
             float f = Config.parseFloat(s1, -1.0F);
 
             if (integer != null && f >= 0.0F)
@@ -1083,22 +1066,17 @@ public class ShaderPackParser
         }
     }
 
-    private static final Map<String, Integer> ALPHA_FUNCS_MAP = Map.of(
-            "NEVER", 512,
-            "LESS", 513,
-            "EQUAL", 514,
-            "LEQUAL", 515,
-            "GREATER", 516,
-            "NOTEQUAL", 517,
-            "GEQUAL", 518,
-            "ALWAYS", 519
-    );
-
     private static Map<String, Integer> makeMapAlphaFuncs() {
-        if (ALPHA_FUNCS_MAP != null) {
-            return ALPHA_FUNCS_MAP;
-        }
-        return null;
+        return Map.of(
+                "NEVER", 512,
+                "LESS", 513,
+                "EQUAL", 514,
+                "LEQUAL", 515,
+                "GREATER", 516,
+                "NOTEQUAL", 517,
+                "GEQUAL", 518,
+                "ALWAYS", 519
+        );
     }
 
     private static final Map<String, Integer> BLEND_FACTORS_MAP = Map.ofEntries(

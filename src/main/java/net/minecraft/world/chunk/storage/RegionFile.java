@@ -1,19 +1,13 @@
 package net.minecraft.world.chunk.storage;
 
 import com.google.common.collect.Lists;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import net.minecraft.server.MinecraftServer;
+
+import java.io.*;
 import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
-import net.minecraft.server.MinecraftServer;
 
 public class RegionFile
 {
@@ -64,7 +58,7 @@ public class RegionFile
             }
 
             int k1 = (int)this.dataFile.length() / 4096;
-            this.sectorFree = Lists.<Boolean>newArrayListWithCapacity(k1);
+            this.sectorFree = Lists.newArrayListWithCapacity(k1);
 
             for (int j = 0; j < k1; ++j)
             {
@@ -128,7 +122,7 @@ public class RegionFile
                     }
                     else
                     {
-                        this.dataFile.seek((long)(j * 4096));
+                        this.dataFile.seek(j * 4096L);
                         int l = this.dataFile.readInt();
 
                         if (l > 4096 * k)
@@ -209,7 +203,7 @@ public class RegionFile
                     {
                         if (j1 != 0)
                         {
-                            if (((Boolean)this.sectorFree.get(k1)).booleanValue())
+                            if (this.sectorFree.get(k1).booleanValue())
                             {
                                 ++j1;
                             }
@@ -218,7 +212,7 @@ public class RegionFile
                                 j1 = 0;
                             }
                         }
-                        else if (((Boolean)this.sectorFree.get(k1)).booleanValue())
+                        else if (this.sectorFree.get(k1).booleanValue())
                         {
                             l1 = k1;
                             j1 = 1;
@@ -270,7 +264,7 @@ public class RegionFile
 
     private void write(int sectorNumber, byte[] data, int length) throws IOException
     {
-        this.dataFile.seek((long)(sectorNumber * 4096));
+        this.dataFile.seek(sectorNumber * 4096L);
         this.dataFile.writeInt(length + 1);
         this.dataFile.writeByte(2);
         this.dataFile.write(data, 0, length);
@@ -294,14 +288,14 @@ public class RegionFile
     private void setOffset(int x, int z, int offset) throws IOException
     {
         this.offsets[x + z * 32] = offset;
-        this.dataFile.seek((long)((x + z * 32) * 4));
+        this.dataFile.seek((x + z * 32L) * 4);
         this.dataFile.writeInt(offset);
     }
 
     private void setChunkTimestamp(int x, int z, int timestamp) throws IOException
     {
         this.chunkTimestamps[x + z * 32] = timestamp;
-        this.dataFile.seek((long)(4096 + (x + z * 32) * 4));
+        this.dataFile.seek(4096 + (x + z * 32L) * 4);
         this.dataFile.writeInt(timestamp);
     }
 
@@ -315,8 +309,8 @@ public class RegionFile
 
     class ChunkBuffer extends ByteArrayOutputStream
     {
-        private int chunkX;
-        private int chunkZ;
+        private final int chunkX;
+        private final int chunkZ;
 
         public ChunkBuffer(int x, int z)
         {

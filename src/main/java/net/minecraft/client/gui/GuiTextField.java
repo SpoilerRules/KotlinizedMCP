@@ -53,16 +53,9 @@ public class GuiTextField extends Gui {
         return this.text;
     }
 
-    public void setText(String p_146180_1_) {
-        if (this.validator.test(p_146180_1_)) {
-            if (p_146180_1_.length() > this.maxStringLength) {
-                this.text = p_146180_1_.substring(0, this.maxStringLength);
-            } else {
-                this.text = p_146180_1_;
-            }
-
-            this.setCursorPositionEnd();
-        }
+    public void setText(String input) {
+        this.text = validator.test(input) ? input.substring(0, Math.min(input.length(), maxStringLength)) : text;
+        setCursorPositionEnd();
     }
 
     public String getSelectedText() {
