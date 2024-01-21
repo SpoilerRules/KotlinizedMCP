@@ -1,13 +1,14 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.CombatTracker;
 
-public class S42PacketCombatEvent implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S42PacketCombatEvent implements IPacket<INetHandlerPlayClient>
 {
     public S42PacketCombatEvent.Event eventType;
     public int field_179774_b;

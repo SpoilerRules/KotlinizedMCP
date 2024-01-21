@@ -1,13 +1,14 @@
 package net.minecraft.network.play.client;
 
-import java.io.IOException;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.util.BlockPos;
 
-public class C08PacketPlayerBlockPlacement implements Packet<INetHandlerPlayServer>
+import java.io.IOException;
+
+public class C08PacketPlayerBlockPlacement implements IPacket<INetHandlerPlayServer>
 {
     private static final BlockPos field_179726_a = new BlockPos(-1, -1, -1);
     private BlockPos position;

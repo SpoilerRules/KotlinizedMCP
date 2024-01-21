@@ -88,7 +88,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.glu.GLU;
 
@@ -778,15 +777,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcProfiler.endSection();
 
         Lagometer.showLagometer(new ScaledResolution(this));
-
-        var keyEvent = (Keyboard.getEventKey() == 0) ? Keyboard.getEventCharacter() : Keyboard.getEventKey();
-
-        if (keyEvent == this.gameSettings.keyBindFullscreen.getKeyCode()) System.out.println("pressed f11");
-
-        if (keyEvent != 0 || !Keyboard.isRepeatEvent() || Keyboard.getEventKeyState()) {
-            if (!(this.currentScreen instanceof GuiControls) && keyEvent == this.gameSettings.keyBindFullscreen.getKeyCode())
-                this.switchFullscreenMode();
-        }
     }
 
     public void updateDisplay() {

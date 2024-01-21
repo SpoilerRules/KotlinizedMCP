@@ -344,10 +344,9 @@ public class ItemInWorldManager
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof ILockableContainer)
+            if (tileentity instanceof ILockableContainer ilockablecontainer)
             {
                 Block block = worldIn.getBlockState(pos).getBlock();
-                ILockableContainer ilockablecontainer = (ILockableContainer)tileentity;
 
                 if (ilockablecontainer instanceof TileEntityChest && block instanceof BlockChest)
                 {

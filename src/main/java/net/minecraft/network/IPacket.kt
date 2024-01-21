@@ -7,7 +7,7 @@ import java.io.IOException
  *
  * @param T the type of the handler used to process this packet
  */
-interface Packet<T : INetHandler> {
+interface IPacket<T : INetHandler> {
     /**
      * Reads the packet data from the given buffer.
      *

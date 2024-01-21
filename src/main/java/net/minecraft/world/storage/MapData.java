@@ -2,20 +2,21 @@ package net.minecraft.world.storage;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S34PacketMaps;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec4b;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+
+import java.util.List;
+import java.util.Map;
 
 public class MapData extends WorldSavedData
 {
@@ -205,7 +206,7 @@ public class MapData extends WorldSavedData
         this.mapDecorations.put(entityIdentifier, new Vec4b((byte)type, b0, b1, b2));
     }
 
-    public Packet getMapPacket(ItemStack mapStack, World worldIn, EntityPlayer player)
+    public IPacket getMapPacket(ItemStack mapStack, World worldIn, EntityPlayer player)
     {
         MapData.MapInfo mapdata$mapinfo = (MapData.MapInfo)this.playersHashMap.get(player);
         return mapdata$mapinfo == null ? null : mapdata$mapinfo.getPacket(mapStack);
@@ -251,7 +252,7 @@ public class MapData extends WorldSavedData
             this.entityplayerObj = player;
         }
 
-        public Packet getPacket(ItemStack stack)
+        public IPacket getPacket(ItemStack stack)
         {
             if (this.field_176105_d)
             {

@@ -10,7 +10,7 @@ public class PacketThreadUtil
 {
     public static int lastDimensionId = Integer.MIN_VALUE;
 
-    public static <T extends INetHandler> void checkThreadAndEnqueue(final Packet<T> p_180031_0_, final T p_180031_1_, IThreadListener p_180031_2_) throws ThreadQuickExitException
+    public static <T extends INetHandler> void checkThreadAndEnqueue(final IPacket<T> p_180031_0_, final T p_180031_1_, IThreadListener p_180031_2_) throws ThreadQuickExitException
     {
         if (!p_180031_2_.isCallingFromMinecraftThread())
         {
@@ -30,7 +30,7 @@ public class PacketThreadUtil
         }
     }
 
-    protected static void clientPreProcessPacket(Packet p_clientPreProcessPacket_0_)
+    protected static void clientPreProcessPacket(IPacket p_clientPreProcessPacket_0_)
     {
         if (p_clientPreProcessPacket_0_ instanceof S08PacketPlayerPosLook)
         {

@@ -1,7 +1,7 @@
 package net.minecraft.item;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.world.World;
 
 public class ItemMapBase extends Item
@@ -11,7 +11,7 @@ public class ItemMapBase extends Item
         return true;
     }
 
-    public Packet createMapDataPacket(ItemStack stack, World worldIn, EntityPlayer player)
+    public IPacket createMapDataPacket(ItemStack stack, World worldIn, EntityPlayer player)
     {
         return null;
     }

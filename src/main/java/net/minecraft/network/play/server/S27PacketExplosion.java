@@ -1,15 +1,16 @@
 package net.minecraft.network.play.server;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.List;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vector3D;
 
-public class S27PacketExplosion implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+import java.util.List;
+
+public class S27PacketExplosion implements IPacket<INetHandlerPlayClient>
 {
     private double posX;
     private double posY;

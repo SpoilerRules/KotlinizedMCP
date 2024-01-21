@@ -149,6 +149,10 @@ tasks.withType<JavaCompile> {
     options.compilerArgs.add("-Xlint:deprecation")
 }
 
+tasks.compileKotlin {
+    kotlinOptions.jvmTarget = "21"
+}
+
 tasks.withType<JavaExec> {
     val osType = System.getProperty("os.name").lowercase().let {
         if (it.contains("windows")) "windows" else "linux"

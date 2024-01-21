@@ -1,13 +1,14 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import java.util.List;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.world.chunk.Chunk;
 
-public class S26PacketMapChunkBulk implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+import java.util.List;
+
+public class S26PacketMapChunkBulk implements IPacket<INetHandlerPlayClient>
 {
     private int[] xPositions;
     private int[] zPositions;

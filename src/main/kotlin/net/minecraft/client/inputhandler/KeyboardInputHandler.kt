@@ -29,8 +29,7 @@ class KeyboardInputHandler : InputService() {
                     )[mc.gameSettings.chatVisibility]?.invoke()
                 }
 
-                mc.gameSettings.keyBindDrop.keyCode -> player?.takeUnless { it.isSpectator }
-                    ?.dropOneItem(GuiScreen.isCtrlKeyDown())
+                mc.gameSettings.keyBindDrop.keyCode -> player?.takeUnless { it.isSpectator }?.dropOneItem(GuiScreen.isCtrlKeyDown())
 
                 mc.gameSettings.keyBindInventory.keyCode -> if (mc.playerController.isRidingHorse) {
                     player?.sendHorseInventory()
@@ -42,8 +41,7 @@ class KeyboardInputHandler : InputService() {
 
             if (activeScreen !is GuiControls) {
                 when (keyEvent) {
-                    //todo: make fullscreen bind work everywhere
-                //    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
+                    mc.gameSettings.keyBindFullscreen.keyCode -> GameDisplayHandler.switchFullscreenMode()
                     mc.gameSettings.keyBindScreenshot.keyCode -> {
                         val screenshotMessage = ScreenshotHandler.takeScreenshot(
                             mc.mcDataDir,

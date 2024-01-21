@@ -306,10 +306,8 @@ public class ItemRenderer
         GlStateManager.rotate(60.0F, 0.0F, 1.0F, 0.0F);
     }
 
-    public void renderItemInFirstPerson(float partialTicks)
-    {
-        if (!Config.isShaders() || !Shaders.isSkipRenderHand())
-        {
+    public void renderItemInFirstPerson(float partialTicks) {
+        if (!Config.isShaders() || !Shaders.isSkipRenderHand()) {
             float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
             EntityPlayerSP abstractclientplayer = this.mc.thePlayer;
             float f1 = abstractclientplayer.getSwingProgress(partialTicks);
@@ -321,18 +319,13 @@ public class ItemRenderer
             GlStateManager.enableRescaleNormal();
             GlStateManager.pushMatrix();
 
-            if (this.itemToRender != null)
-            {
-                if (this.itemToRender.getItem() instanceof ItemMap)
-                {
+            if (this.itemToRender != null) {
+                if (this.itemToRender.getItem() instanceof ItemMap) {
                     this.renderItemMap(abstractclientplayer, f2, f, f1);
-                }
-                else if (abstractclientplayer.getItemInUseCount() > 0)
-                {
+                } else if (abstractclientplayer.getItemInUseCount() > 0) {
                     EnumAction enumaction = this.itemToRender.getItemUseAction();
 
-                    switch (enumaction)
-                    {
+                    switch (enumaction) {
                         case NONE:
                             this.transformFirstPersonItem(f, 0.0F);
                             break;
@@ -352,17 +345,13 @@ public class ItemRenderer
                             this.transformFirstPersonItem(f, 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
                     }
-                }
-                else
-                {
+                } else {
                     this.doItemUsedTransformations(f1);
                     this.transformFirstPersonItem(f, f1);
                 }
 
                 this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
-            }
-            else if (!abstractclientplayer.isInvisible())
-            {
+            } else if (!abstractclientplayer.isInvisible()) {
                 this.renderPlayerArm(abstractclientplayer, f, f1);
             }
 

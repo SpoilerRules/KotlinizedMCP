@@ -1,13 +1,14 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.scoreboard.IScoreObjectiveCriteria;
 import net.minecraft.scoreboard.ScoreObjective;
 
-public class S3BPacketScoreboardObjective implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S3BPacketScoreboardObjective implements IPacket<INetHandlerPlayClient>
 {
     private String objectiveName;
     private String objectiveValue;

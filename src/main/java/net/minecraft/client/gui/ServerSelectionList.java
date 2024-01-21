@@ -1,10 +1,12 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.client.network.LanServerDetector;
+
+import java.util.List;
 
 public class ServerSelectionList extends GuiListExtended
 {
@@ -57,18 +59,18 @@ public class ServerSelectionList extends GuiListExtended
         return slotIndex == this.selectedSlotIndex;
     }
 
-    public int func_148193_k()
+    public int getSelectedIndex()
     {
         return this.selectedSlotIndex;
     }
 
-    public void func_148195_a(ServerList p_148195_1_)
-    {
+    public void setServerList(ServerList updatedServerList) {
         this.serverListInternet.clear();
 
-        for (int i = 0; i < p_148195_1_.countServers(); ++i)
-        {
-            this.serverListInternet.add(new ServerListEntryNormal(this.owner, p_148195_1_.getServerData(i)));
+        for (int serverIndex = 0; serverIndex < updatedServerList.countServers(); ++serverIndex) {
+            ServerData serverData = updatedServerList.getServerData(serverIndex);
+            ServerListEntryNormal serverEntry = new ServerListEntryNormal(this.owner, serverData);
+            this.serverListInternet.add(serverEntry);
         }
     }
 

@@ -1,13 +1,14 @@
 package net.minecraft.network.login.server;
 
 import com.mojang.authlib.GameProfile;
-import java.io.IOException;
-import java.util.UUID;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.login.INetHandlerLoginClient;
 
-public class S02PacketLoginSuccess implements Packet<INetHandlerLoginClient>
+import java.io.IOException;
+import java.util.UUID;
+
+public class S02PacketLoginSuccess implements IPacket<INetHandlerLoginClient>
 {
     private GameProfile profile;
 

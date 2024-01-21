@@ -1,12 +1,13 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.IChatComponent;
 
-public class S45PacketTitle implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S45PacketTitle implements IPacket<INetHandlerPlayClient>
 {
     private S45PacketTitle.Type type;
     private IChatComponent message;

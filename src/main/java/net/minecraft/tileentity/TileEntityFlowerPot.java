@@ -2,7 +2,7 @@ package net.minecraft.tileentity;
 
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.ResourceLocation;
 
@@ -45,7 +45,7 @@ public class TileEntityFlowerPot extends TileEntity
         this.flowerPotData = compound.getInteger("Data");
     }
 
-    public Packet getDescriptionPacket()
+    public IPacket getDescriptionPacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);

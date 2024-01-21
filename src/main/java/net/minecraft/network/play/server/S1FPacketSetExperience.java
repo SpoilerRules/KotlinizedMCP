@@ -1,11 +1,12 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 
-public class S1FPacketSetExperience implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S1FPacketSetExperience implements IPacket<INetHandlerPlayClient>
 {
     private float field_149401_a;
     private int totalExperience;

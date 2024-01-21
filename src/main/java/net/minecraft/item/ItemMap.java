@@ -4,7 +4,6 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
-import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockStone;
@@ -14,12 +13,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.MapData;
+
+import java.util.List;
 
 public class ItemMap extends ItemMapBase
 {
@@ -247,7 +248,7 @@ public class ItemMap extends ItemMapBase
         }
     }
 
-    public Packet createMapDataPacket(ItemStack stack, World worldIn, EntityPlayer player)
+    public IPacket createMapDataPacket(ItemStack stack, World worldIn, EntityPlayer player)
     {
         return this.getMapData(stack, worldIn).getMapPacket(stack, worldIn, player);
     }

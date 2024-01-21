@@ -1,11 +1,12 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 
-public class S13PacketDestroyEntities implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S13PacketDestroyEntities implements IPacket<INetHandlerPlayClient>
 {
     private int[] entityIDs;
 

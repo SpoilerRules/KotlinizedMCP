@@ -2,7 +2,7 @@ package net.minecraft.tileentity;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
@@ -52,7 +52,7 @@ public class TileEntityMobSpawner extends TileEntity implements ITickable
         this.spawnerLogic.updateSpawner();
     }
 
-    public Packet getDescriptionPacket()
+    public IPacket getDescriptionPacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);

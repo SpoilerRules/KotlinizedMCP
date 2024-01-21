@@ -1,14 +1,15 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.MathHelper;
 
-public class S2CPacketSpawnGlobalEntity implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S2CPacketSpawnGlobalEntity implements IPacket<INetHandlerPlayClient>
 {
     private int entityId;
     private int x;

@@ -1,12 +1,13 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 
-public class S2FPacketSetSlot implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S2FPacketSetSlot implements IPacket<INetHandlerPlayClient>
 {
     private int windowId;
     private int slot;

@@ -1,10 +1,10 @@
 package net.minecraft.util;
 
-import java.util.Random;
-import java.util.UUID;
-
 import annotations.ExperimentalState;
 import net.optifine.util.MathUtils;
+
+import java.util.Random;
+import java.util.UUID;
 
 public class MathHelper {
     public static final float SQRT_2 = sqrt_float(2.0F);
@@ -27,13 +27,13 @@ public class MathHelper {
 
     public static float sin(float value) {
         return XMathHelper.INSTANCE.sin(value);
-        //  fastMath ? SIN_TABLE_FAST[(int)(p_76126_0_ * radToIndex) & 4095] : SIN_TABLE[(int)(p_76126_0_ * 10430.378F) & 65535];
+        // fastMath ? SIN_TABLE_FAST[(int)(value * radToIndex) & 4095] : SIN_TABLE[(int)(value * 10430.378F) & 65535];
 
     }
 
     public static float cos(float value) {
         return XMathHelper.INSTANCE.cos(value);
-        //   fastMath ? SIN_TABLE_FAST[(int)(value * radToIndex + 1024.0F) & 4095] : SIN_TABLE[(int)(value * 10430.378F + 16384.0F) & 65535];
+        // fastMath ? SIN_TABLE_FAST[(int)(value * radToIndex + 1024.0F) & 4095] : SIN_TABLE[(int)(value * 10430.378F + 16384.0F) & 65535];
     }
 
     public static float sqrt_float(float value) {

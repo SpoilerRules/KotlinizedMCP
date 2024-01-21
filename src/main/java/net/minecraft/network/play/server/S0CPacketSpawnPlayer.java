@@ -1,18 +1,19 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.MathHelper;
 
-public class S0CPacketSpawnPlayer implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
+public class S0CPacketSpawnPlayer implements IPacket<INetHandlerPlayClient>
 {
     private int entityId;
     private UUID playerId;

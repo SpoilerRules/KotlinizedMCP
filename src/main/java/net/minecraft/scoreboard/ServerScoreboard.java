@@ -2,16 +2,17 @@ package net.minecraft.scoreboard;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S3BPacketScoreboardObjective;
 import net.minecraft.network.play.server.S3CPacketUpdateScore;
 import net.minecraft.network.play.server.S3DPacketDisplayScoreboard;
 import net.minecraft.network.play.server.S3EPacketTeams;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 public class ServerScoreboard extends Scoreboard
 {
@@ -168,9 +169,9 @@ public class ServerScoreboard extends Scoreboard
         }
     }
 
-    public List<Packet> func_96550_d(ScoreObjective p_96550_1_)
+    public List<IPacket> func_96550_d(ScoreObjective p_96550_1_)
     {
-        List<Packet> list = Lists.<Packet>newArrayList();
+        List<IPacket> list = Lists.<IPacket>newArrayList();
         list.add(new S3BPacketScoreboardObjective(p_96550_1_, 0));
 
         for (int i = 0; i < 19; ++i)
@@ -191,11 +192,11 @@ public class ServerScoreboard extends Scoreboard
 
     public void func_96549_e(ScoreObjective p_96549_1_)
     {
-        List<Packet> list = this.func_96550_d(p_96549_1_);
+        List<IPacket> list = this.func_96550_d(p_96549_1_);
 
         for (EntityPlayerMP entityplayermp : this.scoreboardMCServer.getConfigurationManager().getPlayerList())
         {
-            for (Packet packet : list)
+            for (IPacket packet : list)
             {
                 entityplayermp.playerNetServerHandler.sendPacket(packet);
             }
@@ -204,9 +205,9 @@ public class ServerScoreboard extends Scoreboard
         this.field_96553_b.add(p_96549_1_);
     }
 
-    public List<Packet> func_96548_f(ScoreObjective p_96548_1_)
+    public List<IPacket> func_96548_f(ScoreObjective p_96548_1_)
     {
-        List<Packet> list = Lists.<Packet>newArrayList();
+        List<IPacket> list = Lists.<IPacket>newArrayList();
         list.add(new S3BPacketScoreboardObjective(p_96548_1_, 1));
 
         for (int i = 0; i < 19; ++i)
@@ -222,11 +223,11 @@ public class ServerScoreboard extends Scoreboard
 
     public void sendDisplaySlotRemovalPackets(ScoreObjective p_96546_1_)
     {
-        List<Packet> list = this.func_96548_f(p_96546_1_);
+        List<IPacket> list = this.func_96548_f(p_96546_1_);
 
         for (EntityPlayerMP entityplayermp : this.scoreboardMCServer.getConfigurationManager().getPlayerList())
         {
-            for (Packet packet : list)
+            for (IPacket packet : list)
             {
                 entityplayermp.playerNetServerHandler.sendPacket(packet);
             }

@@ -17,6 +17,14 @@ import io.netty.handler.timeout.TimeoutException;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import net.minecraft.util.*;
+import org.apache.commons.lang3.Validate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
+import javax.crypto.SecretKey;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.util.ArrayList;
@@ -24,25 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import javax.crypto.SecretKey;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.CryptManager;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.LazyLoadBase;
-import net.minecraft.util.MessageDeserializer;
-import net.minecraft.util.MessageDeserializer2;
-import net.minecraft.util.MessageSerializer;
-import net.minecraft.util.MessageSerializer2;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.Validate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
-public class NetworkManager extends SimpleChannelInboundHandler<Packet>
+public class NetworkManager extends SimpleChannelInboundHandler<IPacket>
 {
     private static final Logger logger = LogManager.getLogger();
     public static final Marker logMarkerNetwork = MarkerManager.getMarker("NETWORK");
@@ -132,7 +123,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         this.closeChannel(chatcomponenttranslation);
     }
 
-    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
+    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, IPacket p_channelRead0_2_) throws Exception
     {
         if (this.channel.isOpen())
         {
@@ -158,7 +149,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         this.packetListener = handler;
     }
 
-    public void sendPacket(Packet packetIn)
+    public void sendPacket(IPacket packetIn)
     {
         if (this.isChannelOpen())
         {
@@ -188,7 +179,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
     }
 
     @SafeVarargs
-    public final void sendPacket(Packet packetIn, GenericFutureListener<? extends Future<? super Void>> listener, GenericFutureListener<? extends Future<? super Void>>... listeners) {
+    public final void sendPacket(IPacket packetIn, GenericFutureListener<? extends Future<? super Void>> listener, GenericFutureListener<? extends Future<? super Void>>... listeners) {
         if (this.isChannelOpen()) {
             this.flushOutboundQueue();
             this.dispatchPacket(packetIn, prependListener(listener, listeners));
@@ -211,7 +202,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
      * Will commit the packet to the channel. If the current thread 'owns' the channel it will write and flush the
      * packet, otherwise it will add a task for the channel eventloop thread to do that.
      */
-    private void dispatchPacket(final Packet inPacket, final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
+    private void dispatchPacket(final IPacket inPacket, final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
     {
         final EnumConnectionState enumconnectionstate = EnumConnectionState.getFromPacket(inPacket);
         final EnumConnectionState enumconnectionstate1 = (EnumConnectionState)this.channel.attr(attrKeyConnectionState).get();
@@ -495,10 +486,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     static class InboundHandlerTuplePacketListener
     {
-        private final Packet packet;
+        private final IPacket packet;
         private final GenericFutureListener <? extends Future <? super Void >> [] futureListeners;
 
-        public InboundHandlerTuplePacketListener(Packet inPacket, GenericFutureListener <? extends Future <? super Void >> ... inFutureListeners)
+        public InboundHandlerTuplePacketListener(IPacket inPacket, GenericFutureListener <? extends Future <? super Void >> ... inFutureListeners)
         {
             this.packet = inPacket;
             this.futureListeners = inFutureListeners;

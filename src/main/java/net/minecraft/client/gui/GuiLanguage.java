@@ -2,16 +2,16 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.Language;
+import net.minecraft.client.resources.LanguageManager;
+import net.minecraft.client.resources.LocalizationHelper;
+import net.minecraft.client.settings.GameSettings;
+import org.apache.logging.log4j.LogManager;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.LocalizationHelper;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.resources.LanguageManager;
-import net.minecraft.client.settings.GameSettings;
-import org.apache.logging.log4j.LogManager;
 
 public class GuiLanguage extends GuiScreen
 {
@@ -31,8 +31,8 @@ public class GuiLanguage extends GuiScreen
 
     public void initGui()
     {
-        this.buttonList.add(this.forceUnicodeFontBtn = new GuiOptionButton(100, this.width / 2 - 155, this.height - 38, GameSettings.Options.FORCE_UNICODE_FONT, this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT)));
-        this.buttonList.add(this.confirmSettingsBtn = new GuiOptionButton(6, this.width / 2 - 155 + 160, this.height - 38, LocalizationHelper.translate("gui.done")));
+        buttonList.add(this.forceUnicodeFontBtn = new GuiOptionButton(100, this.width / 2 - 155, this.height - 38, GameSettings.Options.FORCE_UNICODE_FONT, this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT)));
+        buttonList.add(this.confirmSettingsBtn = new GuiOptionButton(6, this.width / 2 - 155 + 160, this.height - 38, LocalizationHelper.translate("gui.done")));
         this.list = new GuiLanguage.List(this.mc);
         this.list.registerScrollButtons(7, 8);
     }
@@ -43,12 +43,9 @@ public class GuiLanguage extends GuiScreen
         this.list.handleMouseInput();
     }
 
-    protected void actionPerformed(GuiButton button) throws IOException
-    {
-        if (button.enabled)
-        {
-            switch (button.id)
-            {
+    protected void actionPerformed(GuiButton button) throws IOException {
+        if (button.enabled) {
+            switch (button.id) {
                 case 5:
                     break;
 
@@ -57,9 +54,8 @@ public class GuiLanguage extends GuiScreen
                     break;
 
                 case 100:
-                    if (button instanceof GuiOptionButton)
-                    {
-                        this.game_settings_3.setOptionValue(((GuiOptionButton)button).returnEnumOptions(), 1);
+                    if (button instanceof GuiOptionButton) {
+                        this.game_settings_3.setOptionValue(((GuiOptionButton) button).returnEnumOptions(), 1);
                         button.displayString = this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);
                         ScaledResolution scaledresolution = new ScaledResolution(this.mc);
                         int i = scaledresolution.getScaledWidth();

@@ -1,12 +1,13 @@
 package net.minecraft.network.play.server;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.EnumParticleTypes;
 
-public class S2APacketParticles implements Packet<INetHandlerPlayClient>
+import java.io.IOException;
+
+public class S2APacketParticles implements IPacket<INetHandlerPlayClient>
 {
     private EnumParticleTypes particleType;
     private float xCoord;

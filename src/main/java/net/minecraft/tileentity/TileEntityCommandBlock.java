@@ -5,7 +5,7 @@ import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vector3D;
@@ -64,7 +64,7 @@ public class TileEntityCommandBlock extends TileEntity
         this.commandBlockLogic.readDataFromNBT(compound);
     }
 
-    public Packet getDescriptionPacket()
+    public IPacket getDescriptionPacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);

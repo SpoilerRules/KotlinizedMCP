@@ -1,13 +1,14 @@
 package net.minecraft.network.play.client;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
-public class C07PacketPlayerDigging implements Packet<INetHandlerPlayServer>
+import java.io.IOException;
+
+public class C07PacketPlayerDigging implements IPacket<INetHandlerPlayServer>
 {
     private BlockPos position;
     private EnumFacing facing;

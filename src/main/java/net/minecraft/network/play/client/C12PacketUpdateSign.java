@@ -1,13 +1,14 @@
 package net.minecraft.network.play.client;
 
-import java.io.IOException;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IChatComponent;
 
-public class C12PacketUpdateSign implements Packet<INetHandlerPlayServer>
+import java.io.IOException;
+
+public class C12PacketUpdateSign implements IPacket<INetHandlerPlayServer>
 {
     private BlockPos pos;
     private IChatComponent[] lines;

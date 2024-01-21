@@ -8,15 +8,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S33PacketUpdateSign;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentProcessor;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.Vector3D;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 public class TileEntitySign extends TileEntity
@@ -112,7 +107,7 @@ public class TileEntitySign extends TileEntity
         this.stats.readStatsFromNBT(compound);
     }
 
-    public Packet getDescriptionPacket()
+    public IPacket getDescriptionPacket()
     {
         IChatComponent[] aichatcomponent = new IChatComponent[4];
         System.arraycopy(this.signText, 0, aichatcomponent, 0, 4);

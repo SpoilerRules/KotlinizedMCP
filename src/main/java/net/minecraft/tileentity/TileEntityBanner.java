@@ -1,7 +1,6 @@
 package net.minecraft.tileentity;
 
 import com.google.common.collect.Lists;
-import java.util.List;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -9,8 +8,10 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
+import net.minecraft.network.IPacket;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+
+import java.util.List;
 
 public class TileEntityBanner extends TileEntity
 {
@@ -81,7 +82,7 @@ public class TileEntityBanner extends TileEntity
         this.field_175119_g = true;
     }
 
-    public Packet getDescriptionPacket()
+    public IPacket getDescriptionPacket()
     {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         this.writeToNBT(nbttagcompound);
