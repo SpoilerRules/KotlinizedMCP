@@ -777,6 +777,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcProfiler.endSection();
 
         Lagometer.showLagometer(new ScaledResolution(this));
+        System.out.println(this.currentScreen);
     }
 
     public void updateDisplay() {
@@ -1127,7 +1128,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.mcProfiler.endSection();
-        this.entityRenderer.getMouseOver(1.0F);
+        this.entityRenderer.updateMouseOver(1.0F);
         this.mcProfiler.startSection("gameMode");
 
         if (!this.isGamePaused && this.theWorld != null) {

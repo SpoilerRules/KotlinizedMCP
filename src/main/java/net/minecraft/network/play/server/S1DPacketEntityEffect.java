@@ -25,16 +25,9 @@ public class S1DPacketEntityEffect implements IPacket<INetHandlerPlayClient>
         this.effectId = (byte)(effect.getPotionID() & 255);
         this.amplifier = (byte)(effect.getAmplifier() & 255);
 
-        if (effect.getDuration() > 32767)
-        {
-            this.duration = 32767;
-        }
-        else
-        {
-            this.duration = effect.getDuration();
-        }
+        this.duration = Math.min(effect.getDuration(), 32767);
 
-        this.hideParticles = (byte)(effect.getIsShowParticles() ? 1 : 0);
+        this.hideParticles = (byte)(effect.isShowParticles() ? 1 : 0);
     }
 
     public void readPacketData(PacketBuffer buf) throws IOException

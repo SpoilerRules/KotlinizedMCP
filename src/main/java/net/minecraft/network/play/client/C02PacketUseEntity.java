@@ -75,10 +75,10 @@ public class C02PacketUseEntity implements IPacket<INetHandlerPlayServer>
         return this.hitVec;
     }
 
-    public static enum Action
+    public enum Action
     {
         INTERACT,
         ATTACK,
-        INTERACT_AT;
+        INTERACT_AT
     }
 }

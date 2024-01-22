@@ -1,16 +1,7 @@
 package net.minecraft.client.renderer;
 
 import annotations.PendingRemoval;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
@@ -19,9 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.client.gui.MapItemRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.guimainmenu.GuiMainMenu;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.culling.ClippingHelper;
@@ -32,9 +23,9 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
+import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.shader.ShaderGroup;
 import net.minecraft.client.shader.ShaderLinkHelper;
@@ -57,18 +48,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.src.Config;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vector3D;
+import net.minecraft.util.*;
 import net.minecraft.util.input.MouseInputFilter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
@@ -96,6 +76,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Callable;
 
 public class EntityRenderer implements IResourceManagerReloadListener
 {
@@ -391,104 +379,86 @@ public class EntityRenderer implements IResourceManagerReloadListener
         }
     }
 
-    public void getMouseOver(float partialTicks)
-    {
-        Entity entity = this.mc.getRenderViewEntity();
+    public void updateMouseOver(float partialTicks) {
+        Entity viewEntity = mc.getRenderViewEntity();
 
-        if (entity != null && this.mc.theWorld != null)
-        {
-            this.mc.mcProfiler.startSection("pick");
-            this.mc.pointedEntity = null;
-            double d0 = this.mc.playerController.getBlockReachDistance();
-            this.mc.objectMouseOver = entity.rayTrace(d0, partialTicks);
-            double d1 = d0;
-            Vector3D vector3D = entity.getPositionEyes(partialTicks);
-            boolean flag = false;
-            int i = 3;
+        if (viewEntity == null && mc.thePlayer == null) return;
 
-            if (this.mc.playerController.extendedReach())
-            {
-                d0 = 6.0D;
-                d1 = 6.0D;
-            }
-            else if (d0 > 3.0D)
-            {
-                flag = true;
-            }
+        mc.mcProfiler.startSection("pick");
 
-            if (this.mc.objectMouseOver != null)
-            {
-                d1 = this.mc.objectMouseOver.hitVec.distanceTo(vector3D);
-            }
+        mc.pointedEntity = null;
+        double playerReach = mc.playerController.getBlockReachDistance();
+        mc.objectMouseOver = viewEntity.rayTrace(playerReach, partialTicks);
 
-            Vector3D vec31D = entity.getLook(partialTicks);
-            Vector3D vec32D = vector3D.addVector(vec31D.x * d0, vec31D.y * d0, vec31D.z * d0);
-            Entity pointedEntity = null;
-            Vector3D vec33D = null;
-            float f = 1.0F;
-            List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31D.x * d0, vec31D.y * d0, vec31D.z * d0).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
-            {
-                public boolean apply(Entity p_apply_1_)
-                {
-                    return p_apply_1_.canBeCollidedWith();
-                }
-            }));
-            double d2 = d1;
+        double originalReach = playerReach;
+        Vector3D eyesPosition = viewEntity.getPositionEyes(partialTicks);
+        boolean extendedReach = mc.playerController.extendedReach();
 
-            for (Entity value : list) {
-                Entity entity1 = value;
-                float f1 = entity1.getCollisionBorderSize();
-                AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1);
-                MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vector3D, vec32D);
+        if (extendedReach) playerReach = 6.0D;
 
-                if (axisalignedbb.isVecInside(vector3D)) {
-                    if (d2 >= 0.0D) {
-                        pointedEntity = entity1;
-                        vec33D = movingobjectposition == null ? vector3D : movingobjectposition.hitVec;
-                        d2 = 0.0D;
-                    }
-                } else if (movingobjectposition != null) {
-                    double d3 = vector3D.distanceTo(movingobjectposition.hitVec);
-
-                    if (d3 < d2 || d2 == 0.0D) {
-                        boolean flag1 = false;
-
-                        if (Reflector.ForgeEntity_canRiderInteract.exists()) {
-                            flag1 = Reflector.callBoolean(entity1, Reflector.ForgeEntity_canRiderInteract);
-                        }
-
-                        if (!flag1 && entity1 == entity.ridingEntity) {
-                            if (d2 == 0.0D) {
-                                pointedEntity = entity1;
-                                vec33D = movingobjectposition.hitVec;
-                            }
-                        } else {
-                            pointedEntity = entity1;
-                            vec33D = movingobjectposition.hitVec;
-                            d2 = d3;
-                        }
-                    }
-                }
-            }
-
-            if (pointedEntity != null && flag && vector3D.distanceTo(vec33D) > 3.0D)
-            {
-                pointedEntity = null;
-                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33D, null, new BlockPos(vec33D));
-            }
-
-            if (pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null))
-            {
-                this.mc.objectMouseOver = new MovingObjectPosition(pointedEntity, vec33D);
-
-                if (pointedEntity instanceof EntityLivingBase || pointedEntity instanceof EntityItemFrame)
-                {
-                    this.mc.pointedEntity = pointedEntity;
-                }
-            }
-
-            this.mc.mcProfiler.endSection();
+        if (mc.objectMouseOver != null) {
+            originalReach = mc.objectMouseOver.hitVec.distanceTo(eyesPosition);
         }
+
+        Vector3D lookVector = viewEntity.getLook(partialTicks);
+        Vector3D endVector = eyesPosition.addVector(lookVector.x * playerReach, lookVector.y * playerReach, lookVector.z * playerReach);
+
+        Entity pointedEntity = null;
+        Vector3D hitVector = null;
+        float entityExpansion = 1.0F;
+
+        List<Entity> entities = mc.theWorld.getEntitiesInAABBexcluding(viewEntity,
+                viewEntity.getEntityBoundingBox().addCoord(lookVector.x * playerReach, lookVector.y * playerReach, lookVector.z * playerReach)
+                        .expand(entityExpansion, entityExpansion, entityExpansion),
+                Entity::canBeCollidedWith);
+
+        double closestDistance = originalReach;
+
+        for (Entity entity : entities) {
+            float collisionBorderSize = entity.getCollisionBorderSize();
+            AxisAlignedBB boundingBox = entity.getEntityBoundingBox().expand(collisionBorderSize, collisionBorderSize, collisionBorderSize);
+            MovingObjectPosition intercept = boundingBox.calculateIntercept(eyesPosition, endVector);
+
+            if (boundingBox.isVecInside(eyesPosition)) {
+                if (closestDistance >= 0.0D) {
+                    pointedEntity = entity;
+                    hitVector = intercept == null ? eyesPosition : intercept.hitVec;
+                    closestDistance = 0.0D;
+                }
+            } else if (intercept != null) {
+                double distance = eyesPosition.distanceTo(intercept.hitVec);
+
+                if (distance < closestDistance || closestDistance == 0.0D) {
+                    boolean canRiderInteract = Reflector.ForgeEntity_canRiderInteract.exists() && Reflector.callBoolean(entity, Reflector.ForgeEntity_canRiderInteract);
+
+                    if (!canRiderInteract && entity == viewEntity.ridingEntity) {
+                        if (closestDistance == 0.0D) {
+                            pointedEntity = entity;
+                            hitVector = intercept.hitVec;
+                        }
+                    } else {
+                        pointedEntity = entity;
+                        hitVector = intercept.hitVec;
+                        closestDistance = distance;
+                    }
+                }
+            }
+        }
+
+        if (pointedEntity != null && extendedReach && eyesPosition.distanceTo(hitVector) > 3.0D) {
+            pointedEntity = null;
+            mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, hitVector, null, new BlockPos(hitVector));
+        }
+
+        if (pointedEntity != null && (closestDistance < originalReach || mc.objectMouseOver == null)) {
+            mc.objectMouseOver = new MovingObjectPosition(pointedEntity, hitVector);
+
+            if (pointedEntity instanceof EntityLivingBase || pointedEntity instanceof EntityItemFrame) {
+                mc.pointedEntity = pointedEntity;
+            }
+        }
+
+        mc.mcProfiler.endSection();
     }
 
     private void updateFovModifierHand()
@@ -1394,7 +1364,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.mc.setRenderViewEntity(this.mc.thePlayer);
         }
 
-        this.getMouseOver(partialTicks);
+        this.updateMouseOver(partialTicks);
 
         if (Config.isShaders())
         {

@@ -22,16 +22,17 @@ class KeyboardInputHandler : InputService() {
 
         if (activeScreen == null || activeScreen.allowUserInput) {
             when (keyEvent) {
-                mc.gameSettings.keyBindChat.keyCode -> mc.theWorld?.let { mc.displayGuiScreen(GuiChat()) }
                 mc.gameSettings.keyBindDrop.keyCode -> player?.takeUnless { it.isSpectator }
                     ?.dropOneItem(GuiScreen.isCtrlKeyDown())
+
                 mc.gameSettings.keyBindInventory.keyCode -> if (mc.playerController.isRidingHorse) {
                     player?.sendHorseInventory()
                 } else {
                     mc.netHandler.addToSendQueue(C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT))
                     mc.displayGuiScreen(GuiInventory(player))
                 }
-                mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory) mc.theWorld?.let {
+
+                mc.gameSettings.keyBindChat.keyCode -> mc.theWorld?.let {
                     mapOf(
                         EntityPlayer.EnumChatVisibility.FULL to { mc.displayGuiScreen(GuiChat()) },
                         EntityPlayer.EnumChatVisibility.SYSTEM to { mc.displayGuiScreen(GuiChat("/")) }

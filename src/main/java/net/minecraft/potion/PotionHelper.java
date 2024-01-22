@@ -2,12 +2,13 @@ package net.minecraft.potion;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.src.Config;
 import net.minecraft.util.IntegerCache;
 import net.optifine.CustomColors;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class PotionHelper
 {
@@ -63,7 +64,7 @@ public class PotionHelper
 
             for (PotionEffect potioneffect : p_77911_0_)
             {
-                if (potioneffect.getIsShowParticles())
+                if (potioneffect.isShowParticles())
                 {
                     int j = Potion.potionTypes[potioneffect.getPotionID()].getLiquidColor();
 
@@ -104,7 +105,7 @@ public class PotionHelper
     {
         for (PotionEffect potioneffect : potionEffects)
         {
-            if (!potioneffect.getIsAmbient())
+            if (!potioneffect.isAmbient())
             {
                 return false;
             }
