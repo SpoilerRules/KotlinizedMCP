@@ -777,7 +777,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.mcProfiler.endSection();
 
         Lagometer.showLagometer(new ScaledResolution(this));
-        System.out.println(this.currentScreen);
     }
 
     public void updateDisplay() {
