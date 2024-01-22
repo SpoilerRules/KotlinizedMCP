@@ -83,13 +83,13 @@ public class PotionEffect {
     public boolean onUpdate(EntityLivingBase entityIn) {
         if (duration > 0 && Potion.potionTypes[potionID].isReady(duration, amplifier)) {
             performEffect(entityIn);
-            deincrementDuration();
+            decreaseDuration();
         }
 
         return duration > 0;
     }
 
-    private void deincrementDuration() {
+    private void decreaseDuration() {
         duration--;
     }
 
