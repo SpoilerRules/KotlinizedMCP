@@ -128,6 +128,9 @@ sourceSets {
     }
 }
 
+kotlin.jvmToolchain(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
@@ -147,10 +150,6 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
    // options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
     options.compilerArgs.add("-Xlint:deprecation")
-}
-
-tasks.compileKotlin {
-    kotlinOptions.jvmTarget = "21"
 }
 
 tasks.withType<JavaExec> {
