@@ -5,6 +5,7 @@ import net.minecraft.client.GameDisplayHandler
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiControls
 import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.inventory.GuiContainerCreative
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.network.play.client.C16PacketClientStatus
@@ -32,7 +33,7 @@ class KeyboardInputHandler : InputService() {
                     mc.displayGuiScreen(GuiInventory(player))
                 }
 
-                mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory) mc.theWorld?.let {
+                mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory && activeScreen !is GuiContainerCreative) mc.theWorld?.let {
                     mapOf(
                         EntityPlayer.EnumChatVisibility.FULL to { mc.displayGuiScreen(GuiChat()) },
                         EntityPlayer.EnumChatVisibility.SYSTEM to { mc.displayGuiScreen(GuiChat("/")) }
