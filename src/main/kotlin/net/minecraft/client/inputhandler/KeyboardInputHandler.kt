@@ -32,7 +32,7 @@ class KeyboardInputHandler : InputService() {
                     mc.displayGuiScreen(GuiInventory(player))
                 }
 
-                mc.gameSettings.keyBindChat.keyCode -> mc.theWorld?.let {
+                mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory) mc.theWorld?.let {
                     mapOf(
                         EntityPlayer.EnumChatVisibility.FULL to { mc.displayGuiScreen(GuiChat()) },
                         EntityPlayer.EnumChatVisibility.SYSTEM to { mc.displayGuiScreen(GuiChat("/")) }
