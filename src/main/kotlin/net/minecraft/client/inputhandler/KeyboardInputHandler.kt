@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiControls
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.inventory.GuiContainerCreative
 import net.minecraft.client.gui.inventory.GuiInventory
+import net.minecraft.client.gui.inventory.GuiScreenHorseInventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.network.play.client.C16PacketClientStatus
 import net.minecraft.util.ScreenshotHandler
@@ -27,10 +28,12 @@ class KeyboardInputHandler : InputService() {
                     ?.dropOneItem(GuiScreen.isCtrlKeyDown())
 
                 mc.gameSettings.keyBindInventory.keyCode -> if (mc.playerController.isRidingHorse) {
-                    player?.sendHorseInventory()
+                    if (activeScreen !is GuiScreenHorseInventory) player?.sendHorseInventory()
                 } else {
-                    mc.netHandler.addToSendQueue(C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT))
-                    mc.displayGuiScreen(GuiInventory(player))
+                    if (activeScreen !is GuiInventory && activeScreen !is GuiContainerCreative) {
+                        mc.netHandler.addToSendQueue(C16PacketClientStatus(C16PacketClientStatus.EnumState.OPEN_INVENTORY_ACHIEVEMENT))
+                        mc.displayGuiScreen(GuiInventory(player))
+                    }
                 }
 
                 mc.gameSettings.keyBindChat.keyCode -> if (activeScreen !is GuiInventory && activeScreen !is GuiContainerCreative) mc.theWorld?.let {
