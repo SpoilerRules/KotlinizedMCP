@@ -1,23 +1,19 @@
 package net.minecraft.client.gui.mainMenuGui.microsoftLogin
 
-import java.awt.Desktop
-import java.net.Proxy
-import java.net.URI
-
 import com.mojang.authlib.Agent
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
-
-import net.minecraft.client.Minecraft
-import net.minecraft.util.Session
-
 import me.liuli.elixir.account.MicrosoftAccount
 import me.liuli.elixir.compat.OAuthServer
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
-
+import net.minecraft.util.Session
 import org.apache.logging.log4j.LogManager
+import java.awt.Desktop
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.net.BindException
+import java.net.Proxy
+import java.net.URI
 
 object LoginHandler {
     private lateinit var authServer: OAuthServer
@@ -56,7 +52,7 @@ object LoginHandler {
             override fun authResult(account: MicrosoftAccount) {
                 userAuthentication.setUsername(account.session.username)
 
-                mc.sessionSet(
+                mc.setFreshSession(
                     Session(
                         account.session.username,
                         account.session.uuid,

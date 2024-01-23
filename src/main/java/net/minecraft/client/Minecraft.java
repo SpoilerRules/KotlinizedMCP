@@ -299,7 +299,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         return map;
     }
 
-    public void sessionSet(Session session) {
+    public void setFreshSession(Session session) {
         this.profileProperties.clear();
         this.session = session;
     }
