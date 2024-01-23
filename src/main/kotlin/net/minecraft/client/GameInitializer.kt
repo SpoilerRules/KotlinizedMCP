@@ -6,12 +6,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.minecraft.client.gui.GuiMemoryErrorScreen
 import net.minecraft.client.renderer.OpenGlHelper
+import net.minecraft.client.resources.data.*
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.client.shader.Framebuffer
 import net.minecraft.crash.CrashReport
 import net.minecraft.util.MinecraftError
 import net.minecraft.util.ReportedException
 import net.minecraft.util.input.MiceHelper
+import org.lwjgl.Sys
 import org.lwjgl.opengl.Display
 import kotlin.system.exitProcess
 
@@ -20,6 +22,10 @@ class GameInitializer : CommonGameElement() {
         val crashReport = mc.addGraphicsAndWorldToCrashReport(CrashReport("Unexpected error", exception))
         logger.fatal("Unreported exception thrown!", exception)
         mc.displayCrashReport(crashReport)
+    }
+
+    private inline fun <reified T : IMetadataSection> IMetadataSerializer.registerMetadataSectionType(serializer: IMetadataSectionSerializer<T>) {
+        registerMetadataSectionType(serializer, T::class.java)
     }
 
     companion object {
@@ -67,6 +73,8 @@ class GameInitializer : CommonGameElement() {
 
     @ExperimentalState
     fun initializeGameResources() {
+        logger.info("LWJGL Version: " + Sys.getVersion())
+
         mc.gameSettings = GameSettings(mc, mc.mcDataDir)
 
         GameDisplayHandler().initializeGameWindow()
@@ -75,9 +83,18 @@ class GameInitializer : CommonGameElement() {
         runBlocking(Dispatchers.IO) {
             listOf(
                 launch { mc.defaultResourcePacks.add(mc.mcDefaultResourcePack) },
-                launch { mc.registerMetadataSerializers() },
                 launch { mc.mouseHelper = MiceHelper() },
-                launch { mc.registerMetadataSerializers() }
+                launch {
+                    val metadataSerializer = mc.metadataSerializer_
+
+                    metadataSerializer.apply {
+                        registerMetadataSectionType(TextureMetadataSectionSerializer())
+                        registerMetadataSectionType(FontMetadataSectionSerializer())
+                        registerMetadataSectionType(AnimationMetadataSectionSerializer())
+                        registerMetadataSectionType(PackMetadataSectionSerializer())
+                        registerMetadataSectionType(LanguageMetadataSectionSerializer())
+                    }
+                }
             ).forEach { it.join() }
         }
 

@@ -4,13 +4,10 @@ import net.minecraft.client.resources.ResourcePackRepository
 
 data class CommonResourceElement(var resourcePackRepository: ResourcePackRepository? = null) {
     companion object {
-        private val commonResourceElement: CommonResourceElement = CommonResourceElement()
+        private val commonResourceElement = CommonResourceElement()
 
-        fun getResourcePackRepository(): ResourcePackRepository? =
-            commonResourceElement.resourcePackRepository
-
-        fun setResourcePackRepository(repository: ResourcePackRepository) {
-            commonResourceElement.resourcePackRepository = repository
-        }
+        var resourcePackRepository: ResourcePackRepository?
+            get() = commonResourceElement.resourcePackRepository
+            set(repository) { commonResourceElement.resourcePackRepository = repository }
     }
 }
