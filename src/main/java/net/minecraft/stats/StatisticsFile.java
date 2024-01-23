@@ -6,27 +6,25 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IJsonSerializable;
 import net.minecraft.util.TupleIntJsonSerializable;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class StatisticsFile extends StatFileWriter
 {
@@ -59,7 +57,12 @@ public class StatisticsFile extends StatFileWriter
 
     public void saveStatFile() {
         try {
-            Files.write(this.statsFile.toPath(), dumpJson(this.statsData).getBytes());
+            Path filePath = this.statsFile.toPath();
+            if (Files.notExists(filePath)) {
+                Files.createDirectories(filePath.getParent());
+                logger.info("Created directories for stats file: {}", filePath);
+            }
+            Files.write(filePath, dumpJson(this.statsData).getBytes());
         } catch (IOException ioexception) {
             logger.error("Couldn't save stats", ioexception);
         }
