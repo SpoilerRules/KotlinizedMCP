@@ -300,6 +300,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void sessionSet(Session session) {
+        this.profileProperties.clear();
         this.session = session;
     }
 
