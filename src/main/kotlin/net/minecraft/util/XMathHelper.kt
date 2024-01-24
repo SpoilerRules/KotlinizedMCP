@@ -2,7 +2,9 @@ package net.minecraft.util
 
 import annotations.Preview
 import java.awt.Color
-import kotlin.math.*
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.sqrt
 
 @Preview
 object XMathHelper {
@@ -71,5 +73,22 @@ object XMathHelper {
      * @param multiple The multiple to round up to.
      * @return The rounded-up result.
      */
-    fun roundUpToNearestMultiple(num: Int, multiple: Int): Int = (multiple * ceil(num.toDouble() / multiple.toDouble())).toInt()
+    fun roundUpToNearestMultiple(num: Int, multiple: Int): Int =
+        (multiple * ceil(num.toDouble() / multiple.toDouble())).toInt()
+
+    /**
+     * Performs linear interpolation (lerp) between two values.
+     *
+     * Linear interpolation calculates a value between two endpoints based on a factor.
+     * The interpolation factor should be in the range [0, 1], where 0 corresponds to the start value,
+     * 1 corresponds to the end value, and values in between represent a proportional blend between the two.
+     *
+     * @param interpolationFactor The factor determining the interpolation amount.
+     *                           Should be in the range [0, 1].
+     * @param start The starting value.
+     * @param end The ending value.
+     * @return The result of linear interpolation between the start and end values.
+     */
+    fun lerp(interpolationFactor: Double, start: Double, end: Double): Double =
+        start + interpolationFactor * (end - start)
 }

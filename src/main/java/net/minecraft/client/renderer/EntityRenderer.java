@@ -380,81 +380,82 @@ public class EntityRenderer implements IResourceManagerReloadListener
     }
 
     public void updateMouseOver(float partialTicks) {
-        Entity viewEntity = mc.getRenderViewEntity();
+        Entity playerEntity = mc.getRenderViewEntity();
 
-        if (viewEntity == null && mc.thePlayer == null) return;
+        if (playerEntity == null && mc.thePlayer == null) return;
 
         mc.mcProfiler.startSection("pick");
 
         mc.pointedEntity = null;
-        double playerReach = mc.playerController.getBlockReachDistance();
-        mc.objectMouseOver = viewEntity.rayTrace(playerReach, partialTicks);
+        double reachDistance = mc.playerController.getBlockReachDistance();
+        mc.objectMouseOver = playerEntity.rayTrace(reachDistance, partialTicks);
 
-        double originalReach = playerReach;
-        Vector3D eyesPosition = viewEntity.getPositionEyes(partialTicks);
-        boolean extendedReach = mc.playerController.extendedReach();
+        double maxReachDistance = reachDistance;
+        Vector3D playerEyes = playerEntity.getPositionEyes(partialTicks);
 
-        if (extendedReach) playerReach = 6.0D;
-
-        if (mc.objectMouseOver != null) {
-            originalReach = mc.objectMouseOver.hitVec.distanceTo(eyesPosition);
+        if (mc.playerController.isInCreativeMode()) {
+            reachDistance = maxReachDistance = 6.0D;
         }
 
-        Vector3D lookVector = viewEntity.getLook(partialTicks);
-        Vector3D endVector = eyesPosition.addVector(lookVector.x * playerReach, lookVector.y * playerReach, lookVector.z * playerReach);
+        if (mc.objectMouseOver != null) {
+            maxReachDistance = mc.objectMouseOver.hitVec.distanceTo(playerEyes);
+        }
 
-        Entity pointedEntity = null;
+        Vector3D lookVector = playerEntity.getLook(partialTicks);
+        Vector3D endVector = playerEyes.addVector(lookVector.x * reachDistance, lookVector.y * reachDistance, lookVector.z * reachDistance);
+
+        Entity hitEntity = null;
         Vector3D hitVector = null;
-        float entityExpansion = 1.0F;
-
-        List<Entity> entities = mc.theWorld.getEntitiesInAABBexcluding(viewEntity,
-                viewEntity.getEntityBoundingBox().addCoord(lookVector.x * playerReach, lookVector.y * playerReach, lookVector.z * playerReach)
-                        .expand(entityExpansion, entityExpansion, entityExpansion),
+        float collisionExpansion = 1.0F;
+        List<Entity> entitiesInRange = mc.theWorld.getEntitiesInAABBexcluding(playerEntity,
+                playerEntity.getEntityBoundingBox().addCoord(lookVector.x * reachDistance, lookVector.y * reachDistance, lookVector.z * reachDistance)
+                        .expand(collisionExpansion, collisionExpansion, collisionExpansion),
                 Entity::canBeCollidedWith);
 
-        double closestDistance = originalReach;
+        double closestDistance = maxReachDistance;
 
-        for (Entity entity : entities) {
-            float collisionBorderSize = entity.getCollisionBorderSize();
-            AxisAlignedBB boundingBox = entity.getEntityBoundingBox().expand(collisionBorderSize, collisionBorderSize, collisionBorderSize);
-            MovingObjectPosition intercept = boundingBox.calculateIntercept(eyesPosition, endVector);
+        for (Entity entity : entitiesInRange) {
+            float collisionSize = entity.getCollisionBorderSize();
+            AxisAlignedBB entityBoundingBox = entity.getEntityBoundingBox().expand(collisionSize, collisionSize, collisionSize);
+            MovingObjectPosition intersection = entityBoundingBox.calculateIntercept(playerEyes, endVector);
 
-            if (boundingBox.isVecInside(eyesPosition)) {
+            if (entityBoundingBox.isVecInside(playerEyes)) {
                 if (closestDistance >= 0.0D) {
-                    pointedEntity = entity;
-                    hitVector = intercept == null ? eyesPosition : intercept.hitVec;
+                    hitEntity = entity;
+                    hitVector = intersection == null ? playerEyes : intersection.hitVec;
                     closestDistance = 0.0D;
                 }
-            } else if (intercept != null) {
-                double distance = eyesPosition.distanceTo(intercept.hitVec);
+            } else if (intersection != null) {
+                double distanceToIntersection = playerEyes.distanceTo(intersection.hitVec);
 
-                if (distance < closestDistance || closestDistance == 0.0D) {
-                    boolean canRiderInteract = Reflector.ForgeEntity_canRiderInteract.exists() && Reflector.callBoolean(entity, Reflector.ForgeEntity_canRiderInteract);
+                if (distanceToIntersection < closestDistance || closestDistance == 0.0D) {
+                    boolean canRiderInteract = Reflector.ForgeEntity_canRiderInteract.exists() &&
+                            Reflector.callBoolean(entity, Reflector.ForgeEntity_canRiderInteract);
 
-                    if (!canRiderInteract && entity == viewEntity.ridingEntity) {
+                    if (!canRiderInteract && entity == playerEntity.ridingEntity) {
                         if (closestDistance == 0.0D) {
-                            pointedEntity = entity;
-                            hitVector = intercept.hitVec;
+                            hitEntity = entity;
+                            hitVector = intersection.hitVec;
                         }
                     } else {
-                        pointedEntity = entity;
-                        hitVector = intercept.hitVec;
-                        closestDistance = distance;
+                        hitEntity = entity;
+                        hitVector = intersection.hitVec;
+                        closestDistance = distanceToIntersection;
                     }
                 }
             }
         }
 
-        if (pointedEntity != null && extendedReach && eyesPosition.distanceTo(hitVector) > 3.0D) {
-            pointedEntity = null;
+        if (hitEntity != null && (!mc.playerController.isInCreativeMode() && reachDistance > 3.0D) && playerEyes.distanceTo(hitVector) > 3.0D) {
+            hitEntity = null;
             mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, hitVector, null, new BlockPos(hitVector));
         }
 
-        if (pointedEntity != null && (closestDistance < originalReach || mc.objectMouseOver == null)) {
-            mc.objectMouseOver = new MovingObjectPosition(pointedEntity, hitVector);
+        if (hitEntity != null && (closestDistance < maxReachDistance || mc.objectMouseOver == null)) {
+            mc.objectMouseOver = new MovingObjectPosition(hitEntity, hitVector);
 
-            if (pointedEntity instanceof EntityLivingBase || pointedEntity instanceof EntityItemFrame) {
-                mc.pointedEntity = pointedEntity;
+            if (hitEntity instanceof EntityLivingBase || hitEntity instanceof EntityItemFrame) {
+                mc.pointedEntity = hitEntity;
             }
         }
 
