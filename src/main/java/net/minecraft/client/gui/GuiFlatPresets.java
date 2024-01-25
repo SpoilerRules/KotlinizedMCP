@@ -2,9 +2,6 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -20,6 +17,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.FlatGeneratorInfo;
 import net.minecraft.world.gen.FlatLayerInfo;
 import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class GuiFlatPresets extends GuiScreen
 {
@@ -234,7 +235,7 @@ public class GuiFlatPresets extends GuiScreen
             GuiFlatPresets.this.field_146433_u.setText(((GuiFlatPresets.LayerItem)GuiFlatPresets.FLAT_WORLD_PRESETS.get(GuiFlatPresets.this.field_146435_s.field_148175_k)).field_148233_c);
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return slotIndex == this.field_148175_k;
         }

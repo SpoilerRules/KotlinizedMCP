@@ -117,7 +117,7 @@ public class GuiLanguage extends GuiScreen
             GuiLanguage.this.game_settings_3.saveOptions();
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return this.langCodeList.get(slotIndex).equals(GuiLanguage.this.languageManager.getCurrentLanguage().getLanguageCode());
         }

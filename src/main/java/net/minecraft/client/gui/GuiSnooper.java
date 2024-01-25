@@ -1,11 +1,12 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.client.settings.GameSettings;
+
+import java.io.IOException;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 public class GuiSnooper extends GuiScreen
 {
@@ -117,7 +118,7 @@ public class GuiSnooper extends GuiScreen
         {
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return false;
         }

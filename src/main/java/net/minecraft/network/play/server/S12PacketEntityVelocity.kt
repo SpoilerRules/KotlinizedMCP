@@ -28,16 +28,16 @@ data class S12PacketEntityVelocity(
 
     override fun readPacketData(buf: PacketBuffer) {
         entityId = buf.readVarIntFromBuffer()
-        motionX = buf.readInt()
-        motionY = buf.readInt()
-        motionZ = buf.readInt()
+        motionX = buf.readShort().toInt()
+        motionY = buf.readShort().toInt()
+        motionZ = buf.readShort().toInt()
     }
 
     override fun writePacketData(buf: PacketBuffer) {
         buf.writeVarIntToBuffer(entityId)
-        buf.writeInt(motionX)
-        buf.writeInt(motionY)
-        buf.writeInt(motionZ)
+        buf.writeShort(motionX)
+        buf.writeShort(motionY)
+        buf.writeShort(motionZ)
     }
 
     override fun processPacket(handler: INetHandlerPlayClient) {

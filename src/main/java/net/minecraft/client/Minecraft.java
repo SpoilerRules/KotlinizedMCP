@@ -711,7 +711,7 @@ public final class Minecraft implements IThreadListener, IPlayerUsage {
             }
 
             this.mcProfiler.profilingEnabled = true;
-            this.displayDebugInfo(i1);
+            this.displayDebugInfo();
         } else {
             this.mcProfiler.profilingEnabled = false;
             this.prevFrameTime = System.nanoTime();
@@ -840,7 +840,7 @@ public final class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
-    private void displayDebugInfo(long elapsedTicksTime) {
+    private void displayDebugInfo() {
         if (this.mcProfiler.profilingEnabled) {
             List<Profiler.Result> list = this.mcProfiler.getProfilingData(this.debugProfilerName);
             Profiler.Result profiler$result = list.remove(0);

@@ -1,10 +1,6 @@
 package net.minecraft.client.gui.achievement;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
@@ -27,6 +23,11 @@ import net.minecraft.stats.StatFileWriter;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class GuiStats extends GuiScreen implements IProgressMeter
 {
@@ -210,14 +211,14 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
             super(mcIn, GuiStats.this.width, GuiStats.this.height, 32, GuiStats.this.height - 64, 20);
             this.setShowSelectionBox(false);
-            this.setHasListHeader(true, 20);
+            this.setHasListHeader(20);
         }
 
         protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY)
         {
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return false;
         }
@@ -576,7 +577,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return false;
         }
@@ -758,7 +759,7 @@ public class GuiStats extends GuiScreen implements IProgressMeter
         {
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return false;
         }

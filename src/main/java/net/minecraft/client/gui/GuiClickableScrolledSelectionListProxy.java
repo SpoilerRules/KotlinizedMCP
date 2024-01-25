@@ -1,7 +1,6 @@
 package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
-import org.lwjgl.input.Mouse;
 
 public abstract class GuiClickableScrolledSelectionListProxy extends GuiSlot
 {
@@ -36,7 +35,7 @@ public abstract class GuiClickableScrolledSelectionListProxy extends GuiSlot
 
             if (k > this.bottom || k + l < this.top)
             {
-                this.func_178040_a(j, p_148120_1_, k);
+                this.setSelected(j, p_148120_1_, k);
             }
 
             this.drawSlot(j, p_148120_1_, k, l, mouseXIn, mouseYIn);

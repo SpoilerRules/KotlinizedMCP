@@ -1,8 +1,6 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -11,6 +9,9 @@ import net.minecraft.client.resources.LocalizationHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.ChunkProviderSettings;
 import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiScreenCustomizePresets extends GuiScreen
 {
@@ -170,7 +171,7 @@ public class GuiScreenCustomizePresets extends GuiScreen
             GuiScreenCustomizePresets.this.field_175317_i.setText(((GuiScreenCustomizePresets.Info)GuiScreenCustomizePresets.field_175310_f.get(GuiScreenCustomizePresets.this.field_175311_g.field_178053_u)).field_178954_c.toString());
         }
 
-        protected boolean isSelected(int slotIndex)
+        protected boolean isElementSelected(int slotIndex)
         {
             return slotIndex == this.field_178053_u;
         }
