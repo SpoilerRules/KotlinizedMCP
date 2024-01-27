@@ -12,7 +12,7 @@
 - [Frequently Asked Questions](#frequently-asked-questions)
 - [Built-in Features](#built-in-features)
 - [Pending Built-in Features](#pending-built-in-features)
-- [Why the Name "Evanescent"?](#why-the-name-evanescent)
+- [Ethymology](#ethymology)
 - [Community](#community)
 - [Contributions](#contributions)
 - [License](#license)
@@ -56,7 +56,7 @@ Yes, you are welcome to use any JVM languages to work on Evanescent for your ind
 - ❌ Implemented raw input.
 - ❌ Implemented camera shake customization.
 
-## Why the Name "Evanescent"?
+## Ethymology
 
 The name “Evanescent” means something that fades away quickly. We chose this name because this client is only a starting point for your own project, and you can customize it as you wish.
 
