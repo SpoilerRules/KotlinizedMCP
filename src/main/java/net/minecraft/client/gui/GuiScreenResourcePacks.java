@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import annotations.PendingRemoval;
 import com.google.common.collect.Lists;
 import net.minecraft.client.CommonResourceElement;
 import net.minecraft.client.resources.*;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@PendingRemoval //completely refactor this spaghetti in kotlin when the new resource pack system is being developed
 public class GuiScreenResourcePacks extends GuiScreen {
     private static final Logger logger = LogManager.getLogger();
     private final GuiScreen parentScreen;
@@ -42,12 +44,9 @@ public class GuiScreenResourcePacks extends GuiScreen {
             List<ResourcePackRepository.Entry> list = Lists.newArrayList(resourcepackrepository.getRepositoryEntriesAll());
             list.removeAll(resourcepackrepository.getRepositoryEntries());
 
-            // TODO: make indexing async
-            CompletableFuture.runAsync(() -> {
-                for (ResourcePackRepository.Entry resourcepackrepository$entry : list) {
-                    this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry));
-                }
-            });
+            for (ResourcePackRepository.Entry resourcepackrepository$entry : list) {
+                this.availableResourcePacks.add(new ResourcePackListEntryFound(this, resourcepackrepository$entry));
+            }
 
             CompletableFuture.runAsync(() -> {
                 for (ResourcePackRepository.Entry resourcepackrepository$entry1 : Lists.reverse(resourcepackrepository.getRepositoryEntries())) {
@@ -91,77 +90,76 @@ public class GuiScreenResourcePacks extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         if (button.enabled) {
             if (button.id == 2) {
-                File file1 = CommonResourceElement.Companion.getResourcePackRepository().getDirResourcepacks();
-                String s = file1.getAbsolutePath();
+                File resourcePackDir = CommonResourceElement.Companion.getResourcePackRepository().getDirResourcepacks();
+                String absolutePath = resourcePackDir.getAbsolutePath();
 
                 if (Util.getOSType() == Util.EnumOS.OSX) {
                     try {
-                        logger.info(s);
-                        Runtime.getRuntime().exec(new String[]{"/usr/bin/open", s});
+                        logger.info(absolutePath);
+                        Runtime.getRuntime().exec(new String[]{"/usr/bin/open", absolutePath});
                         return;
-                    } catch (IOException ioexception1) {
-                        logger.error("Couldn't open file", ioexception1);
+                    } catch (IOException ioException) {
+                        logger.error("Couldn't open file", ioException);
                     }
                 } else if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-                    String s1 = String.format("cmd.exe /C start \"Open file\" \"%s\"", s);
+                    String command = String.format("cmd.exe /C start \"Open file\" \"%s\"", absolutePath);
 
                     try {
-                        String[] cmdarray = {s1};
-                        Process process = Runtime.getRuntime().exec(cmdarray);
+                        Process process = Runtime.getRuntime().exec(new String[]{command});
                         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         String line;
                         while ((line = reader.readLine()) != null) {
                             System.out.println(line);
                         }
                         reader.close();
-                    } catch (IOException ioexception) {
-                        logger.error("Couldn't open file", ioexception);
+                    } catch (IOException ioException) {
+                        logger.error("Couldn't open file", ioException);
                     }
                 }
 
-                boolean flag = false;
+                boolean hasError = false;
 
                 try {
-                    Class<?> oclass = Class.forName("java.awt.Desktop");
-                    Object object = oclass.getMethod("getDesktop", new Class[0]).invoke(null);
-                    oclass.getMethod("browse", new Class[]{URI.class}).invoke(object, file1.toURI());
+                    Class<?> desktopClass = Class.forName("java.awt.Desktop");
+                    Object desktopInstance = desktopClass.getMethod("getDesktop").invoke(null);
+                    desktopClass.getMethod("browse", URI.class).invoke(desktopInstance, resourcePackDir.toURI());
                 } catch (Throwable throwable) {
                     logger.error("Couldn't open link", throwable);
-                    flag = true;
+                    hasError = true;
                 }
 
-                if (flag) {
+                if (hasError) {
                     logger.info("Opening via system class!");
-                    Sys.openURL("file://" + s);
+                    Sys.openURL("file://" + absolutePath);
                 }
             } else if (button.id == 1) {
-                if (this.changed) {
-                    List<ResourcePackRepository.Entry> list = Lists.newArrayList();
+                if (changed) {
+                    List<ResourcePackRepository.Entry> resourcePackEntries = Lists.newArrayList();
 
-                    for (ResourcePackListEntry resourcepacklistentry : this.selectedResourcePacks) {
-                        if (resourcepacklistentry instanceof ResourcePackListEntryFound) {
-                            list.add(((ResourcePackListEntryFound) resourcepacklistentry).func_148318_i());
+                    for (ResourcePackListEntry resourcePackListEntry : selectedResourcePacks) {
+                        if (resourcePackListEntry instanceof ResourcePackListEntryFound) {
+                            resourcePackEntries.add(((ResourcePackListEntryFound) resourcePackListEntry).func_148318_i());
                         }
                     }
 
-                    Collections.reverse(list);
-                    CommonResourceElement.Companion.getResourcePackRepository().setRepositories(list);
-                    this.mc.gameSettings.resourcePacks.clear();
-                    this.mc.gameSettings.incompatibleResourcePacks.clear();
+                    Collections.reverse(resourcePackEntries);
+                    CommonResourceElement.Companion.getResourcePackRepository().setRepositories(resourcePackEntries);
+                    mc.gameSettings.resourcePacks.clear();
+                    mc.gameSettings.incompatibleResourcePacks.clear();
 
-                    for (ResourcePackRepository.Entry resourcepackrepository$entry : list) {
-                        this.mc.gameSettings.resourcePacks.add(resourcepackrepository$entry.getResourcePackName());
+                    for (ResourcePackRepository.Entry entry : resourcePackEntries) {
+                        mc.gameSettings.resourcePacks.add(entry.getResourcePackName());
 
-                        if (resourcepackrepository$entry.func_183027_f() != 1) {
-                            this.mc.gameSettings.incompatibleResourcePacks.add(resourcepackrepository$entry.getResourcePackName());
+                        if (entry.func_183027_f() != 1) {
+                            mc.gameSettings.incompatibleResourcePacks.add(entry.getResourcePackName());
                         }
                     }
 
-                    this.mc.gameSettings.saveOptions();
-                    this.mc.refreshResources();
+                    mc.gameSettings.saveOptions();
+                    mc.refreshResources();
                 }
 
-                this.mc.displayGuiScreen(this.parentScreen);
+                mc.displayGuiScreen(parentScreen);
             }
         }
     }
