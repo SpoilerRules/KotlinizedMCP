@@ -19,7 +19,7 @@
 
 ## Introduction
 
-Evanescent is a Minecraft client project that takes MCP 1.8.9 and rewrites it in Kotlin/JVM. This rewrite is designed to offer optimized performance, enhanced readability, and improved conciseness. Powered by the Gradle Kotlin DSL, it ensures smooth dependency setup and fast compilation. We've also integrated OptiFine to save developers valuable time and provide native support for IntelliJ IDEA.
+Evanescent is a Minecraft client project that takes MCP 1.8.9 and rewrites it in Kotlin/JVM. This rewrite is designed to offer optimized performance, enhanced readability, and improved security. Powered by the Gradle Kotlin DSL, it ensures smooth dependency setup and fast compilation. We've also integrated OptiFine to save developers valuable time and provide native support for IntelliJ IDEA.
 
 ## JDK Version and Dependencies
 
@@ -27,34 +27,43 @@ Evanescent uses the latest LTS JDK (currently version 21) and keeps dependencies
 
 ## Frequently Asked Questions
 
-#### Is Evanescent (KotlinizedMCP) designed for me to create my Minecraft 1.8.9 client, similar to a typical decompiled MCP 1.8.9?
-Absolutely! This project is created to aid client developers by providing a user-friendly template. You should consider using Evanescent, also known as KotlinizedMCP, for the following reasons:
+#### Is Evanescent designed for me to create my Minecraft 1.8.9 client, similar to a typical decompiled MCP 1.8.9?
+Absolutely! This project is created to aid client developers by providing a user-friendly template. You should consider using Evanescent for the following reasons:
 - Aims to always use the latest dependencies and support the latest LTS JDK.
 - Uses Gradle (Kotlin Script DSL) to simplify setting up dependencies, compiling, and customizing the project, making your development experience smoother.
 - The majority of classes being rewritten in Kotlin/JVM to enhance performance, readability, and maintainability while utilizing modern features of Java and Kotlin/JVM.
 - Includes built-in features such as in-game Microsoft Login, removal of support for outdated features like Minecraft Realms, integration with OptiFine, and more. Check out the full list of built-in features in the [Built-in Features](#built-in-features) section.
 
-#### Is Evanescent (KotlinizedMCP) based on decompiled MCP 1.8.9?
-Yes, Evanescent, also known as KotlinizedMCP, is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
+#### Is Evanescent based on decompiled MCP 1.8.9?
+Yes, Evanescent is a modernized version of decompiled MCP (Mod Coder Pack) 1.8.9.
 
 #### Can I use other JVM languages, such as Scala, for development?
-Yes, you are welcome to use any JVM languages to work on Evanescent for your independent projects. Please note that our primary focus for contributions to the GitHub repository is in Kotlin/JVM, given the project's name, "KotlinizedMCP". You can find further details on contributing to the project in the [Contributions](#contributions) section.
+Yep, you are welcome to use any JVM languages to work on Evanescent for your independent projects. Please note that our primary focus for contributions to the GitHub repository is in Kotlin/JVM, since it is much better for desktop applications overall. You can find further details on contributing to the project in the [Contributions](#contributions) section.
 
-## Built-in Features
+## Roadmap
 
-- ✅ Asynchronous screenshot handling process.
-- ✅ Command detection is case-insensitive.
-- ✅ Simple Microsoft login in-game.
-- ✅ Extra Settings, offering options like Hit Delay, Auto Sprint, and more.
-- ✅ Removed Minecraft Realms support.
-- ✅ Removed Twitch Broadcast support.
-- ✅ Removed Demo version support.
+#### Performance
+- [ ] Fully Kotlinize Minecraft
+- [ ] Fully asynchronous functions
+    - [x] Asynchronous screenshot handling process
+- [ ] Improve math functions
+- [ ] Optimize entities
+    - [ ] Improve Mob / Animal pathfinding
+    - [ ] Turn chests into block entities
 
-## Pending Built-in Features
+#### Security
+- [x] Fix most deprecations
 
-- ❌ Removed Snooper support.
-- ❌ Implemented raw input.
-- ❌ Implemented camera shake customization.
+#### Quality Of Life
+- [x] Simple Microsoft login in-game
+- [x] Add Extra Settings, like Hit Delay, Auto Sprint, etc.
+- [x] Remove Minecraft Realms support
+- [x] Remove Twitch Broadcast support
+- [x] Remove Demo version support
+- [ ] Remove Snooper support
+- [ ] Implement raw input
+- [ ] Implement camera shake customization
+- [x] Make the command detection case-insensitive
 
 ## Ethymology
 
