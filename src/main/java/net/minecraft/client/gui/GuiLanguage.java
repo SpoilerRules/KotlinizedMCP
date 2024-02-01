@@ -1,4 +1,4 @@
-package net.minecraft.client.gui;
+ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -109,7 +109,7 @@ public class GuiLanguage extends GuiScreen
             Language language = this.languageMap.get(this.langCodeList.get(slotIndex));
             GuiLanguage.this.languageManager.setCurrentLanguage(language);
             GuiLanguage.this.game_settings_3.language = language.getLanguageCode();
-            this.mc.refreshResources();
+            GuiLanguage.this.languageManager.apply(client.getResourceManager());
             GuiLanguage.this.fontRendererObject.setUnicodeFlag(GuiLanguage.this.languageManager.isCurrentLocaleUnicode() || GuiLanguage.this.game_settings_3.forceUnicodeFont);
             GuiLanguage.this.fontRendererObject.setBidiFlag(GuiLanguage.this.languageManager.isCurrentLanguageBidirectional());
             GuiLanguage.this.confirmSettingsBtn.displayString = LocalizationHelper.translate("gui.done");
